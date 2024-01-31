@@ -1,68 +1,117 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
+/* General */
 a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+    text-decoration: none !important;
 }
-a:hover {
-  color: #535bf2;
+:root {
+    --primary: #FDAA04;
+    --secondary: #000220;
 }
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+h2, h3 {
+    color: var(--primary);
 }
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+div.wrapper {
+    padding: 2em 15vw;
+}
+.prim {
+    color: var(--primary);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+/* Navbar */
+.navbar {
+    padding: 0 !important;
 }
-button:hover {
-  border-color: #646cff;
+.navbar-brand img {
+    width: 70px;
+    color: var(--primary);
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.navbar-nav {
+    align-items: center;
+}
+.nav-link:hover {
+    color: var(--primary) !important;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* Main */
+button.btn-primary {
+    border: 1px solid var(--primary);
+    background-color: var(--primary);
+}
+button.btn-primary:hover {
+    color: #fff;
+    border: 1px solid #E39903;
+    background-color: #E39903;
+}
+.card {
+    padding: 0px!important;
+}
+.card .card-title.text-uppercase {
+    transition: .3s;
+}
+.card:hover .card-title.text-uppercase {
+    color: var(--primary);
+}
+.album h2 {
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+    text-decoration-thickness: 4px;
+    text-decoration-color: var(--primary);
+}
+
+/* Form */
+header, legend, .controls {
+    font-family: 'Ubuntu', sans-serif;
+}
+header {
+    padding-top: 2em;
+}
+fieldset:hover {
+    background-color: #f3f3f3;
+}
+legend {
+    color: var(--primary);
+}
+label {
+    margin: 0.5em 0 0.25em;
+}
+button.btn-outline-primary {
+    border: 1px solid var(--primary);
+    background-color: #fff;
+    color: var(--primary);
+    font-size: 14px;
+}
+button.btn-outline-primary:hover {
+    background-color: var(--primary);
+    border: 1px solid var(--primary);
+    color: #fff;
+    transition: .3s;
+}
+
+/* Display */
+.mask {
+    position: absolute;
+	background-color: rgba(0, 0, 0, 0.7);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.bg-image {
+    background-position: 50% 0%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #fff;
+    position: relative;
+	height: 400px;
+}
+.bg-image h1 {
+	text-transform: uppercase;
+}
+.angled-div {
+    background: #ffffff;
+    height: 3rem;
+    transform: skewY(-1.5deg);
+    transform-origin: top left;
+}
+li::marker {
+    color: var(--primary);
 }
