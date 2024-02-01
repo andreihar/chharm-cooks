@@ -22,6 +22,8 @@ function InputList({ items, label, add, remove, change }:{ items:any[], label:st
 function Form() {
   const [ingredients, setIngreds] = useState([{ name:"" }]);
   const [steps, setSteps] = useState([{ name:"" }]);
+  const [imageUrl, setImageUrl] = useState('');
+
   const navigate = useNavigate();
 
   const add = (setter:Function) => () => setter((prev:{ name:string }[]) => [...prev, { name:"" }]);
@@ -89,8 +91,13 @@ function Form() {
               </div>
               <div className="form-group">
                 <label htmlFor="picture">Image URL (optional)</label>
-                <input type="text" className="form-control" name="picture" />
+                <input type="text" className="form-control" name="picture" onChange={e => setImageUrl(e.target.value)} />
               </div>
+              {imageUrl && (
+                <div className="d-flex justify-content-center mt-3">
+                  <img src={imageUrl} alt="Preview" style={{ width: '70%', height: 'auto' }} />
+                </div>
+              )}
             </fieldset>
             <fieldset className="p-4 my-4">
               <legend>Ingredients</legend>
