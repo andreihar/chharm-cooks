@@ -13,7 +13,11 @@ div.wrapper {
     padding: 2em 15vw;
 }
 .prim {
-    color: var(--primary);
+    color: var(--primary)!important;
+}
+.prim-bg {
+    --bs-bg-opacity: 1;
+    background-color: var(--primary)!important;
 }
 
 /* Navbar */
@@ -43,12 +47,19 @@ button.btn-primary:hover {
 }
 .card {
     padding: 0px!important;
+    overflow: hidden;
 }
-.card .card-title.text-uppercase {
+.card .card-title {
     transition: .3s;
 }
 .card:hover .card-title.text-uppercase {
     color: var(--primary);
+}
+.card:hover .card-img, .card:hover .card-img-top {
+    transform: scale(1.1);
+}
+.card-img, .card-img-top {
+    transition: transform .3s ease-in-out;
 }
 .album h2 {
     text-decoration: underline;
@@ -114,4 +125,19 @@ button.btn-outline-primary:hover {
 }
 li::marker {
     color: var(--primary);
+}
+.hover-effect::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transition: background-color .3s;
+}
+.hover-effect:hover::after {
+    background-color: rgba(253, 170, 4, 0.3);
+}
+.hover-effect {
+    position: relative;
 }

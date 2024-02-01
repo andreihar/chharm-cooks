@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import Navbar from './Navbar';
 import { Recipe } from '../Recipe';
 import { defaultRecipes } from '../DefaultRecipes';
+import Navbar from './Navbar';
+import Footer from './Footer';
 
 function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -23,7 +24,7 @@ function Home() {
       <div className="overflow-hidden" style={{ marginTop: "80px" }}>
         <div className="container-fluid col-xxl-8">
           <div className="row flex-lg-nowrap align-items-center g-5">
-            <div className="order-lg-1 w-100">
+            <div className="order-lg-1 w-100 d-none d-lg-block">
               <img src="https://asianinspirations.com.au/wp-content/uploads/2020/09/20200901-Malaysian-Cuisine-Kaleidoscope-of-Flavours-00-Feat-Img_1920w.jpg"
                 style={{ clipPath: "polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%)", }} className="d-block" width={900} height={600} />
             </div>
@@ -46,7 +47,9 @@ function Home() {
               <div key={index} className="col-12 col-sm-6 col-md-4 col-lg-3 my-3">
                 <Link to={`/recipe/${recipe.id}`}>
                 <div className="card h-100">
-                  <img className="card-img-top img-fluid" style={{ height: "200px", objectFit: "cover" }} src={recipe.picture} alt="Card image" />
+                  <div className="img-container" style={{ overflow: 'hidden' }}>
+                    <img className="card-img-top img-fluid hover-enlarge" style={{ height: "200px", objectFit: "cover" }} src={recipe.picture} alt="Card image" />
+                  </div>
                   <div className="card-body">
                     <p className="card-subtitle mb-2 text-body-secondary fs-6 fw-light">{recipe.cuisine}</p>
                     <h5 className="card-title text-uppercase">{recipe.name.split(' | ')[0]}</h5>
@@ -59,6 +62,7 @@ function Home() {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   )
 }

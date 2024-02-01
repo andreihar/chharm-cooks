@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import Navbar from './Navbar';
 import { Recipe } from '../Recipe';
+import Navbar from './Navbar';
+import Footer from './Footer';
 
 function InputList({ items, label, add, remove, change }:{ items:any[], label:string, add:any, remove:any, change:any }) {
   return (
@@ -105,6 +106,7 @@ function Form() {
           </form>
         </main>
       </div>
+      <Footer/>
     </>
   )
 }

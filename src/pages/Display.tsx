@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
-import Navbar from './Navbar';
+import { Link } from 'react-router-dom';
 import { Recipe } from '../Recipe';
+import Navbar from './Navbar';
+import Footer from './Footer';
 
 function Display() {
   const { id } = useParams<{ id: string }>();
   const [recipe, setRecipe] = useState<Recipe>();
+  const [viewAlsoRecipes, setRecipes] = useState<Recipe[]>([]);
 
   useEffect(() => {
     const loadedRecipesJSON = localStorage.getItem('recipes');
@@ -15,6 +18,10 @@ function Display() {
       setRecipe(foundRecipe);
     else
       alert ("Error: ID not found in recipes.");
+    let selectedRecipes: Recipe[] = [...recipes];
+    selectedRecipes = selectedRecipes.filter(recipe => recipe.id !== Number(id));
+    selectedRecipes.sort(() => Math.random() - 0.5);
+    setRecipes(selectedRecipes.slice(0,4));
   }, [id]);
 
   if (recipe) {
@@ -67,6 +74,25 @@ function Display() {
           </div>
         </div>
       </main>
+      <div className="album mt-5 bg-body-tertiary">
+        <div className="container-fluid">
+          <div className="row d-flex align-items-stretch">
+            {viewAlsoRecipes.map((viewRecipe, index) => (
+              <div key={index} className="col-12 col-sm-6 col-lg-3 p-0">
+                <Link to={`/recipe/${viewRecipe.id}`}>
+                  <div className="card text-bg-dark h-100 rounded-0 border-0 hover-effect">
+                    <img src={`${viewRecipe.picture}`} className="card-img rounded-0" style={{ height: '13rem', objectFit: 'cover' }} alt="..." />
+                    <div className="card-img-overlay text-uppercase">
+                      <h5 className="prim-bg card-title position-absolute bottom-0 left-0 py-1 px-2 fs-6 fw-normal">{viewRecipe.name.split(' | ')[0]}</h5>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <Footer/>
     </>
   )
   }
