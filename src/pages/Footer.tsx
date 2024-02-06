@@ -7,7 +7,7 @@ function Footer() {
 				<li className="nav-item"><Link to='/' className="nav-link px-2 text-body-secondary">Home</Link></li>
 				<li className="nav-item"><Link to='/form' className="nav-link px-2 text-body-secondary">New Recipe</Link></li>
 			</ul>
-			<p className="text-center text-body-secondary">© 2023 Andrei Harbachov</p>
+			<p className="text-center text-body-secondary">© 2024 Andrei Harbachov</p>
 		</footer>
 	)
 }

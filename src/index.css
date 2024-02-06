@@ -1,10 +1,10 @@
 /* General */
-a {
-    text-decoration: none !important;
-}
 :root {
     --primary: #FDAA04;
     --secondary: #000220;
+}
+a {
+    text-decoration: none !important;
 }
 h2, h3 {
     color: var(--primary);
