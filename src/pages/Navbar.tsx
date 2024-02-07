@@ -14,7 +14,7 @@ function Navbar() {
             <a className="navbar-brand mx-0 mx-5" href="#">
               <img src={logo} alt="Night Crusade Titans Logo"/>
             </a>
-            <li className="nav-item fs-5"><Link to='/form' className="nav-link">New Recipe</Link></li>
+            <li className="nav-item fs-5"><Link to='/form' className="nav-link">Add Recipe</Link></li>
           </ul>
         </div>
       </div>

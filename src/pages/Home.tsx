@@ -7,6 +7,8 @@ import Footer from './Footer';
 
 function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCuisine, setSelectedCuisine] = useState('');
 
   useEffect(() => {    
     let loadedRecipes = JSON.parse(localStorage.getItem('recipes') || '[]');
@@ -42,8 +44,20 @@ function Home() {
       <div className="album py-5 bg-body-tertiary">
         <div className="container">
           <h2 id="recipes">Recipes</h2>
+          <div className="row justify-content-center my-4">
+            <div className="col-md-6">
+              <input type="text" className="form-control border-dark-subtle" placeholder="Search" onChange={e => setSearchTerm(e.target.value)} />
+              {[...new Set(recipes.map(recipe => recipe.cuisine))].map(cuisine => (
+                <button key={cuisine}
+                  className={`btn ${cuisine === selectedCuisine ? 'btn-primary' : 'btn-secondary'} me-2 mt-2`}
+                  onClick={() => setSelectedCuisine(prev => prev === cuisine ? '' : cuisine)}>
+                  {cuisine}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="row">
-            {recipes.map((recipe, index) => (
+            {recipes.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()) && (!selectedCuisine || item.cuisine === selectedCuisine)).map((recipe, index) => (
               <div key={index} className="col-12 col-sm-6 col-md-4 col-lg-3 my-3">
                 <Link to={`/recipe/${recipe.id}`}>
                 <div className="card h-100">
