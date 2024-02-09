@@ -1,8 +1,9 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
 import { Recipe } from '../Recipe';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import isEqual from 'lodash.isequal';
 
 function InputList({ items, label, add, remove, change }:{ items:any[], label:string, add:any, remove:any, change:any }) {
   return (
@@ -20,34 +21,41 @@ function InputList({ items, label, add, remove, change }:{ items:any[], label:st
 }
 
 function Form() {
+  const { id } = useParams<{ id: string }>();
+  const [name, setName] = useState('');
+  const [chinName, setChinName] = useState('');
+  const [cuisine, setCuisine] = useState('');
+  const [author, setAuthor] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
   const [ingredients, setIngreds] = useState([{ name:"" }]);
   const [steps, setSteps] = useState([{ name:"" }]);
-  const [imageUrl, setImageUrl] = useState('');
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadedRecipesJSON = localStorage.getItem('recipes');
+    if (loadedRecipesJSON) {
+      const recipes = JSON.parse(loadedRecipesJSON);
+      const foundRecipe = recipes.find((r: Recipe) => r.id === Number(id));
+      if (foundRecipe) {
+        setName(foundRecipe.name.split(' | ')[0]);
+        setChinName(foundRecipe.name.split(' | ')[1]);
+        setCuisine(foundRecipe.cuisine);
+        setImageUrl(foundRecipe.picture);
+        setIngreds(foundRecipe.ingredients.map((ingredient:string) => ({ name:ingredient })));
+        setSteps(foundRecipe.steps.map((step:string) => ({ name:step })));
+      } else if (id) {
+        navigate('/');
+      }
+    }
+  }, [id]);
 
   const add = (setter:Function) => () => setter((prev:{ name:string }[]) => [...prev, { name:"" }]);
   const remove = (setter:Function) => (index:number) => setter((prev:{ name:string }[]) => prev.filter((_:any, i:number) => i !== index));
   const change = (setter:Function) => (e:React.ChangeEvent<HTMLInputElement>, index:number) =>
     setter((prev:{ name:string }[]) => prev.map((item, i) => i === index ? { name:e.target.value }:item));
 
-  function getValuesWithPrefix(formData: FormData, prefix: string): string[] {
-    return Array.from(formData.keys())
-      .filter(key => key.startsWith(prefix) && String(formData.get(key)).trim() !== '')
-      .map(key => formData.get(key) as string);
-  }
-
   function submit(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const index = JSON.parse(localStorage.getItem('index') || "3") as number;
-    const formData = new FormData(e.currentTarget);
-    const name = formData.get('name') as string;
-    const chinName = formData.get('chin-name') as string;
-    const cuisine = formData.get('cuisine') as string;
-    const picture = formData.get('picture') as string;
-    const ingredients = getValuesWithPrefix(formData, 'Ingredient');
-    const steps = getValuesWithPrefix(formData, 'Step');
-
     if (ingredients.length === 0) {
       alert('At least one Ingredient is required');
       return;
@@ -58,11 +66,21 @@ function Form() {
     }
 
     let recipes = JSON.parse(localStorage.getItem('recipes') || '[]');
-    let newRecipe = new Recipe(name + " | " + chinName, cuisine, picture, ingredients, steps);
-    newRecipe.id = index;
-    recipes.push(newRecipe);
+    let newRecipe = new Recipe(name + " | " + chinName, cuisine, imageUrl, author, ingredients.map(i => i.name), steps.map(s => s.name));
+    if (id) {
+      newRecipe.id = Number(id);
+      const oldRecipe = recipes.find((r: Recipe) => r.id === Number(id));
+      if (!isEqual(oldRecipe, newRecipe)) {
+        newRecipe.modifiedOn = new Date()
+        recipes[recipes.findIndex((r: Recipe) => r.id === Number(id))] = newRecipe;
+      }
+    } else {
+      const index = JSON.parse(localStorage.getItem('index') || "3") as number;
+      newRecipe.id = index;
+      recipes.push(newRecipe);
+      localStorage.setItem('index', JSON.stringify(index+1));
+    }
     localStorage.setItem('recipes', JSON.stringify(recipes));
-    localStorage.setItem('index', JSON.stringify(index+1));
     navigate('/');
   }
 
@@ -71,7 +89,7 @@ function Form() {
       <Navbar/>
       <div className="wrapper mt-5">
         <header>
-          <h2>Create Recipe</h2>
+          <h2>{id ? 'Edit' : 'Create'} Recipe</h2>
         </header>
         <main>
           <form className="form-group" onSubmit={submit}>
@@ -79,19 +97,23 @@ function Form() {
               <legend>Recipe Information</legend>
               <div className="form-group">
                 <label htmlFor="name">Recipe Name *</label>
-                <input type="text" className="form-control" name="name" placeholder="Ke bah png" required/>
+                <input type="text" className="form-control" name="name" placeholder="Ke bah png" value={name} onChange={e => setName(e.target.value)} required/>
               </div>
               <div className="form-group">
                 <label htmlFor="chin-name">Chinese Name *</label>
-                <input type="text" className="form-control" name="chin-name" placeholder="雞肉飯" required/>
+                <input type="text" className="form-control" name="chin-name" placeholder="雞肉飯" value={chinName} onChange={e => setChinName(e.target.value)} required/>
               </div>
               <div className="form-group">
                 <label htmlFor="cuisine">Cuisine *</label>
-                <input type="text" className="form-control" name="cuisine" placeholder="Taiwanese" required/>
+                <input type="text" className="form-control" name="cuisine" placeholder="Taiwanese" value={cuisine} onChange={e => setCuisine(e.target.value)} required/>
+              </div>
+              <div className="form-group">
+                <label htmlFor="author">Author *</label>
+                <input type="text" className="form-control" name="author" placeholder="Matt Tsai" value={author} onChange={e => setAuthor(e.target.value)} required/>
               </div>
               <div className="form-group">
                 <label htmlFor="picture">Image URL (optional)</label>
-                <input type="text" className="form-control" name="picture" onChange={e => setImageUrl(e.target.value)} />
+                <input type="text" className="form-control" name="picture" placeholder="https://live.staticflickr.com/65535/51720059627_0aed2b149b_o.jpg" value={imageUrl} onChange={e => setImageUrl(e.target.value)} />
               </div>
               {imageUrl && (
                 <div className="d-flex justify-content-center mt-3">
@@ -108,7 +130,7 @@ function Form() {
               <InputList items={steps} label="Step" add={add(setSteps)} remove={remove(setSteps)} change={change(setSteps)}/>
             </fieldset>
             <div className="controls d-flex justify-content-center">
-              <button type="submit" className="btn btn-outline-primary px-4">SUBMIT</button>
+              <button type="submit" className="btn btn-outline-primary px-4">{id ? 'UPDATE' : 'SUBMIT'}</button>
             </div>
           </form>
         </main>

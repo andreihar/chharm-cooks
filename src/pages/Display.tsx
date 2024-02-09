@@ -12,7 +12,12 @@ function Display() {
 
   useEffect(() => {
     const loadedRecipesJSON = localStorage.getItem('recipes');
-    const recipes = loadedRecipesJSON ? JSON.parse(loadedRecipesJSON) : [];
+    let recipes = loadedRecipesJSON ? JSON.parse(loadedRecipesJSON) : [];
+    recipes = recipes.map((recipe: any) => {
+      recipe.createdOn = new Date(recipe.createdOn);
+      recipe.modifiedOn = new Date(recipe.modifiedOn);
+      return recipe;
+    });
     const foundRecipe = recipes.find((r: Recipe) => r.id === Number(id));
     if (foundRecipe)
       setRecipe(foundRecipe);
@@ -25,7 +30,7 @@ function Display() {
   }, [id]);
 
   if (recipe) {
-    const { picture, name, cuisine, ingredients, steps } = recipe;
+    const { picture, name, author, createdOn, modifiedOn, cuisine, ingredients, steps } = recipe;
     const dishName = name.split(' | ')[0];
     return (
     <>
@@ -47,7 +52,12 @@ function Display() {
           <div className="col-md-8">
             <article className="blog-post">
               <h2 className="display-5 link-body-emphasis mb-1">Let's make <span className="prim">{`${dishName}`}</span>!</h2>
+              <p className="text-dark-emphasis">by: <span className="text-uppercase fs-5 ms-2">{`${author}`}</span></p>
               <hr />
+              <p className="text-dark-emphasis">
+                Posted: <span className="">{`${createdOn.toLocaleDateString()}`}</span>&nbsp;
+                Updated: <span className="">{`${modifiedOn.toLocaleDateString()}`}</span>
+              </p>
               <h2>Ingredients</h2>
               <p>{`Embark on a culinary journey with this simple yet sensational ${dishName}. Gather fresh, quality ingredients that will harmonise in a symphony of flavours. Here's the lineup:`}</p>
               <ul>
