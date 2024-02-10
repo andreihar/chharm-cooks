@@ -31,8 +31,8 @@ function Home() {
                 style={{ clipPath: "polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%)", }} className="d-block" width={900} height={600} />
             </div>
             <div className="col-lg-6 p-lg-5">
-              <h1 className="display-4 lh-1 text-body-emphasis">Uncover Hokkien culinary charms at <span className="prim fw-bold">Chhárm</span><span className="prim">Cooks</span></h1>
-              <p className="lead my-5">Embark on a culinary journey with <span className="prim fw-bold">Chhárm</span><span className="prim">Cooks</span>, where the heart of Hokkien <span className="prim fw-bold">炒</span><span className="prim">菜</span> <small className="fs-6">(chhá chhài)</small> beats in every recipe. Explore the secrets of culinary artistry and indulge in flavours that charm your palate.</p>
+              <h1 className="display-4 lh-1 text-body-emphasis">Uncover Hokkien culinary charms at <span className="text-primary fw-bold">Chhárm</span><span className="text-primary">Cooks</span></h1>
+              <p className="lead my-5">Embark on a culinary journey with <span className="text-primary fw-bold">Chhárm</span><span className="text-primary">Cooks</span>, where the heart of Hokkien <span className="text-primary fw-bold">炒</span><span className="text-primary">菜</span> <small className="fs-6">(chhá chhài)</small> beats in every recipe. Explore the secrets of culinary artistry and indulge in flavours that charm your palate.</p>
               <div className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
                 <Link to='/form' className="nav-link"><button type="button" className="btn btn-primary btn-lg px-4 fw-bold">Add Recipe</button></Link>
                 <a href="#recipes" className="ms-md-2"><button type="button" className="btn btn-outline-secondary btn-lg px-4">View Recipes</button></a>

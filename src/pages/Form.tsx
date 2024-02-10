@@ -94,7 +94,7 @@ function Form() {
         <main>
           <form className="form-group" onSubmit={submit}>
             <fieldset className="p-4 my-4">
-              <legend>Recipe Information</legend>
+              <legend className="text-primary">Recipe Information</legend>
               <div className="form-group">
                 <label htmlFor="name">Recipe Name *</label>
                 <input type="text" className="form-control" name="name" placeholder="Ke bah png" value={name} onChange={e => setName(e.target.value)} required/>
@@ -122,11 +122,11 @@ function Form() {
               )}
             </fieldset>
             <fieldset className="p-4 my-4">
-              <legend>Ingredients</legend>
+              <legend className="text-primary">Ingredients</legend>
               <InputList items={ingredients} label="Ingredient" add={add(setIngreds)} remove={remove(setIngreds)} change={change(setIngreds)}/>
             </fieldset>
             <fieldset className="p-4 my-4">
-              <legend>Directions</legend>
+              <legend className="text-primary">Directions</legend>
               <InputList items={steps} label="Step" add={add(setSteps)} remove={remove(setSteps)} change={change(setSteps)}/>
             </fieldset>
             <div className="controls d-flex justify-content-center">

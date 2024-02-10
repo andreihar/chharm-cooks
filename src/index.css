@@ -2,49 +2,30 @@
 :root {
     --primary: #FDAA04;
     --secondary: #000220;
+    --navbar-height: 80px;
+}
+html {
+    scroll-padding-top: var(--navbar-height);
 }
 a {
     text-decoration: none !important;
 }
-h2, h3 {
-    color: var(--primary);
-}
 div.wrapper {
     padding: 2em 15vw;
-}
-.prim {
-    color: var(--primary)!important;
-}
-.prim-bg {
-    --bs-bg-opacity: 1;
-    background-color: var(--primary)!important;
 }
 
 /* Navbar */
 .navbar {
-    padding: 0 !important;
+    height: var(--navbar-height);
 }
 .navbar-brand img {
     width: 70px;
-    color: var(--primary);
-}
-.navbar-nav {
-    align-items: center;
 }
 .nav-link:hover {
     color: var(--primary) !important;
 }
 
 /* Main */
-button.btn-primary {
-    border: 1px solid var(--primary);
-    background-color: var(--primary);
-}
-button.btn-primary:hover {
-    color: #fff;
-    border: 1px solid #E39903;
-    background-color: #E39903;
-}
 .card {
     padding: 0px!important;
     overflow: hidden;
@@ -78,44 +59,19 @@ header {
 fieldset:hover {
     background-color: #f3f3f3;
 }
-legend {
-    color: var(--primary);
-}
 label {
     margin: 0.5em 0 0.25em;
-}
-button.btn-outline-primary {
-    border: 1px solid var(--primary);
-    background-color: #fff;
-    color: var(--primary);
-    font-size: 14px;
-}
-button.btn-outline-primary:hover {
-    background-color: var(--primary);
-    border: 1px solid var(--primary);
-    color: #fff;
-    transition: .3s;
 }
 
 /* Display */
 .mask {
-    position: absolute;
 	background-color: rgba(0, 0, 0, 0.7);
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
 }
 .bg-image {
     background-position: 50% 0%;
     background-repeat: no-repeat;
     background-size: cover;
-    color: #fff;
-    position: relative;
 	height: 400px;
-}
-.bg-image h1 {
-	text-transform: uppercase;
 }
 .angled-div {
     background: #ffffff;
@@ -137,7 +93,4 @@ li::marker {
 }
 .hover-effect:hover::after {
     background-color: rgba(253, 170, 4, 0.3);
-}
-.hover-effect {
-    position: relative;
 }
