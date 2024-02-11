@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
-import Footer from './Footer';
 
 function Login() {
   return (
@@ -10,7 +9,6 @@ function Login() {
     <div className="bg-body-tertiary">
       <main className="form-signin m-auto d-flex align-items-center justify-content-center">
         <form style={{width: '330px'}}>
-          {/* <img className="mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width={72} height={57}/> */}
           <h1 className="mb-1">Sign in</h1>
           <p className="small">Unleash your culinary creativity!</p>
           <div className="form-floating mb-2">

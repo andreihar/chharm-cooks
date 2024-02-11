@@ -1,7 +1,15 @@
+import React, { useEffect } from 'react';
 import logo from '../assets/logo.svg'
 import { Link } from 'react-router-dom';
 
 function Navbar() {
+  useEffect(() => {
+    document.documentElement.classList.add('with-navbar');
+    return () => {
+      document.documentElement.classList.remove('with-navbar');
+    };
+  }, []);
+  
   return (
     // <nav className="navbar navbar-expand fixed-top navbar-light bg-white p-0">
     //   <div className="container-fluid container">
