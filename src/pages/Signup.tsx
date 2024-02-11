@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { Author } from '../Author';
+import { useAuth } from '../contexts/AuthContext';
 
 function Signup() {
   const defaultImage = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg';
@@ -9,6 +10,7 @@ function Signup() {
   const [password, setPassword] = useState('');
   const [imageUrl, setImageUrl] = useState(defaultImage);
   const [social, setSocial] = useState('');
+  const {setAuthUser, setIsLogged} = useAuth();
   const authors = JSON.parse(localStorage.getItem('authors') || '[]');
   const navigate = useNavigate();
 
@@ -23,7 +25,10 @@ function Signup() {
       return;
     }
     if (!imageUrl.trim()) setImageUrl(defaultImage);
-    localStorage.setItem('authors', JSON.stringify([...authors, new Author(name, password, imageUrl, social)]));
+    const newAuthor = new Author(name, password, imageUrl, social)
+    localStorage.setItem('authors', JSON.stringify([...authors, newAuthor]));
+    setAuthUser(newAuthor);
+    setIsLogged(true);
     navigate('/');
   }
 

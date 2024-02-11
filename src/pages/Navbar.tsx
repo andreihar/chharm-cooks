@@ -1,14 +1,25 @@
 import { useEffect } from 'react';
 import logo from '../assets/logo.svg'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 function Navbar() {
+  const {authUser, setAuthUser, isLogged, setIsLogged} = useAuth();
+  const navigate = useNavigate();
+
   useEffect(() => {
     document.documentElement.classList.add('with-navbar');
     return () => {
       document.documentElement.classList.remove('with-navbar');
     };
   }, []);
+
+  const logOut = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsLogged(false);
+    setAuthUser(null);
+    navigate('/');
+  }
   
   return (
     <nav className="navbar navbar-expand-lg fixed-top navbar-light bg-white p-0">
@@ -23,18 +34,21 @@ function Navbar() {
             <li className="nav-item fs-5 me-3"><Link to='/form' className="nav-link">Add Recipe</Link></li>
             <li className="nav-item fs-5"><Link to='/form' className="nav-link">Contributors</Link></li>
           </ul>
-          <div>
-            <Link to='/signup'><button type="button" className="btn btn-outline-secondary me-2">Join Now</button></Link>
-            <Link to='/login'><button type="button" className="btn btn-primary">Sign in</button></Link>
-          </div>
-          {/* <div className="dropdown">
-            <a href="#" className="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="https://github.com/mdo.png" alt="mdo" width={32} height={32} className="rounded-circle"/>
-            </a>
-            <ul className="dropdown-menu text-small" style={{}}>
-              <li><a className="dropdown-item" href="#">Sign out</a></li>
-            </ul>
-          </div> */}
+          {isLogged ? 
+            <div className="dropdown">
+              <a href="#" className="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src={authUser.picture} alt="User Picture" width={32} height={32} className="rounded-circle"/>
+              </a>
+              <ul className="dropdown-menu text-small" style={{}}>
+                <li><button className="dropdown-item" onClick={(e)=>{logOut(e)}}>Sign out</button></li>
+              </ul>
+            </div>
+            :
+            <div>
+              <Link to='/signup'><button type="button" className="btn btn-outline-secondary me-2">Join Now</button></Link>
+              <Link to='/login'><button type="button" className="btn btn-primary">Sign in</button></Link>
+            </div>
+          }
         </div>
       </div>
     </nav>
