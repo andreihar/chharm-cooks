@@ -1,0 +1,10 @@
+import { Author } from './Author';
+
+export const defaultRecipes = [
+	new Author("Jack Wang","jackwang","https://instagram.fyvr4-1.fna.fbcdn.net/v/t51.2885-19/378474089_594497709337678_7784189321591627843_n.jpg?stp=dst-jpg_s320x320&_nc_ht=instagram.fyvr4-1.fna.fbcdn.net&_nc_cat=110&_nc_ohc=WtA02R_n0vcAX-MKjDD&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfBXzDDR_ichaMdlxRnjm4c9NUlPHwqIc3WX9EbWOGg0yw&oe=65CD9327&_nc_sid=8b3546","https://www.linkedin.com/in/jack-wang-295815170/"),
+	new Author("Samuel Ren","samuelren","https://media.licdn.com/dms/image/C5603AQFFIopjM9nf6Q/profile-displayphoto-shrink_800_800/0/1647027164110?e=1712793600&v=beta&t=O37VyNeB-kSIGdJgyBZT0kvhOo4h0tT07D9vXombc2Q","https://www.linkedin.com/in/samuel-jen/"),
+	new Author("Matt Tsai","matttsai","https://media.licdn.com/dms/image/C5603AQGf2o1YD2oxkw/profile-displayphoto-shrink_800_800/0/1655144203423?e=1712793600&v=beta&t=E_uoVTeefBlfQlGxn-tK221gWI5VANYCiiKOG6eS_xI","https://www.linkedin.com/in/matt-tsai-90a3291a3/"),
+	new Author("John Doknjas","johndoknjas","https://john.doknjas.com/wp-content/uploads/2018/09/FM-John-Doknjas-1024x777.jpg","https://www.linkedin.com/in/matt-tsai-90a3291a3/"),
+	new Author("Alex Mei","alexmei","https://instagram.fyvr4-1.fna.fbcdn.net/v/t51.2885-19/422605860_3487821691440343_5917095605750702935_n.jpg?stp=dst-jpg_s320x320&_nc_ht=instagram.fyvr4-1.fna.fbcdn.net&_nc_cat=107&_nc_ohc=E6-qRHMnASwAX9l8hfY&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfAkFqOrcSFO-BAyNx9yqAXwdzQUwIlTH7FJXCI1aNrsUA&oe=65CD682C&_nc_sid=8b3546","https://www.instagram.com/ho_.mei/"),
+	new Author("Keane Junxian Ong","keanejunxianong","https://scontent.cdninstagram.com/v/t51.2885-15/385292583_294732093272680_1901812146180608377_n.webp?stp=dst-jpg_e35&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xMDgweDEwODAuc2RyIn0&_nc_ht=scontent.cdninstagram.com&_nc_cat=104&_nc_ohc=BiE3uRoJcjUAX8RjnQb&edm=APs17CUBAAAA&ccb=7-5&ig_cache_key=MzIwNDU0NTMxNjE3NDUyNTg0OA%3D%3D.2-ccb7-5&oh=00_AfAQxeRY-NR4KsOkN55PYjJVGnVOG8MOx0dOTDpIeNqSAQ&oe=65CD5626&_nc_sid=10d13b","https://www.instagram.com/k.ojx/")
+];

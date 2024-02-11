@@ -6,6 +6,7 @@
 }
 html {
     scroll-padding-top: var(--navbar-height);
+    margin-top: var(--navbar-height);
 }
 a {
     text-decoration: none !important;
@@ -23,6 +24,9 @@ div.wrapper {
 }
 .nav-link:hover {
     color: var(--primary) !important;
+}
+.dropdown-menu {
+    --bs-dropdown-min-width: 0!important;
 }
 
 /* Main */
@@ -59,7 +63,7 @@ header {
 fieldset:hover {
     background-color: #f3f3f3;
 }
-label {
+.form-group label {
     margin: 0.5em 0 0.25em;
 }
 
@@ -93,4 +97,9 @@ li::marker {
 }
 .hover-effect:hover::after {
     background-color: rgba(253, 170, 4, 0.3);
+}
+
+/* Login */
+.form-signin {
+    height: calc(100vh - var(--navbar-height));
 }

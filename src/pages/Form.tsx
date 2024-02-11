@@ -87,7 +87,7 @@ function Form() {
   return (
     <>
       <Navbar/>
-      <div className="wrapper mt-5">
+      <div className="wrapper">
         <header>
           <h2>{id ? 'Edit' : 'Create'} Recipe</h2>
         </header>

@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import ScrollToTop from './ScrollToTop'
 import './index.css'
 import './sass.scss'
+import "bootstrap/dist/js/bootstrap.bundle.min";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

@@ -23,7 +23,7 @@ function Home() {
   return (
     <>
       <Navbar/>
-      <div className="overflow-hidden" style={{ marginTop: "80px" }}>
+      <div className="overflow-hidden">
         <div className="container-fluid col-xxl-8">
           <div className="row flex-lg-nowrap align-items-center g-5">
             <div className="order-lg-1 w-100 d-none d-lg-block">
