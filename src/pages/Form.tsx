@@ -69,7 +69,7 @@ function Form() {
     }
 
     let recipes = JSON.parse(localStorage.getItem('recipes') || '[]');
-    let newRecipe = new Recipe(name + " | " + chinName, cuisine, authUser.name, imageUrl, ingredients.map(i => i.name.trim()).filter(Boolean), steps.map(s => s.name.trim()).filter(Boolean));
+    let newRecipe = new Recipe(name.trim() + " | " + chinName.trim(), cuisine.trim(), authUser.name, imageUrl.trim(), ingredients.map(i => i.name.trim()).filter(Boolean), steps.map(s => s.name.trim()).filter(Boolean));
     if (id) {
       newRecipe.id = Number(id);
       const oldRecipe = recipes.find((r: Recipe) => r.id === Number(id));

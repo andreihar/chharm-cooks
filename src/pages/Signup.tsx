@@ -23,12 +23,12 @@ function Signup() {
 
   function submit(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (authors.some((author: Author) => author.name === name)) {
+    if (authors.some((author: Author) => author.name === name.trim())) {
       alert('This name is already used');
       return;
     }
     if (!imageUrl.trim()) setImageUrl(defaultImage);
-    const newAuthor = new Author(name, password, imageUrl, social)
+    const newAuthor = new Author(name.trim(), password, imageUrl.trim(), social.trim())
     localStorage.setItem('authors', JSON.stringify([...authors, newAuthor]));
     setAuthUser(newAuthor);
     setIsLogged(true);

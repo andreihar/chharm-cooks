@@ -16,7 +16,7 @@ function Login() {
   function submit(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const authors = JSON.parse(localStorage.getItem('authors') || '[]');
-    const author = authors.find((author:Author) => author.name === name);
+    const author = authors.find((author:Author) => author.name === name.trim());
     if (!author) {
       alert('No existing account found with this name');
       return;
