@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Recipe } from '../Recipe';
 import { defaultRecipes } from '../DefaultRecipes';
 import { defaultAuthors } from '../DefaultAuthors';
+import { useAuth } from '../contexts/AuthContext';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
@@ -10,6 +11,8 @@ function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCuisine, setSelectedCuisine] = useState('');
+  const [onlyMyRecipes, setOnlyMyRecipes] = useState(false);
+  const {authUser, isLogged} = useAuth();
 
   useEffect(() => {    
     let loadedRecipes = JSON.parse(localStorage.getItem('recipes') || '[]');
@@ -49,6 +52,13 @@ function Home() {
           <div className="row justify-content-center my-4">
             <div className="col-md-6">
               <input type="text" className="form-control border-dark-subtle" placeholder="Search" onChange={e => setSearchTerm(e.target.value)} />
+              {isLogged &&
+                <button 
+                  className={`btn ${onlyMyRecipes ? 'btn-primary' : 'btn-secondary'} me-2 mt-2`}
+                  onClick={() => setOnlyMyRecipes(prev => !prev)}>
+                  {onlyMyRecipes ? 'Show all recipes' : 'Show only my recipes'}
+                </button>
+              }
               {[...new Set(recipes.map(recipe => recipe.cuisine))].map(cuisine => (
                 <button key={cuisine}
                   className={`btn ${cuisine === selectedCuisine ? 'btn-primary' : 'btn-secondary'} me-2 mt-2`}
@@ -59,7 +69,7 @@ function Home() {
             </div>
           </div>
           <div className="row">
-            {recipes.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()) && (!selectedCuisine || item.cuisine === selectedCuisine)).map((recipe, index) => (
+            {recipes.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()) && (!selectedCuisine || item.cuisine === selectedCuisine) && (!onlyMyRecipes || item.author === authUser.name)).map((recipe, index) => (
               <div key={index} className="col-12 col-sm-6 col-md-4 col-lg-3 my-3">
                 <Link to={`/recipe/${recipe.id}`}>
                 <div className="card h-100">

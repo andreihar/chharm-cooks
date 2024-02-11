@@ -1,36 +1,62 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Recipe } from '../Recipe';
+import { Author } from '../Author';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { useAuth } from '../contexts/AuthContext';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
 function Display() {
   const { id } = useParams<{ id: string }>();
   const [recipe, setRecipe] = useState<Recipe>();
-  const [viewAlsoRecipes, setRecipes] = useState<Recipe[]>([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [author, setAuthor] = useState<Author>();
+  const [viewAlsoRecipes, setViewRecipes] = useState<Recipe[]>([]);
+  const {authUser, isLogged} = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadedRecipesJSON = localStorage.getItem('recipes');
+    const loadedAuthorsJSON = localStorage.getItem('authors');
     let recipes = loadedRecipesJSON ? JSON.parse(loadedRecipesJSON) : [];
+    let authors = loadedAuthorsJSON ? JSON.parse(loadedAuthorsJSON) : [];
     recipes = recipes.map((recipe: any) => {
       recipe.createdOn = new Date(recipe.createdOn);
       recipe.modifiedOn = new Date(recipe.modifiedOn);
       return recipe;
     });
+    setRecipes(recipes);
     const foundRecipe = recipes.find((r: Recipe) => r.id === Number(id));
-    if (foundRecipe)
+    const foundAuthor = authors.find((a: Author) => a.name === foundRecipe?.author);
+    if (foundRecipe && foundAuthor) {
       setRecipe(foundRecipe);
-    else
+      setAuthor(foundAuthor);
+    } else {
       alert ("Error: ID not found in recipes.");
+      navigate('/');
+      return;
+    }
     let selectedRecipes: Recipe[] = [...recipes];
     selectedRecipes = selectedRecipes.filter(recipe => recipe.id !== Number(id));
     selectedRecipes.sort(() => Math.random() - 0.5);
-    setRecipes(selectedRecipes.slice(0,4));
+    setViewRecipes(selectedRecipes.slice(0,4));
   }, [id]);
 
+  const deleteRecipe = () => {
+    const updatedRecipes = recipes.filter(updateRecipe => updateRecipe.id !== recipe!.id);
+    localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
+    navigate('/');
+  }
+
+  const editRecipe = () => {
+    navigate('/form/' + id);
+  }
+
   if (recipe) {
-    const { picture, name, author, createdOn, modifiedOn, cuisine, ingredients, steps } = recipe;
+    const { picture, name, createdOn, modifiedOn, cuisine, ingredients, steps } = recipe;
     const dishName = name.split(' | ')[0];
     return (
     <>
@@ -52,12 +78,23 @@ function Display() {
           <div className="col-md-8">
             <article className="blog-post">
               <h2 className="display-5 link-body-emphasis mb-1">Let's make <span className="text-primary">{`${dishName}`}</span>!</h2>
-              <p className="text-dark-emphasis">by: <span className="text-uppercase fs-5 ms-2">{`${author}`}</span></p>
-              <hr />
-              <p className="text-dark-emphasis">
-                Posted: <span className="">{`${createdOn.toLocaleDateString()}`}</span>&nbsp;
-                Updated: <span className="">{`${modifiedOn.toLocaleDateString()}`}</span>
+              <p className="text-dark-emphasis">by:
+                <img src={author!.picture} alt="User Picture" width={32} height={32} className="rounded-circle ms-2"/>
+                <span className="text-uppercase fs-5 ms-2">{`${author!.name}`}</span>
               </p>
+              <hr />
+              <div className="d-flex justify-content-between">
+                <p className="text-dark-emphasis">
+                  Posted: <span className="">{`${createdOn.toLocaleDateString()}`}</span>&nbsp;
+                  Updated: <span className="">{`${modifiedOn.toLocaleDateString()}`}</span>
+                </p>
+                {isLogged && (authUser.name === author!.name) &&
+                  <div>
+                    <button onClick={deleteRecipe} className="btn btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button>
+                    <button onClick={editRecipe} className="btn btn-outline-secondary ms-2"><FontAwesomeIcon icon={faPenToSquare} /></button>
+                  </div>
+                }
+              </div>
               <h2>Ingredients</h2>
               <p>{`Embark on a culinary journey with this simple yet sensational ${dishName}. Gather fresh, quality ingredients that will harmonise in a symphony of flavours. Here's the lineup:`}</p>
               <ul>
