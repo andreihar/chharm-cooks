@@ -26,7 +26,6 @@ function Form() {
   const [name, setName] = useState('');
   const [chinName, setChinName] = useState('');
   const [cuisine, setCuisine] = useState('');
-  const [author, setAuthor] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [ingredients, setIngreds] = useState([{ name:"" }]);
   const [steps, setSteps] = useState([{ name:"" }]);
@@ -70,7 +69,7 @@ function Form() {
     }
 
     let recipes = JSON.parse(localStorage.getItem('recipes') || '[]');
-    let newRecipe = new Recipe(name + " | " + chinName, cuisine, imageUrl, author, ingredients.map(i => i.name), steps.map(s => s.name));
+    let newRecipe = new Recipe(name + " | " + chinName, cuisine, authUser.name, imageUrl, ingredients.map(i => i.name.trim()).filter(Boolean), steps.map(s => s.name.trim()).filter(Boolean));
     if (id) {
       newRecipe.id = Number(id);
       const oldRecipe = recipes.find((r: Recipe) => r.id === Number(id));
@@ -110,10 +109,6 @@ function Form() {
               <div className="form-group">
                 <label htmlFor="cuisine">Cuisine *</label>
                 <input type="text" className="form-control" name="cuisine" placeholder="Taiwanese" value={cuisine} onChange={e => setCuisine(e.target.value)} required/>
-              </div>
-              <div className="form-group">
-                <label htmlFor="author">Author *</label>
-                <input type="text" className="form-control" name="author" placeholder="Matt Tsai" value={author} onChange={e => setAuthor(e.target.value)} required/>
               </div>
               <div className="form-group">
                 <label htmlFor="picture">Image URL (optional)</label>
