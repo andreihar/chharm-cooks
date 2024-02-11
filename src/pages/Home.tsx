@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { Recipe } from '../Recipe';
 import { defaultRecipes } from '../DefaultRecipes';
+import { defaultAuthors } from '../DefaultAuthors';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
@@ -16,6 +17,7 @@ function Home() {
       loadedRecipes = defaultRecipes.map((recipe, index) => ({ ...recipe, id: index }));
       localStorage.setItem('index', JSON.stringify(loadedRecipes.length));
       localStorage.setItem('recipes', JSON.stringify(loadedRecipes));
+      localStorage.setItem('authors', JSON.stringify(defaultAuthors));
     }
     setRecipes(loadedRecipes);
   }, []);

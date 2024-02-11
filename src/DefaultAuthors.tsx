@@ -1,6 +1,6 @@
 import { Author } from './Author';
 
-export const defaultRecipes = [
+export const defaultAuthors = [
 	new Author("Jack Wang","jackwang","","https://www.linkedin.com/in/jack-wang-295815170/"),
 	new Author("Samuel Ren","samuelren","https://media.licdn.com/dms/image/C5603AQFFIopjM9nf6Q/profile-displayphoto-shrink_800_800/0/1647027164110?e=1712793600&v=beta&t=O37VyNeB-kSIGdJgyBZT0kvhOo4h0tT07D9vXombc2Q","https://www.linkedin.com/in/samuel-jen/"),
 	new Author("Keane Junxian Ong","keanejunxianong","","https://www.instagram.com/k.ojx/"),
