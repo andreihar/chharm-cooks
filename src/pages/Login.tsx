@@ -2,12 +2,15 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Author } from '../Author';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Navbar from './Navbar';
 
 function Login() {
   const {setAuthUser, setIsLogged} = useAuth();
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [isPassword, setIsPassword] = useState(false);
   const navigate = useNavigate();
 
   function submit(e:React.FormEvent<HTMLFormElement>) {
@@ -39,9 +42,12 @@ function Login() {
             <input type="text" className="form-control" id="floatingInput" placeholder="Name" onChange={e => setName(e.target.value)} required/>
             <label htmlFor="floatingInput">Name</label>
           </div>
-          <div className="form-floating mb-4">
-            <input type="password" className="form-control" id="floatingPassword" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
-            <label htmlFor="floatingPassword">Password</label>
+          <div className="form-floating mb-4 position-relative">
+            <input type={isPassword ? "text" : "password"} className="form-control" id="floatingPassword" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
+            <button type="button" onClick={() => setIsPassword(!isPassword)} className="btn position-absolute top-50 translate-middle-y end-0">
+              <FontAwesomeIcon icon={isPassword ? faEye : faEyeSlash} />
+            </button>
+            <label htmlFor="password">Password</label>
           </div>
           <button className="btn btn-primary w-100 py-2 text-uppercase mb-4" type="submit">Sign in</button>
           <p className="m-0">

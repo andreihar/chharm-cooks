@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { Recipe } from '../Recipe';
+import { useAuth } from '../contexts/AuthContext';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import isEqual from 'lodash.isequal';
@@ -29,14 +30,17 @@ function Form() {
   const [imageUrl, setImageUrl] = useState('');
   const [ingredients, setIngreds] = useState([{ name:"" }]);
   const [steps, setSteps] = useState([{ name:"" }]);
+  const {authUser, isLogged} = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!isLogged)
+      navigate('/login');
     const loadedRecipesJSON = localStorage.getItem('recipes');
     if (loadedRecipesJSON) {
       const recipes = JSON.parse(loadedRecipesJSON);
       const foundRecipe = recipes.find((r: Recipe) => r.id === Number(id));
-      if (foundRecipe) {
+      if (foundRecipe && authUser?.name === foundRecipe.author) {
         setName(foundRecipe.name.split(' | ')[0]);
         setChinName(foundRecipe.name.split(' | ')[1]);
         setCuisine(foundRecipe.cuisine);

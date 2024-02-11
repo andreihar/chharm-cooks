@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { Author } from '../Author';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../contexts/AuthContext';
 
 function Signup() {
@@ -10,6 +12,7 @@ function Signup() {
   const [password, setPassword] = useState('');
   const [imageUrl, setImageUrl] = useState(defaultImage);
   const [social, setSocial] = useState('');
+  const [isPassword, setIsPassword] = useState(false);
   const {setAuthUser, setIsLogged} = useAuth();
   const authors = JSON.parse(localStorage.getItem('authors') || '[]');
   const navigate = useNavigate();
@@ -45,8 +48,11 @@ function Signup() {
                   <input type="text" className="form-control" id="name" placeholder="Name" onChange={e => setName(e.target.value)} required/>
                   <label htmlFor="name">Name</label>
                 </div>
-                <div className="form-floating mb-2">
-                  <input type="password" className="form-control" id="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
+                <div className="form-floating mb-2 position-relative">
+                  <input type={isPassword ? "text" : "password"} className="form-control" id="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
+                  <button type="button" onClick={() => setIsPassword(!isPassword)} className="btn position-absolute top-50 translate-middle-y end-0">
+                    <FontAwesomeIcon icon={isPassword ? faEye : faEyeSlash} />
+                  </button>
                   <label htmlFor="password">Password</label>
                 </div>
                 <div className="form-floating mb-2">
