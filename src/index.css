@@ -99,7 +99,50 @@ li::marker {
     background-color: rgba(253, 170, 4, 0.3);
 }
 
-/* Login */
+/* Login, Signup */
 .form-signin {
     height: calc(100vh - var(--navbar-height));
+}
+
+/* Authors */
+.profile-card-3 {
+    font-family: 'Open Sans', Arial, sans-serif;
+    /* text-align: center; */
+}
+.profile-card-3 .background-block {
+    height: 200px;
+}
+.profile-card-3 .background-block .background {
+    width:100%;
+    filter: blur(0.4px);
+    transform: scale(1.8);
+}
+.profile-card-3 .background-block::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+.profile-card-3 .card-content {
+    z-index: 2;
+}
+.profile-card-3 .card-content::before {
+    content: '';
+    background: #f8f9fa;
+    width: 120%;
+    height: 100%;
+    left: 0;
+    bottom: 50px;
+    position: absolute;
+    z-index: -1;
+    transform: rotate(-13deg);
+}
+.profile-card-3 .profile {
+    bottom: 45%;
+    transform: translate(-50%, 0%);
+    z-index:3;
 }

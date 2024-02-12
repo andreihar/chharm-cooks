@@ -5,6 +5,7 @@ import Form from './pages/Form';
 import Display from './pages/Display';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
+import Authors from './pages/Authors';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/recipe/:id" element={<Display />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/contributors" element={<Authors />} />
       </Routes>
     </AuthProvider>
   )

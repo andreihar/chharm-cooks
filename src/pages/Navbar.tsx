@@ -32,7 +32,7 @@ function Navbar() {
           <ul className="navbar-nav mb-lg-0 mx-auto">
             <li className="nav-item fs-5 me-3"><Link to='/' className="nav-link">Home</Link></li>
             <li className="nav-item fs-5 me-3"><Link to='/form' className="nav-link">Add Recipe</Link></li>
-            <li className="nav-item fs-5"><Link to='/form' className="nav-link">Contributors</Link></li>
+            <li className="nav-item fs-5"><Link to='/contributors' className="nav-link">Contributors</Link></li>
           </ul>
           {isLogged ? 
             <div className="dropdown">

@@ -71,7 +71,7 @@ function Signup() {
               </form>
             </div>
             <div className="col-md-8 col-lg-7 col-xl-6">
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" className="img-fluid" alt="Phone image"/>
+              <img src="https://static.vecteezy.com/system/resources/previews/023/904/864/original/father-and-child-cooking-together-in-the-kitchen-flat-illustration-minimalist-modern-concepts-for-web-page-website-development-mobile-app-vector.jpg" className="img-fluid" alt="Phone image"/>
             </div>
           </div>
         </div>
