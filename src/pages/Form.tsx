@@ -40,8 +40,8 @@ function Form() {
       const recipes = JSON.parse(loadedRecipesJSON);
       const foundRecipe = recipes.find((r: Recipe) => r.id === Number(id));
       if (foundRecipe && authUser?.name === foundRecipe.author) {
-        setName(foundRecipe.name.split(' | ')[0]);
-        setChinName(foundRecipe.name.split(' | ')[1]);
+        setName(foundRecipe.name);
+        setChinName(foundRecipe.chinName);
         setCuisine(foundRecipe.cuisine);
         setImageUrl(foundRecipe.picture);
         setIngreds(foundRecipe.ingredients.map((ingredient:string) => ({ name:ingredient })));
@@ -69,7 +69,7 @@ function Form() {
     }
 
     let recipes = JSON.parse(localStorage.getItem('recipes') || '[]');
-    let newRecipe = new Recipe(name.trim() + " | " + chinName.trim(), cuisine.trim(), authUser.name, imageUrl.trim(), ingredients.map(i => i.name.trim()).filter(Boolean), steps.map(s => s.name.trim()).filter(Boolean));
+    let newRecipe = new Recipe(name.trim(), chinName.trim(), cuisine.trim(), authUser.name, imageUrl.trim(), ingredients.map(i => i.name.trim()).filter(Boolean), steps.map(s => s.name.trim()).filter(Boolean));
     if (id) {
       newRecipe.id = Number(id);
       const oldRecipe = recipes.find((r: Recipe) => r.id === Number(id));

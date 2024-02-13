@@ -13,6 +13,7 @@ function Home() {
   const [selectedCuisine, setSelectedCuisine] = useState('');
   const [onlyMyRecipes, setOnlyMyRecipes] = useState(false);
   const {authUser, isLogged} = useAuth();
+  const defaultImg = 'https://images.ctfassets.net/kugm9fp9ib18/3aHPaEUU9HKYSVj1CTng58/d6750b97344c1dc31bdd09312d74ea5b/menu-default-image_220606_web.png';
 
   useEffect(() => {    
     let loadedRecipes = JSON.parse(localStorage.getItem('recipes') || '[]');
@@ -72,16 +73,16 @@ function Home() {
             {recipes.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()) && (!selectedCuisine || item.cuisine === selectedCuisine) && (!onlyMyRecipes || item.author === authUser.name)).map((recipe, index) => (
               <div key={index} className="col-12 col-sm-6 col-md-4 col-lg-3 my-3">
                 <Link to={`/recipe/${recipe.id}`}>
-                <div className="card h-100">
-                  <div className="img-container" style={{ overflow: 'hidden' }}>
-                    <img className="card-img-top img-fluid hover-enlarge" style={{ height: "200px", objectFit: "cover" }} src={recipe.picture} alt="Card image" />
+                  <div className="card h-100">
+                    <div className="img-container" style={{ overflow: 'hidden' }}>
+                      <img className="card-img-top img-fluid hover-enlarge" style={{ height: "200px", objectFit: "cover" }} src={recipe.picture ? recipe.picture : defaultImg} alt="Card image" />
+                    </div>
+                    <div className="card-body">
+                      <p className="card-subtitle mb-2 text-body-secondary fs-6 text-uppercase fw-light">{recipe.cuisine}</p>
+                      <h5 className="card-title text-uppercase">{recipe.name}</h5>
+                      <h5 className="text-body-secondary">{recipe.chinName}</h5>
+                    </div>
                   </div>
-                  <div className="card-body">
-                    <p className="card-subtitle mb-2 text-body-secondary fs-6 text-uppercase fw-light">{recipe.cuisine}</p>
-                    <h5 className="card-title text-uppercase">{recipe.name.split(' | ')[0]}</h5>
-                    <h5 className="text-body-secondary">{recipe.name.split(' | ')[1]}</h5>
-                  </div>
-                </div>
                 </Link>
               </div>
             ))}

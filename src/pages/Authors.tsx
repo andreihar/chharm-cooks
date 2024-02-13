@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Recipe } from '../Recipe';
 import { Author } from '../Author';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLink } from '@fortawesome/free-solid-svg-icons';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
