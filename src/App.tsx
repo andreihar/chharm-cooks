@@ -6,6 +6,7 @@ import Display from './pages/Display';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Authors from './pages/Authors';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/contributors" element={<Authors />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </AuthProvider>
   )

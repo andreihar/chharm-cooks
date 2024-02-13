@@ -37,7 +37,7 @@ div.wrapper {
 .card .card-title {
     transition: .3s;
 }
-.card:hover .card-title.text-uppercase {
+.card:hover .card-title {
     color: var(--primary);
 }
 .card:hover .card-img, .card:hover .card-img-top {
@@ -101,7 +101,7 @@ li::marker {
 
 /* Login, Signup */
 .form-signin {
-    height: calc(100vh - var(--navbar-height));
+    min-height: calc(100vh - var(--navbar-height));
 }
 
 /* Authors */
@@ -142,7 +142,7 @@ li::marker {
     transform: rotate(-13deg);
 }
 .profile-card-3 .profile {
-    bottom: 45%;
+    bottom: 40%;
     transform: translate(-50%, 0%);
     z-index:3;
 }

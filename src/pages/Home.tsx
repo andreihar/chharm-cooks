@@ -79,7 +79,7 @@ function Home() {
                   <div className="card-body">
                     <p className="card-subtitle mb-2 text-body-secondary fs-6 text-uppercase fw-light">{recipe.cuisine}</p>
                     <h5 className="card-title text-uppercase">{recipe.name.split(' | ')[0]}</h5>
-                    <h5 className="card-title text-body-secondary">{recipe.name.split(' | ')[1]}</h5>
+                    <h5 className="text-body-secondary">{recipe.name.split(' | ')[1]}</h5>
                   </div>
                 </div>
                 </Link>
