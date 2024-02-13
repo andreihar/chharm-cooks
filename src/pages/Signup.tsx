@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { Author } from '../Author';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,15 +14,11 @@ function Signup() {
   const [social, setSocial] = useState('');
   const [isPassword, setIsPassword] = useState(false);
   const {setAuthUser, setIsLogged} = useAuth();
-  const authors = JSON.parse(localStorage.getItem('authors') || '[]');
   const navigate = useNavigate();
-
-  useEffect(() => {
-    localStorage.setItem('authors', JSON.stringify(authors));
-  }, [authors]);
 
   function submit(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const authors = JSON.parse(localStorage.getItem('authors') || '[]');
     if (authors.some((author: Author) => author.name === name.trim())) {
       alert('This name is already used');
       return;

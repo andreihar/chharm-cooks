@@ -46,9 +46,11 @@ function Display() {
   }, [id]);
 
   const deleteRecipe = () => {
-    const updatedRecipes = recipes.filter(updateRecipe => updateRecipe.id !== recipe!.id);
-    localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
-    navigate('/');
+    if (window.confirm(`Are you sure you want to delete the recipe "${recipe!.name}"?`)) {
+      const updatedRecipes = recipes.filter(updateRecipe => updateRecipe.id !== recipe!.id);
+      localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
+      navigate('/');
+    }
   }
 
   const editRecipe = () => {
