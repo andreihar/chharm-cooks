@@ -105,19 +105,18 @@ li::marker {
 }
 
 /* Authors */
-.profile-card-3 {
+.profile-card {
     font-family: 'Open Sans', Arial, sans-serif;
-    /* text-align: center; */
 }
-.profile-card-3 .background-block {
+.profile-card .background-block {
     height: 200px;
 }
-.profile-card-3 .background-block .background {
+.profile-card .background-block .background {
     width:100%;
     filter: blur(0.4px);
     transform: scale(1.8);
 }
-.profile-card-3 .background-block::before {
+.profile-card .background-block::before {
     content: "";
     position: absolute;
     top: 0;
@@ -127,10 +126,10 @@ li::marker {
     background: rgba(0, 0, 0, 0.5);
     z-index: 1;
 }
-.profile-card-3 .card-content {
+.profile-card .card-content {
     z-index: 2;
 }
-.profile-card-3 .card-content::before {
+.profile-card .card-content::before {
     content: '';
     background: #f8f9fa;
     width: 120%;
@@ -141,7 +140,7 @@ li::marker {
     z-index: -1;
     transform: rotate(-13deg);
 }
-.profile-card-3 .profile {
+.profile-card .profile {
     bottom: 40%;
     transform: translate(-50%, 0%);
     z-index:3;

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { Recipe } from '../Recipe';
+import { Recipe } from '../models/Recipe';
 import { useAuth } from '../contexts/AuthContext';
-import Navbar from './Navbar';
-import Footer from './Footer';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import isEqual from 'lodash.isequal';
 
 function InputList({ items, label, add, remove, change }:{ items:any[], label:string, add:any, remove:any, change:any }) {
@@ -73,8 +73,12 @@ function Form() {
     if (id) {
       newRecipe.id = Number(id);
       const oldRecipe = recipes.find((r: Recipe) => r.id === Number(id));
-      if (!isEqual(oldRecipe, newRecipe)) {
+      if (!isEqual(
+        (({ createdOn, modifiedOn, ...rest }) => rest)(oldRecipe),
+        (({ createdOn, modifiedOn, ...rest }) => rest)(newRecipe)
+      )) {
         newRecipe.modifiedOn = new Date()
+        newRecipe.createdOn = oldRecipe.createdOn;
         recipes[recipes.findIndex((r: Recipe) => r.id === Number(id))] = newRecipe;
       }
     } else {

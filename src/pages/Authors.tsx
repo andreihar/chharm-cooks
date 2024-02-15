@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Recipe } from '../Recipe';
-import { Author } from '../Author';
-import Navbar from './Navbar';
-import Footer from './Footer';
+import { Recipe } from '../models/Recipe';
+import { Author } from '../models/Author';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 function getSpecialtyCuisine(authorRecipes: Recipe[]) {
   const cuisineFrequency = authorRecipes.reduce((acc, recipe) => {
@@ -17,7 +17,7 @@ function Authors() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const defaultImg = 'https://images.ctfassets.net/kugm9fp9ib18/3aHPaEUU9HKYSVj1CTng58/d6750b97344c1dc31bdd09312d74ea5b/menu-default-image_220606_web.png';
 
-  useEffect(() => {    
+  useEffect(() => {
     let loadedAuthors = JSON.parse(localStorage.getItem('authors') || '[]');
     let loadedRecipes = JSON.parse(localStorage.getItem('recipes') || '[]');
     setAuthors(loadedAuthors);
@@ -43,8 +43,8 @@ function Authors() {
               const recipeImage = authorRecipes.filter(recipe => recipe.picture).sort((a, b) => new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime())[0]?.picture || defaultImg;
               return (
                 <div key={index} className="section-ting col-12 col-sm-6 col-md-4 col-lg-3 my-3">
-                  <a href={author.social}>
-                    <div className="card profile-card-3 text-center">
+                  <a href={author.social} target="_blank" rel="noopener noreferrer">
+                    <div className="card profile-card text-center">
                       <div className="background-block">
                         <img src={recipeImage} alt="profile-sample1" className="background"/>
                       </div>

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceSadTear } from '@fortawesome/free-solid-svg-icons';
-import Navbar from './Navbar';
+import Navbar from '../components/Navbar';
 
 function NotFound() {
   return (

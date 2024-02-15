@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { Recipe } from '../Recipe';
-import { defaultRecipes } from '../DefaultRecipes';
-import { defaultAuthors } from '../DefaultAuthors';
+import { Recipe } from '../models/Recipe';
+import { defaultRecipes } from '../assets/DefaultRecipes';
+import { defaultAuthors } from '../assets/DefaultAuthors';
 import { useAuth } from '../contexts/AuthContext';
-import Navbar from './Navbar';
-import Footer from './Footer';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);

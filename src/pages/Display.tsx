@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
-import { Recipe } from '../Recipe';
-import { Author } from '../Author';
+import { Recipe } from '../models/Recipe';
+import { Author } from '../models/Author';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../contexts/AuthContext';
-import Navbar from './Navbar';
-import Footer from './Footer';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 function Display() {
   const { id } = useParams<{ id: string }>();
@@ -53,10 +53,6 @@ function Display() {
     }
   }
 
-  const editRecipe = () => {
-    navigate('/form/' + id);
-  }
-
   if (recipe) {
     const { picture, name, chinName, createdOn, modifiedOn, cuisine, ingredients, steps } = recipe;
     return (
@@ -92,7 +88,7 @@ function Display() {
                 {isLogged && (authUser.name === author!.name) &&
                   <div>
                     <button onClick={deleteRecipe} className="btn btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button>
-                    <button onClick={editRecipe} className="btn btn-outline-secondary ms-2"><FontAwesomeIcon icon={faPenToSquare} /></button>
+                    <button onClick={() => navigate('/form/' + id)} className="btn btn-outline-secondary ms-2"><FontAwesomeIcon icon={faPenToSquare} /></button>
                   </div>
                 }
               </div>

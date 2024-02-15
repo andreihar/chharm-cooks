@@ -1,4 +1,4 @@
-import { Recipe } from './Recipe';
+import { Recipe } from '../models/Recipe';
 
 export const defaultRecipes = [
 	new Recipe("Hokkien char mee","福建炒麵","Malaysian","Jack Wang","https://images.lifestyleasia.com/wp-content/uploads/sites/6/2023/07/26191620/KL-Hokkien-Mee-on-Long-Plate.jpg",

@@ -1,4 +1,4 @@
-import { Author } from './Author';
+import { Author } from '../models/Author';
 
 export const defaultAuthors = [
 	new Author("Jack Wang","jackwang","https://cdn.discordapp.com/attachments/1138577578106560582/1206426433547931698/378474089_594497709337678_7784189321591627843_n.png?ex=65dbf72c&is=65c9822c&hm=1541cf922543c9b1a522461c2e6ba3596369890759f8e6f1915659f65b6a27d0&","https://www.linkedin.com/in/jack-wang-295815170/"),
