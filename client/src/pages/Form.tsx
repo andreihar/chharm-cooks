@@ -39,7 +39,7 @@ function Form() {
     if (loadedRecipesJSON) {
       const recipes = JSON.parse(loadedRecipesJSON);
       const foundRecipe = recipes.find((r: Recipe) => r.id === Number(id));
-      if (foundRecipe && authUser?.name === foundRecipe.author) {
+      if (foundRecipe && authUser?.username === foundRecipe.author) {
         setName(foundRecipe.name);
         setChinName(foundRecipe.chinName);
         setCuisine(foundRecipe.cuisine);
@@ -69,15 +69,15 @@ function Form() {
     }
 
     let recipes = JSON.parse(localStorage.getItem('recipes') || '[]');
-    let newRecipe = new Recipe(name.trim(), chinName.trim(), cuisine.trim(), authUser.name, imageUrl.trim(), ingredients.map(i => i.name.trim()).filter(Boolean), steps.map(s => s.name.trim()).filter(Boolean));
+    let newRecipe = new Recipe(name.trim(), chinName.trim(), cuisine.trim(), authUser.username, imageUrl.trim(), ingredients.map(i => i.name.trim()).filter(Boolean), steps.map(s => s.name.trim()).filter(Boolean));
     if (id) {
       newRecipe.id = Number(id);
       const oldRecipe = recipes.find((r: Recipe) => r.id === Number(id));
       if (!isEqual(
-        (({ createdOn, modifiedOn, ...rest }) => rest)(oldRecipe),
-        (({ createdOn, modifiedOn, ...rest }) => rest)(newRecipe)
+        (({ createdOn, timeLastModified, ...rest }) => rest)(oldRecipe),
+        (({ createdOn, timeLastModified, ...rest }) => rest)(newRecipe)
       )) {
-        newRecipe.modifiedOn = new Date()
+        newRecipe.timeLastModified = new Date()
         newRecipe.createdOn = oldRecipe.createdOn;
         recipes[recipes.findIndex((r: Recipe) => r.id === Number(id))] = newRecipe;
       }

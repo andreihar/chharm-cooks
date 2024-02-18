@@ -70,7 +70,7 @@ function Home() {
             </div>
           </div>
           <div className="row">
-            {recipes.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()) && (!selectedCuisine || item.cuisine === selectedCuisine) && (!onlyMyRecipes || item.author === authUser.name)).map((recipe, index) => (
+            {recipes.filter(item => item.title.toLowerCase().includes(searchTerm.toLowerCase()) && (!selectedCuisine || item.cuisine === selectedCuisine) && (!onlyMyRecipes || item.author === authUser.username)).map((recipe, index) => (
               <div key={index} className="col-12 col-sm-6 col-md-4 col-lg-3 my-3">
                 <Link to={`/recipe/${recipe.id}`}>
                   <div className="card h-100">
@@ -79,8 +79,8 @@ function Home() {
                     </div>
                     <div className="card-body">
                       <p className="card-subtitle mb-2 text-body-secondary fs-6 text-uppercase fw-light">{recipe.cuisine}</p>
-                      <h5 className="card-title text-uppercase">{recipe.name}</h5>
-                      <h5 className="text-body-secondary">{recipe.chinName}</h5>
+                      <h5 className="card-title text-uppercase">{recipe.title}</h5>
+                      <h5 className="text-body-secondary">{recipe.chinTitle}</h5>
                     </div>
                   </div>
                 </Link>

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Author } from '../models/Author';
+import { User } from '../models/User';
 
 const BASE_URL = 'http://localhost:4000';
 
@@ -7,7 +7,7 @@ const getUsers = () => {
   return axios.get(`${BASE_URL}/getusers`);
 };
 
-const addUser = (newUser: Author) => {
+const addUser = (newUser: User) => {
   return axios.post(`${BASE_URL}/adduser`, newUser);
 };
 

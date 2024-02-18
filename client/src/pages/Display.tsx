@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
-import { Author } from '../models/Author';
+import { User } from '../models/User';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../contexts/AuthContext';
@@ -13,7 +13,7 @@ function Display() {
   const { id } = useParams<{ id: string }>();
   const [recipe, setRecipe] = useState<Recipe>();
   const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [author, setAuthor] = useState<Author>();
+  const [author, setAuthor] = useState<User>();
   const [viewAlsoRecipes, setViewRecipes] = useState<Recipe[]>([]);
   const {authUser, isLogged} = useAuth();
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ function Display() {
     });
     setRecipes(recipes);
     const foundRecipe = recipes.find((r: Recipe) => r.id === Number(id));
-    const foundAuthor = authors.find((a: Author) => a.name === foundRecipe?.author);
+    const foundAuthor = authors.find((a: User) => a.username === foundRecipe?.author);
     if (foundRecipe && foundAuthor) {
       setRecipe(foundRecipe);
       setAuthor(foundAuthor);
@@ -46,7 +46,7 @@ function Display() {
   }, [id]);
 
   const deleteRecipe = () => {
-    if (window.confirm(`Are you sure you want to delete the recipe "${recipe!.name}"?`)) {
+    if (window.confirm(`Are you sure you want to delete the recipe "${recipe!.title}"?`)) {
       const updatedRecipes = recipes.filter(updateRecipe => updateRecipe.id !== recipe!.id);
       localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
       navigate('/');
@@ -54,7 +54,7 @@ function Display() {
   }
 
   if (recipe) {
-    const { picture, name, chinName, createdOn, modifiedOn, cuisine, ingredients, steps } = recipe;
+    const { picture, title, chinTitle, createdOn, timeLastModified, cuisine, ingredients, recipeInstructions } = recipe;
     return (
     <>
       <Navbar/>
@@ -62,7 +62,7 @@ function Display() {
         <div className="mask position-absolute top-0 start-0 bottom-0 end-0">
           <div className="d-flex justify-content-center align-items-center h-100">
             <div className="text-white">
-              <h1 className="mb-3">{`${name} | ${chinName}`}</h1>
+              <h1 className="mb-3">{`${title} | ${chinTitle}`}</h1>
               <h4 className="mb-3">{`Authentic ${cuisine} Hokkien dish made at home`}</h4>
             </div>
           </div>
@@ -74,18 +74,18 @@ function Display() {
         <div className="row g-5">
           <div className="col-md-8">
             <article className="blog-post">
-              <h2 className="display-5 link-body-emphasis mb-1">Let's make <span className="text-primary">{`${name}`}</span>!</h2>
+              <h2 className="display-5 link-body-emphasis mb-1">Let's make <span className="text-primary">{`${title}`}</span>!</h2>
               <p className="text-dark-emphasis align-items-center d-flex">by:
                 <img src={author!.picture} alt="User Picture" width={32} height={32} className="rounded-circle ms-2"/>
-                <span className="text-uppercase fs-5 ms-2">{`${author!.name}`}</span>
+                <span className="text-uppercase fs-5 ms-2">{`${author!.username}`}</span>
               </p>
               <hr />
               <div className="d-flex justify-content-between">
                 <p className="text-dark-emphasis">
                   Posted: <span className="">{`${createdOn.toLocaleDateString()}`}</span>&nbsp;
-                  Updated: <span className="">{`${modifiedOn.toLocaleDateString()}`}</span>
+                  Updated: <span className="">{`${timeLastModified.toLocaleDateString()}`}</span>
                 </p>
-                {isLogged && (authUser.name === author!.name) &&
+                {isLogged && (authUser.username === author!.username) &&
                   <div>
                     <button onClick={deleteRecipe} className="btn btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button>
                     <button onClick={() => navigate('/form/' + id)} className="btn btn-outline-secondary ms-2"><FontAwesomeIcon icon={faPenToSquare} /></button>
@@ -100,9 +100,9 @@ function Display() {
                 ))}
               </ul>
               <h2>Directions</h2>
-              <p>{`Now that your kitchen is adorned with the finest ingredients, let's weave them together into a culinary masterpiece. Follow these straightforward steps to unlock the full potential of each component, creating ${recipe!.name} that tantalises the taste buds:`}</p>
+              <p>{`Now that your kitchen is adorned with the finest ingredients, let's weave them together into a culinary masterpiece. Follow these straightforward steps to unlock the full potential of each component, creating ${recipe!.title} that tantalises the taste buds:`}</p>
               <ol>
-                {steps.map((step, index) => (
+                {recipeInstructions.map((step, index) => (
                   <li key={index}>{step}</li>
                 ))}
               </ol>
@@ -127,7 +127,7 @@ function Display() {
                   <div className="card text-bg-dark h-100 rounded-0 border-0 hover-effect position-relative">
                     <img src={`${viewRecipe.picture}`} className="card-img rounded-0" style={{ height: '13rem', objectFit: 'cover' }} alt="..." />
                     <div className="card-img-overlay text-uppercase">
-                      <h5 className="bg-primary card-title position-absolute bottom-0 left-0 py-1 px-2 fs-6 fw-normal" style={{color: 'inherit', transition: 'none'}}>{viewRecipe.name}</h5>
+                      <h5 className="bg-primary card-title position-absolute bottom-0 left-0 py-1 px-2 fs-6 fw-normal" style={{color: 'inherit', transition: 'none'}}>{viewRecipe.title}</h5>
                     </div>
                   </div>
                 </Link>

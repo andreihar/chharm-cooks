@@ -1,25 +1,25 @@
 export class Recipe {
 	id:number
-	name:string;
-	chinName:string;
+	title:string;
+	chinTitle:string;
 	cuisine:string;
 	author:string;
 	picture:string;
 	createdOn:Date;
-	modifiedOn:Date;
+	timeLastModified:Date;
 	ingredients:string[];
-	steps:string[];
+	recipeInstructions:string[];
 
-	constructor(name:string, chinName:string, cuisine:string, author:string, picture:string, ingredients:string[], steps:string[]) {
+	constructor(title:string, chinTitle:string, cuisine:string, author:string, picture:string, ingredients:string[], recipeInstructions:string[]) {
 		this.id = 0;
-		this.name = name;
-		this.chinName = chinName;
+		this.title = title;
+		this.chinTitle = chinTitle;
 		this.cuisine = cuisine;
 		this.author = author
 		this.picture = picture;
 		this.ingredients = ingredients;
-		this.steps = steps;
+		this.recipeInstructions = recipeInstructions;
 		this.createdOn = new Date();
-		this.modifiedOn = new Date();
+		this.timeLastModified = new Date();
 	}
 }

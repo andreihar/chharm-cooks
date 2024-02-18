@@ -1,7 +1,8 @@
 import React, {useState, useContext, useEffect} from 'react';
+import { User } from '../models/User';
 
 interface AuthContextValue {
-	authUser: any;
+	authUser: User;
 	setAuthUser: React.Dispatch<React.SetStateAction<any>>;
 	isLogged: boolean;
 	setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;

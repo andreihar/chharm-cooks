@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Author } from '../models/Author';
+import { User } from '../models/User';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../components/Navbar';
 
 function Login() {
   const {setAuthUser, setIsLogged} = useAuth();
-  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isPassword, setIsPassword] = useState(false);
   const navigate = useNavigate();
@@ -16,9 +16,9 @@ function Login() {
   function submit(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const authors = JSON.parse(localStorage.getItem('authors') || '[]');
-    const author = authors.find((author:Author) => author.name === name.trim());
+    const author = authors.find((author:User) => author.username === username.trim());
     if (!author) {
-      alert('No existing account found with this name');
+      alert('No existing account found with this username');
       return;
     }
     if (author.password !== password) {
@@ -39,8 +39,8 @@ function Login() {
             <h1 className="mb-1">Sign in</h1>
             <p className="small">Unleash your culinary creativity!</p>
             <div className="form-floating mb-2">
-              <input type="text" className="form-control" id="floatingInput" placeholder="Name" onChange={e => setName(e.target.value)} required/>
-              <label htmlFor="floatingInput">Name</label>
+              <input type="text" className="form-control" id="floatingInput" placeholder="Username" onChange={e => setUsername(e.target.value)} required/>
+              <label htmlFor="floatingInput">Username</label>
             </div>
             <div className="form-floating mb-4 position-relative">
               <input type={isPassword ? "text" : "password"} className="form-control" id="floatingPassword" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>

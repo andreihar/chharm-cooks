@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import { Author } from '../models/Author';
+import { User } from '../models/User';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../contexts/AuthContext';
@@ -9,7 +9,7 @@ import DbService from '../services/DbService';
 function Signup() {
   const defaultImage = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg';
 
-  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [imageUrl, setImageUrl] = useState(defaultImage);
   const [social, setSocial] = useState('');
@@ -20,12 +20,12 @@ function Signup() {
   function submit(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const authors = JSON.parse(localStorage.getItem('authors') || '[]');
-    if (authors.some((author: Author) => author.name === name.trim())) {
-      alert('This name is already used');
+    if (authors.some((author: User) => author.username === username.trim())) {
+      alert('This username is already used');
       return;
     }
     if (!imageUrl.trim()) setImageUrl(defaultImage);
-    const newAuthor = new Author(name.trim(), password, imageUrl.trim(), social.trim())
+    const newAuthor = new User(username.trim(), password, imageUrl.trim(), social.trim())
     DbService.addUser(newAuthor);
     // localStorage.setItem('authors', JSON.stringify([...authors, newAuthor]));
     // setAuthUser(newAuthor);
@@ -42,8 +42,8 @@ function Signup() {
             <form style={{width: '330px'}} className="float-end" onSubmit={submit}>
               <img src={imageUrl} alt="mdo" width={128} height={128} className="rounded-circle mx-auto d-block mb-3"/>
               <div className="form-floating mb-2">
-                <input type="text" className="form-control" id="name" placeholder="Name" onChange={e => setName(e.target.value)} required/>
-                <label htmlFor="name">Name</label>
+                <input type="text" className="form-control" id="username" placeholder="Name" onChange={e => setUsername(e.target.value)} required/>
+                <label htmlFor="username">Username</label>
               </div>
               <div className="form-floating mb-2 position-relative">
                 <input type={isPassword ? "text" : "password"} className="form-control" id="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
