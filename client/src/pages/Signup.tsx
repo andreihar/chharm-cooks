@@ -4,6 +4,7 @@ import { Author } from '../models/Author';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../contexts/AuthContext';
+import DbService from '../services/DbService';
 
 function Signup() {
   const defaultImage = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg';
@@ -13,7 +14,7 @@ function Signup() {
   const [imageUrl, setImageUrl] = useState(defaultImage);
   const [social, setSocial] = useState('');
   const [isPassword, setIsPassword] = useState(false);
-  const {setAuthUser, setIsLogged} = useAuth();
+  // const {setAuthUser, setIsLogged} = useAuth();
   const navigate = useNavigate();
 
   function submit(e:React.FormEvent<HTMLFormElement>) {
@@ -25,9 +26,10 @@ function Signup() {
     }
     if (!imageUrl.trim()) setImageUrl(defaultImage);
     const newAuthor = new Author(name.trim(), password, imageUrl.trim(), social.trim())
-    localStorage.setItem('authors', JSON.stringify([...authors, newAuthor]));
-    setAuthUser(newAuthor);
-    setIsLogged(true);
+    DbService.addUser(newAuthor);
+    // localStorage.setItem('authors', JSON.stringify([...authors, newAuthor]));
+    // setAuthUser(newAuthor);
+    // setIsLogged(true);
     navigate('/');
   }
 
