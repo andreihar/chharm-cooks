@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState, useContext} from 'react';
 import { User } from '../models/User';
 
 interface AuthContextValue {
@@ -16,22 +16,11 @@ export function useAuth() {
 	  throw new Error('useAuth must be used within an AuthProvider');
 	}
 	return context;
-  }
+}
 
 export function AuthProvider(props:any) {
-	const [authUser, setAuthUser] = useState(() => {
-		const storedAuthUser = localStorage.getItem('authUser');
-		return storedAuthUser ? JSON.parse(storedAuthUser) : null;
-	});
-	const [isLogged, setIsLogged] = useState(() => {
-		const storedIsLogged = localStorage.getItem('isLogged');
-		return storedIsLogged ? JSON.parse(storedIsLogged) : false;
-	});
-
-	useEffect(() => {
-		localStorage.setItem('authUser', JSON.stringify(authUser));
-		localStorage.setItem('isLogged', JSON.stringify(isLogged));
-	}, [authUser, isLogged]);
+	const [authUser, setAuthUser] = useState(null);
+	const [isLogged, setIsLogged] = useState(false);
 
 	const value: any = {
 		authUser,

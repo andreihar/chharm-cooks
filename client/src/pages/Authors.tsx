@@ -3,6 +3,7 @@ import { Recipe } from '../models/Recipe';
 import { User } from '../models/User';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import DbService from '../services/DbService';
 
 function getSpecialtyCuisine(authorRecipes: Recipe[]) {
   const cuisineFrequency = authorRecipes.reduce((acc, recipe) => {
@@ -18,10 +19,11 @@ function Authors() {
   const defaultImg = 'https://images.ctfassets.net/kugm9fp9ib18/3aHPaEUU9HKYSVj1CTng58/d6750b97344c1dc31bdd09312d74ea5b/menu-default-image_220606_web.png';
 
   useEffect(() => {
-    let loadedAuthors = JSON.parse(localStorage.getItem('authors') || '[]');
-    let loadedRecipes = JSON.parse(localStorage.getItem('recipes') || '[]');
-    setAuthors(loadedAuthors);
-    setRecipes(loadedRecipes);
+    DbService.getUsers().then(loadedAuthors => {
+      let loadedRecipes = JSON.parse(localStorage.getItem('recipes') || '[]');
+      setAuthors(loadedAuthors);
+      setRecipes(loadedRecipes);
+    });
   }, []);
 
   return (
@@ -32,14 +34,14 @@ function Authors() {
           <h2>Our Top Contributors</h2>
           <div className="row">
             {authors.sort((a, b) => {
-              const aRecipes = recipes.filter(recipe => recipe.author === a.username).length;
-              const bRecipes = recipes.filter(recipe => recipe.author === b.username).length;
+              const aRecipes = recipes.filter(recipe => recipe.username === a.username).length;
+              const bRecipes = recipes.filter(recipe => recipe.username === b.username).length;
               if (aRecipes === bRecipes)
                 return a.username.localeCompare(b.username);
               else
                 return bRecipes - aRecipes;
             }).map((author, index) => {
-              const authorRecipes = recipes.filter(recipe => recipe.author === author.username);
+              const authorRecipes = recipes.filter(recipe => recipe.username === author.username);
               const recipeImage = authorRecipes.filter(recipe => recipe.picture).sort((a, b) => new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime())[0]?.picture || defaultImg;
               return (
                 <div key={index} className="section-ting col-12 col-sm-6 col-md-4 col-lg-3 my-3">

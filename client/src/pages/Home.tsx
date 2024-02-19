@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
-import { defaultRecipes } from '../assets/DefaultRecipes';
-import { defaultAuthors } from '../assets/DefaultAuthors';
 import { useAuth } from '../contexts/AuthContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import DbService from '../services/DbService';
 
 function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -15,15 +14,13 @@ function Home() {
   const {authUser, isLogged} = useAuth();
   const defaultImg = 'https://images.ctfassets.net/kugm9fp9ib18/3aHPaEUU9HKYSVj1CTng58/d6750b97344c1dc31bdd09312d74ea5b/menu-default-image_220606_web.png';
 
-  useEffect(() => {    
-    let loadedRecipes = JSON.parse(localStorage.getItem('recipes') || '[]');
-    if (!loadedRecipes.length) {
-      loadedRecipes = defaultRecipes.map((recipe, index) => ({ ...recipe, id: index }));
-      localStorage.setItem('index', JSON.stringify(loadedRecipes.length));
-      localStorage.setItem('recipes', JSON.stringify(loadedRecipes));
-      localStorage.setItem('authors', JSON.stringify(defaultAuthors));
-    }
-    setRecipes(loadedRecipes);
+  useEffect(() => {
+    const loadRecipes = async () => {
+      const loadedRecipes = await DbService.getRecipes();
+      console.log(loadedRecipes);
+      setRecipes(loadedRecipes);
+    };
+    loadRecipes();
   }, []);
 
   return (
@@ -70,9 +67,9 @@ function Home() {
             </div>
           </div>
           <div className="row">
-            {recipes.filter(item => item.title.toLowerCase().includes(searchTerm.toLowerCase()) && (!selectedCuisine || item.cuisine === selectedCuisine) && (!onlyMyRecipes || item.author === authUser.username)).map((recipe, index) => (
+            {recipes.filter(item => item.title.toLowerCase().includes(searchTerm.toLowerCase()) && (!selectedCuisine || item.cuisine === selectedCuisine) && (!onlyMyRecipes || item.username === authUser.username)).map((recipe, index) => (
               <div key={index} className="col-12 col-sm-6 col-md-4 col-lg-3 my-3">
-                <Link to={`/recipe/${recipe.id}`}>
+                <Link to={`/recipe/${recipe.rid}`}>
                   <div className="card h-100">
                     <div className="img-container" style={{ overflow: 'hidden' }}>
                       <img className="card-img-top img-fluid hover-enlarge" style={{ height: "200px", objectFit: "cover" }} src={recipe.picture ? recipe.picture : defaultImg} alt="Card image" />

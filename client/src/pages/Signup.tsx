@@ -14,12 +14,12 @@ function Signup() {
   const [imageUrl, setImageUrl] = useState(defaultImage);
   const [social, setSocial] = useState('');
   const [isPassword, setIsPassword] = useState(false);
-  // const {setAuthUser, setIsLogged} = useAuth();
+  const {setAuthUser, setIsLogged} = useAuth();
   const navigate = useNavigate();
 
-  function submit(e:React.FormEvent<HTMLFormElement>) {
+  async function submit(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const authors = JSON.parse(localStorage.getItem('authors') || '[]');
+    const authors = await DbService.getUsers();
     if (authors.some((author: User) => author.username === username.trim())) {
       alert('This username is already used');
       return;
@@ -27,9 +27,8 @@ function Signup() {
     if (!imageUrl.trim()) setImageUrl(defaultImage);
     const newAuthor = new User(username.trim(), password, imageUrl.trim(), social.trim())
     DbService.addUser(newAuthor);
-    // localStorage.setItem('authors', JSON.stringify([...authors, newAuthor]));
-    // setAuthUser(newAuthor);
-    // setIsLogged(true);
+    setAuthUser(newAuthor);
+    setIsLogged(true);
     navigate('/');
   }
 

@@ -8,6 +8,7 @@ import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../contexts/AuthContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import DbService from '../services/DbService';
 
 function Display() {
   const { id } = useParams<{ id: string }>();
@@ -19,35 +20,30 @@ function Display() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const loadedRecipesJSON = localStorage.getItem('recipes');
-    const loadedAuthorsJSON = localStorage.getItem('authors');
-    let recipes = loadedRecipesJSON ? JSON.parse(loadedRecipesJSON) : [];
-    let authors = loadedAuthorsJSON ? JSON.parse(loadedAuthorsJSON) : [];
-    recipes = recipes.map((recipe: any) => {
-      recipe.createdOn = new Date(recipe.createdOn);
-      recipe.modifiedOn = new Date(recipe.modifiedOn);
-      return recipe;
-    });
-    setRecipes(recipes);
-    const foundRecipe = recipes.find((r: Recipe) => r.id === Number(id));
-    const foundAuthor = authors.find((a: User) => a.username === foundRecipe?.author);
-    if (foundRecipe && foundAuthor) {
-      setRecipe(foundRecipe);
-      setAuthor(foundAuthor);
-    } else {
-      alert ("Error: ID not found in recipes.");
-      navigate('/');
-      return;
-    }
-    let selectedRecipes: Recipe[] = [...recipes];
-    selectedRecipes = selectedRecipes.filter(recipe => recipe.id !== Number(id));
-    selectedRecipes.sort(() => Math.random() - 0.5);
-    setViewRecipes(selectedRecipes.slice(0,4));
+    const loadData = async () => {
+      const recipes = await DbService.getRecipes();
+      setRecipes(recipes);
+      const foundRecipe = await DbService.getRecipeById(Number(id));
+      const foundAuthor = foundRecipe && await DbService.getUserByName(foundRecipe.username);
+      console.log(foundRecipe);
+      if (foundRecipe && foundAuthor) {
+        setRecipe(foundRecipe);
+        setAuthor(foundAuthor);
+      } else {
+        alert ("Error: Recipe or author not found.");
+        navigate('/');
+        return;
+      }
+      let selectedRecipes: Recipe[] = recipes.filter(recipe => recipe.rid !== Number(id));
+      selectedRecipes.sort(() => Math.random() - 0.5);
+      setViewRecipes(selectedRecipes.slice(0,4));
+    };
+    loadData();
   }, [id]);
 
   const deleteRecipe = () => {
     if (window.confirm(`Are you sure you want to delete the recipe "${recipe!.title}"?`)) {
-      const updatedRecipes = recipes.filter(updateRecipe => updateRecipe.id !== recipe!.id);
+      const updatedRecipes = recipes.filter(updateRecipe => updateRecipe.rid !== recipe!.rid);
       localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
       navigate('/');
     }
@@ -93,7 +89,7 @@ function Display() {
                 }
               </div>
               <h2>Ingredients</h2>
-              <p>{`Embark on a culinary journey with this simple yet sensational ${name}. Gather fresh, quality ingredients that will harmonise in a symphony of flavours. Here's the lineup:`}</p>
+              <p>{`Embark on a culinary journey with this simple yet sensational ${title}. Gather fresh, quality ingredients that will harmonise in a symphony of flavours. Here's the lineup:`}</p>
               <ul>
                 {ingredients.map((ingredient, index) => (
                   <li key={index}>{ingredient}</li>
@@ -111,7 +107,7 @@ function Display() {
           <div className="col-md-4">
             <div className="position-sticky" style={{ top: "90px" }}>
               <div className="p-4 mb-3 bg-body-tertiary rounded">
-                <h4 className="fst-italic">About <span className="text-primary">{`${name}`}</span></h4>
+                <h4 className="fst-italic">About <span className="text-primary">{`${title}`}</span></h4>
                 <p className="mb-0">This Hokkien classic is a flavour journey, balancing savoury and umami notes in every bite. From perfectly cooked proteins to crisp veggies, it tells the storey of Hokkien culinary heritage, enriched by a time-honoured sauce. Savour a taste of tradition and innovation in this delectable dish.</p>
               </div>
             </div>
@@ -123,7 +119,7 @@ function Display() {
           <div className="row d-flex align-items-stretch">
             {viewAlsoRecipes.map((viewRecipe, index) => (
               <div key={index} className="col-12 col-sm-6 col-lg-3 p-0">
-                <Link to={`/recipe/${viewRecipe.id}`}>
+                <Link to={`/recipe/${viewRecipe.rid}`}>
                   <div className="card text-bg-dark h-100 rounded-0 border-0 hover-effect position-relative">
                     <img src={`${viewRecipe.picture}`} className="card-img rounded-0" style={{ height: '13rem', objectFit: 'cover' }} alt="..." />
                     <div className="card-img-overlay text-uppercase">

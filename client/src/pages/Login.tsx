@@ -5,6 +5,7 @@ import { User } from '../models/User';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../components/Navbar';
+import DbService from '../services/DbService';
 
 function Login() {
   const {setAuthUser, setIsLogged} = useAuth();
@@ -13,9 +14,9 @@ function Login() {
   const [isPassword, setIsPassword] = useState(false);
   const navigate = useNavigate();
 
-  function submit(e:React.FormEvent<HTMLFormElement>) {
+  async function submit(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const authors = JSON.parse(localStorage.getItem('authors') || '[]');
+    const authors = await DbService.getUsers();
     const author = authors.find((author:User) => author.username === username.trim());
     if (!author) {
       alert('No existing account found with this username');
