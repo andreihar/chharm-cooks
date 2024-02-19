@@ -19,11 +19,8 @@ function Authors() {
   const defaultImg = 'https://images.ctfassets.net/kugm9fp9ib18/3aHPaEUU9HKYSVj1CTng58/d6750b97344c1dc31bdd09312d74ea5b/menu-default-image_220606_web.png';
 
   useEffect(() => {
-    DbService.getUsers().then(loadedAuthors => {
-      let loadedRecipes = JSON.parse(localStorage.getItem('recipes') || '[]');
-      setAuthors(loadedAuthors);
-      setRecipes(loadedRecipes);
-    });
+    DbService.getUsers().then(setAuthors);
+    DbService.getRecipes().then(setRecipes);
   }, []);
 
   return (

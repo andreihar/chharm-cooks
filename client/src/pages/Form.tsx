@@ -37,24 +37,28 @@ function Form() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLogged)
-      navigate('/login');
-    const loadedRecipesJSON = localStorage.getItem('recipes');
-    if (loadedRecipesJSON) {
-      const recipes = JSON.parse(loadedRecipesJSON);
-      const foundRecipe = recipes.find((r: Recipe) => r.rid === Number(id));
-      if (foundRecipe && authUser?.username === foundRecipe.author) {
-        setName(foundRecipe.name);
-        setChinName(foundRecipe.chinName);
-        setCuisine(foundRecipe.cuisine);
-        setPicture(foundRecipe.picture);
-        setIngreds(foundRecipe.ingredients.map((ingredient:string) => ({ name:ingredient })));
-        setSteps(foundRecipe.steps.map((step:string) => ({ name:step })));
+    const fetchRecipe = async () => {
+      if (!isLogged) {
+        navigate('/login');
       } else if (id) {
-        navigate('/');
+        const foundRecipe = await DbService.getRecipeById(Number(id));
+        if (foundRecipe && authUser?.username === foundRecipe.username) {
+          setName(foundRecipe.title);
+          setChinName(foundRecipe.chinTitle);
+          setCuisine(foundRecipe.cuisine);
+          setPrepTime(foundRecipe.prepTime);
+          setCookTime(foundRecipe.cookTime);
+          setServings(foundRecipe.servings);
+          setPicture(foundRecipe.picture);
+          setIngreds(foundRecipe.ingredients.map((ingredient:string) => ({ name:ingredient })));
+          setSteps(foundRecipe.recipeInstructions.map((step:string) => ({ name:step })));
+        } else {
+          navigate('/');
+        }
       }
-    }
-  }, [id]);
+    };
+    fetchRecipe();
+  }, [id, isLogged, authUser]);
 
   const add = (setter:Function) => () => setter((prev:{ name:string }[]) => [...prev, { name:"" }]);
   const remove = (setter:Function) => (index:number) => setter((prev:{ name:string }[]) => prev.filter((_:any, i:number) => i !== index));
@@ -72,28 +76,19 @@ function Form() {
       return;
     }
 
-    // let recipes = JSON.parse(localStorage.getItem('recipes') || '[]');
-    let recipes = await DbService.getRecipes();
     let newRecipe = new Recipe(name.trim(), chinName.trim(), cuisine.trim(), authUser.username, prepTime, cookTime, servings, picture.trim(), ingredients.map(i => i.name.trim()).filter(Boolean), steps.map(s => s.name.trim()).filter(Boolean));
     if (id) {
-      newRecipe.rid = Number(id);
-      const oldRecipe = recipes.find((r: Recipe) => r.rid === Number(id));
+      const oldRecipe = await DbService.getRecipeById(Number(id));
       if (oldRecipe && !isEqual(
-        (({ createdOn, timeLastModified, ...rest }) => rest)(oldRecipe),
-        (({ createdOn, timeLastModified, ...rest }) => rest)(newRecipe)
+        (({ createdOn, timeLastModified, rid, ...rest }) => rest)(oldRecipe),
+        (({ createdOn, timeLastModified, rid, ...rest }) => rest)(newRecipe)
       )) {
-        newRecipe.timeLastModified = new Date()
         newRecipe.createdOn = oldRecipe.createdOn;
-        recipes[recipes.findIndex((r: Recipe) => r.rid === Number(id))] = newRecipe;
+        DbService.updateRecipe(Number(id), newRecipe);
       }
     } else {
       DbService.addRecipe(newRecipe);
-      // const index = JSON.parse(localStorage.getItem('index') || "3") as number;
-      // newRecipe.id = index;
-      // recipes.push(newRecipe);
-      // localStorage.setItem('index', JSON.stringify(index+1));
     }
-    // localStorage.setItem('recipes', JSON.stringify(recipes));
     navigate('/');
   }
 

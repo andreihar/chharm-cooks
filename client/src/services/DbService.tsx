@@ -69,13 +69,23 @@ const addRecipe = (newRecipe: Recipe) => {
   return axios.post(`${BASE_URL}/addrecipe`, newRecipe);
 };
 
+const deleteRecipe = (id:number) => {
+  return axios.delete(`${BASE_URL}/deleterecipe/${id}`);
+};
+
+const updateRecipe = (id:number, updateRecipe: Recipe) => {
+  return axios.put(`${BASE_URL}/updaterecipe/${id}`, updateRecipe);
+}
+
 const DbService = {
   getUsers,
   getUserByName,
   addUser,
   getRecipes,
   getRecipeById,
-  addRecipe
+  addRecipe,
+  deleteRecipe,
+  updateRecipe
 };
 
 export default DbService;

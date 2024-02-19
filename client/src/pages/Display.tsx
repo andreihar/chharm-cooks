@@ -25,7 +25,6 @@ function Display() {
       setRecipes(recipes);
       const foundRecipe = await DbService.getRecipeById(Number(id));
       const foundAuthor = foundRecipe && await DbService.getUserByName(foundRecipe.username);
-      console.log(foundRecipe);
       if (foundRecipe && foundAuthor) {
         setRecipe(foundRecipe);
         setAuthor(foundAuthor);
@@ -43,8 +42,7 @@ function Display() {
 
   const deleteRecipe = () => {
     if (window.confirm(`Are you sure you want to delete the recipe "${recipe!.title}"?`)) {
-      const updatedRecipes = recipes.filter(updateRecipe => updateRecipe.rid !== recipe!.rid);
-      localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
+      DbService.deleteRecipe(Number(id));
       navigate('/');
     }
   }
