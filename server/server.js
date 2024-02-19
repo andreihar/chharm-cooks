@@ -5,8 +5,10 @@ const db = require("./db")
 const app = express()
 
 const fs = require('fs');
-const jsonUsers = fs.readFileSync('../client/src/assets/defaultUsers.json', 'utf8');
-const jsonRecipes = fs.readFileSync('../client/src/assets/defaultRecipes.json', 'utf8');
+
+// Default Data
+const jsonUsers = fs.readFileSync('./assets/defaultUsers.json', 'utf8');
+const jsonRecipes = fs.readFileSync('./assets/defaultRecipes.json', 'utf8');
 const users = JSON.parse(jsonUsers);
 const recipes = JSON.parse(jsonRecipes);
 
@@ -62,6 +64,7 @@ app.put('/updaterecipe/:id', async (req, res) => {
 });
 
 async function InitDB() {
+    // Default data
     await db.helpers.init(users, recipes)
     const p = await db.helpers.getUsers()
     console.log(p)

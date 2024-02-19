@@ -19,6 +19,7 @@ const helpers = {
                 social TEXT
             );
         `;
+        // Default data
         const resUser = await pool.query(usersSql);
         if (resUser.command === 'CREATE') {
             for (const user of users) {
@@ -49,6 +50,7 @@ const helpers = {
                 recipe_instructions TEXT[]
             );
         `;
+        // Default data
         const resRec = await pool.query(recipesSql);
         if (resRec.command === 'CREATE') {
             for (const recipe of recipes) {

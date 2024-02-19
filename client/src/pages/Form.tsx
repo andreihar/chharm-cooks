@@ -116,15 +116,13 @@ function Form() {
                 <input type="text" className="form-control" name="cuisine" placeholder="Taiwanese" value={cuisine} onChange={e => setCuisine(e.target.value)} required/>
               </div>
               <div className="form-group">
-                <label htmlFor="prepTime">Preparation Time *</label>
+                <label htmlFor="prepTime">Preparation Time (min) *</label>
                 <input type="number" className="form-control" name="prepTime" placeholder="Preparation time in minutes" value={prepTime} onChange={e => setPrepTime(Math.max(0, Number(e.target.value)))} required/>
               </div>
-
               <div className="form-group">
-                <label htmlFor="cookTime">Cooking Time *</label>
+                <label htmlFor="cookTime">Cooking Time (min) *</label>
                 <input type="number" className="form-control" name="cookTime" placeholder="Cooking time in minutes" value={cookTime} onChange={e => setCookTime(Math.max(0, Number(e.target.value)))} required/>
               </div>
-
               <div className="form-group">
                 <label htmlFor="servings">Number of Servings *</label>
                 <input type="number" className="form-control" name="servings" placeholder="Number of servings" value={servings} onChange={e => setServings(Math.max(0, Number(e.target.value)))} required/>
