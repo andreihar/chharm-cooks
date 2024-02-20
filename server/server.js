@@ -4,14 +4,6 @@ const db = require("./db")
 
 const app = express()
 
-const fs = require('fs');
-
-// Default Data
-const jsonUsers = fs.readFileSync('./assets/defaultUsers.json', 'utf8');
-const jsonRecipes = fs.readFileSync('./assets/defaultRecipes.json', 'utf8');
-const users = JSON.parse(jsonUsers);
-const recipes = JSON.parse(jsonRecipes);
-
 app.use(express.json())
 app.use(cors())
 let port = 4000
@@ -65,7 +57,7 @@ app.put('/updaterecipe/:id', async (req, res) => {
 
 async function InitDB() {
     // Default data
-    await db.helpers.init(users, recipes)
+    await db.helpers.init()
     const p = await db.helpers.getUsers()
     console.log(p)
     people = p

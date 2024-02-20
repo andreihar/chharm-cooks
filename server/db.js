@@ -9,29 +9,31 @@ const pool = new Pool({
 	port: process.env.DB_PORT
 });
 
+const defaultData = async function() {
+    const fs = require('fs');
+    const users = JSON.parse(fs.readFileSync('./assets/defaultUsers.json', 'utf8'));
+    const recipes = JSON.parse(fs.readFileSync('./assets/defaultRecipes.json', 'utf8'));
+    for (const { username, password, picture, social } of users) {
+        await helpers.addUser(username, password, picture, social);
+    }
+    for (const { title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, ingredients, recipeInstructions } of recipes) {
+        await helpers.addRecipe(title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, new Date(), new Date(), ingredients, recipeInstructions);
+    }
+};
+
 const helpers = {
-    init: async function(users, recipes) {
-        const usersSql = `
+    init: async function() {
+        const sql = `
             CREATE TABLE IF NOT EXISTS users(
                 username VARCHAR(50) PRIMARY KEY, 
                 password VARCHAR(50), 
                 picture TEXT, 
                 social TEXT
             );
-        `;
-        // Default data
-        const resUser = await pool.query(usersSql);
-        if (resUser.command === 'CREATE') {
-            for (const user of users) {
-                const { username, password, picture, social } = user;
-                await helpers.addUser(username, password, picture, social);
-            }
-        }
-        await pool.query(`CREATE TABLE IF NOT EXISTS ingredient(
-            iid SERIAL PRIMARY KEY, 
-            ingredients TEXT[]
-        );`);
-        const recipesSql = `
+            CREATE TABLE IF NOT EXISTS ingredient(
+                iid SERIAL PRIMARY KEY, 
+                ingredients TEXT[]
+            );
             CREATE TABLE IF NOT EXISTS recipe(
                 rid SERIAL PRIMARY KEY, 
                 title VARCHAR(50), 
@@ -43,21 +45,16 @@ const helpers = {
                 cook_time INT, 
                 servings INT, 
                 picture TEXT, 
-                created_on TIMESTAMP, 
-                time_last_modified TIMESTAMP, 
+                created_on TIMESTAMPTZ, 
+                time_last_modified TIMESTAMPTZ, 
                 iid INT,
                 FOREIGN KEY (iid) REFERENCES ingredient(iid) ON DELETE CASCADE,
                 recipe_instructions TEXT[]
             );
         `;
-        // Default data
-        const resRec = await pool.query(recipesSql);
-        if (resRec.command === 'CREATE') {
-            for (const recipe of recipes) {
-                const { title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, ingredients, recipeInstructions } = recipe;
-                await helpers.addRecipe(title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, new Date(), new Date(), ingredients, recipeInstructions);
-            }
-        }
+        await pool.query(sql);
+        if (!(await pool.query("SELECT EXISTS (SELECT 1 FROM recipe LIMIT 1);")).rows[0].exists)
+            await defaultData();
     },
 
     // Users

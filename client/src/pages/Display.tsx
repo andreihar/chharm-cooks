@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
 import { User } from '../models/User';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPenToSquare, faClock, faBowlRice } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../contexts/AuthContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -13,7 +13,6 @@ import DbService from '../services/DbService';
 function Display() {
   const { id } = useParams<{ id: string }>();
   const [recipe, setRecipe] = useState<Recipe>();
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [author, setAuthor] = useState<User>();
   const [viewAlsoRecipes, setViewRecipes] = useState<Recipe[]>([]);
   const {authUser, isLogged} = useAuth();
@@ -22,7 +21,7 @@ function Display() {
   useEffect(() => {
     const loadData = async () => {
       const recipes = await DbService.getRecipes();
-      setRecipes(recipes);
+      setViewRecipes(recipes.filter(recipe => recipe.rid !== Number(id)).sort(() => Math.random() - 0.5).slice(0, 4));
       const foundRecipe = await DbService.getRecipeById(Number(id));
       const foundAuthor = foundRecipe && await DbService.getUserByName(foundRecipe.username);
       if (foundRecipe && foundAuthor) {
@@ -33,22 +32,19 @@ function Display() {
         navigate('/');
         return;
       }
-      let selectedRecipes: Recipe[] = recipes.filter(recipe => recipe.rid !== Number(id));
-      selectedRecipes.sort(() => Math.random() - 0.5);
-      setViewRecipes(selectedRecipes.slice(0,4));
     };
     loadData();
   }, [id]);
 
   const deleteRecipe = () => {
-    if (window.confirm(`Are you sure you want to delete the recipe "${recipe!.title}"?`)) {
+    if (window.confirm(`Are you sure you want to delete "${recipe!.title}"?`)) {
       DbService.deleteRecipe(Number(id));
       navigate('/');
     }
   }
 
   if (recipe) {
-    const { picture, title, chinTitle, createdOn, timeLastModified, cuisine, ingredients, recipeInstructions } = recipe;
+    const { picture, title, chinTitle, createdOn, timeLastModified, cuisine, ingredients, recipeInstructions, prepTime, cookTime, servings } = recipe;
     return (
     <>
       <Navbar/>
@@ -106,6 +102,12 @@ function Display() {
             <div className="position-sticky" style={{ top: "90px" }}>
               <div className="p-4 mb-3 bg-body-tertiary rounded">
                 <h4 className="fst-italic">About <span className="text-primary">{`${title}`}</span></h4>
+                <p className="mb-0 text-uppercase"><FontAwesomeIcon icon={faClock} /> Time</p>
+                <ul className="mb-1">
+                  <li><span className="text-uppercase">Prep:</span> <span className="text-dark-emphasis">{`${prepTime} minutes`}</span></li>
+                  <li><span className="text-uppercase">Cook:</span> <span className="text-dark-emphasis">{`${cookTime} minutes`}</span></li>
+                </ul>
+                <p><span className="text-uppercase"><FontAwesomeIcon icon={faBowlRice} /> Servings:</span> <span className="text-dark-emphasis">{`${servings}`}</span></p>
                 <p className="mb-0">This Hokkien classic is a flavour journey, balancing savoury and umami notes in every bite. From perfectly cooked proteins to crisp veggies, it tells the storey of Hokkien culinary heritage, enriched by a time-honoured sauce. Savour a taste of tradition and innovation in this delectable dish.</p>
               </div>
             </div>
