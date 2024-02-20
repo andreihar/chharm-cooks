@@ -41,7 +41,7 @@ function Signup() {
             <form style={{width: '330px'}} className="float-end" onSubmit={submit}>
               <img src={imageUrl} alt="mdo" width={128} height={128} className="rounded-circle mx-auto d-block mb-3"/>
               <div className="form-floating mb-2">
-                <input type="text" className="form-control" id="username" placeholder="Name" onChange={e => setUsername(e.target.value)} required/>
+                <input type="text" className="form-control" id="username" placeholder="Name" onChange={e => setUsername(e.target.value)} autoComplete="username"/>
                 <label htmlFor="username">Username</label>
               </div>
               <div className="form-floating mb-2 position-relative">

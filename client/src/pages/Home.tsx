@@ -25,8 +25,8 @@ function Home() {
         <div className="container-fluid col-xxl-8">
           <div className="row flex-lg-nowrap align-items-center g-5">
             <div className="order-lg-1 w-100 d-none d-lg-block">
-              <img src="https://asianinspirations.com.au/wp-content/uploads/2020/09/20200901-Malaysian-Cuisine-Kaleidoscope-of-Flavours-00-Feat-Img_1920w.jpg"
-                style={{ clipPath: "polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%)", }} className="d-block" width={900} height={600} />
+              <img alt="Home banner" src="https://asianinspirations.com.au/wp-content/uploads/2020/09/20200901-Malaysian-Cuisine-Kaleidoscope-of-Flavours-00-Feat-Img_1920w.jpg"
+                style={{ clipPath: "polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%)", }} className="d-block" width={900} height={600} loading="lazy" />
             </div>
             <div className="col-lg-6 p-lg-5">
               <h1 className="display-4 lh-1 text-body-emphasis">Uncover Hokkien culinary charms at <span className="text-primary fw-bold">Chhárm</span><span className="text-primary">Cooks</span></h1>
@@ -44,7 +44,7 @@ function Home() {
           <h2 id="recipes">Recipes</h2>
           <div className="row justify-content-center my-4">
             <div className="col-md-6">
-              <input type="text" className="form-control border-dark-subtle" placeholder="Search" onChange={e => setSearchTerm(e.target.value)} />
+              <input id="search" type="text" className="form-control border-dark-subtle" placeholder="Search" onChange={e => setSearchTerm(e.target.value)} />
               {isLogged &&
                 <button 
                   className={`btn ${onlyMyRecipes ? 'btn-primary' : 'btn-secondary'} me-2 mt-2`}
@@ -67,7 +67,7 @@ function Home() {
                 <Link to={`/recipe/${recipe.rid}`}>
                   <div className="card h-100">
                     <div className="img-container" style={{ overflow: 'hidden' }}>
-                      <img className="card-img-top img-fluid hover-enlarge" style={{ height: "200px", objectFit: "cover" }} src={recipe.picture ? recipe.picture : defaultImg} alt="Card image" />
+                      <img className="card-img-top img-fluid hover-enlarge" style={{ height: "200px", objectFit: "cover" }} src={recipe.picture ? recipe.picture : defaultImg} alt="Card image" loading="lazy" />
                     </div>
                     <div className="card-body">
                       <p className="card-subtitle mb-2 text-body-secondary fs-6 text-uppercase fw-light">{recipe.cuisine}</p>

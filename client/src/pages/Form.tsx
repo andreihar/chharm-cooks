@@ -13,7 +13,7 @@ function InputList({ items, label, add, remove, change }:{ items:any[], label:st
       {items.map((item, index) => (
         <div className="form-group d-flex align-items-center mb-2" key={index}>
           <label className="fw-bold me-2" htmlFor={`${label}-${index}`}>{index + 1}</label>
-          <input type="text" className="form-control" name={`${label}-${index}`} value={item.name} onChange={e => change(e, index)}/>
+          <input id={`${label}-${index}`} type="text" className="form-control" name={`${label}-${index}`} value={item.name} onChange={e => change(e, index)}/>
           <button type="button" className="btn btn-outline-danger fw-bold ms-2" onClick={() => remove(index)}>-</button>
         </div>
       ))}
@@ -105,31 +105,31 @@ function Form() {
               <legend className="text-primary">Recipe Information</legend>
               <div className="form-group">
                 <label htmlFor="name">Recipe Name *</label>
-                <input type="text" className="form-control" name="name" placeholder="Ke bah png" value={name} onChange={e => setName(e.target.value)} required/>
+                <input id="name" type="text" className="form-control" name="name" placeholder="Ke bah png" value={name} onChange={e => setName(e.target.value)} required autoComplete="name"/>
               </div>
               <div className="form-group">
-                <label htmlFor="chin-name">Chinese Name *</label>
-                <input type="text" className="form-control" name="chin-name" placeholder="雞肉飯" value={chinName} onChange={e => setChinName(e.target.value)} required/>
+                <label htmlFor="chinName">Chinese Name *</label>
+                <input id="chinName" type="text" className="form-control" name="chinName" placeholder="雞肉飯" value={chinName} onChange={e => setChinName(e.target.value)} required/>
               </div>
               <div className="form-group">
                 <label htmlFor="cuisine">Cuisine *</label>
-                <input type="text" className="form-control" name="cuisine" placeholder="Taiwanese" value={cuisine} onChange={e => setCuisine(e.target.value)} required/>
+                <input id="cuisine" type="text" className="form-control" name="cuisine" placeholder="Taiwanese" value={cuisine} onChange={e => setCuisine(e.target.value)} required/>
               </div>
               <div className="form-group">
                 <label htmlFor="prepTime">Preparation Time (min) *</label>
-                <input type="number" className="form-control" name="prepTime" placeholder="Preparation time in minutes" value={prepTime} onChange={e => setPrepTime(Math.max(0, Number(e.target.value)))} required/>
+                <input id="prepTime" type="number" className="form-control" name="prepTime" placeholder="Preparation time in minutes" value={prepTime} onChange={e => setPrepTime(Math.max(0, Number(e.target.value)))} required/>
               </div>
               <div className="form-group">
                 <label htmlFor="cookTime">Cooking Time (min) *</label>
-                <input type="number" className="form-control" name="cookTime" placeholder="Cooking time in minutes" value={cookTime} onChange={e => setCookTime(Math.max(0, Number(e.target.value)))} required/>
+                <input id="cookTime" type="number" className="form-control" name="cookTime" placeholder="Cooking time in minutes" value={cookTime} onChange={e => setCookTime(Math.max(0, Number(e.target.value)))} required/>
               </div>
               <div className="form-group">
                 <label htmlFor="servings">Number of Servings *</label>
-                <input type="number" className="form-control" name="servings" placeholder="Number of servings" value={servings} onChange={e => setServings(Math.max(0, Number(e.target.value)))} required/>
+                <input id="servings" type="number" className="form-control" name="servings" placeholder="Number of servings" value={servings} onChange={e => setServings(Math.max(0, Number(e.target.value)))} required/>
               </div>
               <div className="form-group">
                 <label htmlFor="picture">Image URL (optional)</label>
-                <input type="text" className="form-control" name="picture" placeholder="https://live.staticflickr.com/65535/51720059627_0aed2b149b_o.jpg" value={picture} onChange={e => setPicture(e.target.value)} />
+                <input id="picture" type="text" className="form-control" name="picture" placeholder="https://live.staticflickr.com/65535/51720059627_0aed2b149b_o.jpg" value={picture} onChange={e => setPicture(e.target.value)} />
               </div>
               {picture && (
                 <div className="d-flex justify-content-center mt-3">

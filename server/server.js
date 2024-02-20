@@ -56,7 +56,6 @@ app.put('/updaterecipe/:id', async (req, res) => {
 });
 
 async function InitDB() {
-    // Default data
     await db.helpers.init()
     const p = await db.helpers.getUsers()
     console.log(p)

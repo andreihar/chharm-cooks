@@ -44,7 +44,7 @@ function Login() {
               <label htmlFor="floatingInput">Username</label>
             </div>
             <div className="form-floating mb-4 position-relative">
-              <input type={isPassword ? "text" : "password"} className="form-control" id="floatingPassword" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
+              <input type={isPassword ? "text" : "password"} className="form-control" id="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
               <button type="button" onClick={() => setIsPassword(!isPassword)} className="btn position-absolute top-50 translate-middle-y end-0">
                 <FontAwesomeIcon icon={isPassword ? faEye : faEyeSlash} />
               </button>
