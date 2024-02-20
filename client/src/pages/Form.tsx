@@ -6,6 +6,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import isEqual from 'lodash.isequal';
 import DbService from '../services/DbService';
+import noRecipe from '../assets/noRecipe.png';
 
 function InputList({ items, label, add, remove, change }:{ items:any[], label:string, add:any, remove:any, change:any }) {
   return (
@@ -75,8 +76,7 @@ function Form() {
       alert('At least one Step is required');
       return;
     }
-
-    let newRecipe = new Recipe(name.trim(), chinName.trim(), cuisine.trim(), authUser.username, prepTime, cookTime, servings, picture.trim(), ingredients.map(i => i.name.trim()).filter(Boolean), steps.map(s => s.name.trim()).filter(Boolean));
+    let newRecipe = new Recipe(name.trim(), chinName.trim(), cuisine.trim(), authUser.username, prepTime, cookTime, servings, picture.trim() || noRecipe, ingredients.map(i => i.name.trim()).filter(Boolean), steps.map(s => s.name.trim()).filter(Boolean));
     if (id) {
       const oldRecipe = await DbService.getRecipeById(Number(id));
       if (oldRecipe && !isEqual(

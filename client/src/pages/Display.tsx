@@ -105,7 +105,7 @@ function Display() {
               <div className="p-4 mb-3 bg-body-tertiary rounded">
                 <h4 className="fst-italic">About <span className="text-primary">{`${title}`}</span></h4>
                 <p className="mb-2"><FontAwesomeIcon icon={faClock} className="text-primary" /> <span className="text-uppercase">Prep:</span> <span className="text-dark-emphasis">{`${prepTime} minutes`}</span> <span className="ms-1 text-uppercase">Cook:</span> <span className="text-dark-emphasis">{`${cookTime} minutes`}</span></p>
-                <p><span className="text-uppercase"><FontAwesomeIcon icon={faBowlRice} className="text-primary" /> Serves</span> <span className="text-dark-emphasis">{`${servings}`}</span></p>
+                <p><span className="text-uppercase"><FontAwesomeIcon icon={faBowlRice} className="text-primary" /> Serves</span> <span className="text-dark-emphasis">{`${servings} ${servings > 1 ? 'people' : 'person'}`}</span></p>
                 <p className="mb-0">This Hokkien classic is a flavour journey, balancing savoury and umami notes in every bite. From perfectly cooked proteins to crisp veggies, it tells the storey of Hokkien culinary heritage, enriched by a time-honoured sauce. Savour a taste of tradition and innovation in this delectable dish.</p>
               </div>
             </div>
