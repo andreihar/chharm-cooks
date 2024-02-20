@@ -66,8 +66,10 @@ function Display() {
             <article className="blog-post">
               <h2 className="display-5 link-body-emphasis mb-1">Let's make <span className="text-primary">{`${title}`}</span>!</h2>
               <p className="text-dark-emphasis align-items-center d-flex">by:
-                <img src={author!.picture} alt="User Picture" width={32} height={32} className="rounded-circle ms-2"/>
-                <span className="text-uppercase fs-5 ms-2">{`${author!.username}`}</span>
+                <a href={author!.social} target="_blank" rel="noopener noreferrer" className="text-dark-emphasis align-items-center d-flex">
+                  <img src={author!.picture} alt="User Picture" width={32} height={32} className="rounded-circle ms-2"/>
+                  <span className="text-uppercase fs-5 ms-2">{`${author!.username}`}</span>
+                </a>
               </p>
               <hr />
               <div className="d-flex justify-content-between">
@@ -102,12 +104,8 @@ function Display() {
             <div className="position-sticky" style={{ top: "90px" }}>
               <div className="p-4 mb-3 bg-body-tertiary rounded">
                 <h4 className="fst-italic">About <span className="text-primary">{`${title}`}</span></h4>
-                <p className="mb-0 text-uppercase"><FontAwesomeIcon icon={faClock} /> Time</p>
-                <ul className="mb-1">
-                  <li><span className="text-uppercase">Prep:</span> <span className="text-dark-emphasis">{`${prepTime} minutes`}</span></li>
-                  <li><span className="text-uppercase">Cook:</span> <span className="text-dark-emphasis">{`${cookTime} minutes`}</span></li>
-                </ul>
-                <p><span className="text-uppercase"><FontAwesomeIcon icon={faBowlRice} /> Servings:</span> <span className="text-dark-emphasis">{`${servings}`}</span></p>
+                <p className="mb-2"><FontAwesomeIcon icon={faClock} className="text-primary" /> <span className="text-uppercase">Prep:</span> <span className="text-dark-emphasis">{`${prepTime} minutes`}</span> <span className="ms-1 text-uppercase">Cook:</span> <span className="text-dark-emphasis">{`${cookTime} minutes`}</span></p>
+                <p><span className="text-uppercase"><FontAwesomeIcon icon={faBowlRice} className="text-primary" /> Serves</span> <span className="text-dark-emphasis">{`${servings}`}</span></p>
                 <p className="mb-0">This Hokkien classic is a flavour journey, balancing savoury and umami notes in every bite. From perfectly cooked proteins to crisp veggies, it tells the storey of Hokkien culinary heritage, enriched by a time-honoured sauce. Savour a taste of tradition and innovation in this delectable dish.</p>
               </div>
             </div>
