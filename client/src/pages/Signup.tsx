@@ -5,13 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../contexts/AuthContext';
 import DbService from '../services/DbService';
+import noUser from '../assets/noUser.jpg';
 
 function Signup() {
-  const defaultImage = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg';
-
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [imageUrl, setImageUrl] = useState(defaultImage);
+  const [imageUrl, setImageUrl] = useState(noUser);
   const [social, setSocial] = useState('');
   const [isPassword, setIsPassword] = useState(false);
   const {setAuthUser, setIsLogged} = useAuth();
@@ -24,7 +23,7 @@ function Signup() {
       alert('This username is already used');
       return;
     }
-    if (!imageUrl.trim()) setImageUrl(defaultImage);
+    if (!imageUrl.trim()) setImageUrl(noUser);
     const newAuthor = new User(username.trim(), password, imageUrl.trim(), social.trim())
     DbService.addUser(newAuthor);
     setAuthUser(newAuthor);
@@ -52,7 +51,7 @@ function Signup() {
                 <label htmlFor="password">Password</label>
               </div>
               <div className="form-floating mb-2">
-                <input type="text" className="form-control" id="picture" placeholder="Picture" onChange={e => setImageUrl(e.target.value || defaultImage)}/>
+                <input type="text" className="form-control" id="picture" placeholder="Picture" onChange={e => setImageUrl(e.target.value || noUser)}/>
                 <label htmlFor="picture">Picture URL (optional)</label>
               </div>
               <div className="form-floating mb-4">

@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DbService from '../services/DbService';
+import noRecipe from '../assets/noRecipe.png';
 
 function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -12,7 +13,6 @@ function Home() {
   const [selectedCuisine, setSelectedCuisine] = useState('');
   const [onlyMyRecipes, setOnlyMyRecipes] = useState(false);
   const {authUser, isLogged} = useAuth();
-  const defaultImg = 'https://images.ctfassets.net/kugm9fp9ib18/3aHPaEUU9HKYSVj1CTng58/d6750b97344c1dc31bdd09312d74ea5b/menu-default-image_220606_web.png';
 
   useEffect(() => {
     DbService.getRecipes().then(setRecipes);
@@ -67,7 +67,7 @@ function Home() {
                 <Link to={`/recipe/${recipe.rid}`}>
                   <div className="card h-100">
                     <div className="img-container" style={{ overflow: 'hidden' }}>
-                      <img className="card-img-top img-fluid hover-enlarge" style={{ height: "200px", objectFit: "cover" }} src={recipe.picture ? recipe.picture : defaultImg} alt="Card image" loading="lazy" />
+                      <img className="card-img-top img-fluid hover-enlarge" style={{ height: "200px", objectFit: "cover" }} src={recipe.picture ? recipe.picture : noRecipe} alt="Card image" loading="lazy" />
                     </div>
                     <div className="card-body">
                       <p className="card-subtitle mb-2 text-body-secondary fs-6 text-uppercase fw-light">{recipe.cuisine}</p>

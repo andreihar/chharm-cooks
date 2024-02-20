@@ -4,6 +4,7 @@ import { User } from '../models/User';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DbService from '../services/DbService';
+import noRecipe from '../assets/noRecipe.png';
 
 function getSpecialtyCuisine(authorRecipes: Recipe[]) {
   const cuisineFrequency = authorRecipes.reduce((acc, recipe) => {
@@ -16,7 +17,6 @@ function getSpecialtyCuisine(authorRecipes: Recipe[]) {
 function Authors() {
   const [authors, setAuthors] = useState<User[]>([]);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const defaultImg = 'https://images.ctfassets.net/kugm9fp9ib18/3aHPaEUU9HKYSVj1CTng58/d6750b97344c1dc31bdd09312d74ea5b/menu-default-image_220606_web.png';
 
   useEffect(() => {
     DbService.getUsers().then(setAuthors);
@@ -39,7 +39,7 @@ function Authors() {
                 return bRecipes - aRecipes;
             }).map((author, index) => {
               const authorRecipes = recipes.filter(recipe => recipe.username === author.username);
-              const recipeImage = authorRecipes.filter(recipe => recipe.picture).sort((a, b) => new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime())[0]?.picture || defaultImg;
+              const recipeImage = authorRecipes.filter(recipe => recipe.picture).sort((a, b) => new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime())[0]?.picture || noRecipe;
               return (
                 <div key={index} className="section-ting col-12 col-sm-6 col-md-4 col-lg-3 my-3">
                   <a href={author.social} target="_blank" rel="noopener noreferrer">
