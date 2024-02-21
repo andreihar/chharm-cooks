@@ -6,6 +6,7 @@ import { User } from '../models/User';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare, faClock, faBowlRice } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DbService from '../services/DbService';
@@ -16,6 +17,7 @@ function Display() {
   const [author, setAuthor] = useState<User>();
   const [viewAlsoRecipes, setViewRecipes] = useState<Recipe[]>([]);
   const {authUser, isLogged} = useAuth();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,7 +30,7 @@ function Display() {
         setRecipe(foundRecipe);
         setAuthor(foundAuthor);
       } else {
-        alert ("Error: Recipe or author not found.");
+        alert (t('display.error'));
         navigate('/');
         return;
       }
@@ -37,7 +39,7 @@ function Display() {
   }, [id]);
 
   const deleteRecipe = () => {
-    if (window.confirm(`Are you sure you want to delete "${recipe!.title}"?`)) {
+    if (window.confirm(`${t('display.delete.part1')}${recipe!.title}${t('display.delete.part2')}`)) {
       DbService.deleteRecipe(Number(id));
       navigate('/');
     }
@@ -53,7 +55,7 @@ function Display() {
           <div className="d-flex justify-content-center align-items-center h-100">
             <div className="text-white">
               <h1 className="mb-3">{`${title} | ${chinTitle}`}</h1>
-              <h4 className="mb-3">{`Authentic ${cuisine} Hokkien dish made at home`}</h4>
+              <h4 className="mb-3">{t('display.authentic.part1')}{`${cuisine}`}{t('display.authentic.part2')}</h4>
             </div>
           </div>
         </div>
@@ -64,8 +66,8 @@ function Display() {
         <div className="row g-5">
           <div className="col-md-8">
             <article className="blog-post">
-              <h2 className="display-5 link-body-emphasis mb-1">Let's make <span className="text-primary">{`${title}`}</span>!</h2>
-              <p className="text-dark-emphasis align-items-center d-flex">by:
+              <h2 className="display-5 link-body-emphasis mb-1">{t('display.letsMake.part1')}<span className="text-primary">{`${title}`}</span>{t('display.letsMake.part2')}</h2>
+              <p className="text-dark-emphasis align-items-center d-flex">{t('display.by')}
                 <a href={author!.social} target="_blank" rel="noopener noreferrer" className="text-dark-emphasis align-items-center d-flex">
                   <img src={author!.picture} alt="User Picture" width={32} height={32} className="rounded-circle ms-2"/>
                   <span className="text-uppercase fs-5 ms-2">{`${author!.username}`}</span>
@@ -74,8 +76,8 @@ function Display() {
               <hr />
               <div className="d-flex justify-content-between">
                 <p className="text-dark-emphasis">
-                  Posted: <span className="">{`${createdOn.toLocaleDateString()}`}</span>&nbsp;
-                  Updated: <span className="">{`${timeLastModified.toLocaleDateString()}`}</span>
+                  {t('display.posted')} <span className="">{`${createdOn.toLocaleDateString()}`}</span>&nbsp;
+                  {t('display.updated')} <span className="">{`${timeLastModified.toLocaleDateString()}`}</span>
                 </p>
                 {isLogged && (authUser.username === author!.username) &&
                   <div>
@@ -84,15 +86,15 @@ function Display() {
                   </div>
                 }
               </div>
-              <h2>Ingredients</h2>
-              <p>{`Embark on a culinary journey with this simple yet sensational ${title}. Gather fresh, quality ingredients that will harmonise in a symphony of flavours. Here's the lineup:`}</p>
+              <h2>{t('form.ingredients')}</h2>
+              <p>{t('display.ingredientDesc.part1')}{`${title}`}{t('display.ingredientDesc.part2')}</p>
               <ul>
                 {ingredients.map((ingredient, index) => (
                   <li key={index}>{ingredient}</li>
                 ))}
               </ul>
-              <h2>Directions</h2>
-              <p>{`Now that your kitchen is adorned with the finest ingredients, let's weave them together into a culinary masterpiece. Follow these straightforward steps to unlock the full potential of each component, creating ${recipe!.title} that tantalises the taste buds:`}</p>
+              <h2>{t('form.directions')}</h2>
+              <p>{t('display.stepsDesc.part1')}{`${recipe!.title}`}{t('display.stepsDesc.part2')}</p>
               <ol>
                 {recipeInstructions.map((step, index) => (
                   <li key={index}>{step}</li>
@@ -103,10 +105,10 @@ function Display() {
           <div className="col-md-4">
             <div className="position-sticky" style={{ top: "90px" }}>
               <div className="p-4 mb-3 bg-body-tertiary rounded">
-                <h4 className="fst-italic">About <span className="text-primary">{`${title}`}</span></h4>
-                <p className="mb-2"><FontAwesomeIcon icon={faClock} className="text-primary" /> <span className="text-uppercase">Prep:</span> <span className="text-dark-emphasis">{`${prepTime} minutes`}</span> <span className="ms-1 text-uppercase">Cook:</span> <span className="text-dark-emphasis">{`${cookTime} minutes`}</span></p>
-                <p><span className="text-uppercase"><FontAwesomeIcon icon={faBowlRice} className="text-primary" /> Serves</span> <span className="text-dark-emphasis">{`${servings} ${servings > 1 ? 'people' : 'person'}`}</span></p>
-                <p className="mb-0">This Hokkien classic is a flavour journey, balancing savoury and umami notes in every bite. From perfectly cooked proteins to crisp veggies, it tells the storey of Hokkien culinary heritage, enriched by a time-honoured sauce. Savour a taste of tradition and innovation in this delectable dish.</p>
+                <h4 className="fst-italic">{t('display.about')}<span className="text-primary">{`${title}`}</span></h4>
+                <p className="mb-2"><FontAwesomeIcon icon={faClock} className="text-primary" /> <span className="text-uppercase">{t('display.prep')}</span> <span className="text-dark-emphasis">{`${prepTime} `}{t('display.mins')}</span> <span className="ms-1 text-uppercase">{t('display.cook')}</span> <span className="text-dark-emphasis">{`${cookTime} `}{t('display.mins')}</span></p>
+                <p><span className="text-uppercase"><FontAwesomeIcon icon={faBowlRice} className="text-primary" /> {t('display.serves')}</span> <span className="text-dark-emphasis">{`${servings} ${servings > 1 ? t('display.people') : t('display.person')}`}</span></p>
+                <p className="mb-0">{t('display.aboutText')}</p>
               </div>
             </div>
           </div>

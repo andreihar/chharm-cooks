@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
 import { useAuth } from '../contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import isEqual from 'lodash.isequal';
 import DbService from '../services/DbService';
 import noRecipe from '../assets/noRecipe.png';
 
-function InputList({ items, label, add, remove, change }:{ items:any[], label:string, add:any, remove:any, change:any }) {
+function InputList({ items, label, addLabel, add, remove, change }:{ items:any[], label:string, addLabel:string, add:any, remove:any, change:any }) {
   return (
     <>
       {items.map((item, index) => (
@@ -18,7 +19,7 @@ function InputList({ items, label, add, remove, change }:{ items:any[], label:st
           <button type="button" className="btn btn-outline-danger fw-bold ms-2" onClick={() => remove(index)}>-</button>
         </div>
       ))}
-      <button type="button" className="btn btn-outline-primary fw-bold px-4" onClick={add}>Add {label}</button>
+      <button type="button" className="btn btn-outline-primary fw-bold px-4" onClick={add}>{addLabel}{label}</button>
     </>
   );
 }
@@ -35,6 +36,7 @@ function Form() {
   const [ingredients, setIngreds] = useState([{ name:"" }]);
   const [steps, setSteps] = useState([{ name:"" }]);
   const {authUser, isLogged} = useAuth();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,11 +71,11 @@ function Form() {
   async function submit(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (ingredients.length === 0) {
-      alert('At least one Ingredient is required');
+      alert(t('form.oneIngredient'));
       return;
     }
     if (steps.length === 0) {
-      alert('At least one Step is required');
+      alert(t('form.oneStep'));
       return;
     }
     let newRecipe = new Recipe(name.trim(), chinName.trim(), cuisine.trim(), authUser.username, prepTime, cookTime, servings, picture.trim() || noRecipe, ingredients.map(i => i.name.trim()).filter(Boolean), steps.map(s => s.name.trim()).filter(Boolean));
@@ -97,38 +99,38 @@ function Form() {
       <Navbar/>
       <div className="wrapper">
         <header>
-          <h2>{id ? 'Edit' : 'Create'} Recipe</h2>
+          <h2>{id ? t('form.edit') : t('form.create')}{t('form.recipe')}</h2>
         </header>
         <main>
           <form className="form-group" onSubmit={submit}>
             <fieldset className="p-4 my-4">
-              <legend className="text-primary">Recipe Information</legend>
+              <legend className="text-primary">{t('form.recipeInfo')}</legend>
               <div className="form-group">
-                <label htmlFor="name">Recipe Name *</label>
+                <label htmlFor="name">{t('form.recipeName')} *</label>
                 <input id="name" type="text" className="form-control" name="name" placeholder="Ke bah png" value={name} onChange={e => setName(e.target.value)} required autoComplete="name"/>
               </div>
               <div className="form-group">
-                <label htmlFor="chinName">Chinese Name *</label>
+                <label htmlFor="chinName">{t('form.chinName')} *</label>
                 <input id="chinName" type="text" className="form-control" name="chinName" placeholder="雞肉飯" value={chinName} onChange={e => setChinName(e.target.value)} required/>
               </div>
               <div className="form-group">
-                <label htmlFor="cuisine">Cuisine *</label>
+                <label htmlFor="cuisine">{t('form.cuisine')} *</label>
                 <input id="cuisine" type="text" className="form-control" name="cuisine" placeholder="Taiwanese" value={cuisine} onChange={e => setCuisine(e.target.value)} required/>
               </div>
               <div className="form-group">
-                <label htmlFor="prepTime">Preparation Time (min) *</label>
+                <label htmlFor="prepTime">{t('form.prepTime')} {t('form.min')} *</label>
                 <input id="prepTime" type="number" className="form-control" name="prepTime" placeholder="Preparation time in minutes" value={prepTime} onChange={e => setPrepTime(Math.max(0, Number(e.target.value)))} required/>
               </div>
               <div className="form-group">
-                <label htmlFor="cookTime">Cooking Time (min) *</label>
+                <label htmlFor="cookTime">{t('form.cookTime')} {t('form.min')} *</label>
                 <input id="cookTime" type="number" className="form-control" name="cookTime" placeholder="Cooking time in minutes" value={cookTime} onChange={e => setCookTime(Math.max(0, Number(e.target.value)))} required/>
               </div>
               <div className="form-group">
-                <label htmlFor="servings">Number of Servings *</label>
+                <label htmlFor="servings">{t('form.servings')} *</label>
                 <input id="servings" type="number" className="form-control" name="servings" placeholder="Number of servings" value={servings} onChange={e => setServings(Math.max(0, Number(e.target.value)))} required/>
               </div>
               <div className="form-group">
-                <label htmlFor="picture">Image URL (optional)</label>
+                <label htmlFor="picture">{t('form.picture')} {t('form.optional')}</label>
                 <input id="picture" type="text" className="form-control" name="picture" placeholder="https://live.staticflickr.com/65535/51720059627_0aed2b149b_o.jpg" value={picture} onChange={e => setPicture(e.target.value)} />
               </div>
               {picture && (
@@ -138,15 +140,15 @@ function Form() {
               )}
             </fieldset>
             <fieldset className="p-4 my-4">
-              <legend className="text-primary">Ingredients</legend>
-              <InputList items={ingredients} label="Ingredient" add={add(setIngreds)} remove={remove(setIngreds)} change={change(setIngreds)}/>
+              <legend className="text-primary">{t('form.ingredients')}</legend>
+              <InputList items={ingredients} label={t('form.ingredient')} addLabel={t('form.add')} add={add(setIngreds)} remove={remove(setIngreds)} change={change(setIngreds)}/>
             </fieldset>
             <fieldset className="p-4 my-4">
-              <legend className="text-primary">Directions</legend>
-              <InputList items={steps} label="Step" add={add(setSteps)} remove={remove(setSteps)} change={change(setSteps)}/>
+              <legend className="text-primary">{t('form.directions')}</legend>
+              <InputList items={steps} label={t('form.step')} addLabel={t('form.add')} add={add(setSteps)} remove={remove(setSteps)} change={change(setSteps)}/>
             </fieldset>
             <div className="controls d-flex justify-content-center">
-              <button type="submit" className="btn btn-outline-primary px-4">{id ? 'UPDATE' : 'SUBMIT'}</button>
+              <button type="submit" className="btn btn-outline-primary px-4 text-uppercase">{id ? t('form.update') : t('form.submit')}</button>
             </div>
           </form>
         </main>

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 import { User } from '../models/User';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -9,6 +10,7 @@ import DbService from '../services/DbService';
 
 function Login() {
   const {setAuthUser, setIsLogged} = useAuth();
+  const { t } = useTranslation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isPassword, setIsPassword] = useState(false);
@@ -19,11 +21,11 @@ function Login() {
     const authors = await DbService.getUsers();
     const author = authors.find((author:User) => author.username === username.trim());
     if (!author) {
-      alert('No existing account found with this username');
+      alert(t('login.noUsername'));
       return;
     }
     if (author.password !== password) {
-      alert('Incorrect password. Please try again');
+      alert(t('login.incorrectPassword'));
       return;
     }
     setAuthUser(author);
@@ -37,23 +39,23 @@ function Login() {
       <div className="bg-body-tertiary">
         <main className="form-signin m-auto d-flex align-items-center justify-content-center">
           <form style={{width: '330px'}} onSubmit={submit}>
-            <h1 className="mb-1">Sign in</h1>
-            <p className="small">Unleash your culinary creativity!</p>
+            <h1 className="mb-1">{t('login.signIn')}</h1>
+            <p className="small">{t('login.unleash')}</p>
             <div className="form-floating mb-2">
               <input type="text" className="form-control" id="floatingInput" placeholder="Username" onChange={e => setUsername(e.target.value)} required/>
-              <label htmlFor="floatingInput">Username</label>
+              <label htmlFor="floatingInput">{t('signup.username')}</label>
             </div>
             <div className="form-floating mb-4 position-relative">
               <input type={isPassword ? "text" : "password"} className="form-control" id="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
               <button type="button" onClick={() => setIsPassword(!isPassword)} className="btn position-absolute top-50 translate-middle-y end-0">
                 <FontAwesomeIcon icon={isPassword ? faEye : faEyeSlash} />
               </button>
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password">{t('signup.password')}</label>
             </div>
-            <button className="btn btn-primary w-100 py-2 text-uppercase mb-4" type="submit">Sign in</button>
+            <button className="btn btn-primary w-100 py-2 text-uppercase mb-4" type="submit">{t('login.signIn')}</button>
             <p className="m-0">
-              Don't have an account?{" "}
-              <Link to='/signup' className="fw-bold px-1">Join now</Link>
+              {t('login.makeAccount')}{" "}
+              <Link to='/signup' className="fw-bold px-1">{t('login.signIn')}</Link>
             </p>
           </form>
         </main>

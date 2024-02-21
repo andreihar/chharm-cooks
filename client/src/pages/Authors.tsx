@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Recipe } from '../models/Recipe';
 import { User } from '../models/User';
+import { useTranslation } from 'react-i18next';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DbService from '../services/DbService';
@@ -15,6 +16,7 @@ function getSpecialtyCuisine(authorRecipes: Recipe[]) {
 }
 
 function Authors() {
+  const { t } = useTranslation();
   const [authors, setAuthors] = useState<User[]>([]);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
 
@@ -28,7 +30,7 @@ function Authors() {
       <Navbar/>
       <div className="album py-5">
         <div className="container">
-          <h2>Our Top Contributors</h2>
+          <h2>{t('authors.top')}</h2>
           <div className="row">
             {authors.sort((a, b) => {
               const aRecipes = recipes.filter(recipe => recipe.username === a.username).length;
@@ -52,8 +54,8 @@ function Authors() {
                       </div>
                       <div className="card-content p-3 position-relative bg-body-tertiary">
                         <h3 className="card-title fs-4 mb-2">{author.username}</h3>
-                        <div><small>{authorRecipes.length} {authorRecipes.length === 1 ? 'Recipe' : 'Recipes'}</small></div>
-                        <div><small><span className="text-primary fw-bold">{getSpecialtyCuisine(authorRecipes)}</span> cuisine</small></div>
+                        <div><small>{authorRecipes.length} {authorRecipes.length === 1 ? t('authors.recipe') : t('home.recipes')}</small></div>
+                        <div><small><span className="text-primary fw-bold">{getSpecialtyCuisine(authorRecipes)}</span> {t('authors.cuisine')}</small></div>
                       </div>
                     </div>
                   </a>

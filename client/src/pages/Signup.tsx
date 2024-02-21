@@ -4,6 +4,7 @@ import { User } from '../models/User';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 import DbService from '../services/DbService';
 import noUser from '../assets/noUser.jpg';
 
@@ -14,6 +15,7 @@ function Signup() {
   const [social, setSocial] = useState('');
   const [isPassword, setIsPassword] = useState(false);
   const {setAuthUser, setIsLogged} = useAuth();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   async function submit(e:React.FormEvent<HTMLFormElement>) {
@@ -34,33 +36,33 @@ function Signup() {
     <section className="signup">
       <div className="container pt-5 h-100">
         <div className="row d-flex align-items-center justify-content-center h-100">
-          <h1 className="mb-1 fw-normal text-center mb-5">Welcome to your<br/><span className="text-primary">Hokkien culinary community</span></h1>  
+          <h1 className="mb-1 fw-normal text-center mb-5">{t('signup.welcome.part1')}<br/><span className="text-primary">{t('signup.welcome.part2')}</span></h1>  
           <div className="col-md-7 col-lg-5 col-xl-5 offset-xr-1">
             <form style={{width: '330px'}} className="float-end" onSubmit={submit}>
               <img src={imageUrl} alt="mdo" width={128} height={128} className="rounded-circle mx-auto d-block mb-3"/>
               <div className="form-floating mb-2">
                 <input type="text" className="form-control" id="username" placeholder="Name" onChange={e => setUsername(e.target.value)} autoComplete="username"/>
-                <label htmlFor="username">Username</label>
+                <label htmlFor="username">{t('signup.username')}</label>
               </div>
               <div className="form-floating mb-2 position-relative">
                 <input type={isPassword ? "text" : "password"} className="form-control" id="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
                 <button type="button" onClick={() => setIsPassword(!isPassword)} className="btn position-absolute top-50 translate-middle-y end-0">
                   <FontAwesomeIcon icon={isPassword ? faEye : faEyeSlash} />
                 </button>
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">{t('signup.password')}</label>
               </div>
               <div className="form-floating mb-2">
                 <input type="text" className="form-control" id="picture" placeholder="Picture" onChange={e => setImageUrl(e.target.value || noUser)}/>
-                <label htmlFor="picture">Picture URL (optional)</label>
+                <label htmlFor="picture">{t('form.picture')} {t('form.optional')}</label>
               </div>
               <div className="form-floating mb-4">
                 <input type="text" className="form-control" id="social" placeholder="Social" onChange={e => setSocial(e.target.value)}/>
-                <label htmlFor="social">Social Link (optional)</label>
+                <label htmlFor="social">{t('signup.social')} {t('form.optional')}</label>
               </div>
-              <button className="btn btn-primary w-100 py-2 text-uppercase mb-4" type="submit">Join</button>
+              <button className="btn btn-primary w-100 py-2 text-uppercase mb-4" type="submit">{t('signup.join')}</button>
               <p className="m-0">
-                Already have an account?{" "}
-                <Link to='/login' className="fw-bold px-1">Sign in</Link>
+                {t('signup.haveAccount')}{" "}
+                <Link to='/login' className="fw-bold px-1">{t('login.signIn')}</Link>
               </p>
             </form>
           </div>

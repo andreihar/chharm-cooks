@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
 import { useAuth } from '../contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DbService from '../services/DbService';
@@ -13,6 +14,7 @@ function Home() {
   const [selectedCuisine, setSelectedCuisine] = useState('');
   const [onlyMyRecipes, setOnlyMyRecipes] = useState(false);
   const {authUser, isLogged} = useAuth();
+  const { t } = useTranslation();
 
   useEffect(() => {
     DbService.getRecipes().then(setRecipes);
@@ -29,11 +31,19 @@ function Home() {
                 style={{ clipPath: "polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%)", }} className="d-block" width={900} height={600} loading="lazy" />
             </div>
             <div className="col-lg-6 p-lg-5">
-              <h1 className="display-4 lh-1 text-body-emphasis">Uncover Hokkien culinary charms at <span className="text-primary fw-bold">Chhárm</span><span className="text-primary">Cooks</span></h1>
-              <p className="lead my-5">Embark on a culinary journey with <span className="text-primary fw-bold">Chhárm</span><span className="text-primary">Cooks</span>, where the heart of Hokkien <span className="text-primary fw-bold">炒</span><span className="text-primary">菜</span> <small className="fs-6">(chhá chhài)</small> beats in every recipe. Explore the secrets of culinary artistry and indulge in flavours that charm your palate.</p>
+              <h1 className="display-4 lh-1 text-body-emphasis">
+                {t('home.title.part1')}<span className="text-primary"><b className="fw-bold">Chhárm</b>Cooks</span>{t('home.title.part2')}
+              </h1>
+              <p className="lead my-5">
+                {t('home.description.part1')}
+                <span className="text-primary"><b className="fw-bold">Chhárm</b>Cooks</span>
+                {t('home.description.part2')}
+                <span className="text-primary"><b className="fw-bold">炒</b>菜</span> <small className="fs-6">(chhá chhài)</small>
+                {t('home.description.part3')}
+              </p>
               <div className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-                <Link to='/form' className="nav-link"><button type="button" className="btn btn-primary btn-lg px-4 fw-bold">Add Recipe</button></Link>
-                <a href="#recipes" className="ms-md-2"><button type="button" className="btn btn-outline-secondary btn-lg px-4">View Recipes</button></a>
+                <Link to='/form' className="nav-link"><button type="button" className="btn btn-primary btn-lg px-4 fw-bold">{t('navbar.addRecipe')}</button></Link>
+                <a href="#recipes" className="ms-md-2"><button type="button" className="btn btn-outline-secondary btn-lg px-4">{t('home.viewRecipes')}</button></a>
               </div>
             </div>
           </div>
@@ -41,15 +51,15 @@ function Home() {
       </div>
       <div className="album py-5 bg-body-tertiary">
         <div className="container">
-          <h2 id="recipes">Recipes</h2>
+          <h2 id="recipes">{t('home.recipes')}</h2>
           <div className="row justify-content-center my-4">
             <div className="col-md-6">
-              <input id="search" type="text" className="form-control border-dark-subtle" placeholder="Search" onChange={e => setSearchTerm(e.target.value)} />
+              <input id="search" type="text" className="form-control border-dark-subtle" placeholder={t('home.search')} onChange={e => setSearchTerm(e.target.value)} />
               {isLogged &&
                 <button 
                   className={`btn ${onlyMyRecipes ? 'btn-primary' : 'btn-secondary'} me-2 mt-2`}
                   onClick={() => setOnlyMyRecipes(prev => !prev)}>
-                  {onlyMyRecipes ? 'Show all recipes' : 'Show only my recipes'}
+                  {onlyMyRecipes ? t('home.showAll') : t('home.showMy')}
                 </button>
               }
               {[...new Set(recipes.map(recipe => recipe.cuisine))].map(cuisine => (
