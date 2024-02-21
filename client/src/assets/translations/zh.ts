@@ -1,4 +1,4 @@
-export const cn = {
+export const zh = {
   translation: {
     home: {
       title: {
@@ -20,7 +20,7 @@ export const cn = {
       home: "家",
       addRecipe: "添加食譜",
       contributors: "貢獻者",
-      signout: "登出"
+      signOut: "登出"
     },
     login: {
       signIn: "登入",

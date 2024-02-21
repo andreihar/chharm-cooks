@@ -55,10 +55,12 @@ function Navbar() {
               <Link to='/login'><button type="button" className="btn btn-primary">{t('login.signIn')}</button></Link>
             </div>
           }
-          <select onChange={changeLanguage}>
-            <option value="en">English</option>
-            <option value="cn">Deutsch</option>
+          <div className="ms-2">
+          <select value={i18n.language} onChange={changeLanguage} className="form-select">
+            <option value="en">ENG</option>
+            <option value="zh">華語</option>
           </select>
+          </div>
         </div>
       </div>
     </nav>

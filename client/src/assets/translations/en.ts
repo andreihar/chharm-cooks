@@ -20,7 +20,7 @@ export const en = {
       home: "Home",
       addRecipe: "Add Recipe",
       contributors: "Contributors",
-      signout: "Sign Out"
+      signOut: "Sign Out"
     },
     login: {
       signIn: "Sign In",
