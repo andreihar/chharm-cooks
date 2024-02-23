@@ -70,15 +70,15 @@ function Form() {
 
   async function submit(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (ingredients.length === 0) {
+    let newRecipe = new Recipe(name.trim(), chinName.trim(), cuisine.trim(), authUser.username, prepTime, cookTime, servings, picture.trim() || noRecipe, ingredients.map(i => i.name.trim()).filter(Boolean), steps.map(s => s.name.trim()).filter(Boolean));
+    if (newRecipe.ingredients.length === 0) {
       alert(t('form.oneIngredient'));
       return;
     }
-    if (steps.length === 0) {
+    if (newRecipe.recipeInstructions.length === 0) {
       alert(t('form.oneStep'));
       return;
     }
-    let newRecipe = new Recipe(name.trim(), chinName.trim(), cuisine.trim(), authUser.username, prepTime, cookTime, servings, picture.trim() || noRecipe, ingredients.map(i => i.name.trim()).filter(Boolean), steps.map(s => s.name.trim()).filter(Boolean));
     if (id) {
       const oldRecipe = await DbService.getRecipeById(Number(id));
       if (oldRecipe && !isEqual(

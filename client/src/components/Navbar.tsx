@@ -56,7 +56,7 @@ function Navbar() {
             </div>
           }
           <div className="ms-2">
-          <select value={i18n.language} onChange={changeLanguage} className="form-select">
+          <select value={i18n.language} onChange={changeLanguage} className="form-select" name="Language">
             <option value="en">ENG</option>
             <option value="zh">華語</option>
           </select>

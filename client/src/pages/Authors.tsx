@@ -41,7 +41,7 @@ function Authors() {
                 return bRecipes - aRecipes;
             }).map((author, index) => {
               const authorRecipes = recipes.filter(recipe => recipe.username === author.username);
-              const recipeImage = authorRecipes.filter(recipe => recipe.picture).sort((a, b) => new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime())[0]?.picture || noRecipe;
+              const recipeImage = authorRecipes.filter(recipe => recipe.picture && recipe.picture.startsWith('http')).sort((a, b) => new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime())[0]?.picture || noRecipe;
               return (
                 <div key={index} className="section-ting col-12 col-sm-6 col-md-4 col-lg-3 my-3">
                   <a href={author.social} target="_blank" rel="noopener noreferrer">

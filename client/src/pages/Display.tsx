@@ -39,7 +39,7 @@ function Display() {
   }, [id]);
 
   const deleteRecipe = () => {
-    if (window.confirm(`${t('display.delete.part1')}${recipe!.title}${t('display.delete.part2')}`)) {
+    if (window.confirm(`${t('display.delete.part1')} ${recipe!.title}${t('display.delete.part2')}`)) {
       DbService.deleteRecipe(Number(id));
       navigate('/');
     }
