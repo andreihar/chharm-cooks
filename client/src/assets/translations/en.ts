@@ -32,7 +32,7 @@ export const en = {
     },
     signup: {
       welcome: {
-        part1: "Welcome to your ",
+        part1: "Welcome to your",
         part2: "Hokkien culinary community"
       },
       username: "Username",
