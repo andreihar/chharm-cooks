@@ -59,18 +59,27 @@ const helpers = {
 
     // Users
     getUsers: async function() {
-        const res = await pool.query('SELECT * FROM users')
+        const res = await pool.query('SELECT username, picture, social FROM users')
         return res.rows
     },
 
     getUserByName: async function(username) {
-        const res = await pool.query('SELECT * FROM users WHERE username = $1', [username])
+        const res = await pool.query('SELECT username, picture, social FROM users WHERE username = $1', [username])
         return res.rows[0]
     },
 
 	addUser: async function(username, password, picture, social) {
         const q = 'INSERT INTO users(username, password, picture, social) VALUES($1, $2, $3, $4) ON CONFLICT (username) DO NOTHING'
         const res = await pool.query(q, [username, password, picture, social])
+    },
+
+    checkPassword: async function(username, password) {
+        const q = 'SELECT password FROM users WHERE username = $1'
+        const res = await pool.query(q, [username]);
+        const user = res.rows[0];
+        if (user)
+            return user.password === password;
+        return false;
     },
 
     // Recipes

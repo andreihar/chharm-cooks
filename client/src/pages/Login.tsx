@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../components/Navbar';
 import DbService from '../services/DbService';
+import { AxiosError } from 'axios';
 
 function Login() {
   const {setAuthUser, setIsLogged} = useAuth();
@@ -18,19 +19,19 @@ function Login() {
 
   async function submit(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const authors = await DbService.getUsers();
-    const author = authors.find((author:User) => author.username === username.trim());
-    if (!author) {
-      alert(t('login.noUsername'));
-      return;
+    try {
+      const author = await DbService.login(username.trim(), password);
+      setAuthUser(author);
+      setIsLogged(true);
+      navigate('/');
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      if (axiosError.response && axiosError.response.status === 401) {
+        alert(t('login.incorrectPassword'));
+      } else {
+        alert(t('login.noUsername'));
+      }
     }
-    if (author.password !== password) {
-      alert(t('login.incorrectPassword'));
-      return;
-    }
-    setAuthUser(author);
-    setIsLogged(true);
-    navigate('/');
   }
 
   return (

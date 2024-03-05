@@ -25,8 +25,8 @@ function Signup() {
       alert('This username is already used');
       return;
     }
-    const newAuthor = new User(username.trim(), password, imageUrl.trim() || noUser, social.trim())
-    DbService.addUser(newAuthor);
+    const newAuthor = new User(username.trim(), imageUrl.trim() || noUser, social.trim())
+    DbService.addUser(newAuthor, password);
     setAuthUser(newAuthor);
     setIsLogged(true);
     navigate('/');

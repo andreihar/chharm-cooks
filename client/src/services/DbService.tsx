@@ -41,8 +41,17 @@ const getUserByName = (username:string): Promise<User> => {
     });
 };
 
-const addUser = (newUser: User) => {
-  return axios.post(`${BASE_URL}/adduser`, newUser);
+const addUser = (newUser: User, password: string) => {
+  return axios.post(`${BASE_URL}/adduser`, { ...newUser, password });
+};
+
+const login = (username: string, password: string): Promise<User> => {
+  return axios.post<User>(`${BASE_URL}/login`, { username, password })
+    .then(response => response.data)
+    .catch(error => {
+      console.error('Error logging in', error);
+      throw error;
+    });
 };
 
 // Recipes
@@ -81,6 +90,7 @@ const DbService = {
   getUsers,
   getUserByName,
   addUser,
+  login,
   getRecipes,
   getRecipeById,
   addRecipe,

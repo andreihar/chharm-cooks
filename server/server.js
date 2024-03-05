@@ -25,6 +25,19 @@ app.post('/adduser', async (req, res) => {
     res.redirect('/getusers')
 })
 
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+    const user = await db.helpers.getUserByName(username);
+    if (!user) {
+        return res.status(404).json({ error: 'Invalid username' });
+    }
+    if (!(await db.helpers.checkPassword(username, password))) {
+        return res.status(401).json({ error: 'Invalid password' });
+    }
+    delete user.password;
+    res.json(user);
+});
+
 
 // Recipes
 app.get('/getrecipes', async (req, res) => {
