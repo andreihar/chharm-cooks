@@ -10,6 +10,4 @@ COPY . .
 
 EXPOSE 4000
 
-CMD sleep 10 && node server.js
-
 CMD [ "node", "server.js" ]
