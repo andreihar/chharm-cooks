@@ -1,4 +1,6 @@
 const { Pool } = require('pg');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 require('dotenv').config({ path: './process.env' });
 const pool = new Pool({
@@ -26,7 +28,7 @@ const helpers = {
         const sql = `
             CREATE TABLE IF NOT EXISTS users(
                 username VARCHAR(50) PRIMARY KEY, 
-                password VARCHAR(50), 
+                password VARCHAR(60), 
                 picture TEXT, 
                 social TEXT
             );
@@ -69,16 +71,16 @@ const helpers = {
     },
 
 	addUser: async function(username, password, picture, social) {
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
         const q = 'INSERT INTO users(username, password, picture, social) VALUES($1, $2, $3, $4) ON CONFLICT (username) DO NOTHING'
-        const res = await pool.query(q, [username, password, picture, social])
+        const res = await pool.query(q, [username, hashedPassword, picture, social])
     },
 
     checkPassword: async function(username, password) {
         const q = 'SELECT password FROM users WHERE username = $1'
         const res = await pool.query(q, [username]);
         const user = res.rows[0];
-        if (user)
-            return user.password === password;
+        return user && await bcrypt.compare(password, user.password);
         return false;
     },
 
