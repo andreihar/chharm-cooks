@@ -69,9 +69,6 @@ app.put('/updaterecipe/:id', async (req, res) => {
 
 async function InitDB() {
     await db.helpers.init()
-    const p = await db.helpers.getUsers()
-    console.log(p)
-    people = p
 }
 
 InitDB().then(() => { 

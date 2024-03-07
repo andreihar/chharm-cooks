@@ -76,8 +76,8 @@ function Display() {
               <hr />
               <div className="d-flex justify-content-between">
                 <p className="text-dark-emphasis">
-                  {t('display.posted')} <span className="">{`${createdOn.toLocaleDateString()}`}</span>&nbsp;
-                  {t('display.updated')} <span className="">{`${timeLastModified.toLocaleDateString()}`}</span>
+                  {t('display.posted')} <span className="">{`${createdOn.toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>&nbsp;|&nbsp;
+                  {t('display.updated')} <span className="">{`${timeLastModified.toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>
                 </p>
                 {isLogged && (authUser.username === author!.username) &&
                   <div>

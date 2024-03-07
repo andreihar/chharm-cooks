@@ -1,5 +1,5 @@
 const { Pool } = require('pg');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
 require('dotenv').config({ path: './process.env' });
@@ -71,7 +71,7 @@ const helpers = {
     },
 
 	addUser: async function(username, password, picture, social) {
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        const hashedPassword = bcrypt.hashSync(password, saltRounds);
         const q = 'INSERT INTO users(username, password, picture, social) VALUES($1, $2, $3, $4) ON CONFLICT (username) DO NOTHING'
         const res = await pool.query(q, [username, hashedPassword, picture, social])
     },
@@ -80,8 +80,7 @@ const helpers = {
         const q = 'SELECT password FROM users WHERE username = $1'
         const res = await pool.query(q, [username]);
         const user = res.rows[0];
-        return user && await bcrypt.compare(password, user.password);
-        return false;
+        return user && bcrypt.compareSync(password, user.password);
     },
 
     // Recipes

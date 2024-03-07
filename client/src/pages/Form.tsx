@@ -107,11 +107,11 @@ function Form() {
               <legend className="text-primary">{t('form.recipeInfo')}</legend>
               <div className="form-group">
                 <label htmlFor="name">{t('form.recipeName')} *</label>
-                <input id="name" type="text" className="form-control" name="name" placeholder="Ke bah png" value={name} onChange={e => setName(e.target.value)} required autoComplete="name"/>
+                <input id="name" type="text" className="form-control" name="name" placeholder="Ke bah png" value={name} onChange={e => setName(e.target.value)} required autoComplete="name" maxLength={50}/>
               </div>
               <div className="form-group">
                 <label htmlFor="chinName">{t('form.chinName')} *</label>
-                <input id="chinName" type="text" className="form-control" name="chinName" placeholder="雞肉飯" value={chinName} onChange={e => setChinName(e.target.value)} required/>
+                <input id="chinName" type="text" className="form-control" name="chinName" placeholder="雞肉飯" value={chinName} onChange={e => setChinName(e.target.value)} required maxLength={50}/>
               </div>
               <div className="form-group">
                 <label htmlFor="cuisine">{t('form.cuisine')} *</label>

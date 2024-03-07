@@ -41,11 +41,11 @@ function Signup() {
             <form style={{width: '330px'}} className="float-end" onSubmit={submit}>
               <img src={imageUrl} alt="mdo" width={128} height={128} className="rounded-circle mx-auto d-block mb-3"/>
               <div className="form-floating mb-2">
-                <input type="text" className="form-control" id="username" placeholder="Name" onChange={e => setUsername(e.target.value)} autoComplete="username"/>
+                <input type="text" className="form-control" id="username" placeholder="Name" onChange={e => setUsername(e.target.value)} autoComplete="username" maxLength={50} required/>
                 <label htmlFor="username">{t('signup.username')}</label>
               </div>
               <div className="form-floating mb-2 position-relative">
-                <input type={isPassword ? "text" : "password"} className="form-control" id="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
+                <input type={isPassword ? "text" : "password"} className="form-control" id="password" placeholder="Password" onChange={e => setPassword(e.target.value)} maxLength={60} required/>
                 <button type="button" onClick={() => setIsPassword(!isPassword)} className="btn position-absolute top-50 translate-middle-y end-0">
                   <FontAwesomeIcon icon={isPassword ? faEye : faEyeSlash} />
                 </button>

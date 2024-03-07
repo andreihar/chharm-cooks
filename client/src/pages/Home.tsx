@@ -18,6 +18,10 @@ function Home() {
 
   useEffect(() => {
     DbService.getRecipes().then(setRecipes);
+    const intervalId = setInterval(() => {
+      DbService.getRecipes().then(setRecipes);
+    }, 5000);
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
