@@ -55,7 +55,7 @@ function Authors() {
                       <div className="card-content p-3 position-relative bg-body-tertiary">
                         <h3 className="card-title fs-4 mb-2">{author.username}</h3>
                         <div><small>{authorRecipes.length} {authorRecipes.length === 1 ? t('authors.recipe') : t('home.recipes')}</small></div>
-                        <div><small><span className="text-primary fw-bold">{getSpecialtyCuisine(authorRecipes)}</span> {t('authors.cuisine')}</small></div>
+                        <div><small><span className="text-primary fw-bold">{getSpecialtyCuisine(authorRecipes) || t('authors.no')}</span> {t('authors.cuisine')}</small></div>
                       </div>
                     </div>
                   </a>

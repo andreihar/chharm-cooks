@@ -55,7 +55,7 @@ function Login() {
             <button className="btn btn-primary w-100 py-2 text-uppercase mb-4" type="submit">{t('login.signIn')}</button>
             <p className="m-0">
               {t('login.makeAccount')}{" "}
-              <Link to='/signup' className="fw-bold px-1">{t('login.signIn')}</Link>
+              <Link to='/signup' className="fw-bold px-1">{t('signup.join')}</Link>
             </p>
           </form>
         </main>

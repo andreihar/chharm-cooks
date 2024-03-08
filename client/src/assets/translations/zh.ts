@@ -103,7 +103,8 @@ export const zh = {
     authors: {
       top: "我們的傑出貢獻者",
       recipe: "配方",
-      cuisine: "菜"
+      cuisine: "菜",
+      no: "沒有"
     },
     404: {
       message: "我們似乎找不到您要找的頁面",
