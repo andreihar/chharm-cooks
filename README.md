@@ -19,6 +19,12 @@ A comprehensive recipe-sharing platform inspired by Hokkien cuisine. This React-
 
 [Live Demo][demo]
 
+
+
+https://github.com/andreihar/recipe-app/assets/95883512/8c8a6a1e-2009-4ee1-9eed-683e406eb0d8
+
+
+
 </div>
 
 
@@ -54,6 +60,7 @@ A comprehensive recipe-sharing platform inspired by Hokkien cuisine. This React-
         <li><a href="#not-found">Not Found</a></li>
       </ul>
     </li>
+    <li><a href="#lighthouse-report">Lighthouse Report</a></li>
     <li><a href="#contributors">Contributors</a></li>
     <li><a href="#licence">Licence</a></li>
   </ol>
@@ -138,7 +145,7 @@ Users can create recipes via the "Add Recipe" button, which reveals a user-frien
 Users can view recipes by clicking on recipe cards on the Home Page. To maintain integrity, only logged-in users who authored a recipe have the privilege to delete or edit them. When editing a recipe, users are redirected to the Form page, where all input fields are pre-populated with information from the selected recipe. Upon submission of the form, the existing recipe entry will be promptly modified.
 
 <p align="center">
-<img src="readme/showcase.png" alt="Form" height="300">
+<img src="readme/showcase.png" alt="Showcase" height="300">
 </p>
 
 <p align="center">
@@ -150,7 +157,7 @@ Users can view recipes by clicking on recipe cards on the Home Page. To maintain
 Users are presented with a randomised list of suggested recipes at the bottom of the Recipe Showcase page.
 
 <p align="center">
-<img src="readme/suggest.png" alt="Form" height="300">
+<img src="readme/suggest.png" alt="Suggest" height="300">
 </p>
 
 ### User Ranking
@@ -167,6 +174,15 @@ In the event of a non-existent page, users are redirected to a 404 page with int
 
 <p align="center">
 <img src="readme/404.png" alt="Page not Found" height="300">
+</p>
+
+
+
+<!-- LIGHTHOUSE -->
+## Lighthouse Report
+
+<p align="center">
+<img src="readme/audit.png" alt="Audit" height="150">
 </p>
 
 
