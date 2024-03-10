@@ -25,9 +25,10 @@ function Signup() {
       alert('This username is already used');
       return;
     }
-    const newAuthor = new User(username.trim(), imageUrl.trim() || noUser, social.trim())
-    DbService.addUser(newAuthor, password);
-    setAuthUser(newAuthor);
+    const newAuthor = new User(username.trim(), imageUrl.trim() || noUser, social.trim());
+    const response = await DbService.addUser(newAuthor, password);
+    localStorage.setItem('token', response.token);
+    setAuthUser(response.user);
     setIsLogged(true);
     navigate('/');
   }

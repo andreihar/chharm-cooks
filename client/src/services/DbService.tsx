@@ -22,6 +22,11 @@ const mapDbToRecipe = (dbRecipe: any): Recipe => {
   };
 }
 
+interface LoginResponse {
+  user: User;
+  token: string;
+};
+
 // Users
 const getUsers = (): Promise<User[]> => {
   return axios.get<User[]>(`${BASE_URL}/getusers`)
@@ -41,21 +46,33 @@ const getUserByName = (username:string): Promise<User> => {
     });
 };
 
-const addUser = (newUser: User, password: string) => {
-  return axios.post(`${BASE_URL}/adduser`, { ...newUser, password });
+const addUser = (newUser: User, password: string): Promise<LoginResponse> => {
+  return axios.post<LoginResponse>(`${BASE_URL}/adduser`, { ...newUser, password })
+    .then(response => response.data)
+    .catch(error => {
+      console.error('Error signing up', error);
+      throw error;
+    });
 };
 
-const login = (username: string, password: string): Promise<User> => {
-  return axios.post<User>(`${BASE_URL}/login`, { username, password })
-    .then(response => response.data)
+const login = (username: string, password: string): Promise<LoginResponse> => {
+  return axios.post<LoginResponse>(`${BASE_URL}/login`, { username, password })
+    .then(response => {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+      return response.data;
+    })
     .catch(error => {
       console.error('Error logging in', error);
       throw error;
     });
 };
 
-// Recipes
+const logout = () => {
+  delete axios.defaults.headers.common['Authorization'];
+  localStorage.removeItem('token');
+};
 
+// Recipes
 const getRecipes = (): Promise<Recipe[]> => {
   return axios.get<Recipe[]>(`${BASE_URL}/getrecipes`)
     .then(response => response.data.map(mapDbToRecipe))
@@ -91,6 +108,7 @@ const DbService = {
   getUserByName,
   addUser,
   login,
+  logout,
   getRecipes,
   getRecipeById,
   addRecipe,

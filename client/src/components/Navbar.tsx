@@ -5,6 +5,7 @@ import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
+import DbService from '../services/DbService';
 
 function Navbar() {
   const {authUser, setAuthUser, isLogged, setIsLogged} = useAuth();
@@ -26,6 +27,8 @@ function Navbar() {
     e.preventDefault();
     setIsLogged(false);
     setAuthUser(null);
+    localStorage.removeItem('authUser');
+    DbService.logout();
     navigate('/');
   }
   

@@ -19,8 +19,9 @@ function Login() {
   async function submit(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
-      const author = await DbService.login(username.trim(), password);
-      setAuthUser(author);
+      const response = await DbService.login(username.trim(), password);
+      localStorage.setItem('token', response.token);
+      setAuthUser(response.user);
       setIsLogged(true);
       navigate('/');
     } catch (error) {
