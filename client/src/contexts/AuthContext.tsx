@@ -1,5 +1,5 @@
-import React, {useState, useContext, useEffect} from 'react';
-import { jwtDecode } from "jwt-decode";
+import React, {useState, useContext} from 'react';
+import Cookies from 'js-cookie';
 import { User } from '../models/User';
 
 interface AuthContextValue {
@@ -21,37 +21,10 @@ export function useAuth() {
 
 export function AuthProvider(props:any) {
 	const [authUser, setAuthUser] = useState(() => {
-        const savedUser = localStorage.getItem('authUser');
+        const savedUser = Cookies.get('authUser');
         return savedUser ? JSON.parse(savedUser) : null;
     });
     const [isLogged, setIsLogged] = useState(!!authUser);
-
-	useEffect(() => {
-		if (authUser) {
-			localStorage.setItem('authUser', JSON.stringify(authUser));
-		} else {
-			localStorage.removeItem('authUser');
-		}
-	}, [authUser]);
-
-    useEffect(() => {
-		const token = localStorage.getItem('token');
-		if (token && typeof token === 'string') {
-			const decodedToken = jwtDecode(token);
-			if (decodedToken.exp) {
-				const expirationDate = decodedToken.exp * 1000;
-				const timeoutId = setTimeout(() => {
-					localStorage.removeItem('authUser');
-					localStorage.removeItem('token');
-					setIsLogged(false);
-				}, expirationDate - Date.now());
-				return () => clearTimeout(timeoutId);
-			}
-		} else {
-			localStorage.removeItem('authUser');
-			localStorage.removeItem('token');
-		}
-	}, []);
 
 	const value: any = {
 		authUser,

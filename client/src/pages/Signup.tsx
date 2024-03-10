@@ -26,9 +26,8 @@ function Signup() {
       return;
     }
     const newAuthor = new User(username.trim(), imageUrl.trim() || noUser, social.trim());
-    const response = await DbService.addUser(newAuthor, password);
-    localStorage.setItem('token', response.token);
-    setAuthUser(response.user);
+    const user = await DbService.addUser(newAuthor, password);
+    setAuthUser(user);
     setIsLogged(true);
     navigate('/');
   }

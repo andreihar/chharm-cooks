@@ -27,7 +27,6 @@ function Navbar() {
     e.preventDefault();
     setIsLogged(false);
     setAuthUser(null);
-    localStorage.removeItem('authUser');
     DbService.logout();
     navigate('/');
   }

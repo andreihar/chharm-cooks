@@ -1,8 +1,15 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
+import { jwtDecode } from "jwt-decode";
 import { User } from '../models/User';
 import { Recipe } from '../models/Recipe';
 
 const BASE_URL = 'http://localhost:4000';
+
+const token = Cookies.get('token');
+if (token) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
 
 const mapDbToRecipe = (dbRecipe: any): Recipe => {
   return {
@@ -46,20 +53,36 @@ const getUserByName = (username:string): Promise<User> => {
     });
 };
 
-const addUser = (newUser: User, password: string): Promise<LoginResponse> => {
+const setAuthHeadersAndCookies = (response: LoginResponse) => {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${response.token}`;
+  const decodedToken = jwtDecode(response.token);
+  if (decodedToken.exp) {
+    const expirationDate = new Date(decodedToken.exp * 1000);
+    Cookies.set('token', response.token, { expires: expirationDate });
+    Cookies.set('authUser', JSON.stringify(response.user), { expires: expirationDate });
+  } else {
+    Cookies.set('token', response.token);
+    Cookies.set('authUser', JSON.stringify(response.user));
+  }
+};
+
+const addUser = (newUser: User, password: string): Promise<User> => {
   return axios.post<LoginResponse>(`${BASE_URL}/adduser`, { ...newUser, password })
-    .then(response => response.data)
+    .then(response => {
+      setAuthHeadersAndCookies(response.data);
+      return response.data.user;
+    })
     .catch(error => {
       console.error('Error signing up', error);
       throw error;
     });
 };
 
-const login = (username: string, password: string): Promise<LoginResponse> => {
+const login = (username: string, password: string): Promise<User> => {
   return axios.post<LoginResponse>(`${BASE_URL}/login`, { username, password })
     .then(response => {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
-      return response.data;
+      setAuthHeadersAndCookies(response.data);
+      return response.data.user;
     })
     .catch(error => {
       console.error('Error logging in', error);
@@ -69,7 +92,8 @@ const login = (username: string, password: string): Promise<LoginResponse> => {
 
 const logout = () => {
   delete axios.defaults.headers.common['Authorization'];
-  localStorage.removeItem('token');
+  Cookies.remove('token');
+  Cookies.remove('authUser');
 };
 
 // Recipes
