@@ -11,7 +11,7 @@ function NotFound() {
     <>
       <Navbar/>
       <div className="bg-body-tertiary">
-        <main className="form-signin d-flex flex-column justify-content-center align-items-center text-center">
+        <main className="min-height d-flex flex-column justify-content-center align-items-center text-center">
           <FontAwesomeIcon icon={faFaceSadTear} size="6x" className="text-primary mb-4"/>
           <h1 className="display-1 mb-4">404</h1>
           <p className="display-6 mb-5">{t('404.message')}</p>

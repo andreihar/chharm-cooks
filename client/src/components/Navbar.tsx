@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import logo from '../assets/logo.svg'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
@@ -51,8 +53,8 @@ function Navbar() {
             </div>
             :
             <div>
-              <Link to='/signup'><button type="button" className="btn btn-outline-secondary me-2">{t('login.joinNow')}</button></Link>
-              <Link to='/login'><button type="button" className="btn btn-primary">{t('login.signIn')}</button></Link>
+              <Link to='/login'><button type="button" className="btn me-1"><FontAwesomeIcon className="fs-4 align-middle text-primary" icon={faCircleUser} /> {t('login.signIn')}</button></Link>
+              <Link to='/signup'><button type="button" className="btn btn-primary">{t('login.joinNow')}</button></Link>
             </div>
           }
           <div className="ms-2">

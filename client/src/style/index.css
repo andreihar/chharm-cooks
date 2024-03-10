@@ -29,6 +29,23 @@ div.wrapper {
     --bs-dropdown-min-width: 0!important;
 }
 
+/* Hero */
+.min-height {
+    min-height: calc(100vh - var(--navbar-height));
+}
+.hero-image {
+    display: none;
+}
+@media (min-width: 992px) {
+    .hero-image {
+      display: block;
+    }
+}  
+.hero-image img {
+    object-fit: cover;
+    clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
 /* Main */
 .card {
     padding: 0px!important;
@@ -97,11 +114,6 @@ li::marker {
 }
 .hover-effect:hover::after {
     background-color: rgba(253, 170, 4, 0.3);
-}
-
-/* Login, Signup */
-.form-signin {
-    min-height: calc(100vh - var(--navbar-height));
 }
 
 /* Authors */

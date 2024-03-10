@@ -27,30 +27,27 @@ function Home() {
   return (
     <>
       <Navbar/>
-      <div className="overflow-hidden">
-        <div className="container-fluid col-xxl-8">
-          <div className="row flex-lg-nowrap align-items-center g-5">
-            <div className="order-lg-1 w-100 d-none d-lg-block">
-              <img alt="Home banner" src="https://asianinspirations.com.au/wp-content/uploads/2020/09/20200901-Malaysian-Cuisine-Kaleidoscope-of-Flavours-00-Feat-Img_1920w.jpg"
-                style={{ clipPath: "polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%)", }} className="d-block" width={900} height={600} loading="lazy" />
-            </div>
-            <div className="col-lg-6 p-lg-5">
-              <h1 className="display-4 lh-1 text-body-emphasis">
-                {t('home.title.part1')}<span className="text-primary"><b className="fw-bold">Chhárm</b>Cooks</span>{t('home.title.part2')}
-              </h1>
-              <p className="lead my-5">
-                {t('home.description.part1')}
-                <span className="text-primary"><b className="fw-bold">Chhárm</b>Cooks</span>
-                {t('home.description.part2')}
-                <span className="text-primary"><b className="fw-bold">炒</b>菜</span> <small className="fs-6">(chhá chhài)</small>
-                {t('home.description.part3')}
-              </p>
-              <div className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-                <Link to='/form' className="nav-link"><button type="button" className="btn btn-primary btn-lg px-4 fw-bold">{t('navbar.addRecipe')}</button></Link>
-                <a href="#recipes" className="ms-md-2"><button type="button" className="btn btn-outline-secondary btn-lg px-4">{t('home.viewRecipes')}</button></a>
-              </div>
+      <div className="min-height overflow-hidden d-flex w-100">
+        <div className="d-flex flex-grow-1 align-items-center justify-content-center p-1" style={{flex: "1"}}>
+          <div className="col-lg-7 col-md-7 col-sm-7">
+            <h1 className="display-4 lh-1 text-body-emphasis">
+              {t('home.title.part1')}<span className="text-primary"><b className="fw-bold">Chhárm</b>Cooks</span>{t('home.title.part2')}
+            </h1>
+            <p className="lead my-5">
+              {t('home.description.part1')}
+              <span className="text-primary"><b className="fw-bold">Chhárm</b>Cooks</span>
+              {t('home.description.part2')}
+              <span className="text-primary"><b className="fw-bold">炒</b>菜</span> <small className="fs-6">(chhá chhài)</small>
+              {t('home.description.part3')}
+            </p>
+            <div className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+              <Link to='/form' className="nav-link"><button type="button" className="btn btn-primary btn-lg px-4 fw-bold">{t('navbar.addRecipe')}</button></Link>
+              <a href="#recipes" className="ms-md-2"><button type="button" className="btn btn-outline-secondary btn-lg px-4">{t('home.viewRecipes')}</button></a>
             </div>
           </div>
+        </div>
+        <div className="hero-image position-relative flex-grow-1" style={{flex: "1"}}>
+          <img alt="Home banner" className="position-absolute top-0 bottom-0 start-0 left-0 h-100" src="https://asianinspirations.com.au/wp-content/uploads/2020/09/20200901-Malaysian-Cuisine-Kaleidoscope-of-Flavours-00-Feat-Img_1920w.jpg" />
         </div>
       </div>
       <div className="album py-5 bg-body-tertiary">

@@ -37,7 +37,7 @@ function Login() {
     <>
       <Navbar/>
       <div className="bg-body-tertiary">
-        <main className="form-signin m-auto d-flex align-items-center justify-content-center">
+        <main className="min-height m-auto d-flex align-items-center justify-content-center">
           <form style={{width: '330px'}} onSubmit={submit}>
             <h1 className="mb-1">{t('login.signIn')}</h1>
             <p className="small">{t('login.unleash')}</p>
