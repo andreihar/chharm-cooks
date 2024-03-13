@@ -4,7 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
 import { User } from '../models/User';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPenToSquare, faClock, faBowlRice } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPenToSquare, faClock, faBowlRice, faThumbsUp as faThumbsUpL } from '@fortawesome/free-solid-svg-icons';
+import {faThumbsUp as faThumbsUpN } from '@fortawesome/free-regular-svg-icons';
 import { useAuth } from '../contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
 import Navbar from '../components/Navbar';
@@ -15,6 +16,8 @@ function Display() {
   const { id } = useParams<{ id: string }>();
   const [recipe, setRecipe] = useState<Recipe>();
   const [author, setAuthor] = useState<User>();
+  const [userLiked, setUserLiked] = useState<boolean>(false);
+  const [likes, setLikes] = useState<number>(0);
   const [viewAlsoRecipes, setViewRecipes] = useState<Recipe[]>([]);
   const {authUser, isLogged} = useAuth();
   const { t, i18n } = useTranslation();
@@ -29,6 +32,8 @@ function Display() {
       if (foundRecipe && foundAuthor) {
         setRecipe(foundRecipe);
         setAuthor(foundAuthor);
+        setUserLiked(await DbService.getUserLikedRecipe(Number(id)));
+        setLikes(await DbService.getLikesForRecipe(Number(id)));
       } else {
         alert (t('display.error'));
         navigate('/');
@@ -36,6 +41,7 @@ function Display() {
       }
     };
     loadData();
+
   }, [id]);
 
   const deleteRecipe = () => {
@@ -43,6 +49,17 @@ function Display() {
       DbService.deleteRecipe(Number(id));
       navigate('/');
     }
+  }
+
+  const handleLike = async () => {
+    if (userLiked) {
+      await DbService.unlikeRecipe(Number(id));
+      setLikes(Number(likes) - 1);
+    } else {
+      await DbService.likeRecipe(Number(id));
+      setLikes(Number(likes) + 1);
+    }
+    setUserLiked(!userLiked);
   }
 
   if (recipe) {
@@ -69,14 +86,29 @@ function Display() {
           <div className="col-md-8">
             <article className="blog-post">
               <h2 className="display-5 link-body-emphasis mb-1">{t('display.letsMake.part1')}<span className="text-primary">{i18n.language === 'en' ? `${title}` : `${chin_title}`}</span>{t('display.letsMake.part2')}</h2>
-              <p className="text-dark-emphasis align-items-center d-flex">{t('display.by')}
-                <a href={author!.social} target="_blank" rel="noopener noreferrer" className="text-dark-emphasis align-items-center d-flex">
-                  <img src={author!.picture} alt="User Picture" width={32} height={32} className="rounded-circle ms-2"/>
-                  <span className="text-uppercase fs-5 ms-2">
-                    {i18n.language === 'en' ? `${author?.first_name} ${author?.last_name}` : `${author?.last_name} ${author?.first_name}`}
-                  </span>
-                </a>
-              </p>
+              <div className="text-dark-emphasis align-items-center d-flex justify-content-between">
+                <div>
+                  <Link to={`/user/${author!.username}`} className="text-dark-emphasis align-items-center d-flex">
+                  {/* <a href={author!.social} target="_blank" rel="noopener noreferrer" className="text-dark-emphasis align-items-center d-flex"> */}
+                  {t('display.by')}
+                    <img src={author!.picture} alt="User Picture" width={32} height={32} className="rounded-circle ms-2"/>
+                    <span className="text-uppercase fs-5 ms-2">
+                      {i18n.language === 'en' ? `${author?.first_name} ${author?.last_name}` : `${author?.last_name} ${author?.first_name}`}
+                    </span>
+                  </Link>
+                </div>
+                <div className="align-items-center d-flex fs-5">
+                  <button 
+                    onClick={handleLike} 
+                    className="btn" 
+                    disabled={!isLogged} 
+                    style={{border: 'none'}}
+                  >
+                    <FontAwesomeIcon icon={userLiked ? faThumbsUpL : faThumbsUpN} />
+                  </button>
+                {likes}
+                </div>
+              </div>
               <hr />
               <div className="d-flex justify-content-between">
                 <p className="text-dark-emphasis">

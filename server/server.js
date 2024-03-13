@@ -101,6 +101,16 @@ app.get('/recipes/:id', async (req, res) => {
     }
 })
 
+app.get('/recipes/user/:username', async (req, res) => {
+    try {
+        let username = req.params.username
+        let p = await db.helpers.getRecipesByUser(username)
+        res.json(p)
+    } catch (err) {
+        res.status(500).json({ error: 'An error occurred while fetching the recipes' })
+    }
+})
+
 app.post('/recipes', authMiddleware, async (req, res) => {
     try {
         const { title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, createdOn, timeLastModified, ingredients, recipeInstructions } = req.body
@@ -171,6 +181,10 @@ app.get('/following/:username', async (req, res) => {
 app.post('/follow', authMiddleware, async (req, res) => {
     try {
         const { followed } = req.body
+        if (req.user.username === followed) {
+            return res.status(400).json({ error: 'You cannot follow yourself' });
+        }
+        console.log("we're here")
         await db.helpers.followUser(req.user.username, followed)
         res.json({ message: 'User followed successfully' })
     } catch (err) {
@@ -212,10 +226,30 @@ app.post('/unlike', authMiddleware, async (req, res) => {
 app.get('/likes/:username', async (req, res) => {
     try {
         const username = req.params.username
-        const likes = await db.helpers.getLikes(username)
+        const likes = await db.helpers.getLikesOfUser(username)
         res.json(likes)
     } catch (err) {
         res.status(500).json({ error: 'An error occurred while fetching likes' })
+    }
+})
+
+app.get('/likes/recipe/:rid', async (req, res) => {
+    try {
+        const rid = req.params.rid
+        const likes = await db.helpers.getLikesForRecipe(rid)
+        res.json(likes)
+    } catch (err) {
+        res.status(500).json({ error: 'An error occurred while fetching likes' })
+    }
+})
+
+app.get('/likes/user/:rid', authMiddleware, async (req, res) => {
+    try {
+        const { rid } = req.params
+        const liked = await db.helpers.getUserLikedRecipe(req.user.username, rid)
+        res.json(liked)
+    } catch (err) {
+        res.status(500).json({ error: 'An error occurred while fetching if user liked the recipe' })
     }
 })
 

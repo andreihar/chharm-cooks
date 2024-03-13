@@ -43,10 +43,6 @@ function Signup() {
     setStep(step + 1);
   };
 
-  const prevStep = () => {
-    setStep(step - 1);
-  };
-
   const validateForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     nextStep();
@@ -62,8 +58,8 @@ function Signup() {
     <div className="container-fluid">
       <section style={{minHeight:"100vh"}} className="row d-flex align-items-center justify-content-center h-100">
         <div className={`col-md-${step === 1 ? '6' : '9'} d-flex flex-column justify-content-center align-items-center`}>
-          <h2 className="mb-1 fw-normal text-center mb-5">{t('signup.welcome.part1')}<br/><span className="text-primary">{t('signup.welcome.part2')}</span></h2>  
           {step === 1 && (<>
+          <h2 className="mb-1 fw-normal text-center mb-5">{t('signup.welcome.part1')}<br/><span className="text-primary">{t('signup.welcome.part2')}</span></h2>  
           <form style={{minWidth: '330px'}} onSubmit={validateForm}>
             <div className="form-floating mb-3">
               <input type="text" className="form-control" id="username" placeholder="Name" onChange={e => setUsername(e.target.value)} onKeyDown={preventSpaces} autoComplete="username" maxLength={50} required/>
@@ -88,6 +84,7 @@ function Signup() {
           </form>
           </>)}
           {step === 2 && (<>
+          <h2 className="mb-1 fw-normal text-center mb-5">{t('signup.welcome.part1')}</h2>  
           <form style={{minWidth: '330px'}} onSubmit={validateForm}>
             <img src={imageUrl} alt="mdo" width={128} height={128} className="rounded-circle mx-auto d-block mb-5"/>
             <div className="d-flex justify-content-between">
@@ -108,6 +105,7 @@ function Signup() {
           </form>
           </>)}
           {step === 3 && (<>
+          <h2 className="mb-1 fw-normal text-center mb-5">{t('signup.welcome.part1')}</h2>  
           <form style={{minWidth: '330px'}} onSubmit={validateForm}>
             <div className="form-floating mb-4">
               <input type="text" className="form-control" id="social" placeholder="Social" onChange={e => setSocial(e.target.value)}/>
@@ -117,6 +115,7 @@ function Signup() {
           </form>
           </>)}
           {step === 4 && (<>
+          <h2 className="mb-1 fw-normal text-center mb-5">{t('signup.welcome.part1')}</h2>  
           <form style={{minWidth: '330px'}} onSubmit={submit}>
             <div className="form-floating mb-4">
               <input type="text" className="form-control" id="occupation" placeholder="Occupation" onChange={e => setOccupation(e.target.value)}/>

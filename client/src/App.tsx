@@ -8,6 +8,7 @@ import Display from './pages/Display';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Authors from './pages/Authors';
+import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/contributors" element={<Authors />} />
+          <Route path="/user/:username" element={<Profile />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </I18nextProvider>

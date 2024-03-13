@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Recipe } from '../models/Recipe';
 import { User } from '../models/User';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DbService from '../services/DbService';
@@ -46,7 +47,7 @@ function Authors() {
               const recipeImage = authorRecipes.filter(recipe => recipe.picture && recipe.picture.startsWith('http')).sort((a, b) => new Date(b.created_on).getTime() - new Date(a.created_on).getTime())[0]?.picture || noRecipe;
               return (
                 <div key={index} className="section-ting col-12 col-sm-6 col-md-4 col-lg-3 my-3">
-                  <a href={author.social} target="_blank" rel="noopener noreferrer">
+                  <Link to={`/user/${author!.username}`}>
                     <div className="card profile-card text-center">
                       <div className="background-block">
                         <img src={recipeImage} alt="profile-sample1" className="background"/>
@@ -60,7 +61,7 @@ function Authors() {
                         <div><small><span className="text-primary fw-bold">{getSpecialtyCuisine(authorRecipes) || t('authors.no')}</span> {t('authors.cuisine')}</small></div>
                       </div>
                     </div>
-                  </a>
+                  </Link>
                 </div>
               );
             })}

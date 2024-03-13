@@ -101,6 +101,17 @@ const helpers = {
         return res.rows[0]
     },
 
+    getRecipesByUser: async function(username) {
+        const res = await pool.query(`
+            SELECT recipe.*, ingredient.*
+            FROM recipe
+            INNER JOIN ingredient
+            ON recipe.iid = ingredient.iid
+            WHERE username = $1
+        `, [username])
+        return res.rows
+    },
+
     addRecipe: async function(title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, created_on, time_last_modified, ingredients, recipe_instructions) {
         await pool.query('BEGIN')
         try {
@@ -146,6 +157,7 @@ const helpers = {
     },
     
     followUser: async function(follower, followed) {
+        console.log(follower, followed)
         const q = 'INSERT INTO followers(follower, followed) VALUES($1, $2) ON CONFLICT (follower, followed) DO NOTHING'
         const res = await pool.query(q, [follower, followed])
         return res.rows[0]
@@ -171,15 +183,26 @@ const helpers = {
     },
     
     getLikesOfUser: async function(username) {
-        const q = 'SELECT rid FROM likes WHERE username = $1'
-        const res = await pool.query(q, [username])
-        return res.rows
+        const q = `
+            SELECT recipes.* 
+            FROM likes 
+            INNER JOIN recipes ON likes.rid = recipes.id 
+            WHERE likes.username = $1
+        `;
+        const res = await pool.query(q, [username]);
+        return res.rows;
     },
 
     getLikesForRecipe: async function(rid) {
         const q = 'SELECT COUNT(username) as likes FROM likes WHERE rid = $1'
         const res = await pool.query(q, [rid])
         return res.rows[0].likes
+    },
+
+    getUserLikedRecipe: async function(username, rid) {
+        const q = 'SELECT EXISTS(SELECT 1 FROM likes WHERE username = $1 AND rid = $2)';
+        const res = await pool.query(q, [username, rid]);
+        return res.rows[0].exists;
     },
 
     // Notifications

@@ -50,6 +50,7 @@ function Navbar() {
                 <img src={authUser.picture} alt="User Picture" width={32} height={32} className="rounded-circle"/>
               </a>
               <ul className="dropdown-menu text-small" style={{}}>
+                <Link to={`/user/${authUser.username}`}><button type="button" className="dropdown-item">{t('navbar.profile')}</button></Link>
                 <li><button className="dropdown-item" onClick={(e)=>{logOut(e)}}>{t('navbar.signOut')}</button></li>
               </ul>
             </div>

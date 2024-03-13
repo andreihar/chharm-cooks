@@ -106,6 +106,19 @@ const getRecipeById = (id:number): Promise<Recipe> => {
     });
 };
 
+const getRecipesByUsername = (username:string): Promise<Recipe[]> => {
+  return axios.get<Recipe[]>(`${BASE_URL}/recipes/user/${username}`)
+    .then(response => response.data.map(recipe => ({
+      ...recipe,
+      created_on: new Date(recipe.created_on),
+      time_last_modified: new Date(recipe.time_last_modified)
+    })))
+    .catch(error => {
+      console.error('Error fetching recipes by username', error);
+      return [];
+    });
+};
+
 const addRecipe = (newRecipe: Recipe) => {
   return axios.post(`${BASE_URL}/recipes`, newRecipe);
 };
@@ -118,6 +131,71 @@ const updateRecipe = (id:number, updateRecipe: Recipe) => {
   return axios.put(`${BASE_URL}/recipes/${id}`, updateRecipe);
 }
 
+// Followers
+const getFollowers = async (username: string): Promise<string[]> => {
+  try {
+    const response = await axios.get(`${BASE_URL}/followers/${username}`)
+    return response.data
+  } catch (error) {
+    console.error('An error occurred while fetching followers', error)
+    throw error
+  }
+}
+
+const getFollowing = async (username: string): Promise<string[]> => {
+  try {
+    const response = await axios.get(`${BASE_URL}/following/${username}`)
+    return response.data
+  } catch (error) {
+    console.error('An error occurred while fetching following', error)
+    throw error
+  }
+};
+
+const followUser = (followed:string) => {
+  return axios.post(`${BASE_URL}/follow`, { followed });
+}
+
+const unfollowUser = (followed:string) => {
+  return axios.post(`${BASE_URL}/unfollow`, { followed });
+}
+
+// Likes
+const likeRecipe = (rid:number) => {
+  return axios.post(`${BASE_URL}/like`, { rid });
+}
+
+const unlikeRecipe = (rid:number) => {
+  return axios.post(`${BASE_URL}/unlike`, { rid });
+}
+
+const getLikesByUsername = (username:string): Promise<Recipe[]> => {
+  return axios.get<Recipe[]>(`${BASE_URL}/likes/${username}`)
+    .then(response => response.data)
+    .catch(error => {
+      console.error('Error fetching likes', error)
+      throw error
+    })
+}
+
+const getLikesForRecipe = (rid: number): Promise<number> => {
+  return axios.get<number>(`${BASE_URL}/likes/recipe/${rid}`)
+    .then(response => response.data)
+    .catch(error => {
+      console.error('Error fetching likes for recipe', error)
+      throw error
+    })
+}
+
+const getUserLikedRecipe = (rid: number): Promise<boolean> => {
+  return axios.get<boolean>(`${BASE_URL}/likes/user/${rid}`)
+  .then(response => response.data)
+  .catch(error => {
+    console.error('Error fetching if user liked the recipe', error)
+    throw error
+  })
+}
+
 const DbService = {
   getUsers,
   getUserByName,
@@ -126,9 +204,19 @@ const DbService = {
   logout,
   getRecipes,
   getRecipeById,
+  getRecipesByUsername,
   addRecipe,
   deleteRecipe,
-  updateRecipe
+  updateRecipe,
+  getFollowers,
+  getFollowing,
+  followUser,
+  unfollowUser,
+  likeRecipe,
+  unlikeRecipe,
+  getLikesByUsername,
+  getLikesForRecipe,
+  getUserLikedRecipe
 };
 
 export default DbService;
