@@ -15,8 +15,8 @@ const defaultData = async function() {
     const fs = require('fs')
     const users = JSON.parse(fs.readFileSync('./assets/defaultUsers.json', 'utf8'))
     const recipes = JSON.parse(fs.readFileSync('./assets/defaultRecipes.json', 'utf8'))
-    for (const { username, password, picture, social } of users) {
-        await helpers.addUser(username, password, picture, social)
+    for (const { username, email, picture, social, first_name, last_name, bio, occupation, password } of users) {
+        await helpers.addUser(username, email, picture, social, first_name, last_name, bio, occupation, password)
     }
     for (const { title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, ingredients, recipeInstructions } of recipes) {
         await helpers.addRecipe(title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, new Date(), new Date(), ingredients, recipeInstructions)
@@ -25,69 +25,58 @@ const defaultData = async function() {
 
 const helpers = {
     init: async function() {
-        const sql = `
-            CREATE TABLE IF NOT EXISTS users(
-                username VARCHAR(50) PRIMARY KEY, 
-                password VARCHAR(60), 
-                picture TEXT, 
-                social TEXT
-            );
-            CREATE TABLE IF NOT EXISTS ingredient(
-                iid SERIAL PRIMARY KEY, 
-                ingredients TEXT[]
-            );
-            CREATE TABLE IF NOT EXISTS recipe(
-                rid SERIAL PRIMARY KEY, 
-                title VARCHAR(50), 
-                chin_title VARCHAR(50), 
-                cuisine VARCHAR(50), 
-                username VARCHAR(50), 
-                FOREIGN KEY (username) REFERENCES users(username), 
-                prep_time INT, 
-                cook_time INT, 
-                servings INT, 
-                picture TEXT, 
-                created_on TIMESTAMPTZ, 
-                time_last_modified TIMESTAMPTZ, 
-                iid INT,
-                FOREIGN KEY (iid) REFERENCES ingredient(iid) ON DELETE CASCADE,
-                recipe_instructions TEXT[]
-            );
-        `
-        await pool.query(sql);
+        const {
+            createUsersTable,
+            createIngredientTable,
+            createRecipeTable,
+            createFollowersTable,
+            createLikesTable,
+            createNotificationsTable
+        } = require('./tables')
+
+        await pool.query(createUsersTable)
+        await pool.query(createIngredientTable)
+        await pool.query(createRecipeTable)
+        await pool.query(createFollowersTable)
+        await pool.query(createLikesTable)
+        await pool.query(createNotificationsTable)
         if (!(await pool.query("SELECT EXISTS (SELECT 1 FROM recipe LIMIT 1);")).rows[0].exists)
             await defaultData()
     },
 
     // Users
     getUsers: async function() {
-        const res = await pool.query('SELECT username, picture, social FROM users')
+        const res = await pool.query('SELECT username, email, picture, social, first_name, last_name, bio, occupation, created_on FROM users')
         return res.rows
     },
 
-    getUserByName: async function(username) {
-        const res = await pool.query('SELECT username, picture, social FROM users WHERE username = $1', [username])
+    getUsers: async function() {
+        const res = await pool.query('SELECT username, email, picture, social, first_name, last_name, bio, occupation, created_on FROM users')
+        return res.rows
+    },
+
+    getUserByUsername: async function(username) {
+        const res = await pool.query('SELECT username, email, picture, social, first_name, last_name, bio, occupation, created_on FROM users WHERE username = $1', [username])
         return res.rows[0]
     },
 
-	addUser: async function(username, password, picture, social) {
-        const hashedPassword = bcrypt.hashSync(password, saltRounds);
-        const q = 'INSERT INTO users(username, password, picture, social) VALUES($1, $2, $3, $4) ON CONFLICT (username) DO NOTHING'
-        const res = await pool.query(q, [username, hashedPassword, picture, social])
+    addUser: async function(username, email, picture, social, first_name, last_name, bio, occupation, password) {
+        const hashedPassword = bcrypt.hashSync(password, saltRounds)
+        const q = 'INSERT INTO users(username, email, picture, social, first_name, last_name, bio, occupation, password) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) ON CONFLICT (username) DO NOTHING RETURNING username, email, picture, social, first_name, last_name, bio, occupation, created_on'
+        const res = await pool.query(q, [username, email, picture, social, first_name, last_name, bio, occupation, hashedPassword])
+        return res.rows[0]
     },
 
-    addUser: async function(username, password, picture, social) {
-        const hashedPassword = bcrypt.hashSync(password, saltRounds);
-        const q = 'INSERT INTO users(username, password, picture, social) VALUES($1, $2, $3, $4) ON CONFLICT (username) DO NOTHING RETURNING *';
-        const res = await pool.query(q, [username, hashedPassword, picture, social]);
-        return res.rows[0];
-    },
-
-    checkPassword: async function(username, password) {
-        const q = 'SELECT password FROM users WHERE username = $1'
-        const res = await pool.query(q, [username])
+    checkPassword: async function(identifier, password) {
+        const q = 'SELECT password FROM users WHERE username = $1 OR email = $1'
+        const res = await pool.query(q, [identifier])
         const user = res.rows[0]
         return user && bcrypt.compareSync(password, user.password)
+    },
+
+    checkIdentification: async function(identifier) {
+        const res = await pool.query('SELECT username, email, picture, social, first_name, last_name, bio, occupation, created_on FROM users WHERE username = $1 OR email = $1', [identifier])
+        return res.rows[0]
     },
 
     // Recipes
@@ -97,7 +86,7 @@ const helpers = {
             FROM recipe
             INNER JOIN ingredient
             ON recipe.iid = ingredient.iid
-        `);
+        `)
         return res.rows
     },
 
@@ -117,20 +106,21 @@ const helpers = {
         try {
             const ingredientRes = await pool.query('INSERT INTO ingredient(ingredients) VALUES($1) RETURNING iid', [ingredients])
             const iid = ingredientRes.rows[0].iid
-            await pool.query('INSERT INTO recipe(title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, created_on, time_last_modified, iid, recipe_instructions) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)', [title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, created_on, time_last_modified, iid, recipe_instructions])
+            const recipeRes = await pool.query('INSERT INTO recipe(title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, created_on, time_last_modified, iid, recipe_instructions) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING rid', [title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, created_on, time_last_modified, iid, recipe_instructions])
             await pool.query('COMMIT')
+            return recipeRes.rows[0]
         } catch (e) {
             await pool.query('ROLLBACK')
             throw e
         }
     },
 
-    deleteById: async function(id) {
+    deleteRecipeById: async function(id) {
         const q = 'DELETE FROM recipe WHERE rid = $1'
-        const res = await pool.query(q, [id])
+        await pool.query(q, [id])
     },
 
-    updateById: async function(id, title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, created_on, time_last_modified, ingredients, recipe_instructions) {
+    updateRecipeById: async function(id, title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, created_on, time_last_modified, ingredients, recipe_instructions) {
         await pool.query('BEGIN')
         try {
             const recipeRes = await pool.query('SELECT iid FROM recipe WHERE rid = $1', [id])
@@ -142,6 +132,77 @@ const helpers = {
             await pool.query('ROLLBACK')
             throw e
         }
+    },
+
+    // Followers
+    getFollowers: async function(username) {
+        const res = await pool.query('SELECT follower FROM followers WHERE followed = $1', [username])
+        return res.rows
+    },
+    
+    getFollowing: async function(username) {
+        const res = await pool.query('SELECT followed FROM followers WHERE follower = $1', [username])
+        return res.rows
+    },
+    
+    followUser: async function(follower, followed) {
+        const q = 'INSERT INTO followers(follower, followed) VALUES($1, $2) ON CONFLICT (follower, followed) DO NOTHING'
+        const res = await pool.query(q, [follower, followed])
+        return res.rows[0]
+    },
+    
+    unfollowUser: async function(follower, followed) {
+        const q = 'DELETE FROM followers WHERE follower = $1 AND followed = $2'
+        const res = await pool.query(q, [follower, followed])
+        return res.rows[0]
+    },
+
+    // Likes
+    likeRecipe: async function(username, rid) {
+        const q = 'INSERT INTO likes(username, rid) VALUES($1, $2) ON CONFLICT (username, rid) DO NOTHING'
+        const res = await pool.query(q, [username, rid])
+        return res.rows[0]
+    },
+    
+    unlikeRecipe: async function(username, rid) {
+        const q = 'DELETE FROM likes WHERE username = $1 AND rid = $2'
+        const res = await pool.query(q, [username, rid])
+        return res.rows[0]
+    },
+    
+    getLikesOfUser: async function(username) {
+        const q = 'SELECT rid FROM likes WHERE username = $1'
+        const res = await pool.query(q, [username])
+        return res.rows
+    },
+
+    getLikesForRecipe: async function(rid) {
+        const q = 'SELECT COUNT(username) as likes FROM likes WHERE rid = $1'
+        const res = await pool.query(q, [rid])
+        return res.rows[0].likes
+    },
+
+    // Notifications
+    getNotifications: async function(username) {
+        const q = `
+            SELECT notifications.*, recipes.*, users.first_name 
+            FROM notifications 
+            INNER JOIN recipes ON notifications.recipe_id = recipes.id 
+            INNER JOIN users ON recipes.user_id = users.id 
+            WHERE notifications.username = $1
+        `
+        const res = await pool.query(q, [username])
+        return res.rows
+    },
+    
+    markNotificationAsRead: async function(username, rid) {
+        const q = 'UPDATE notifications SET read = TRUE WHERE username = $1 AND rid = $2'
+        await pool.query(q, [username, rid])
+    },
+    
+    addNotification: async function(username, rid) {
+        const q = 'INSERT INTO notifications(username, rid) VALUES($1, $2)'
+        await pool.query(q, [username, rid])
     }
 }
 

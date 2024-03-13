@@ -17,7 +17,7 @@ function Display() {
   const [author, setAuthor] = useState<User>();
   const [viewAlsoRecipes, setViewRecipes] = useState<Recipe[]>([]);
   const {authUser, isLogged} = useAuth();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,7 +46,7 @@ function Display() {
   }
 
   if (recipe) {
-    const { picture, title, chinTitle, createdOn, timeLastModified, cuisine, ingredients, recipeInstructions, prepTime, cookTime, servings } = recipe;
+    const { picture, title, chin_title, created_on, time_last_modified, cuisine, ingredients, recipe_instructions, prep_time, cook_time, servings } = recipe;
     return (
     <>
       <Navbar/>
@@ -54,7 +54,9 @@ function Display() {
         <div className="mask position-absolute top-0 start-0 bottom-0 end-0">
           <div className="d-flex justify-content-center align-items-center h-100">
             <div className="text-white">
-              <h1 className="mb-3">{`${title} | ${chinTitle}`}</h1>
+              <h1 className="mb-3">
+                {i18n.language === 'en' ? `${title} | ${chin_title}` : `${chin_title} | ${title}`}
+              </h1>
               <h4 className="mb-3">{t('display.authentic.part1')}{`${cuisine}`}{t('display.authentic.part2')}</h4>
             </div>
           </div>
@@ -66,18 +68,20 @@ function Display() {
         <div className="row g-5">
           <div className="col-md-8">
             <article className="blog-post">
-              <h2 className="display-5 link-body-emphasis mb-1">{t('display.letsMake.part1')}<span className="text-primary">{`${title}`}</span>{t('display.letsMake.part2')}</h2>
+              <h2 className="display-5 link-body-emphasis mb-1">{t('display.letsMake.part1')}<span className="text-primary">{i18n.language === 'en' ? `${title}` : `${chin_title}`}</span>{t('display.letsMake.part2')}</h2>
               <p className="text-dark-emphasis align-items-center d-flex">{t('display.by')}
                 <a href={author!.social} target="_blank" rel="noopener noreferrer" className="text-dark-emphasis align-items-center d-flex">
                   <img src={author!.picture} alt="User Picture" width={32} height={32} className="rounded-circle ms-2"/>
-                  <span className="text-uppercase fs-5 ms-2">{`${author!.username}`}</span>
+                  <span className="text-uppercase fs-5 ms-2">
+                    {i18n.language === 'en' ? `${author?.first_name} ${author?.last_name}` : `${author?.last_name} ${author?.first_name}`}
+                  </span>
                 </a>
               </p>
               <hr />
               <div className="d-flex justify-content-between">
                 <p className="text-dark-emphasis">
-                  {t('display.posted')} <span className="">{`${createdOn.toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>&nbsp;|&nbsp;
-                  {t('display.updated')} <span className="">{`${timeLastModified.toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>
+                  {t('display.posted')} <span className="">{`${created_on.toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>&nbsp;|&nbsp;
+                  {t('display.updated')} <span className="">{`${time_last_modified.toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>
                 </p>
                 {isLogged && (authUser.username === author!.username) &&
                   <div>
@@ -87,16 +91,16 @@ function Display() {
                 }
               </div>
               <h2>{t('form.ingredients')}</h2>
-              <p>{t('display.ingredientDesc.part1')}{`${title}`}{t('display.ingredientDesc.part2')}</p>
+              <p>{t('display.ingredientDesc.part1')}{i18n.language === 'en' ? `${title}` : `${chin_title}`}{t('display.ingredientDesc.part2')}</p>
               <ul>
                 {ingredients.map((ingredient, index) => (
                   <li key={index}>{ingredient}</li>
                 ))}
               </ul>
               <h2>{t('form.directions')}</h2>
-              <p>{t('display.stepsDesc.part1')}{`${recipe!.title}`}{t('display.stepsDesc.part2')}</p>
+              <p>{t('display.stepsDesc.part1')}{i18n.language === 'en' ? `${title}` : `${chin_title}`}{t('display.stepsDesc.part2')}</p>
               <ol>
-                {recipeInstructions.map((step, index) => (
+                {recipe_instructions.map((step, index) => (
                   <li key={index}>{step}</li>
                 ))}
               </ol>
@@ -105,8 +109,8 @@ function Display() {
           <div className="col-md-4">
             <div className="position-sticky" style={{ top: "90px" }}>
               <div className="p-4 mb-3 bg-body-tertiary rounded">
-                <h4 className="fst-italic">{t('display.about')}<span className="text-primary">{`${title}`}</span></h4>
-                <p className="mb-2"><FontAwesomeIcon icon={faClock} className="text-primary" /> <span className="text-uppercase">{t('display.prep')}</span> <span className="text-dark-emphasis">{`${prepTime} `}{t('display.mins')}</span> <span className="ms-1 text-uppercase">{t('display.cook')}</span> <span className="text-dark-emphasis">{`${cookTime} `}{t('display.mins')}</span></p>
+                <h4 className="fst-italic">{t('display.about')}<span className="text-primary">{i18n.language === 'en' ? `${title}` : `${chin_title}`}</span></h4>
+                <p className="mb-2"><FontAwesomeIcon icon={faClock} className="text-primary" /> <span className="text-uppercase">{t('display.prep')}</span> <span className="text-dark-emphasis">{`${prep_time} `}{t('display.mins')}</span> <span className="ms-1 text-uppercase">{t('display.cook')}</span> <span className="text-dark-emphasis">{`${cook_time} `}{t('display.mins')}</span></p>
                 <p><span className="text-uppercase"><FontAwesomeIcon icon={faBowlRice} className="text-primary" /> {t('display.serves')}</span> <span className="text-dark-emphasis">{`${servings} ${servings > 1 ? t('display.people') : t('display.person')}`}</span></p>
                 <p className="mb-0">{t('display.aboutText')}</p>
               </div>
@@ -123,7 +127,7 @@ function Display() {
                   <div className="card text-bg-dark h-100 rounded-0 border-0 hover-effect position-relative">
                     <img src={`${viewRecipe.picture}`} className="card-img rounded-0" style={{ height: '13rem', objectFit: 'cover' }} alt="..." />
                     <div className="card-img-overlay text-uppercase">
-                      <h5 className="bg-primary card-title position-absolute bottom-0 left-0 py-1 px-2 fs-6 fw-normal" style={{color: 'inherit', transition: 'none'}}>{viewRecipe.title}</h5>
+                      <h5 className="bg-primary card-title position-absolute bottom-0 left-0 py-1 px-2 fs-6 fw-normal" style={{color: 'inherit', transition: 'none'}}>{i18n.language === 'en' ? `${viewRecipe.title}` : `${viewRecipe.chin_title}`}</h5>
                     </div>
                   </div>
                 </Link>

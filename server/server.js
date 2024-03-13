@@ -35,7 +35,7 @@ const authenticateUser = async (req, res, user) => {
 
 
 // Users
-app.get('/getusers', async (req, res) => {
+app.get('/users', async (req, res) => {
     try {
         let p = await db.helpers.getUsers()
         res.json(p)
@@ -44,17 +44,17 @@ app.get('/getusers', async (req, res) => {
     }
 })
 
-app.get('/getuser/:username', async (req, res) => {
+app.get('/users/:username', async (req, res) => {
     try {
         let username = req.params.username
-        let p = await db.helpers.getUserByName(username)
+        let p = await db.helpers.getUserByUsername(username)
         res.json(p)
     } catch (err) {
         res.status(500).json({ error: 'An error occurred while fetching the user' })
     }
 })
 
-app.post('/adduser', async (req, res) => {
+app.post('/users', async (req, res) => {
     try {
         const { username, password, picture, social } = req.body
         const user = await db.helpers.addUser(username, password, picture, social)
@@ -69,9 +69,9 @@ app.post('/adduser', async (req, res) => {
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body
-    const user = await db.helpers.getUserByName(username)
+    const user = await db.helpers.checkIdentification(username)
     if (!user) {
-        return res.status(404).json({ error: 'Invalid username' })
+        return res.status(404).json({ error: 'Invalid username or email' })
     }
     if (!(await db.helpers.checkPassword(username, password))) {
         return res.status(401).json({ error: 'Invalid password' })
@@ -82,7 +82,7 @@ app.post('/login', async (req, res) => {
 
 
 // Recipes
-app.get('/getrecipes', async (req, res) => {
+app.get('/recipes', async (req, res) => {
     try {
         let p = await db.helpers.getRecipes()
         res.json(p)
@@ -91,16 +91,7 @@ app.get('/getrecipes', async (req, res) => {
     }
 })
 
-app.post('/addrecipe', authMiddleware, async (req, res) => {
-    try {
-        const { title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, createdOn, timeLastModified, ingredients, recipeInstructions } = req.body
-        await db.helpers.addRecipe(title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, createdOn, timeLastModified, ingredients, recipeInstructions)
-    } catch (err) {
-        res.status(500).json({ error: 'An error occurred while adding the recipe' })
-    }
-})
-
-app.get('/getrecipe/:id', async (req, res) => {
+app.get('/recipes/:id', async (req, res) => {
     try {
         let id = req.params.id
         let p = await db.helpers.getRecipeById(id)
@@ -110,7 +101,21 @@ app.get('/getrecipe/:id', async (req, res) => {
     }
 })
 
-app.delete('/deleterecipe/:id', authMiddleware, async (req, res) => {
+app.post('/recipes', authMiddleware, async (req, res) => {
+    try {
+        const { title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, createdOn, timeLastModified, ingredients, recipeInstructions } = req.body
+        const recipe = await db.helpers.addRecipe(title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, createdOn, timeLastModified, ingredients, recipeInstructions)
+        const followers = await db.helpers.getFollowers(username)
+        for (let follower of followers) {
+            await db.helpers.addNotification(follower.follower, recipe.rid)
+        }
+        res.status(200).json({ message: 'Recipe added successfully' })
+    } catch (err) {
+        res.status(500).json({ error: 'An error occurred while adding the recipe' })
+    }
+})
+
+app.delete('/recipes/:id', authMiddleware, async (req, res) => {
     try {
         let id = req.params.id
         let recipe = await db.helpers.getRecipeById(id)
@@ -124,7 +129,7 @@ app.delete('/deleterecipe/:id', authMiddleware, async (req, res) => {
     }
 })
 
-app.put('/updaterecipe/:id', authMiddleware, async (req, res) => {
+app.put('/recipes/:id', authMiddleware, async (req, res) => {
     try {
         const { id } = req.params
         let recipe = await db.helpers.getRecipeById(id)
@@ -139,6 +144,98 @@ app.put('/updaterecipe/:id', authMiddleware, async (req, res) => {
         res.json({ message: 'Recipe updated successfully' })
     } catch (err) {
         res.status(500).json({ error: 'An error occurred while updating the recipe' })
+    }
+})
+
+// Followers
+app.get('/followers/:username', async (req, res) => {
+    try {
+        const username = req.params.username
+        const followers = await db.helpers.getFollowers(username)
+        res.json(followers)
+    } catch (err) {
+        res.status(500).json({ error: 'An error occurred while fetching followers' })
+    }
+})
+
+app.get('/following/:username', async (req, res) => {
+    try {
+        const username = req.params.username
+        const following = await db.helpers.getFollowing(username)
+        res.json(following)
+    } catch (err) {
+        res.status(500).json({ error: 'An error occurred while fetching following' })
+    }
+})
+
+app.post('/follow', authMiddleware, async (req, res) => {
+    try {
+        const { followed } = req.body
+        await db.helpers.followUser(req.user.username, followed)
+        res.json({ message: 'User followed successfully' })
+    } catch (err) {
+        res.status(500).json({ error: 'An error occurred while following the user' })
+    }
+})
+
+app.post('/unfollow', authMiddleware, async (req, res) => {
+    try {
+        const { followed } = req.body
+        await db.helpers.unfollowUser(req.user.username, followed)
+        res.json({ message: 'User unfollowed successfully' })
+    } catch (err) {
+        res.status(500).json({ error: 'An error occurred while unfollowing the user' })
+    }
+})
+
+// Likes
+app.post('/like', authMiddleware, async (req, res) => {
+    try {
+        const { rid } = req.body
+        await db.helpers.likeRecipe(req.user.username, rid)
+        res.json({ message: 'Recipe liked successfully' })
+    } catch (err) {
+        res.status(500).json({ error: 'An error occurred while liking the recipe' })
+    }
+})
+
+app.post('/unlike', authMiddleware, async (req, res) => {
+    try {
+        const { rid } = req.body
+        await db.helpers.unlikeRecipe(req.user.username, rid)
+        res.json({ message: 'Recipe unliked successfully' })
+    } catch (err) {
+        res.status(500).json({ error: 'An error occurred while unliking the recipe' })
+    }
+})
+
+app.get('/likes/:username', async (req, res) => {
+    try {
+        const username = req.params.username
+        const likes = await db.helpers.getLikes(username)
+        res.json(likes)
+    } catch (err) {
+        res.status(500).json({ error: 'An error occurred while fetching likes' })
+    }
+})
+
+// Notifications
+app.get('/notifications', authMiddleware, async (req, res) => {
+    try {
+        const notifications = await db.helpers.getNotifications(req.user.username)
+        res.json(notifications)
+    } catch (err) {
+        res.status(500).json({ error: 'An error occurred while fetching notifications' })
+    }
+})
+
+app.post('/notifications/read/:rid', authMiddleware, async (req, res) => {
+    try {
+        const rid = req.params.rid
+        await db.helpers.markNotificationAsRead(req.user.username, rid)
+        res.json({ message: 'Notification marked as read' })
+    } catch (err) {
+        res.status(500).json({ error: 'An error occurred while marking the notification as read' })
     }
 })
 

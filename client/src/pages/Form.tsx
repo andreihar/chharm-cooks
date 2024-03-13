@@ -47,14 +47,14 @@ function Form() {
         const foundRecipe = await DbService.getRecipeById(Number(id));
         if (foundRecipe && authUser?.username === foundRecipe.username) {
           setName(foundRecipe.title);
-          setChinName(foundRecipe.chinTitle);
+          setChinName(foundRecipe.chin_title);
           setCuisine(foundRecipe.cuisine);
-          setPrepTime(foundRecipe.prepTime);
-          setCookTime(foundRecipe.cookTime);
+          setPrepTime(foundRecipe.prep_time);
+          setCookTime(foundRecipe.cook_time);
           setServings(foundRecipe.servings);
           setPicture(foundRecipe.picture);
           setIngreds(foundRecipe.ingredients.map((ingredient:string) => ({ name:ingredient })));
-          setSteps(foundRecipe.recipeInstructions.map((step:string) => ({ name:step })));
+          setSteps(foundRecipe.recipe_instructions.map((step:string) => ({ name:step })));
         } else {
           navigate('/');
         }
@@ -75,17 +75,17 @@ function Form() {
       alert(t('form.oneIngredient'));
       return;
     }
-    if (newRecipe.recipeInstructions.length === 0) {
+    if (newRecipe.recipe_instructions.length === 0) {
       alert(t('form.oneStep'));
       return;
     }
     if (id) {
       const oldRecipe = await DbService.getRecipeById(Number(id));
       if (oldRecipe && !isEqual(
-        (({ createdOn, timeLastModified, rid, ...rest }) => rest)(oldRecipe),
-        (({ createdOn, timeLastModified, rid, ...rest }) => rest)(newRecipe)
+        (({ created_on, time_last_modified, rid, ...rest }) => rest)(oldRecipe),
+        (({ created_on, time_last_modified, rid, ...rest }) => rest)(newRecipe)
       )) {
-        newRecipe.createdOn = oldRecipe.createdOn;
+        newRecipe.created_on = oldRecipe.created_on;
         DbService.updateRecipe(Number(id), newRecipe);
       }
     } else {
