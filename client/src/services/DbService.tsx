@@ -82,11 +82,7 @@ const logout = () => {
 // Recipes
 const getRecipes = (): Promise<Recipe[]> => {
   return axios.get<Recipe[]>(`${BASE_URL}/recipes`)
-    .then(response => response.data.map(recipe => ({
-      ...recipe,
-      created_on: new Date(recipe.created_on),
-      time_last_modified: new Date(recipe.time_last_modified)
-    })))
+    .then(response => response.data)
     .catch(error => {
       console.error('Error fetching recipes', error);
       return [];
@@ -95,11 +91,7 @@ const getRecipes = (): Promise<Recipe[]> => {
 
 const getRecipeById = (id:number): Promise<Recipe> => {
   return axios.get<Recipe>(`${BASE_URL}/recipes/${id}`)
-    .then(response => ({
-      ...response.data,
-      created_on: new Date(response.data.created_on),
-      time_last_modified: new Date(response.data.time_last_modified)
-    }))
+    .then(response => response.data)
     .catch(error => {
       console.error('Error fetching recipe', error);
       throw error;
@@ -108,11 +100,7 @@ const getRecipeById = (id:number): Promise<Recipe> => {
 
 const getRecipesByUsername = (username:string): Promise<Recipe[]> => {
   return axios.get<Recipe[]>(`${BASE_URL}/recipes/user/${username}`)
-    .then(response => response.data.map(recipe => ({
-      ...recipe,
-      created_on: new Date(recipe.created_on),
-      time_last_modified: new Date(recipe.time_last_modified)
-    })))
+    .then(response => response.data)
     .catch(error => {
       console.error('Error fetching recipes by username', error);
       return [];
