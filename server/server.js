@@ -3,94 +3,20 @@ const cors = require("cors")
 const db = require("./database/db")
 const { authMiddleware } = require('./middleware/authMiddleware')
 const app = express()
-const users = require('./api/users')
+const usersController = require('./api/users/users.controller')
+const recipesController = require('./api/recipes/recipes.controller')
 
 app.use(express.json())
 app.use(cors())
 let port = 4000
 
-app.use('/users', users.usersController);
+app.use('/users', usersController);
+app.use('/recipes', recipesController);
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ error: 'An error occurred' });
 });
-
-// Recipes
-app.get('/recipes', async (req, res) => {
-    try {
-        let p = await db.helpers.getRecipes()
-        res.json(p)
-    } catch (err) {
-        res.status(500).json({ error: 'An error occurred while fetching recipes' })
-    }
-})
-
-app.get('/recipes/:id', async (req, res) => {
-    try {
-        let id = req.params.id
-        let p = await db.helpers.getRecipeById(id)
-        res.json(p)
-    } catch (err) {
-        res.status(500).json({ error: 'An error occurred while fetching the recipe' })
-    }
-})
-
-app.get('/recipes/user/:username', async (req, res) => {
-    try {
-        let username = req.params.username
-        let p = await db.helpers.getRecipesByUser(username)
-        res.json(p)
-    } catch (err) {
-        res.status(500).json({ error: 'An error occurred while fetching the recipes' })
-    }
-})
-
-app.post('/recipes', authMiddleware, async (req, res) => {
-    try {
-        const { title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, createdOn, timeLastModified, ingredients, recipeInstructions } = req.body
-        const recipe = await db.helpers.addRecipe(title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, createdOn, timeLastModified, ingredients, recipeInstructions)
-        const followers = await db.helpers.getFollowers(username)
-        for (let follower of followers) {
-            await db.helpers.addNotification(follower.follower, recipe.rid)
-        }
-        res.status(200).json({ message: 'Recipe added successfully' })
-    } catch (err) {
-        res.status(500).json({ error: 'An error occurred while adding the recipe' })
-    }
-})
-
-app.delete('/recipes/:id', authMiddleware, async (req, res) => {
-    try {
-        let id = req.params.id
-        let recipe = await db.helpers.getRecipeById(id)
-        if (recipe.username !== req.user.username) {
-            return res.status(403).json({ error: 'You are not authorized to delete this recipe' })
-        }
-        await db.helpers.deleteById(id)
-        res.json({ message: 'Recipe deleted successfully' })
-    } catch (err) {
-        res.status(500).json({ error: 'An error occurred while deleting the recipe' })
-    }
-})
-
-app.put('/recipes/:id', authMiddleware, async (req, res) => {
-    try {
-        const { id } = req.params
-        let recipe = await db.helpers.getRecipeById(id)
-        if (recipe.username !== req.user.username) {
-            console.log('User is not authorized to update this recipe')
-            console.log(recipe.username)
-            console.log(req.user.username)
-            return res.status(403).json({ error: 'You are not authorized to update this recipe' })
-        }
-        const { title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, createdOn, timeLastModified, ingredients, recipeInstructions } = req.body
-        await db.helpers.updateById(id, title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, createdOn, timeLastModified, ingredients, recipeInstructions)
-        res.json({ message: 'Recipe updated successfully' })
-    } catch (err) {
-        res.status(500).json({ error: 'An error occurred while updating the recipe' })
-    }
-})
 
 // Followers
 app.get('/followers/:username', async (req, res) => {
@@ -119,7 +45,6 @@ app.post('/follow', authMiddleware, async (req, res) => {
         if (req.user.username === followed) {
             return res.status(400).json({ error: 'You cannot follow yourself' });
         }
-        console.log("we're here")
         await db.helpers.followUser(req.user.username, followed)
         res.json({ message: 'User followed successfully' })
     } catch (err) {

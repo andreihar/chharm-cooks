@@ -19,7 +19,7 @@ const defaultData = async function() {
         await helpers.addUser(username, email, picture, social, first_name, last_name, bio, occupation, password)
     }
     for (const { title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, ingredients, recipeInstructions } of recipes) {
-        await helpers.addRecipe(title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, new Date(), new Date(), ingredients, recipeInstructions)
+        await helpers.addRecipe(title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, ingredients, recipeInstructions)
     }
 };
 
@@ -107,12 +107,12 @@ const helpers = {
         return res.rows
     },
 
-    addRecipe: async function(title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, created_on, time_last_modified, ingredients, recipe_instructions) {
+    addRecipe: async function(title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, ingredients, recipe_instructions) {
         await pool.query('BEGIN')
         try {
             const ingredientRes = await pool.query('INSERT INTO ingredient(ingredients) VALUES($1) RETURNING iid', [ingredients])
             const iid = ingredientRes.rows[0].iid
-            const recipeRes = await pool.query('INSERT INTO recipe(title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, created_on, time_last_modified, iid, recipe_instructions) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING rid', [title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, created_on, time_last_modified, iid, recipe_instructions])
+            const recipeRes = await pool.query('INSERT INTO recipe(title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, iid, recipe_instructions) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING rid', [title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, iid, recipe_instructions])
             await pool.query('COMMIT')
             return recipeRes.rows[0]
         } catch (e) {
@@ -126,13 +126,13 @@ const helpers = {
         await pool.query(q, [id])
     },
 
-    updateRecipeById: async function(id, title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, created_on, time_last_modified, ingredients, recipe_instructions) {
+    updateRecipeById: async function(id, title, chin_title, cuisine, prep_time, cook_time, servings, picture, ingredients, recipe_instructions) {
         await pool.query('BEGIN')
         try {
             const recipeRes = await pool.query('SELECT iid FROM recipe WHERE rid = $1', [id])
             const iid = recipeRes.rows[0].iid
             await pool.query('UPDATE ingredient SET ingredients = $1 WHERE iid = $2', [ingredients, iid])
-            await pool.query('UPDATE recipe SET title = $1, chin_title = $2, cuisine = $3, username = $4, prep_time = $5, cook_time = $6, servings = $7, picture = $8, created_on = $9, time_last_modified = $10, recipe_instructions = $11 WHERE rid = $12', [title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, created_on, time_last_modified, recipe_instructions, id])
+            await pool.query('UPDATE recipe SET title = $1, chin_title = $2, cuisine = $3, prep_time = $4, cook_time = $5, servings = $6, picture = $7, recipe_instructions = $8, time_last_modified = $9 WHERE rid = $10', [title, chin_title, cuisine, prep_time, cook_time, servings, picture, recipe_instructions, new Date(), id])
             await pool.query('COMMIT')
         } catch (e) {
             await pool.query('ROLLBACK')

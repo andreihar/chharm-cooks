@@ -40,7 +40,7 @@ router.post('/login', async (req, res, next) => {
         const user = await usersService.login({ username, password });
         await authenticateUser(req, res, user);
     } catch (err) {
-        if (err.message === 'User not found') {
+        if (err.message === 'Invalid username') {
             res.status(404).json({ error: 'Invalid username' });
         } else if (err.message === 'Invalid password') {
             res.status(401).json({ error: 'Invalid password' });

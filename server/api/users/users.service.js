@@ -19,7 +19,7 @@ const addUser = async ({ username, email, picture, social, first_name, last_name
 const login = async ({ username, password }) => {
     const user = await db.helpers.checkIdentification(username);
     if (!user) {
-        throw new Error('User not found');
+        throw new Error('Invalid username');
     }
     const isPasswordValid = await db.helpers.checkPassword(username, password);
     if (!isPasswordValid) {

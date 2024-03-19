@@ -32,8 +32,8 @@ const createRecipeTable = `
 		cook_time INT,
 		servings INT,
 		picture TEXT,
-		created_on TIMESTAMPTZ,
-		time_last_modified TIMESTAMPTZ,
+		created_on TIMESTAMPTZ DEFAULT NOW(),
+		time_last_modified TIMESTAMPTZ DEFAULT NOW(),
 		iid INT,
 		FOREIGN KEY (iid) REFERENCES ingredient(iid) ON DELETE CASCADE,
 		recipe_instructions TEXT[]
