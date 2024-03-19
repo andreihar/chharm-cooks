@@ -50,11 +50,6 @@ const helpers = {
         return res.rows
     },
 
-    getUsers: async function() {
-        const res = await pool.query('SELECT username, email, picture, social, first_name, last_name, bio, occupation, created_on FROM users')
-        return res.rows
-    },
-
     getUserByUsername: async function(username) {
         const res = await pool.query('SELECT username, email, picture, social, first_name, last_name, bio, occupation, created_on FROM users WHERE username = $1', [username])
         return res.rows[0]
@@ -157,7 +152,6 @@ const helpers = {
     },
     
     followUser: async function(follower, followed) {
-        console.log(follower, followed)
         const q = 'INSERT INTO followers(follower, followed) VALUES($1, $2) ON CONFLICT (follower, followed) DO NOTHING'
         const res = await pool.query(q, [follower, followed])
         return res.rows[0]

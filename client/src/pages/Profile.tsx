@@ -39,11 +39,10 @@ function Display() {
         // setLikedRecipes(foundLikedRecipes);
         setFollowing(foundFollowing);
         setFollowers(foundFollowers);
-        console.log(followersUsernames)
-        const followerUsernames = followersUsernames.map(user => user.follower);
-        if (followerUsernames.includes(authUser.username)) {
-          setUserFollows(true);
-        }
+        // const followerUsernames = followersUsernames.map(user => user.follower);
+        // if (followerUsernames.includes(authUser.username)) {
+        //   setUserFollows(true);
+        // }
         setFollowersCount(followersUsernames.length);
       } else {
         alert (t('display.error'));
@@ -74,7 +73,8 @@ function Display() {
     return (
     <>
       <Navbar/>
-      <div className="p-5 text-center bg-image text-uppercase position-relative" style={{ backgroundImage: `url(${recipes[0].picture})`}}>
+      <div className="p-5 text-center bg-image text-uppercase position-relative" 
+      style={{ backgroundImage: recipes.length > 0 ? `url(${recipes[0].picture})` : 'none' }}>
         <div className="mask position-absolute top-0 start-0 bottom-0 end-0">
           <div className="d-flex justify-content-center align-items-center h-100">
           </div>

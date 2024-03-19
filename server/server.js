@@ -1,85 +1,20 @@
 const express = require("express")
 const cors = require("cors")
-const db = require("./db")
-const jwt = require('jsonwebtoken')
-require('dotenv').config({ path: './process.env' })
+const db = require("./database/db")
+const { authMiddleware } = require('./middleware/authMiddleware')
 const app = express()
-const secretKey = process.env.JWT_SECRET_KEY
+const users = require('./api/users')
 
 app.use(express.json())
 app.use(cors())
 let port = 4000
 
-// Authentication
-const authMiddleware = (req, res, next) => {
-    const authHeader = req.headers.authorization
-    if (authHeader) {
-        const token = authHeader.split(' ')[1]
-        jwt.verify(token, secretKey, (err, user) => {
-            if (err) {
-                console.log('Error verifying token:', err)
-                return res.sendStatus(403)
-            }
-            req.user = user
-            next()
-        })
-    } else {
-        res.sendStatus(401)
-    }
-}
+app.use('/users', users.usersController);
 
-const authenticateUser = async (req, res, user) => {
-    const token = jwt.sign({ username: user.username }, secretKey, { expiresIn: '1h' })
-    res.json({ user, token })
-}
-
-
-// Users
-app.get('/users', async (req, res) => {
-    try {
-        let p = await db.helpers.getUsers()
-        res.json(p)
-    } catch (err) {
-        res.status(500).json({ error: 'An error occurred while fetching users' })
-    }
-})
-
-app.get('/users/:username', async (req, res) => {
-    try {
-        let username = req.params.username
-        let p = await db.helpers.getUserByUsername(username)
-        res.json(p)
-    } catch (err) {
-        res.status(500).json({ error: 'An error occurred while fetching the user' })
-    }
-})
-
-app.post('/users', async (req, res) => {
-    try {
-        const { username, password, picture, social } = req.body
-        const user = await db.helpers.addUser(username, password, picture, social)
-        if (!user) {
-            return res.status(400).json({ error: 'Username is already taken' });
-        }
-        await authenticateUser(req, res, user)
-    } catch (err) {
-        res.status(500).json({ error: 'An error occurred while adding the user' })
-    }
-})
-
-app.post('/login', async (req, res) => {
-    const { username, password } = req.body
-    const user = await db.helpers.checkIdentification(username)
-    if (!user) {
-        return res.status(404).json({ error: 'Invalid username or email' })
-    }
-    if (!(await db.helpers.checkPassword(username, password))) {
-        return res.status(401).json({ error: 'Invalid password' })
-    }
-    delete user.password
-    await authenticateUser(req, res, user)
-})
-
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ error: 'An error occurred' });
+});
 
 // Recipes
 app.get('/recipes', async (req, res) => {

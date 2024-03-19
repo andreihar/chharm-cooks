@@ -77,5 +77,5 @@ module.exports = {
     createRecipeTable,
     createFollowersTable,
     createLikesTable,
-    createNotificationsTable  // add this line
-  };
+    createNotificationsTable
+};

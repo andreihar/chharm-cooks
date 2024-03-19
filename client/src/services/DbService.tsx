@@ -31,7 +31,7 @@ const setAuthHeadersAndCookies = (response: LoginResponse) => {
 };
 
 const login = (username: string, password: string): Promise<User> => {
-  return axios.post<LoginResponse>(`${BASE_URL}/login`, { username, password })
+  return axios.post<LoginResponse>(`${BASE_URL}/users/login`, { username, password })
     .then(response => {
       setAuthHeadersAndCookies(response.data);
       return response.data.user;
