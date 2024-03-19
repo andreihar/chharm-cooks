@@ -32,7 +32,7 @@ function Display() {
       if (foundRecipe && foundAuthor) {
         setRecipe(foundRecipe);
         setAuthor(foundAuthor);
-        setUserLiked(await DbService.getUserLikedRecipe(Number(id)));
+        if (isLogged) setUserLiked(await DbService.getUserLikedRecipe(Number(id)));
         setLikes(await DbService.getLikesForRecipe(Number(id)));
       } else {
         alert (t('display.error'));

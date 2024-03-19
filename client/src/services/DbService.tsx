@@ -144,7 +144,7 @@ const getFollowers = async (username: string): Promise<string[]> => {
 
 const getFollowing = async (username: string): Promise<string[]> => {
   try {
-    const response = await axios.get(`${BASE_URL}/following/${username}`)
+    const response = await axios.get(`${BASE_URL}/followers/following/${username}`)
     return response.data
   } catch (error) {
     console.error('An error occurred while fetching following', error)
@@ -153,20 +153,20 @@ const getFollowing = async (username: string): Promise<string[]> => {
 };
 
 const followUser = (followed:string) => {
-  return axios.post(`${BASE_URL}/follow`, { followed });
+  return axios.post(`${BASE_URL}/followers/follow`, { followed });
 }
 
 const unfollowUser = (followed:string) => {
-  return axios.post(`${BASE_URL}/unfollow`, { followed });
+  return axios.post(`${BASE_URL}/followers/unfollow`, { followed });
 }
 
 // Likes
 const likeRecipe = (rid:number) => {
-  return axios.post(`${BASE_URL}/like`, { rid });
+  return axios.post(`${BASE_URL}/likes/like`, { rid });
 }
 
 const unlikeRecipe = (rid:number) => {
-  return axios.post(`${BASE_URL}/unlike`, { rid });
+  return axios.post(`${BASE_URL}/likes/unlike`, { rid });
 }
 
 const getLikesByUsername = (username:string): Promise<Recipe[]> => {
