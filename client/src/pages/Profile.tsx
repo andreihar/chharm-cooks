@@ -39,10 +39,10 @@ function Display() {
         // setLikedRecipes(foundLikedRecipes);
         setFollowing(foundFollowing);
         setFollowers(foundFollowers);
-        // const followerUsernames = followersUsernames.map(user => user.follower);
-        // if (followerUsernames.includes(authUser.username)) {
-        //   setUserFollows(true);
-        // }
+        const followerUsernames = followersUsernames.map(user => user.follower);
+        if (followerUsernames.includes(authUser.username)) {
+          setUserFollows(true);
+        }
         setFollowersCount(followersUsernames.length);
       } else {
         alert (t('display.error'));
@@ -81,39 +81,85 @@ function Display() {
         </div>
       </div>
       <div className="angled-div" />
+
       
       <main className="container">
         <div className="row g-5">
           <div className="col-md-8 mx-auto">
-            <article className="blog-post" style={{marginTop: '-170px'}}>
-            <img src={picture} alt="User Picture" width={180} height={180} className="rounded-circle ms-2" style={{transform: 'translateY(-20px)', border: '6px solid white'}}/>
-              <h2 className="display-5 link-body-emphasis mb-1">{i18n.language === 'en' ? `${first_name} ${last_name}` : `${last_name} ${first_name}`}</h2>
+            <article className="blog-post" style={{marginTop: '-190px'}}>
+              <div style={{transform: 'translateY(-20px)', display: 'flex', alignItems: 'center'}}>
+                <img src={picture} alt="User Picture" width={180} height={180} className="rounded-circle ms-2" style={{border: '6px solid white'}}/>
+                <div className="ms-4 text-light">
+                  <h2 className="display-5 mb-1">{i18n.language === 'en' ? `${first_name} ${last_name}` : `${last_name} ${first_name}`}</h2>
+                  <p className="fs-4 mb-0">New York, USA</p>
+                </div>
+              </div>
               <div className="text-dark-emphasis align-items-center d-flex justify-content-between">
                 <div>
                   <a href={social} target="_blank" rel="noopener noreferrer" className="text-dark-emphasis align-items-center d-flex">
                     <span className="fs-5 ms-2">{occupation}</span>
+                    
                   </a>
                 </div>
-                {isLogged && (authUser.username !== username) &&
-                  <div className="align-items-center d-flex fs-5">
-                    {userFollows
-                      ? <button className="btn btn-primary" onClick={unfollow}>Unfollow</button>
-                      : <button className="btn btn-outline-primary" onClick={follow}>Follow</button>
-                    }
-                  </div>
-                }
+                <div className="d-flex justify-content-end text-center py-1">
+                <div>
+                  <p className="mb-1 h5">{recipes.length}</p>
+                  <p className="small text-muted mb-0">Recipes</p>
+                </div>
+                <div className="px-3">
+                  <p className="mb-1 h5">{followers.length}</p>
+                  <p className="small text-muted mb-0">Followers</p>
+                </div>
+                <div>
+                  <p className="mb-1 h5">{following.length}</p>
+                  <p className="small text-muted mb-0">Following</p>
+                </div>
+              </div>
               </div>
               <hr />
               <div className="d-flex justify-content-between">
                 <p className="text-dark-emphasis">
                   Joined On <span className="">{`${new Date(created_on).toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>
                 </p>
-                <p>Following: {following.length}</p>
-                <p>Followers: {followers.length}</p>
-                <p>Recipes: {recipes.length}</p>
+                {isLogged && (authUser.username !== username) &&
+                  <div className="align-items-center d-flex fs-5">
+                    {userFollows
+                      ? <button className="btn btn-outline-secondary" onClick={unfollow}>Unfollow</button>
+                      : <button className="btn btn-primary" onClick={follow}>Follow</button>
+                    }
+                  </div>
+                }
               </div>
-              <h2>{t('form.ingredients')}</h2>
-              <h2>{t('form.directions')}</h2>
+              <div className="bd-example-snippet bd-code-snippet">
+                <div className="bd-example m-0 border-0">
+                  <nav>
+                    <div className="nav nav-underline mb-3" id="nav-tab" role="tablist">
+                      <button className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="false" tabIndex={-1}>Home</button>
+                      <button className="nav-link" id="nav-recipes-tab" data-bs-toggle="tab" data-bs-target="#nav-recipes" type="button" role="tab" aria-controls="nav-recipes" aria-selected="false" tabIndex={-1}>Recipes</button>
+                      <button className="nav-link" id="nav-following-tab" data-bs-toggle="tab" data-bs-target="#nav-following" type="button" role="tab" aria-controls="nav-following" aria-selected="false" tabIndex={-1}>Following</button>
+                      <button className="nav-link" id="nav-followers-tab" data-bs-toggle="tab" data-bs-target="#nav-followers" type="button" role="tab" aria-controls="nav-followers" aria-selected="false" tabIndex={-1}>Followers</button>
+                      <button className="nav-link" id="nav-liked-tab" data-bs-toggle="tab" data-bs-target="#nav-liked" type="button" role="tab" aria-controls="nav-liked" aria-selected="false" tabIndex={-1}>Liked</button>
+                    </div>
+                  </nav>
+                  <div className="tab-content" id="nav-tabContent">
+                    <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                      <p>This is some placeholder.</p>
+                    </div>
+                    <div className="tab-pane fade" id="nav-recipes" role="tabpanel" aria-labelledby="nav-recipes-tab">
+                      <p>This is some placeholder.</p>
+                    </div>
+                    <div className="tab-pane fade" id="nav-following" role="tabpanel" aria-labelledby="nav-following-tab">
+                      <p>This is some placeholder.</p>
+                    </div>
+                    <div className="tab-pane fade" id="nav-followers" role="tabpanel" aria-labelledby="nav-followers-tab">
+                      <p>This is some placeholder.</p>
+                    </div>
+                    <div className="tab-pane fade" id="nav-liked" role="tabpanel" aria-labelledby="nav-liked-tab">
+                      <p>This is some placeholder.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </article>
           </div>
           {/* <div className="col-md-4">
