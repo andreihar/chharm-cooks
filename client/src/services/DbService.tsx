@@ -52,7 +52,7 @@ const getUsers = (): Promise<User[]> => {
     });
 };
 
-const getUserByName = (username:string): Promise<User> => {
+const getUserByName = (username: string): Promise<User> => {
   return axios.get<User>(`${BASE_URL}/users/${username}`)
     .then(response => response.data)
     .catch(error => {
@@ -89,7 +89,7 @@ const getRecipes = (): Promise<Recipe[]> => {
     });
 };
 
-const getRecipeById = (id:number): Promise<Recipe> => {
+const getRecipeById = (id: number): Promise<Recipe> => {
   return axios.get<Recipe>(`${BASE_URL}/recipes/${id}`)
     .then(response => response.data)
     .catch(error => {
@@ -98,7 +98,7 @@ const getRecipeById = (id:number): Promise<Recipe> => {
     });
 };
 
-const getRecipesByUsername = (username:string): Promise<Recipe[]> => {
+const getRecipesByUsername = (username: string): Promise<Recipe[]> => {
   return axios.get<Recipe[]>(`${BASE_URL}/recipes/user/${username}`)
     .then(response => response.data)
     .catch(error => {
@@ -111,11 +111,11 @@ const addRecipe = (newRecipe: Recipe) => {
   return axios.post(`${BASE_URL}/recipes`, newRecipe);
 };
 
-const deleteRecipe = (id:number) => {
+const deleteRecipe = (id: number) => {
   return axios.delete(`${BASE_URL}/recipes/${id}`);
 };
 
-const updateRecipe = (id:number, updateRecipe: Recipe) => {
+const updateRecipe = (id: number, updateRecipe: Recipe) => {
   return axios.put(`${BASE_URL}/recipes/${id}`, updateRecipe);
 }
 
@@ -140,24 +140,24 @@ const getFollowing = async (username: string): Promise<string[]> => {
   }
 };
 
-const followUser = (followed:string) => {
+const followUser = (followed: string) => {
   return axios.post(`${BASE_URL}/followers/follow`, { followed });
 }
 
-const unfollowUser = (followed:string) => {
+const unfollowUser = (followed: string) => {
   return axios.post(`${BASE_URL}/followers/unfollow`, { followed });
 }
 
 // Likes
-const likeRecipe = (rid:number) => {
+const likeRecipe = (rid: number) => {
   return axios.post(`${BASE_URL}/likes/like`, { rid });
 }
 
-const unlikeRecipe = (rid:number) => {
+const unlikeRecipe = (rid: number) => {
   return axios.post(`${BASE_URL}/likes/unlike`, { rid });
 }
 
-const getLikesByUsername = (username:string): Promise<Recipe[]> => {
+const getLikesByUsername = (username: string): Promise<Recipe[]> => {
   return axios.get<Recipe[]>(`${BASE_URL}/likes/${username}`)
     .then(response => response.data)
     .catch(error => {
@@ -177,11 +177,11 @@ const getLikesForRecipe = (rid: number): Promise<number> => {
 
 const getUserLikedRecipe = (rid: number): Promise<boolean> => {
   return axios.get<boolean>(`${BASE_URL}/likes/user/${rid}`)
-  .then(response => response.data)
-  .catch(error => {
-    console.error('Error fetching if user liked the recipe', error)
-    throw error
-  })
+    .then(response => response.data)
+    .catch(error => {
+      console.error('Error fetching if user liked the recipe', error)
+      throw error
+    })
 }
 
 const DbService = {

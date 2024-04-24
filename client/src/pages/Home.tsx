@@ -13,7 +13,7 @@ function Home() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCuisine, setSelectedCuisine] = useState('');
   const [onlyMyRecipes, setOnlyMyRecipes] = useState(false);
-  const {authUser, isLogged} = useAuth();
+  const { authUser, isLogged } = useAuth();
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -26,9 +26,9 @@ function Home() {
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div className="min-height overflow-hidden d-flex w-100">
-        <div className="d-flex flex-grow-1 align-items-center justify-content-center p-1" style={{flex: "1"}}>
+        <div className="d-flex flex-grow-1 align-items-center justify-content-center p-1" style={{ flex: "1" }}>
           <div className="col-lg-7 col-md-7 col-sm-7">
             <h1 className="display-4 lh-1 text-body-emphasis">
               {t('home.title.part1')}<span className="text-primary"><b className="fw-bold">Chhárm</b>Cooks</span>{t('home.title.part2')}
@@ -46,7 +46,7 @@ function Home() {
             </div>
           </div>
         </div>
-        <div className="hero-image position-relative flex-grow-1" style={{flex: "1"}}>
+        <div className="hero-image position-relative flex-grow-1" style={{ flex: "1" }}>
           <img alt="Home banner" className="position-absolute top-0 bottom-0 start-0 left-0 h-100" src="https://asianinspirations.com.au/wp-content/uploads/2020/09/20200901-Malaysian-Cuisine-Kaleidoscope-of-Flavours-00-Feat-Img_1920w.jpg" />
         </div>
       </div>
@@ -57,7 +57,7 @@ function Home() {
             <div className="col-md-6">
               <input id="search" type="text" className="form-control border-dark-subtle" placeholder={t('home.search')} onChange={e => setSearchTerm(e.target.value)} />
               {isLogged &&
-                <button 
+                <button
                   className={`btn ${onlyMyRecipes ? 'btn-primary' : 'btn-secondary'} me-2 mt-2`}
                   onClick={() => setOnlyMyRecipes(prev => !prev)}>
                   {onlyMyRecipes ? t('home.showAll') : t('home.showMy')}
@@ -92,7 +92,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   )
 }

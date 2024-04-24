@@ -28,20 +28,20 @@ function Authors() {
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div className="album py-5">
         <div className="container">
           <h2>{t('authors.top')}</h2>
           <div className="row">
-          {authors.sort((a, b) => {
-            const aFullName = i18n.language === 'en' ? `${a.first_name} ${a.last_name}` : `${a.last_name} ${a.first_name}`;
-            const bFullName = i18n.language === 'en' ? `${b.first_name} ${b.last_name}` : `${b.last_name} ${b.first_name}`;
-            const aRecipes = recipes.filter(recipe => recipe.username === a.username).length;
-            const bRecipes = recipes.filter(recipe => recipe.username === b.username).length;
-            if (aRecipes === bRecipes)
-              return aFullName.localeCompare(bFullName);
-            else
-              return bRecipes - aRecipes;
+            {authors.sort((a, b) => {
+              const aFullName = i18n.language === 'en' ? `${a.first_name} ${a.last_name}` : `${a.last_name} ${a.first_name}`;
+              const bFullName = i18n.language === 'en' ? `${b.first_name} ${b.last_name}` : `${b.last_name} ${b.first_name}`;
+              const aRecipes = recipes.filter(recipe => recipe.username === a.username).length;
+              const bRecipes = recipes.filter(recipe => recipe.username === b.username).length;
+              if (aRecipes === bRecipes)
+                return aFullName.localeCompare(bFullName);
+              else
+                return bRecipes - aRecipes;
             }).map((author, index) => {
               const authorRecipes = recipes.filter(recipe => recipe.username === author.username);
               const recipeImage = authorRecipes.filter(recipe => recipe.picture && recipe.picture.startsWith('http')).sort((a, b) => new Date(b.created_on).getTime() - new Date(a.created_on).getTime())[0]?.picture || noRecipe;
@@ -50,10 +50,10 @@ function Authors() {
                   <Link to={`/user/${author!.username}`}>
                     <div className="card profile-card text-center">
                       <div className="background-block">
-                        <img src={recipeImage} alt="profile-sample1" className="background"/>
+                        <img src={recipeImage} alt="profile-sample1" className="background" />
                       </div>
                       <div>
-                        <img src={author.picture} alt="profile-image" className="profile rounded-circle position-absolute shadow" width={'100px'} height={'100px'}/>
+                        <img src={author.picture} alt="profile-image" className="profile rounded-circle position-absolute shadow" width={'100px'} height={'100px'} />
                       </div>
                       <div className="card-content p-3 position-relative bg-body-tertiary">
                         <h3 className="card-title fs-4 mb-2">{i18n.language === 'en' ? `${author.first_name} ${author.last_name}` : `${author.last_name} ${author.first_name}`}</h3>
@@ -68,7 +68,7 @@ function Authors() {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   )
 }

@@ -1,5 +1,9 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
 // custom variables
 $primary: #FDAA04;
+$font-family-base: -apple-system, "Nunito", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
 // import bootstrap
 @import "node_modules/bootstrap/scss/bootstrap";

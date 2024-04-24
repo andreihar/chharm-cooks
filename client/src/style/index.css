@@ -71,9 +71,6 @@ div.wrapper {
 }
 
 /* Form */
-header, legend, .controls {
-    font-family: 'Ubuntu', sans-serif;
-}
 header {
     padding-top: 2em;
 }
@@ -117,9 +114,6 @@ li::marker {
 }
 
 /* Authors */
-.profile-card {
-    font-family: 'Open Sans', Arial, sans-serif;
-}
 .profile-card .background-block {
     height: 200px;
 }

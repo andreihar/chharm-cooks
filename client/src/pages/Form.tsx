@@ -9,13 +9,13 @@ import isEqual from 'lodash.isequal';
 import DbService from '../services/DbService';
 import noRecipe from '../assets/noRecipe.png';
 
-function InputList({ items, label, addLabel, add, remove, change }:{ items:any[], label:string, addLabel:string, add:any, remove:any, change:any }) {
+function InputList({ items, label, addLabel, add, remove, change }: { items: any[], label: string, addLabel: string, add: any, remove: any, change: any }) {
   return (
     <>
       {items.map((item, index) => (
         <div className="form-group d-flex align-items-center mb-2" key={index}>
           <label className="fw-bold me-2" htmlFor={`${label}-${index}`}>{index + 1}</label>
-          <input id={`${label}-${index}`} type="text" className="form-control" name={`${label}-${index}`} value={item.name} onChange={e => change(e, index)}/>
+          <input id={`${label}-${index}`} type="text" className="form-control" name={`${label}-${index}`} value={item.name} onChange={e => change(e, index)} />
           <button type="button" className="btn btn-outline-danger fw-bold ms-2" onClick={() => remove(index)}>-</button>
         </div>
       ))}
@@ -33,9 +33,9 @@ function Form() {
   const [cookTime, setCookTime] = useState(0);
   const [servings, setServings] = useState(0);
   const [picture, setPicture] = useState('');
-  const [ingredients, setIngreds] = useState([{ name:"" }]);
-  const [steps, setSteps] = useState([{ name:"" }]);
-  const {authUser, isLogged} = useAuth();
+  const [ingredients, setIngreds] = useState([{ name: "" }]);
+  const [steps, setSteps] = useState([{ name: "" }]);
+  const { authUser, isLogged } = useAuth();
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -53,8 +53,8 @@ function Form() {
           setCookTime(foundRecipe.cook_time);
           setServings(foundRecipe.servings);
           setPicture(foundRecipe.picture);
-          setIngreds(foundRecipe.ingredients.map((ingredient:string) => ({ name:ingredient })));
-          setSteps(foundRecipe.recipe_instructions.map((step:string) => ({ name:step })));
+          setIngreds(foundRecipe.ingredients.map((ingredient: string) => ({ name: ingredient })));
+          setSteps(foundRecipe.recipe_instructions.map((step: string) => ({ name: step })));
         } else {
           navigate('/');
         }
@@ -63,12 +63,12 @@ function Form() {
     fetchRecipe();
   }, [id, isLogged, authUser]);
 
-  const add = (setter:Function) => () => setter((prev:{ name:string }[]) => [...prev, { name:"" }]);
-  const remove = (setter:Function) => (index:number) => setter((prev:{ name:string }[]) => prev.filter((_:any, i:number) => i !== index));
-  const change = (setter:Function) => (e:React.ChangeEvent<HTMLInputElement>, index:number) =>
-    setter((prev:{ name:string }[]) => prev.map((item, i) => i === index ? { name:e.target.value }:item));
+  const add = (setter: Function) => () => setter((prev: { name: string }[]) => [...prev, { name: "" }]);
+  const remove = (setter: Function) => (index: number) => setter((prev: { name: string }[]) => prev.filter((_: any, i: number) => i !== index));
+  const change = (setter: Function) => (e: React.ChangeEvent<HTMLInputElement>, index: number) =>
+    setter((prev: { name: string }[]) => prev.map((item, i) => i === index ? { name: e.target.value } : item));
 
-  async function submit(e:React.FormEvent<HTMLFormElement>) {
+  async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     let newRecipe = new Recipe(name.trim(), chinName.trim(), cuisine.trim(), authUser.username, prepTime, cookTime, servings, picture.trim() || noRecipe, ingredients.map(i => i.name.trim()).filter(Boolean), steps.map(s => s.name.trim()).filter(Boolean));
     if (newRecipe.ingredients.length === 0) {
@@ -96,7 +96,7 @@ function Form() {
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div className="wrapper">
         <header>
           <h2>{id ? t('form.edit') : t('form.create')}{t('form.recipe')}</h2>
@@ -107,27 +107,27 @@ function Form() {
               <legend className="text-primary">{t('form.recipeInfo')}</legend>
               <div className="form-group">
                 <label htmlFor="name">{t('form.recipeName')} *</label>
-                <input id="name" type="text" className="form-control" name="name" placeholder="Ke bah png" value={name} onChange={e => setName(e.target.value)} required autoComplete="name" maxLength={50}/>
+                <input id="name" type="text" className="form-control" name="name" placeholder="Ke bah png" value={name} onChange={e => setName(e.target.value)} required autoComplete="name" maxLength={50} />
               </div>
               <div className="form-group">
                 <label htmlFor="chinName">{t('form.chinName')} *</label>
-                <input id="chinName" type="text" className="form-control" name="chinName" placeholder="雞肉飯" value={chinName} onChange={e => setChinName(e.target.value)} required maxLength={50}/>
+                <input id="chinName" type="text" className="form-control" name="chinName" placeholder="雞肉飯" value={chinName} onChange={e => setChinName(e.target.value)} required maxLength={50} />
               </div>
               <div className="form-group">
                 <label htmlFor="cuisine">{t('form.cuisine')} *</label>
-                <input id="cuisine" type="text" className="form-control" name="cuisine" placeholder="Taiwanese" value={cuisine} onChange={e => setCuisine(e.target.value)} required/>
+                <input id="cuisine" type="text" className="form-control" name="cuisine" placeholder="Taiwanese" value={cuisine} onChange={e => setCuisine(e.target.value)} required />
               </div>
               <div className="form-group">
                 <label htmlFor="prepTime">{t('form.prepTime')} {t('form.min')} *</label>
-                <input id="prepTime" type="number" className="form-control" name="prepTime" placeholder="Preparation time in minutes" value={prepTime} onChange={e => setPrepTime(Math.max(0, Number(e.target.value)))} required/>
+                <input id="prepTime" type="number" className="form-control" name="prepTime" placeholder="Preparation time in minutes" value={prepTime} onChange={e => setPrepTime(Math.max(0, Number(e.target.value)))} required />
               </div>
               <div className="form-group">
                 <label htmlFor="cookTime">{t('form.cookTime')} {t('form.min')} *</label>
-                <input id="cookTime" type="number" className="form-control" name="cookTime" placeholder="Cooking time in minutes" value={cookTime} onChange={e => setCookTime(Math.max(0, Number(e.target.value)))} required/>
+                <input id="cookTime" type="number" className="form-control" name="cookTime" placeholder="Cooking time in minutes" value={cookTime} onChange={e => setCookTime(Math.max(0, Number(e.target.value)))} required />
               </div>
               <div className="form-group">
                 <label htmlFor="servings">{t('form.servings')} *</label>
-                <input id="servings" type="number" className="form-control" name="servings" placeholder="Number of servings" value={servings} onChange={e => setServings(Math.max(0, Number(e.target.value)))} required/>
+                <input id="servings" type="number" className="form-control" name="servings" placeholder="Number of servings" value={servings} onChange={e => setServings(Math.max(0, Number(e.target.value)))} required />
               </div>
               <div className="form-group">
                 <label htmlFor="picture">{t('form.picture')} {t('form.optional')}</label>
@@ -141,11 +141,11 @@ function Form() {
             </fieldset>
             <fieldset className="p-4 my-4">
               <legend className="text-primary">{t('form.ingredients')}</legend>
-              <InputList items={ingredients} label={t('form.ingredient')} addLabel={t('form.add')} add={add(setIngreds)} remove={remove(setIngreds)} change={change(setIngreds)}/>
+              <InputList items={ingredients} label={t('form.ingredient')} addLabel={t('form.add')} add={add(setIngreds)} remove={remove(setIngreds)} change={change(setIngreds)} />
             </fieldset>
             <fieldset className="p-4 my-4">
               <legend className="text-primary">{t('form.directions')}</legend>
-              <InputList items={steps} label={t('form.step')} addLabel={t('form.add')} add={add(setSteps)} remove={remove(setSteps)} change={change(setSteps)}/>
+              <InputList items={steps} label={t('form.step')} addLabel={t('form.add')} add={add(setSteps)} remove={remove(setSteps)} change={change(setSteps)} />
             </fieldset>
             <div className="controls d-flex justify-content-center">
               <button type="submit" className="btn btn-outline-primary px-4 text-uppercase">{id ? t('form.update') : t('form.submit')}</button>
@@ -153,7 +153,7 @@ function Form() {
           </form>
         </main>
       </div>
-      <Footer/>
+      <Footer />
     </>
   )
 }

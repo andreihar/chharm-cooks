@@ -9,14 +9,14 @@ import DbService from '../services/DbService';
 import { AxiosError } from 'axios';
 
 function Login() {
-  const {setAuthUser, setIsLogged} = useAuth();
+  const { setAuthUser, setIsLogged } = useAuth();
   const { t } = useTranslation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isPassword, setIsPassword] = useState(false);
   const navigate = useNavigate();
 
-  async function submit(e:React.FormEvent<HTMLFormElement>) {
+  async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
       const user = await DbService.login(username.trim(), password);
@@ -35,18 +35,18 @@ function Login() {
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div className="bg-body-tertiary">
         <main className="min-height m-auto d-flex align-items-center justify-content-center">
-          <form style={{width: '330px'}} onSubmit={submit}>
+          <form style={{ width: '330px' }} onSubmit={submit}>
             <h1 className="mb-1">{t('login.signIn')}</h1>
             <p className="small">{t('login.unleash')}</p>
             <div className="form-floating mb-2">
-              <input type="text" className="form-control" id="floatingInput" placeholder="Username" onChange={e => setUsername(e.target.value)} required/>
+              <input type="text" className="form-control" id="floatingInput" placeholder="Username" onChange={e => setUsername(e.target.value)} required />
               <label htmlFor="floatingInput">{t('signup.username')}</label>
             </div>
             <div className="form-floating mb-4 position-relative">
-              <input type={isPassword ? "text" : "password"} className="form-control" id="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
+              <input type={isPassword ? "text" : "password"} className="form-control" id="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required />
               <button type="button" onClick={() => setIsPassword(!isPassword)} className="btn position-absolute top-50 translate-middle-y end-0">
                 <FontAwesomeIcon icon={isPassword ? faEye : faEyeSlash} />
               </button>
