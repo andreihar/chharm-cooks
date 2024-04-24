@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
@@ -6,20 +6,20 @@ import { User } from '../models/User';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare, faClock, faBowlRice, faThumbsUp as faThumbsUpL } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsUp as faThumbsUpN } from '@fortawesome/free-regular-svg-icons';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DbService from '../services/DbService';
 
 function Display() {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{ id: string; }>();
   const [recipe, setRecipe] = useState<Recipe>();
   const [author, setAuthor] = useState<User>();
   const [userLiked, setUserLiked] = useState<boolean>(false);
   const [likes, setLikes] = useState<number>(0);
   const [viewAlsoRecipes, setViewRecipes] = useState<Recipe[]>([]);
-  const { authUser, isLogged } = useAuth();
+  const { user, isAuthenticated } = useAuth0();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
@@ -32,7 +32,7 @@ function Display() {
       if (foundRecipe && foundAuthor) {
         setRecipe(foundRecipe);
         setAuthor(foundAuthor);
-        if (isLogged) setUserLiked(await DbService.getUserLikedRecipe(Number(id)));
+        if (isAuthenticated) setUserLiked(await DbService.getUserLikedRecipe(Number(id)));
         setLikes(await DbService.getLikesForRecipe(Number(id)));
       } else {
         alert(t('display.error'));
@@ -49,7 +49,7 @@ function Display() {
       DbService.deleteRecipe(Number(id));
       navigate('/');
     }
-  }
+  };
 
   const handleLike = async () => {
     if (userLiked) {
@@ -60,7 +60,7 @@ function Display() {
       setLikes(Number(likes) + 1);
     }
     setUserLiked(!userLiked);
-  }
+  };
 
   if (recipe) {
     const { picture, title, chin_title, created_on, time_last_modified, cuisine, ingredients, recipe_instructions, prep_time, cook_time, servings } = recipe;
@@ -101,7 +101,7 @@ function Display() {
                     <button
                       onClick={handleLike}
                       className="btn"
-                      disabled={!isLogged}
+                      disabled={!isAuthenticated}
                       style={{ border: 'none' }}
                     >
                       <FontAwesomeIcon icon={userLiked ? faThumbsUpL : faThumbsUpN} />
@@ -115,7 +115,7 @@ function Display() {
                     {t('display.posted')} <span className="">{`${created_on.toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>&nbsp;|&nbsp;
                     {t('display.updated')} <span className="">{`${time_last_modified.toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>
                   </p>
-                  {isLogged && (authUser.username === author!.username) &&
+                  {isAuthenticated && (user!.username === author!.username) &&
                     <div>
                       <button onClick={deleteRecipe} className="btn btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button>
                       <button onClick={() => navigate('/form/' + id)} className="btn btn-outline-secondary ms-2"><FontAwesomeIcon icon={faPenToSquare} /></button>
@@ -170,8 +170,8 @@ function Display() {
         </div>
         <Footer />
       </>
-    )
+    );
   }
 }
 
-export default Display
+export default Display;

@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -13,7 +13,7 @@ function Home() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCuisine, setSelectedCuisine] = useState('');
   const [onlyMyRecipes, setOnlyMyRecipes] = useState(false);
-  const { authUser, isLogged } = useAuth();
+  const { user, isAuthenticated } = useAuth0();
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -56,7 +56,7 @@ function Home() {
           <div className="row justify-content-center my-4">
             <div className="col-md-6">
               <input id="search" type="text" className="form-control border-dark-subtle" placeholder={t('home.search')} onChange={e => setSearchTerm(e.target.value)} />
-              {isLogged &&
+              {isAuthenticated &&
                 <button
                   className={`btn ${onlyMyRecipes ? 'btn-primary' : 'btn-secondary'} me-2 mt-2`}
                   onClick={() => setOnlyMyRecipes(prev => !prev)}>
@@ -73,7 +73,7 @@ function Home() {
             </div>
           </div>
           <div className="row">
-            {recipes.filter(item => item.title.toLowerCase().includes(searchTerm.toLowerCase()) && (!selectedCuisine || item.cuisine === selectedCuisine) && (!onlyMyRecipes || item.username === authUser.username)).map((recipe, index) => (
+            {recipes.filter(item => item.title.toLowerCase().includes(searchTerm.toLowerCase()) && (!selectedCuisine || item.cuisine === selectedCuisine) && (!onlyMyRecipes || item.username === user!.username)).map((recipe, index) => (
               <div key={index} className="col-12 col-sm-6 col-md-4 col-lg-3 my-3">
                 <Link to={`/recipe/${recipe.rid}`}>
                   <div className="card h-100">
@@ -94,7 +94,7 @@ function Home() {
       </div>
       <Footer />
     </>
-  )
+  );
 }
 
-export default Home
+export default Home;

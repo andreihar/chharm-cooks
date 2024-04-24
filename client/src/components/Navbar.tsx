@@ -1,14 +1,13 @@
 import { useEffect } from 'react';
-import logo from '../assets/logo.svg'
+import logo from '../assets/logo.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
-import DbService from '../services/DbService';
 
 function Navbar() {
-  const { authUser, setAuthUser, isLogged, setIsLogged } = useAuth();
+  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
   const { i18n, t } = useTranslation();
   const navigate = useNavigate();
 
@@ -25,11 +24,9 @@ function Navbar() {
 
   const logOut = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setIsLogged(false);
-    setAuthUser(null);
-    DbService.logout();
+    logout();
     navigate('/');
-  }
+  };
 
   return (
     <nav className="navbar navbar-expand-lg fixed-top navbar-light bg-white p-0">
@@ -44,20 +41,21 @@ function Navbar() {
             <li className="nav-item fs-5 me-3"><Link to='/form' className="nav-link">{t('navbar.addRecipe')}</Link></li>
             <li className="nav-item fs-5"><Link to='/contributors' className="nav-link">{t('navbar.contributors')}</Link></li>
           </ul>
-          {isLogged ?
+          {(isAuthenticated && user) ?
             <div className="dropdown">
               <a href="#" className="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src={authUser.picture} alt="User Picture" width={32} height={32} className="rounded-circle" />
+                <img src={user.picture} alt="User Picture" width={32} height={32} className="rounded-circle" />
+                {/* {JSON.stringify(user)} */}
               </a>
               <ul className="dropdown-menu text-small" style={{}}>
-                <Link to={`/user/${authUser.username}`}><button type="button" className="dropdown-item">{t('navbar.profile')}</button></Link>
-                <li><button className="dropdown-item" onClick={(e) => { logOut(e) }}>{t('navbar.signOut')}</button></li>
+                {/* <Link to={`/user/${authUser.username}`}><button type="button" className="dropdown-item">{t('navbar.profile')}</button></Link> */}
+                <li><button className="dropdown-item" onClick={(e) => logOut(e)}>{t('navbar.signOut')}</button></li>
               </ul>
             </div>
             :
             <div>
-              <Link to='/login'><button type="button" className="btn me-1"><FontAwesomeIcon className="fs-4 align-middle text-primary" icon={faCircleUser} /> {t('login.signIn')}</button></Link>
-              <Link to='/signup'><button type="button" className="btn btn-primary">{t('login.joinNow')}</button></Link>
+              <button className="btn me-1" onClick={() => loginWithRedirect()}><FontAwesomeIcon className="fs-4 align-middle text-primary" icon={faCircleUser} /> {t('login.signIn')}</button>
+              {/* <Link to='/signup'><button type="button" className="btn btn-primary">{t('login.joinNow')}</button></Link> */}
             </div>
           }
           <div className="ms-2">
@@ -69,7 +67,7 @@ function Navbar() {
         </div>
       </div>
     </nav>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

@@ -1,18 +1,18 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
 import { User } from '../models/User';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare, faClock, faBowlRice, faThumbsUp as faThumbsUpL } from '@fortawesome/free-solid-svg-icons';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DbService from '../services/DbService';
 
 function Display() {
-  const { username } = useParams<{ username: string }>();
+  const { username } = useParams<{ username: string; }>();
   const [author, setAuthor] = useState<User>();
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [likedRecipes, setLikedRecipes] = useState<Recipe[]>([]);
@@ -20,7 +20,7 @@ function Display() {
   const [followers, setFollowers] = useState<User[]>([]);
   const [userFollows, setUserFollows] = useState<boolean>(false);
   const [followersCount, setFollowersCount] = useState<number>(0);
-  const { authUser, isLogged } = useAuth();
+  const { user, isAuthenticated } = useAuth0();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
@@ -39,11 +39,11 @@ function Display() {
         // setLikedRecipes(foundLikedRecipes);
         setFollowing(foundFollowing);
         setFollowers(foundFollowers);
-        const followerUsernames = followersUsernames.map(user => user.follower);
-        if (followerUsernames.includes(authUser.username)) {
-          setUserFollows(true);
-        }
-        setFollowersCount(followersUsernames.length);
+        // const followerUsernames = followersUsernames.map(user => user.follower);
+        // if (followerUsernames.includes(authUser.username)) {
+        //   setUserFollows(true);
+        // }
+        // setFollowersCount(followersUsernames.length);
       } else {
         alert(t('display.error'));
         navigate('/');
@@ -59,17 +59,17 @@ function Display() {
     const newFollowing = await DbService.getFollowers(username || '');
     setFollowersCount(newFollowing.length);
     setUserFollows(true);
-  }
+  };
 
   const unfollow = async () => {
     await DbService.unfollowUser(username || '');
     const newFollowing = await DbService.getFollowers(username || '');
     setFollowersCount(newFollowing.length);
     setUserFollows(false);
-  }
+  };
 
   if (author) {
-    const { username, email, picture, social, first_name, last_name, bio, occupation, created_on } = author
+    const { username, email, picture, social, first_name, last_name, bio, occupation, created_on } = author;
     return (
       <>
         <Navbar />
@@ -120,7 +120,7 @@ function Display() {
                   <p className="text-dark-emphasis">
                     Joined On <span className="">{`${new Date(created_on).toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>
                   </p>
-                  {isLogged && (authUser.username !== username) &&
+                  {isAuthenticated && user && (user.sub !== username) &&
                     <div className="align-items-center d-flex fs-5">
                       {userFollows
                         ? <button className="btn btn-outline-secondary" onClick={unfollow}>Unfollow</button>
@@ -172,8 +172,8 @@ function Display() {
         </main>
         <Footer />
       </>
-    )
+    );
   }
 }
 
-export default Display
+export default Display;
