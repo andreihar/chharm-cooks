@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import { Recipe } from '../models/Recipe';
 import { User } from '../models/User';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,7 @@ function getSpecialtyCuisine(authorRecipes: Recipe[]) {
   const cuisineFrequency = authorRecipes.reduce((acc, recipe) => {
     acc[recipe.cuisine] = (acc[recipe.cuisine] || 0) + 1;
     return acc;
-  }, {} as { [key: string]: number });
+  }, {} as { [key: string]: number; });
   return Object.keys(cuisineFrequency).reduce((a, b) => cuisineFrequency[a] > cuisineFrequency[b] ? a : b, '');
 }
 
@@ -70,7 +70,7 @@ function Authors() {
       </div>
       <Footer />
     </>
-  )
+  );
 }
 
-export default Authors
+export default Authors;

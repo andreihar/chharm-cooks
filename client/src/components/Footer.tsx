@@ -13,7 +13,7 @@ function Footer() {
 			</ul>
 			<p className="text-center text-body-secondary">© 2024 Andrei Harbachov</p>
 		</footer>
-	)
+	);
 }
 
-export default Footer
+export default Footer;
