@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { jwtDecode } from "jwt-decode";
 import { User } from '../models/User';
 import { Recipe } from '../models/Recipe';
 
@@ -10,25 +9,6 @@ const token = Cookies.get('token');
 if (token) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
-
-interface LoginResponse {
-  user: User;
-  token: string;
-};
-
-// Authentication
-const setAuthHeadersAndCookies = (response: LoginResponse) => {
-  axios.defaults.headers.common['Authorization'] = `Bearer ${response.token}`;
-  const decodedToken = jwtDecode(response.token);
-  if (decodedToken.exp) {
-    const expirationDate = new Date(decodedToken.exp * 1000);
-    Cookies.set('token', response.token, { expires: expirationDate });
-    Cookies.set('authUser', JSON.stringify(response.user), { expires: expirationDate });
-  } else {
-    Cookies.set('token', response.token);
-    Cookies.set('authUser', JSON.stringify(response.user));
-  }
-};
 
 // Users
 const getUsers = (): Promise<User[]> => {
@@ -49,22 +29,9 @@ const getUserByName = (username: string): Promise<User> => {
     });
 };
 
-const addUser = (newUser: User, password: string): Promise<User> => {
-  return axios.post<LoginResponse>(`${BASE_URL}/users`, { ...newUser, password })
-    .then(response => {
-      setAuthHeadersAndCookies(response.data);
-      return response.data.user;
-    })
-    .catch(error => {
-      console.error('Error signing up', error);
-      throw error;
-    });
-};
-
 const logout = () => {
   delete axios.defaults.headers.common['Authorization'];
   Cookies.remove('token');
-  Cookies.remove('authUser');
 };
 
 // Recipes
@@ -175,8 +142,6 @@ const getUserLikedRecipe = (rid: number): Promise<boolean> => {
 const DbService = {
   getUsers,
   getUserByName,
-  addUser,
-  // login,
   logout,
   getRecipes,
   getRecipeById,

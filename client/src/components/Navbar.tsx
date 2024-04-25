@@ -37,6 +37,7 @@ function Navbar() {
 
   const logOut = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    DbService.logout();
     logout();
     navigate('/');
   };
@@ -58,19 +59,15 @@ function Navbar() {
             <div className="dropdown">
               <a href="#" className="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 <img src={user.picture} alt="User Picture" width={32} height={32} className="rounded-circle" />
-                {/* {JSON.stringify(user)} */}
               </a>
               <ul className="dropdown-menu text-small" style={{}}>
-                {/* <Link to={`/user/${authUser.username}`}><button type="button" className="dropdown-item">{t('navbar.profile')}</button></Link> */}
+                <Link to={`/user/${user.sub}`}><button type="button" className="dropdown-item">{t('navbar.profile')}</button></Link>
                 <li><button className="dropdown-item" onClick={(e) => logOut(e)}>{t('navbar.signOut')}</button></li>
               </ul>
             </div>
             :
             <div>
-              <button className="btn me-1" onClick={() => loginWithRedirect()}>
-                <FontAwesomeIcon className="fs-4 align-middle text-primary" icon={faCircleUser} />
-                {t('login.signIn')}
-              </button>
+              <button className="btn me-1" onClick={() => loginWithRedirect()}><FontAwesomeIcon className="fs-4 align-middle text-primary" icon={faCircleUser} /> {t('login.signIn')}</button>
               {/* <Link to='/signup'><button type="button" className="btn btn-primary">{t('login.joinNow')}</button></Link> */}
             </div>
           }
