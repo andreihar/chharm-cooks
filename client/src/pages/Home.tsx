@@ -73,7 +73,7 @@ function Home() {
             </div>
           </div>
           <div className="row">
-            {recipes.filter(item => item.title.toLowerCase().includes(searchTerm.toLowerCase()) && (!selectedCuisine || item.cuisine === selectedCuisine) && (!onlyMyRecipes || item.username === user!.username)).map((recipe, index) => (
+            {recipes.filter(item => item.title.toLowerCase().includes(searchTerm.toLowerCase()) && (!selectedCuisine || item.cuisine === selectedCuisine) && (!onlyMyRecipes || item.username === user!.sub)).map((recipe, index) => (
               <div key={index} className="col-12 col-sm-6 col-md-4 col-lg-3 my-3">
                 <Link to={`/recipe/${recipe.rid}`}>
                   <div className="card h-100">

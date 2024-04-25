@@ -115,7 +115,7 @@ function Display() {
                     {t('display.posted')} <span className="">{`${created_on.toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>&nbsp;|&nbsp;
                     {t('display.updated')} <span className="">{`${time_last_modified.toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>
                   </p>
-                  {isAuthenticated && (user!.username === author!.username) &&
+                  {isAuthenticated && (user!.sub === author!.username) &&
                     <div>
                       <button onClick={deleteRecipe} className="btn btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button>
                       <button onClick={() => navigate('/form/' + id)} className="btn btn-outline-secondary ms-2"><FontAwesomeIcon icon={faPenToSquare} /></button>

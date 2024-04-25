@@ -15,8 +15,8 @@ const defaultData = async function () {
 	const fs = require('fs');
 	const users = JSON.parse(fs.readFileSync('./assets/defaultUsers.json', 'utf8'));
 	const recipes = JSON.parse(fs.readFileSync('./assets/defaultRecipes.json', 'utf8'));
-	for (const { username, email, picture, social, first_name, last_name, bio, occupation, password } of users) {
-		await helpers.addUser(username, email, picture, social, first_name, last_name, bio, occupation, password);
+	for (const { username, email, picture, social, first_name, last_name, bio, occupation } of users) {
+		await helpers.addUser(username, email, picture, social, first_name, last_name, bio, occupation);
 	}
 	for (const { title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, ingredients, recipeInstructions } of recipes) {
 		await helpers.addRecipe(title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, ingredients, recipeInstructions);
@@ -40,8 +40,8 @@ const helpers = {
 		await pool.query(createFollowersTable);
 		await pool.query(createLikesTable);
 		await pool.query(createNotificationsTable);
-		// if (!(await pool.query("SELECT EXISTS (SELECT 1 FROM recipe LIMIT 1);")).rows[0].exists)
-		// 	await defaultData();
+		if (!(await pool.query("SELECT EXISTS (SELECT 1 FROM recipe LIMIT 1);")).rows[0].exists)
+			await defaultData();
 	},
 
 	// Users

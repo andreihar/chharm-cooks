@@ -11,7 +11,6 @@ import { User } from '../models/User';
 function Navbar() {
   const { logout, loginWithRedirect, isAuthenticated, user, getAccessTokenSilently } = useAuth0();
   const { i18n, t } = useTranslation();
-  const navigate = useNavigate();
 
   const changeLanguage = (event: React.ChangeEvent<HTMLSelectElement>) => {
     i18n.changeLanguage(event.target.value);
@@ -42,7 +41,6 @@ function Navbar() {
     e.preventDefault();
     DbService.logout();
     logout();
-    navigate('/');
   };
 
   return (
