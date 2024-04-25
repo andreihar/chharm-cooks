@@ -26,7 +26,7 @@ const defaultData = async function () {
 const helpers = {
 	init: async function () {
 		const {
-			// createUsersTable,
+			createUsersTable,
 			createIngredientTable,
 			createRecipeTable,
 			createFollowersTable,
@@ -34,7 +34,7 @@ const helpers = {
 			createNotificationsTable
 		} = require('./tables');
 
-		// await pool.query(createUsersTable);
+		await pool.query(createUsersTable);
 		await pool.query(createIngredientTable);
 		await pool.query(createRecipeTable);
 		await pool.query(createFollowersTable);
@@ -45,34 +45,26 @@ const helpers = {
 	},
 
 	// Users
-	// getUsers: async function () {
-	// 	const res = await pool.query('SELECT username, email, picture, social, first_name, last_name, bio, occupation, created_on FROM users');
-	// 	return res.rows;
-	// },
+	getUsers: async function () {
+		const res = await pool.query('SELECT * FROM users');
+		return res.rows;
+	},
 
-	// getUserByUsername: async function (username) {
-	// 	const res = await pool.query('SELECT username, email, picture, social, first_name, last_name, bio, occupation, created_on FROM users WHERE username = $1', [username]);
-	// 	return res.rows[0];
-	// },
+	getUserByUsername: async function (username) {
+		const res = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
+		return res.rows[0];
+	},
 
-	// addUser: async function (username, email, picture, social, first_name, last_name, bio, occupation, password) {
-	// 	const hashedPassword = bcrypt.hashSync(password, saltRounds);
-	// 	const q = 'INSERT INTO users(username, email, picture, social, first_name, last_name, bio, occupation, password) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) ON CONFLICT (username) DO NOTHING RETURNING username, email, picture, social, first_name, last_name, bio, occupation, created_on';
-	// 	const res = await pool.query(q, [username, email, picture, social, first_name, last_name, bio, occupation, hashedPassword]);
-	// 	return res.rows[0];
-	// },
-
-	// checkPassword: async function (identifier, password) {
-	// 	const q = 'SELECT password FROM users WHERE username = $1 OR email = $1';
-	// 	const res = await pool.query(q, [identifier]);
-	// 	const user = res.rows[0];
-	// 	return user && bcrypt.compareSync(password, user.password);
-	// },
-
-	// checkIdentification: async function (identifier) {
-	// 	const res = await pool.query('SELECT username, email, picture, social, first_name, last_name, bio, occupation, created_on FROM users WHERE username = $1 OR email = $1', [identifier]);
-	// 	return res.rows[0];
-	// },
+	addUser: async function (username, email, picture, social, first_name, last_name, bio, occupation) {
+		const q = `
+			INSERT INTO users(username, email, picture, social, first_name, last_name, bio, occupation) 
+			VALUES($1, $2, $3, $4, $5, $6, $7, $8) 
+			ON CONFLICT (username) 
+			DO UPDATE SET email = $2, picture = $3, social = $4, first_name = $5, last_name = $6, bio = $7, occupation = $8
+		`;
+		await pool.query(q, [username, email, picture, social, first_name, last_name, bio, occupation]);
+		// return res.rows[0];
+	},
 
 	// Recipes
 	getRecipes: async function () {

@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
 import DbService from '../services/DbService';
+import { User } from '../models/User';
 
 function Navbar() {
   const { logout, loginWithRedirect, isAuthenticated, user, getAccessTokenSilently } = useAuth0();
@@ -24,16 +25,18 @@ function Navbar() {
   }, []);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && user) {
       getAccessTokenSilently()
         .then(token => {
-          document.cookie = `token=${token}; path=/`;
+          const { sub, email, picture, given_name, family_name } = user;
+          const newUser = new User(sub!, email!, picture!, '', given_name!, family_name!, '', '', new Date());
+          DbService.login(newUser, token);
         })
         .catch(e => {
           console.log(e);
         });
     }
-  }, [isAuthenticated, getAccessTokenSilently]);
+  }, [isAuthenticated, getAccessTokenSilently, user]);
 
   const logOut = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

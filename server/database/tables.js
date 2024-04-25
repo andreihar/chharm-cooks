@@ -1,3 +1,17 @@
+const createUsersTable = `
+	CREATE TABLE IF NOT EXISTS users(
+		username VARCHAR(255) PRIMARY KEY,
+		email VARCHAR(255) UNIQUE NOT NULL,
+		picture TEXT,
+		social TEXT,
+		first_name VARCHAR(255),
+		last_name VARCHAR(255),
+		bio TEXT,
+		occupation VARCHAR(100),
+		created_on TIMESTAMPTZ DEFAULT NOW()
+	);
+`;
+
 const createIngredientTable = `
 	CREATE TABLE IF NOT EXISTS ingredient(
 		iid SERIAL PRIMARY KEY, 
@@ -12,6 +26,7 @@ const createRecipeTable = `
 		chin_title VARCHAR(50),
 		cuisine VARCHAR(50),
 		username VARCHAR(255),
+		FOREIGN KEY (username) REFERENCES users(username),
 		prep_time INT,
 		cook_time INT,
 		servings INT,
@@ -28,7 +43,9 @@ const createFollowersTable = `
 	CREATE TABLE IF NOT EXISTS followers(
 		follower VARCHAR(255),
 		followed VARCHAR(255),
-		PRIMARY KEY (follower, followed)
+		PRIMARY KEY (follower, followed),
+		FOREIGN KEY (follower) REFERENCES users(username) ON DELETE CASCADE,
+		FOREIGN KEY (followed) REFERENCES users(username) ON DELETE CASCADE
 	);
 `;
 
@@ -37,6 +54,7 @@ const createLikesTable = `
 		username VARCHAR(255),
 		rid SERIAL,
 		PRIMARY KEY (username, rid),
+		FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE,
 		FOREIGN KEY (rid) REFERENCES recipe(rid) ON DELETE CASCADE
 	);
 `;
@@ -47,12 +65,13 @@ const createNotificationsTable = `
 		rid INT,
 		read BOOLEAN DEFAULT FALSE,
 		PRIMARY KEY (username, rid),
+		FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE,
 		FOREIGN KEY (rid) REFERENCES recipe(rid) ON DELETE CASCADE
 	);
 `;
 
 module.exports = {
-	// createUsersTable,
+	createUsersTable,
 	createIngredientTable,
 	createRecipeTable,
 	createFollowersTable,

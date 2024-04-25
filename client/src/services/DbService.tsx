@@ -10,6 +10,17 @@ if (token) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
 
+const login = (user: User, token: string): Promise<User> => {
+  Cookies.set('token', token);
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  return axios.post<User>(`${BASE_URL}/users/login`, user)
+    .then(response => response.data)
+    .catch(error => {
+      console.error('Error logging in user', error);
+      throw error;
+    });
+};
+
 // Users
 const getUsers = (): Promise<User[]> => {
   return axios.get<User[]>(`${BASE_URL}/users`)
@@ -142,6 +153,7 @@ const getUserLikedRecipe = (rid: number): Promise<boolean> => {
 const DbService = {
   getUsers,
   getUserByName,
+  login,
   logout,
   getRecipes,
   getRecipeById,

@@ -20,4 +20,12 @@ router.get('/:username', async (req, res) => {
 	}
 });
 
+router.post('/login', async (req, res) => {
+	try {
+		await usersService.addUser(req.body);
+	} catch (err) {
+		res.status(500).json({ error: 'An error occurred while logging in' });
+	}
+});
+
 module.exports = router;
