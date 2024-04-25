@@ -26,10 +26,10 @@ router.get('/following/:username', async (req, res) => {
 router.post('/follow', authMiddleware, async (req, res) => {
 	try {
 		const { followed } = req.body;
-		if (req.user.username === followed) {
+		if (req.auth.sub === followed) {
 			return res.status(400).json({ error: 'You cannot follow yourself' });
 		}
-		await followersService.followUser(req.user.username, followed);
+		await followersService.followUser(req.auth.sub, followed);
 		res.json({ message: 'User followed successfully' });
 	} catch (err) {
 		res.status(500).json({ error: 'An error occurred while following the user' });
@@ -39,7 +39,7 @@ router.post('/follow', authMiddleware, async (req, res) => {
 router.post('/unfollow', authMiddleware, async (req, res) => {
 	try {
 		const { followed } = req.body;
-		await followersService.unfollowUser(req.user.username, followed);
+		await followersService.unfollowUser(req.auth.sub, followed);
 		res.json({ message: 'User unfollowed successfully' });
 	} catch (err) {
 		res.status(500).json({ error: 'An error occurred while unfollowing the user' });
