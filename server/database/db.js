@@ -40,8 +40,8 @@ const helpers = {
 		await pool.query(createFollowersTable);
 		await pool.query(createLikesTable);
 		await pool.query(createNotificationsTable);
-		if (!(await pool.query("SELECT EXISTS (SELECT 1 FROM recipe LIMIT 1);")).rows[0].exists)
-			await defaultData();
+		// if (!(await pool.query("SELECT EXISTS (SELECT 1 FROM recipe LIMIT 1);")).rows[0].exists)
+		// 	await defaultData();
 	},
 
 	// Users

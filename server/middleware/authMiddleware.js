@@ -1,27 +1,18 @@
-const jwt = require('jsonwebtoken');
+const { expressjwt: jwt } = require('express-jwt');
+const jwksRsa = require('jwks-rsa');
+
 require('dotenv').config({ path: './process.env' });
-const secretKey = process.env.JWT_SECRET_KEY;
+const authMiddleware = jwt({
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
+  }),
 
-const authMiddleware = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  if (authHeader) {
-    const token = authHeader.split(' ')[1];
-    jwt.verify(token, secretKey, (err, user) => {
-      if (err) {
-        console.log('Error verifying token:', err);
-        return res.sendStatus(403);
-      }
-      req.user = user;
-      next();
-    });
-  } else {
-    res.sendStatus(401);
-  }
-};
+  audience: process.env.AUTH0_AUDIENCE,
+  issuer: `https://${process.env.AUTH0_DOMAIN}/`,
+  algorithms: ['RS256']
+});
 
-const authenticateUser = async (req, res, user) => {
-  const token = jwt.sign({ username: user.username }, secretKey, { expiresIn: '1h' });
-  res.json({ user, token });
-};
-
-module.exports = { authMiddleware, authenticateUser };
+module.exports = { authMiddleware };

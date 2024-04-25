@@ -30,18 +30,6 @@ const setAuthHeadersAndCookies = (response: LoginResponse) => {
   }
 };
 
-const login = (username: string, password: string): Promise<User> => {
-  return axios.post<LoginResponse>(`${BASE_URL}/users/login`, { username, password })
-    .then(response => {
-      setAuthHeadersAndCookies(response.data);
-      return response.data.user;
-    })
-    .catch(error => {
-      console.error('Error logging in', error);
-      throw error;
-    });
-};
-
 // Users
 const getUsers = (): Promise<User[]> => {
   return axios.get<User[]>(`${BASE_URL}/users`)
@@ -188,7 +176,7 @@ const DbService = {
   getUsers,
   getUserByName,
   addUser,
-  login,
+  // login,
   logout,
   getRecipes,
   getRecipeById,

@@ -5,9 +5,10 @@ import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
+import DbService from '../services/DbService';
 
 function Navbar() {
-  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
+  const { logout, loginWithRedirect, isAuthenticated, user, getAccessTokenSilently } = useAuth0();
   const { i18n, t } = useTranslation();
   const navigate = useNavigate();
 
@@ -21,6 +22,18 @@ function Navbar() {
       document.documentElement.classList.remove('with-navbar');
     };
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      getAccessTokenSilently()
+        .then(token => {
+          document.cookie = `token=${token}; path=/`;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+  }, [isAuthenticated, getAccessTokenSilently]);
 
   const logOut = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -54,7 +67,10 @@ function Navbar() {
             </div>
             :
             <div>
-              <button className="btn me-1" onClick={() => loginWithRedirect()}><FontAwesomeIcon className="fs-4 align-middle text-primary" icon={faCircleUser} /> {t('login.signIn')}</button>
+              <button className="btn me-1" onClick={() => loginWithRedirect()}>
+                <FontAwesomeIcon className="fs-4 align-middle text-primary" icon={faCircleUser} />
+                {t('login.signIn')}
+              </button>
               {/* <Link to='/signup'><button type="button" className="btn btn-primary">{t('login.joinNow')}</button></Link> */}
             </div>
           }
