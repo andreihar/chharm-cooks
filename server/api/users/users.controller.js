@@ -22,7 +22,8 @@ router.get('/:username', async (req, res) => {
 
 router.post('/login', async (req, res) => {
 	try {
-		await usersService.addUser(req.body);
+		const isNewUser = await usersService.addUser(req.body);
+		res.status(200).json({ isNewUser });
 	} catch (err) {
 		res.status(500).json({ error: 'An error occurred while logging in' });
 	}

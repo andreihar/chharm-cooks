@@ -11,6 +11,7 @@ import { User } from '../models/User';
 function Navbar() {
   const { logout, loginWithRedirect, isAuthenticated, user, getAccessTokenSilently } = useAuth0();
   const { i18n, t } = useTranslation();
+  const navigate = useNavigate();
 
   const changeLanguage = (event: React.ChangeEvent<HTMLSelectElement>) => {
     i18n.changeLanguage(event.target.value);
@@ -27,9 +28,19 @@ function Navbar() {
     if (isAuthenticated && user) {
       getAccessTokenSilently()
         .then(token => {
-          const { sub, email, picture, given_name, family_name } = user;
+          const { sub, email, picture, name } = user;
+          const [given_name = '', family_name = ''] = name ? name.split(' ') : [];
           const newUser = new User(sub!, email!, picture!, '', given_name!, family_name!, '', '', new Date());
-          DbService.login(newUser, token);
+          DbService.login(newUser, token)
+            .then(isNewUser => {
+              if (isNewUser) {
+                navigate('*');
+                console.log('New user created');
+              } else {
+                navigate('/contributors');
+                console.log('Logged into existing user');
+              }
+            });
         })
         .catch(e => {
           console.log(e);

@@ -9,11 +9,8 @@ const getUserByUsername = async (username) => {
 };
 
 const addUser = async ({ username, email, picture, social, first_name, last_name, bio, occupation }) => {
-	const user = await db.helpers.addUser(username, email, picture, social, first_name, last_name, bio, occupation);
-	if (!user) {
-		return null;
-	}
-	return user;
+	const isNewUser = await db.helpers.addUser(username, email, picture, social, first_name, last_name, bio, occupation);
+	return isNewUser;
 };
 
 module.exports = {

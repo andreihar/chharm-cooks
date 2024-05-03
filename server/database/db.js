@@ -60,10 +60,11 @@ const helpers = {
 			INSERT INTO users(username, email, picture, social, first_name, last_name, bio, occupation) 
 			VALUES($1, $2, $3, $4, $5, $6, $7, $8) 
 			ON CONFLICT (username) 
-			DO UPDATE SET email = $2, picture = $3, social = $4, first_name = $5, last_name = $6, bio = $7, occupation = $8
+			DO UPDATE SET email = $2, picture = $3, first_name = $5, last_name = $6, social = CASE WHEN $4 = '' THEN users.social ELSE $4 END, bio = CASE WHEN $7 = '' THEN users.bio ELSE $7 END, occupation = CASE WHEN $8 = '' THEN users.occupation ELSE $8 END
+			RETURNING (xmax = 0) AS is_new_user
 		`;
-		await pool.query(q, [username, email, picture, social, first_name, last_name, bio, occupation]);
-		// return res.rows[0];
+		const res = await pool.query(q, [username, email, picture, social, first_name, last_name, bio, occupation]);
+		return res.rows[0].is_new_user;
 	},
 
 	// Recipes
