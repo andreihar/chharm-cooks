@@ -2,7 +2,6 @@
   {
 		"username": "auth0|662a1b785717fb24bc6e3103",
 		"password": "ja_CKwJ_ackw",
-		"email": "jackwang@example.com",
 		"picture": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTD2mKBdUYRUA2uWZnvLw3x7cUbpgBAdqmd8_nCav_-GJ-rcAoh",
 		"social": "https://www.linkedin.com/in/jack-wang-295815170/",
 		"first_name": "Jack",
@@ -13,7 +12,6 @@
   {
 		"username": "auth0|662a1bca96132b5427cffe73",
 		"password": "S*AMuESa-mUe4",
-		"email": "samueljen@example.com",
 		"picture": "https://media.licdn.com/dms/image/C5603AQFFIopjM9nf6Q/profile-displayphoto-shrink_800_800/0/1647027164110?e=1712793600&v=beta&t=O37VyNeB-kSIGdJgyBZT0kvhOo4h0tT07D9vXombc2Q",
 		"social": "https://www.linkedin.com/in/samuel-jen/",
 		"first_name": "Samuel",
@@ -24,7 +22,6 @@
   {
 		"username": "auth0|662a1bdc4da8ec45371eb422",
 		"password": "j#unXikE%anE4",
-		"email": "keanejunxianong@example.com",
 		"picture": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTD2mKBdUYRUA2uWZnvLw3x7cUbpgBAdqmd8_nCav_-GJ-rcAoh",
 		"social": "https://www.instagram.com/k.ojx/",
 		"first_name": "Keane Junxian",
@@ -35,7 +32,6 @@
   {
 		"username": "auth0|662a1bef93cc4d2e64f5b17b",
 		"password": "M%Attt2024ma%Ttt",
-		"email": "matttsai@example.com",
 		"picture": "https://media.licdn.com/dms/image/C5603AQGf2o1YD2oxkw/profile-displayphoto-shrink_800_800/0/1655144203423?e=1712793600&v=beta&t=E_uoVTeefBlfQlGxn-tK221gWI5VANYCiiKOG6eS_xI",
 		"social": "https://www.linkedin.com/in/matt-tsai-90a3291a3/",
 		"first_name": "Matt",
@@ -46,7 +42,6 @@
 	{
 		"username": "auth0|662a1c0093cc4d2e64f5b185",
 		"password": "alex%m2024A!lExM",
-		"email": "alexmei@example.com",
 		"picture": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTD2mKBdUYRUA2uWZnvLw3x7cUbpgBAdqmd8_nCav_-GJ-rcAoh",
 		"social": "https://www.instagram.com/ho_.mei/",
 		"first_name": "Alex",
@@ -57,7 +52,6 @@
 	{
 		"username": "auth0|662a1c1093cc4d2e64f5b18f",
 		"password": "jo/HnDj-oHnd2024",
-		"email": "johndoknjas@example.com",
 		"picture": "https://john.doknjas.com/wp-content/uploads/2018/09/FM-John-Doknjas-1024x777.jpg",
 		"social": "https://www.linkedin.com/in/john-doknjas-8676331b0/",
 		"first_name": "John",

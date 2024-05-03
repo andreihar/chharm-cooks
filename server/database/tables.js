@@ -1,7 +1,6 @@
 const createUsersTable = `
 	CREATE TABLE IF NOT EXISTS users(
 		username VARCHAR(255) PRIMARY KEY,
-		email VARCHAR(255) UNIQUE NOT NULL,
 		picture TEXT,
 		social TEXT,
 		first_name VARCHAR(255),

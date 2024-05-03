@@ -15,8 +15,8 @@ const defaultData = async function () {
 	const fs = require('fs');
 	const users = JSON.parse(fs.readFileSync('./assets/defaultUsers.json', 'utf8'));
 	const recipes = JSON.parse(fs.readFileSync('./assets/defaultRecipes.json', 'utf8'));
-	for (const { username, email, picture, social, first_name, last_name, bio, occupation } of users) {
-		await helpers.addUser(username, email, picture, social, first_name, last_name, bio, occupation);
+	for (const { username, picture, social, first_name, last_name, bio, occupation } of users) {
+		await helpers.addUser(username, picture, social, first_name, last_name, bio, occupation);
 	}
 	for (const { title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, ingredients, recipeInstructions } of recipes) {
 		await helpers.addRecipe(title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, ingredients, recipeInstructions);
@@ -55,15 +55,15 @@ const helpers = {
 		return res.rows[0];
 	},
 
-	addUser: async function (username, email, picture, social, first_name, last_name, bio, occupation) {
+	addUser: async function (username, picture, social, first_name, last_name, bio, occupation) {
 		const q = `
-			INSERT INTO users(username, email, picture, social, first_name, last_name, bio, occupation) 
-			VALUES($1, $2, $3, $4, $5, $6, $7, $8) 
+			INSERT INTO users(username, picture, social, first_name, last_name, bio, occupation) 
+			VALUES($1, $2, $3, $4, $5, $6, $7) 
 			ON CONFLICT (username) 
-			DO UPDATE SET email = $2, picture = $3, first_name = $5, last_name = $6, social = CASE WHEN $4 = '' THEN users.social ELSE $4 END, bio = CASE WHEN $7 = '' THEN users.bio ELSE $7 END, occupation = CASE WHEN $8 = '' THEN users.occupation ELSE $8 END
+			DO UPDATE SET picture = $2, first_name = $4, last_name = $5, social = CASE WHEN $3 = '' THEN users.social ELSE $3 END, bio = CASE WHEN $6 = '' THEN users.bio ELSE $6 END, occupation = CASE WHEN $7 = '' THEN users.occupation ELSE $7 END
 			RETURNING (xmax = 0) AS is_new_user
 		`;
-		const res = await pool.query(q, [username, email, picture, social, first_name, last_name, bio, occupation]);
+		const res = await pool.query(q, [username, picture, social, first_name, last_name, bio, occupation]);
 		return res.rows[0].is_new_user;
 	},
 

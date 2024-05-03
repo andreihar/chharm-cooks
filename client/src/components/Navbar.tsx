@@ -28,16 +28,15 @@ function Navbar() {
     if (isAuthenticated && user) {
       getAccessTokenSilently()
         .then(token => {
-          const { sub, email, picture, name } = user;
+          const { sub, picture, name } = user;
           const [given_name = '', family_name = ''] = name ? name.split(' ') : [];
-          const newUser = new User(sub!, email!, picture!, '', given_name!, family_name!, '', '', new Date());
+          const newUser = new User(sub!, picture!, '', given_name!, family_name!, '', '', new Date());
           DbService.login(newUser, token)
             .then(isNewUser => {
               if (isNewUser) {
-                navigate('*');
+                navigate('/signup');
                 console.log('New user created');
               } else {
-                navigate('/contributors');
                 console.log('Logged into existing user');
               }
             });

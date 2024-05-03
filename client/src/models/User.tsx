@@ -1,6 +1,5 @@
 export class User {
 	username: string;
-	email: string;
 	picture: string;
 	social: string;
 	first_name: string;
@@ -9,9 +8,8 @@ export class User {
 	occupation: string;
 	created_on: Date;
 
-	constructor(username: string, email: string, picture: string, social: string, first_name: string, last_name: string, bio: string, occupation: string, created_on: Date) {
+	constructor(username: string, picture: string, social: string, first_name: string, last_name: string, bio: string, occupation: string, created_on: Date) {
 		this.username = username;
-		this.email = email;
 		this.picture = picture;
 		this.social = social;
 		this.first_name = first_name;

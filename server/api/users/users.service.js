@@ -8,8 +8,8 @@ const getUserByUsername = async (username) => {
 	return await db.helpers.getUserByUsername(username);
 };
 
-const addUser = async ({ username, email, picture, social, first_name, last_name, bio, occupation }) => {
-	const isNewUser = await db.helpers.addUser(username, email, picture, social, first_name, last_name, bio, occupation);
+const addUser = async ({ username, picture, social, first_name, last_name, bio, occupation }) => {
+	const isNewUser = await db.helpers.addUser(username, picture, social, first_name, last_name, bio, occupation);
 	return isNewUser;
 };
 

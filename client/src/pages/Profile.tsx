@@ -69,7 +69,7 @@ function Display() {
   };
 
   if (author) {
-    const { username, email, picture, social, first_name, last_name, bio, occupation, created_on } = author;
+    const { username, picture, social, first_name, last_name, bio, occupation, created_on } = author;
     return (
       <>
         <Navbar />
