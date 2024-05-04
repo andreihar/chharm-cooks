@@ -60,11 +60,26 @@ const helpers = {
 			INSERT INTO users(username, picture, social, first_name, last_name, bio, occupation) 
 			VALUES($1, $2, $3, $4, $5, $6, $7) 
 			ON CONFLICT (username) 
-			DO UPDATE SET picture = $2, first_name = $4, last_name = $5, social = CASE WHEN $3 = '' THEN users.social ELSE $3 END, bio = CASE WHEN $6 = '' THEN users.bio ELSE $6 END, occupation = CASE WHEN $7 = '' THEN users.occupation ELSE $7 END
+			DO NOTHING
 			RETURNING (xmax = 0) AS is_new_user
 		`;
+		try {
+			const res = await pool.query(q, [username, picture, social, first_name, last_name, bio, occupation]);
+			return res.rows.length > 0 ? res.rows[0].is_new_user : false;
+		} catch (error) {
+			console.error('Error executing query', error);
+			throw error;
+		}
+	},
+
+	updateUser: async function (username, picture, social, first_name, last_name, bio = null, occupation = null) {
+		const q = `
+			UPDATE users
+			SET picture = $2, social = COALESCE($3, social), first_name = $4, last_name = $5, bio = COALESCE($6, bio), occupation = COALESCE($7, occupation)
+			WHERE username = $1
+		`;
 		const res = await pool.query(q, [username, picture, social, first_name, last_name, bio, occupation]);
-		return res.rows[0].is_new_user;
+		return res.rows[0];
 	},
 
 	// Recipes

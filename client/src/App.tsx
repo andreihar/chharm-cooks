@@ -7,6 +7,7 @@ import Display from './pages/Display';
 import Authors from './pages/Authors';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
+import Signup from './pages/Signup';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/recipe/:id" element={<Display />} />
         <Route path="/contributors" element={<Authors />} />
         <Route path="/user/:username" element={<Profile />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </I18nextProvider>

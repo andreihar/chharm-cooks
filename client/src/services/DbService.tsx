@@ -40,6 +40,15 @@ const getUserByName = (username: string): Promise<User> => {
     });
 };
 
+const updateUser = (username: string, user: Partial<User>): Promise<boolean> => {
+  return axios.put(`${BASE_URL}/users/${username}`, user)
+    .then(response => response.status === 200)
+    .catch(error => {
+      console.error('Error updating user', error);
+      throw error;
+    });
+};
+
 const logout = () => {
   delete axios.defaults.headers.common['Authorization'];
   Cookies.remove('token');
@@ -153,6 +162,7 @@ const getUserLikedRecipe = (rid: number): Promise<boolean> => {
 const DbService = {
   getUsers,
   getUserByName,
+  updateUser,
   login,
   logout,
   getRecipes,

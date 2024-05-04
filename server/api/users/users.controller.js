@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const usersService = require('./users.service');
+const { authMiddleware } = require('../../middleware/authMiddleware');
 
 router.get('/', async (req, res) => {
 	try {
@@ -26,6 +27,15 @@ router.post('/login', async (req, res) => {
 		res.status(200).json({ isNewUser });
 	} catch (err) {
 		res.status(500).json({ error: 'An error occurred while logging in' });
+	}
+});
+
+router.put('/:username', authMiddleware, async (req, res) => {
+	try {
+		const success = await usersService.updateUser(req.params.username, req.body, req.auth.sub);
+		res.sendStatus(200);
+	} catch (err) {
+		res.status(500).json({ error: 'An error occurred while updating the user' });
 	}
 });
 

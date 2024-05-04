@@ -30,14 +30,22 @@ function Navbar() {
         .then(token => {
           const { sub, picture, name } = user;
           const [given_name = '', family_name = ''] = name ? name.split(' ') : [];
-          const newUser = new User(sub!, picture!, '', given_name!, family_name!, '', '', new Date());
+          const newUser = new User(sub!, picture!, null, given_name!, family_name!, null, null, new Date());
           DbService.login(newUser, token)
             .then(isNewUser => {
               if (isNewUser) {
                 navigate('/signup');
                 console.log('New user created');
               } else {
-                console.log('Logged into existing user');
+                DbService.updateUser(sub!, newUser)
+                  .then(success => {
+                    if (success) {
+                      console.log('User information updated');
+                    } else {
+                      console.log('An error occurred while updating the user');
+                    }
+                  })
+                  .catch(error => console.error('An error occurred while updating the user', error));
               }
             });
         })

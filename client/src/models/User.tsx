@@ -1,14 +1,14 @@
 export class User {
 	username: string;
 	picture: string;
-	social: string;
+	social: string | null;
 	first_name: string;
 	last_name: string;
-	bio: string;
-	occupation: string;
+	bio: string | null;
+	occupation: string | null;
 	created_on: Date;
 
-	constructor(username: string, picture: string, social: string, first_name: string, last_name: string, bio: string, occupation: string, created_on: Date) {
+	constructor(username: string, picture: string, social: string | null = null, first_name: string, last_name: string, bio: string | null = null, occupation: string | null = null, created_on: Date) {
 		this.username = username;
 		this.picture = picture;
 		this.social = social;
