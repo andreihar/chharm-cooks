@@ -55,16 +55,16 @@ const helpers = {
 		return res.rows[0];
 	},
 
-	addUser: async function (username, picture, social, first_name, last_name, bio, occupation) {
+	addUser: async function (username, picture, social, first_name, last_name, bio, occupation, country) {
 		const q = `
-			INSERT INTO users(username, picture, social, first_name, last_name, bio, occupation) 
-			VALUES($1, $2, $3, $4, $5, $6, $7) 
+			INSERT INTO users(username, picture, social, first_name, last_name, bio, occupation, country) 
+			VALUES($1, $2, $3, $4, $5, $6, $7, $8) 
 			ON CONFLICT (username) 
 			DO NOTHING
 			RETURNING (xmax = 0) AS is_new_user
 		`;
 		try {
-			const res = await pool.query(q, [username, picture, social, first_name, last_name, bio, occupation]);
+			const res = await pool.query(q, [username, picture, social, first_name, last_name, bio, occupation, country]);
 			return res.rows.length > 0 ? res.rows[0].is_new_user : false;
 		} catch (error) {
 			console.error('Error executing query', error);
@@ -72,13 +72,13 @@ const helpers = {
 		}
 	},
 
-	updateUser: async function (username, picture, social, first_name, last_name, bio = null, occupation = null) {
+	updateUser: async function (username, picture, social, first_name, last_name, bio = null, occupation = null, country = null) {
 		const q = `
 			UPDATE users
-			SET picture = $2, social = COALESCE($3, social), first_name = $4, last_name = $5, bio = COALESCE($6, bio), occupation = COALESCE($7, occupation)
+			SET picture = $2, social = COALESCE($3, social), first_name = $4, last_name = $5, bio = COALESCE($6, bio), occupation = COALESCE($7, occupation), country = COALESCE($8, country)
 			WHERE username = $1
 		`;
-		const res = await pool.query(q, [username, picture, social, first_name, last_name, bio, occupation]);
+		const res = await pool.query(q, [username, picture, social, first_name, last_name, bio, occupation, country]);
 		return res.rows[0];
 	},
 

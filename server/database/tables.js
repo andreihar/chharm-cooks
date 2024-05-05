@@ -7,6 +7,7 @@ const createUsersTable = `
 		last_name VARCHAR(255),
 		bio TEXT,
 		occupation VARCHAR(100),
+		country VARCHAR(2),
 		created_on TIMESTAMPTZ DEFAULT NOW()
 	);
 `;
