@@ -93,8 +93,7 @@ function Navbar() {
             </div>
             :
             <div>
-              <button className="btn me-1" onClick={() => loginWithRedirect()}><FontAwesomeIcon className="fs-4 align-middle text-primary" icon={faCircleUser} /> {t('login.signIn')}</button>
-              {/* <Link to='/signup'><button type="button" className="btn btn-primary">{t('login.joinNow')}</button></Link> */}
+              <button className="btn me-1" onClick={() => loginWithRedirect()}><FontAwesomeIcon className="fs-4 align-middle text-primary" icon={faCircleUser} /> {t('navbar.signIn')}</button>
             </div>
           }
           <div className="ms-2">

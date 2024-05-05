@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User } from '../models/User';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import DbService from '../services/DbService';
 import countries from '../assets/translations/countries.json';
 
@@ -49,7 +49,15 @@ function Signup() {
     <div className="container-fluid">
       <section style={{ minHeight: "100vh" }} className="row d-flex align-items-center justify-content-center h-100">
         <div className={`col-md-9 d-flex flex-column justify-content-center align-items-center`}>
-          <h2 className="mb-1 fw-normal text-center mb-5">{t('signup.welcome.part1')}<br /><span className="text-primary">{t('signup.welcome.part2')}</span></h2>
+          <h2 className="mb-1 fw-normal text-center mb-5">
+            <Trans
+              i18nKey="signup.welcome"
+              components={[
+                <br />,
+                <span className="text-primary" />
+              ]}
+            />
+          </h2>
           {step === 1 && (<>
             <form style={{ minWidth: '330px' }} onSubmit={validateForm}>
               <div className="form-floating mb-4">

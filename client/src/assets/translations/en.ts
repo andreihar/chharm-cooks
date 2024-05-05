@@ -1,15 +1,8 @@
 export const en = {
   translation: {
     home: {
-      title: {
-        part1: "Uncover Hokkien culinary charms at ",
-        part2: ""
-      },
-      description: {
-        part1: "Embark on a culinary journey with ",
-        part2: ", where the heart of Hokkien ",
-        part3: " beats in every recipe. Explore the secrets of culinary artistry and indulge in flavours that charm your palate."
-      },
+      title: "Uncover Hokkien culinary charms at <0>Chhárm</0><1>Cooks</1>",
+      description: "Embark on a culinary journey with <0>Chhárm</0><1>Cooks</1>, where the heart of Hokkien <0>炒</0><1>菜</1> <2>(chhá chhài)</2> beats in every recipe. Explore the secrets of culinary artistry and indulge in flavours that charm your palate.",
       viewRecipes: "View Recipes",
       recipes: "Recipes",
       search: "Search",
@@ -20,26 +13,13 @@ export const en = {
       home: "Home",
       addRecipe: "Add Recipe",
       contributors: "Contributors",
+      signIn: "Sign In",
       signOut: "Sign Out"
     },
-    login: {
-      signIn: "Sign In",
-      unleash: "Unleash the Hokkien culinary artist in you!",
-      makeAccount: "Don't have an account?",
-      joinNow: "Join Now",
-      noUsername: "No existing account found with this username",
-      incorrectPassword: "Incorrect password. Please try again"
-    },
     signup: {
-      welcome: {
-        part1: "Welcome to your",
-        part2: "Hokkien culinary community"
-      },
-      username: "Username",
-      password: "Password",
-      picture: "Picture URL",
+      welcome: "Welcome to your<0/><1>Hokkien culinary community</1>",
+      unleash: "Unleash the Hokkien culinary artist in you!",
       social: "Social Link",
-      haveAccount: "Already have an account?",
       join: "Join"
     },
     form: {
@@ -68,10 +48,7 @@ export const en = {
     },
     display: {
       authentic: "Authentic {{cuisine}} Hokkien dish made at home",
-      letsMake: {
-        part1: "Let's make ",
-        part2: "!"
-      },
+      letsMake: "Let's make <0>{{dish}}</0>!",
       by: "by:",
       posted: "Posted:",
       updated: "Updated:",
@@ -91,8 +68,7 @@ export const en = {
     authors: {
       top: "Our Top Contributors",
       recipe: "Recipe",
-      cuisine: "{{cuisine}} cuisine",
-      no: "No cuisine"
+      cuisine: "{{cuisine}} cuisine"
     },
     404: {
       message: "We can't seem to find a page you're looking for",

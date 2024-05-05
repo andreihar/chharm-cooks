@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DbService from '../services/DbService';
@@ -31,14 +31,16 @@ function Home() {
         <div className="d-flex flex-grow-1 align-items-center justify-content-center p-1" style={{ flex: "1" }}>
           <div className="col-lg-7 col-md-7 col-sm-7">
             <h1 className="display-4 lh-1 text-body-emphasis">
-              {t('home.title.part1')}<span className="text-primary"><b className="fw-bold">Chhárm</b>Cooks</span>{t('home.title.part2')}
+              <Trans
+                i18nKey="home.title"
+                components={[<b className="text-primary fw-bold" />, <span className="text-primary" />]}
+              />
             </h1>
             <p className="lead my-5">
-              {t('home.description.part1')}
-              <span className="text-primary"><b className="fw-bold">Chhárm</b>Cooks</span>
-              {t('home.description.part2')}
-              <span className="text-primary"><b className="fw-bold">炒</b>菜</span> <small className="fs-6">(chhá chhài)</small>
-              {t('home.description.part3')}
+              <Trans
+                i18nKey="home.description"
+                components={[<b className="text-primary fw-bold" />, <span className="text-primary" />, <small className="fs-6" />]}
+              />
             </p>
             <div className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
               <Link to='/form' className="nav-link"><button type="button" className="btn btn-primary btn-lg px-4 fw-bold">{t('navbar.addRecipe')}</button></Link>

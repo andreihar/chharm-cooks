@@ -1,15 +1,8 @@
 export const ms = {
   translation: {
     home: {
-      title: {
-        part1: "Temui daya tarikan masakan Hokkien di ",
-        part2: ""
-      },
-      description: {
-        part1: "Mulakan perjalanan kulinari dengan ",
-        part2: ", di mana hati Hokkien ",
-        part3: " berdegup dalam setiap resipi. Terokai rahsia kesenian kulinari dan nikmati perisa yang memikat selera anda."
-      },
+      title: "Temui daya tarikan masakan Hokkien di <0>Chhárm</0><1>Cooks</1>",
+      description: "Mulakan perjalanan kulinari dengan <0>Chhárm</0><1>Cooks</1>, di mana hati Hokkien <0>炒</0><1>菜</1> <2>(chhá chhài)</2> berdegup dalam setiap resipi. Terokai rahsia kesenian kulinari dan nikmati perisa yang memikat selera anda.",
       viewRecipes: "Lihat Resipi",
       recipes: "Resipi",
       search: "Cari",
@@ -20,21 +13,12 @@ export const ms = {
       home: "Utama",
       addRecipe: "Tambah Resipi",
       contributors: "Penyumbang",
+      signIn: "Masuk",
       signOut: "Keluar"
     },
-    login: {
-      signIn: "Masuk",
-      unleash: "Lepaskan artis masakan Hokkien dalam diri anda!",
-      makeAccount: "Tiada akaun?",
-      joinNow: "Sertai Sekarang",
-      noUsername: "Tiada akaun sedia ada ditemui dengan nama pengguna ini",
-      incorrectPassword: "Kata laluan salah. Sila cuba lagi"
-    },
     signup: {
-      welcome: {
-        part1: "Selamat datang ke",
-        part2: "komuniti masakan Hokkien anda"
-      },
+      welcome: "Selamat datang ke<0/><1>komuniti masakan Hokkien anda</1>",
+      unleash: "Lepaskan artis masakan Hokkien dalam diri anda!",
       social: "Pautan Sosial",
       join: "Sertai"
     },
@@ -64,10 +48,7 @@ export const ms = {
     },
     display: {
       authentic: "Hidangan Hokkien asli {{cuisine}} yang dibuat di rumah",
-      letsMake: {
-        part1: "Jom buat ",
-        part2: "!"
-      },
+      letsMake: "Jom buat <0>{{dish}}</0>!",
       by: "oleh:",
       posted: "Diterbitkan:",
       updated: "Dikemaskini:",
@@ -87,8 +68,7 @@ export const ms = {
     authors: {
       top: "Penyumbang Utama Kami",
       recipe: "Resipi",
-      cuisine: "Masakan {{cuisine}}",
-      no: "Tiada masakan"
+      cuisine: "Masakan {{cuisine}}"
     },
     404: {
       message: "Kami nampaknya tidak dapat mencari halaman yang anda cari",

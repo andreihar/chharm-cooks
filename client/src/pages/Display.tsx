@@ -76,7 +76,6 @@ function Display() {
                 <h1 className="mb-3">
                   {i18n.language === 'zh' ? `${chin_title} | ${title}` : `${title} | ${chin_title}`}
                 </h1>
-                {/* <h4 className="mb-3">{t('display.authentic.part1')}{`${cuisine}`}{t('display.authentic.part2')}</h4> */}
                 <h4 className="mb-3">
                   <Trans i18nKey="display.authentic" values={{ cuisine }} />
                 </h4>
@@ -90,11 +89,16 @@ function Display() {
           <div className="row g-5">
             <div className="col-md-8">
               <article className="blog-post">
-                <h2 className="display-5 link-body-emphasis mb-1">{t('display.letsMake.part1')}<span className="text-primary">{i18n.language === 'zh' ? `${chin_title}` : `${title}`}</span>{t('display.letsMake.part2')}</h2>
+                <h2 className="display-5 link-body-emphasis mb-1">
+                  <Trans
+                    i18nKey="display.letsMake"
+                    components={[<span className="text-primary" />]}
+                    values={{ dish: i18n.language === 'zh' ? chin_title : title }}
+                  />
+                </h2>
                 <div className="text-dark-emphasis align-items-center d-flex justify-content-between">
                   <div>
                     <Link to={`/user/${author!.username}`} className="text-dark-emphasis align-items-center d-flex">
-                      {/* <a href={author!.social} target="_blank" rel="noopener noreferrer" className="text-dark-emphasis align-items-center d-flex"> */}
                       {t('display.by')}
                       <img src={author!.picture} alt="User Picture" width={32} height={32} className="rounded-circle ms-2" />
                       <span className="text-uppercase fs-5 ms-2">

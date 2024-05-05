@@ -1,15 +1,8 @@
 export const zh = {
   translation: {
     home: {
-      title: {
-        part1: "",
-        part2: " 探索福建美食的魅力"
-      },
-      description: {
-        part1: "",
-        part2: " 一起踏上烹飪之旅，這裡的每一份配方都充滿了福建",
-        part3: " 家鄉味。探索烹飪藝術的秘密，發現令您著迷的風味"
-      },
+      title: "<0>Chhárm</0><1>Cooks</1> 探索福建美食的魅力",
+      description: "<0>Chhárm</0><1>Cooks</1> 一起踏上烹飪之旅，這裡的每一份配方都充滿了福建<0>炒</0><1>菜</1> <2>(chhá chhài)</2> 家鄉味。探索烹飪藝術的秘密，發現令您著迷的風味",
       viewRecipes: "查看配方",
       recipes: "配方",
       search: "搜尋",
@@ -20,26 +13,13 @@ export const zh = {
       home: "主頁",
       addRecipe: "添加配方",
       contributors: "貢獻者",
+      signIn: "登錄",
       signOut: "退出"
     },
-    login: {
-      signIn: "登錄",
-      unleash: "解放你心中的福建烹飪藝術！",
-      makeAccount: "沒有帳戶？",
-      joinNow: "立即加入",
-      noUsername: "找不到使用此用戶名的現有帳戶",
-      incorrectPassword: "密碼錯誤。請再試一次"
-    },
     signup: {
-      welcome: {
-        part1: "歡迎來到您的",
-        part2: "福建烹飪天地"
-      },
-      username: "用戶名",
-      password: "密碼",
-      picture: "頭像鏈接",
+      welcome: "歡迎來到您的<0/><1>福建烹飪天地</1>",
+      unleash: "解放你心中的福建烹飪藝術！",
       social: "其他登入方式",
-      haveAccount: "已經有帳戶？",
       join: "註冊"
     },
     form: {
@@ -68,10 +48,7 @@ export const zh = {
     },
     display: {
       authentic: "在家做正宗的 {{cuisine}} 福建菜",
-      letsMake: {
-        part1: "一起來做",
-        part2: "吧!"
-      },
+      letsMake: "一起來做<0>{{dish}}</0>吧!",
       by: "作者",
       posted: "出版於",
       updated: "更新於",
@@ -91,8 +68,7 @@ export const zh = {
     authors: {
       top: "我們的傑出貢獻者",
       recipe: "配方",
-      cuisine: "{{cuisine}}菜",
-      no: "沒有菜"
+      cuisine: "{{cuisine}}菜"
     },
     404: {
       message: "我們似乎找不到您要找的頁面",
