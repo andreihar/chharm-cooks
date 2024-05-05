@@ -30,7 +30,7 @@ function Navbar() {
         .then(token => {
           const { sub, picture, name } = user;
           const [given_name = '', family_name = ''] = name ? name.split(' ') : [];
-          const newUser = new User(sub!, picture!, null, given_name!, family_name!, null, null, new Date());
+          const newUser = new User(sub!, picture!, null, given_name!, family_name!, null, null, null, new Date());
           DbService.login(newUser, token)
             .then(isNewUser => {
               if (isNewUser) {

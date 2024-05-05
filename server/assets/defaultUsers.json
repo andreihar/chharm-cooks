@@ -7,7 +7,8 @@
 		"first_name": "Jack",
 		"last_name": "Wang",
 		"bio": "Software Developer",
-		"occupation": "Software Developer"
+		"occupation": "Software Developer",
+		"country": "MY"
   },
   {
 		"username": "auth0|662a1bca96132b5427cffe73",
@@ -17,7 +18,8 @@
 		"first_name": "Samuel",
 		"last_name": "Jen",
 		"bio": "Software Engineer",
-		"occupation": "Software Engineer"
+		"occupation": "Software Engineer",
+		"country": "MY"
   },
   {
 		"username": "auth0|662a1bdc4da8ec45371eb422",
@@ -27,7 +29,8 @@
 		"first_name": "Keane Junxian",
 		"last_name": "Ong",
 		"bio": "Software Engineer",
-		"occupation": "Software Engineer"
+		"occupation": "Software Engineer",
+		"country": "SG"
   },
   {
 		"username": "auth0|662a1bef93cc4d2e64f5b17b",
@@ -37,7 +40,8 @@
 		"first_name": "Matt",
 		"last_name": "Tsai",
 		"bio": "Software Developer",
-		"occupation": "Software Developer"
+		"occupation": "Software Developer",
+		"country": "TW"
   },
 	{
 		"username": "auth0|662a1c0093cc4d2e64f5b185",
@@ -47,7 +51,8 @@
 		"first_name": "Alex",
 		"last_name": "Mei",
 		"bio": "Software Developer",
-		"occupation": "Software Developer"
+		"occupation": "Software Developer",
+		"country": "ID"
   },
 	{
 		"username": "auth0|662a1c1093cc4d2e64f5b18f",
@@ -57,6 +62,7 @@
 		"first_name": "John",
 		"last_name": "Doknjas",
 		"bio": "Software Developer",
-		"occupation": "Software Developer"
+		"occupation": "Software Developer",
+		"country": "PH"
   }
 ]

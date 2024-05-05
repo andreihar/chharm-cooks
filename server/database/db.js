@@ -15,8 +15,8 @@ const defaultData = async function () {
 	const fs = require('fs');
 	const users = JSON.parse(fs.readFileSync('./assets/defaultUsers.json', 'utf8'));
 	const recipes = JSON.parse(fs.readFileSync('./assets/defaultRecipes.json', 'utf8'));
-	for (const { username, picture, social, first_name, last_name, bio, occupation } of users) {
-		await helpers.addUser(username, picture, social, first_name, last_name, bio, occupation);
+	for (const { username, picture, social, first_name, last_name, bio, occupation, country } of users) {
+		await helpers.addUser(username, picture, social, first_name, last_name, bio, occupation, country);
 	}
 	for (const { title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, ingredients, recipeInstructions } of recipes) {
 		await helpers.addRecipe(title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, ingredients, recipeInstructions);
