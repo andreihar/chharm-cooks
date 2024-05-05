@@ -99,8 +99,9 @@ function Navbar() {
           }
           <div className="ms-2">
             <select value={i18n.language} onChange={changeLanguage} className="form-select" name="Language">
-              <option value="en">ENG</option>
+              <option value="en">EN</option>
               <option value="zh">華語</option>
+              <option value="ms">MS</option>
             </select>
           </div>
         </div>

@@ -100,7 +100,7 @@ function Display() {
                 <div style={{ transform: 'translateY(-20px)', display: 'flex', alignItems: 'center' }}>
                   <img src={picture} alt="User Picture" width={180} height={180} className="rounded-circle ms-2" style={{ border: '6px solid white' }} />
                   <div className="ms-4 text-light">
-                    <h2 className="display-5 mb-1">{i18n.language === 'en' ? `${first_name} ${last_name}` : `${last_name} ${first_name}`}</h2>
+                    <h2 className="display-5 mb-1">{i18n.language === 'zh' ? `${last_name} ${first_name}` : `${first_name} ${last_name}`}</h2>
                     {country && <p className="fs-4 mb-0">{getCountryName(country)}</p>}
                   </div>
                 </div>

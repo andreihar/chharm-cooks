@@ -82,8 +82,8 @@ function Home() {
                     </div>
                     <div className="card-body">
                       <p className="card-subtitle mb-2 text-body-secondary fs-6 text-uppercase fw-light">{recipe.cuisine}</p>
-                      <h5 className="card-title text-uppercase">{i18n.language === 'en' ? `${recipe.title}` : `${recipe.chin_title}`}</h5>
-                      <h5 className="text-body-secondary">{i18n.language === 'en' ? `${recipe.chin_title}` : `${recipe.title}`}</h5>
+                      <h5 className="card-title text-uppercase">{i18n.language === 'zh' ? `${recipe.chin_title}` : `${recipe.title}`}</h5>
+                      <h5 className="text-body-secondary">{i18n.language === 'zh' ? `${recipe.title}` : `${recipe.chin_title}`}</h5>
                     </div>
                   </div>
                 </Link>
