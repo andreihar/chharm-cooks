@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DbService from '../services/DbService';
+import countries from '../assets/translations/countries.json';
 
 function Display() {
   const { username } = useParams<{ username: string; }>();
@@ -23,6 +24,16 @@ function Display() {
   const { user, isAuthenticated } = useAuth0();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+
+  const getCountryName = (countryCode: string) => {
+    const langIndex = {
+      "en": 0,
+      "zh": 1,
+      "ms": 2
+    }[i18n.language] || 0;
+
+    return (countries as Record<string, string[]>)[countryCode][langIndex];
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -69,7 +80,7 @@ function Display() {
   };
 
   if (author) {
-    const { username, picture, social, first_name, last_name, bio, occupation, created_on } = author;
+    const { username, picture, social, first_name, last_name, bio, occupation, country, created_on } = author;
     return (
       <>
         <Navbar />
@@ -90,14 +101,13 @@ function Display() {
                   <img src={picture} alt="User Picture" width={180} height={180} className="rounded-circle ms-2" style={{ border: '6px solid white' }} />
                   <div className="ms-4 text-light">
                     <h2 className="display-5 mb-1">{i18n.language === 'en' ? `${first_name} ${last_name}` : `${last_name} ${first_name}`}</h2>
-                    <p className="fs-4 mb-0">New York, USA</p>
+                    {country && <p className="fs-4 mb-0">{getCountryName(country)}</p>}
                   </div>
                 </div>
                 <div className="text-dark-emphasis align-items-center d-flex justify-content-between">
                   <div>
-                    <a href={social} target="_blank" rel="noopener noreferrer" className="text-dark-emphasis align-items-center d-flex">
+                    <a href={social ? social : '#'} target="_blank" rel="noopener noreferrer" className="text-dark-emphasis align-items-center d-flex">
                       <span className="fs-5 ms-2">{occupation}</span>
-
                     </a>
                   </div>
                   <div className="d-flex justify-content-end text-center py-1">
@@ -174,6 +184,6 @@ function Display() {
       </>
     );
   }
-}
+};
 
 export default Display;

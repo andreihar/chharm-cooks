@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare, faClock, faBowlRice, faThumbsUp as faThumbsUpL } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsUp as faThumbsUpN } from '@fortawesome/free-regular-svg-icons';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DbService from '../services/DbService';
@@ -32,7 +32,9 @@ function Display() {
       if (foundRecipe && foundAuthor) {
         setRecipe(foundRecipe);
         setAuthor(foundAuthor);
-        if (isAuthenticated) setUserLiked(await DbService.getUserLikedRecipe(Number(id)));
+        if (isAuthenticated) {
+          setUserLiked(await DbService.getUserLikedRecipe(Number(id)));
+        }
         setLikes(await DbService.getLikesForRecipe(Number(id)));
       } else {
         alert(t('display.error'));
@@ -45,7 +47,7 @@ function Display() {
   }, [id]);
 
   const deleteRecipe = () => {
-    if (window.confirm(`${t('display.delete.part1')} ${recipe!.title}${t('display.delete.part2')}`)) {
+    if (window.confirm(t('display.delete', { dish: recipe!.title }))) {
       DbService.deleteRecipe(Number(id));
       navigate('/');
     }
@@ -74,7 +76,10 @@ function Display() {
                 <h1 className="mb-3">
                   {i18n.language === 'en' ? `${title} | ${chin_title}` : `${chin_title} | ${title}`}
                 </h1>
-                <h4 className="mb-3">{t('display.authentic.part1')}{`${cuisine}`}{t('display.authentic.part2')}</h4>
+                {/* <h4 className="mb-3">{t('display.authentic.part1')}{`${cuisine}`}{t('display.authentic.part2')}</h4> */}
+                <h4 className="mb-3">
+                  <Trans i18nKey="display.authentic" values={{ cuisine }} />
+                </h4>
               </div>
             </div>
           </div>
@@ -123,14 +128,18 @@ function Display() {
                   }
                 </div>
                 <h2>{t('form.ingredients')}</h2>
-                <p>{t('display.ingredientDesc.part1')}{i18n.language === 'en' ? `${title}` : `${chin_title}`}{t('display.ingredientDesc.part2')}</p>
+                <p>
+                  <Trans i18nKey="display.ingredientDesc" values={{ dish: i18n.language === 'en' ? title : chin_title }} />
+                </p>
                 <ul>
                   {ingredients.map((ingredient, index) => (
                     <li key={index}>{ingredient}</li>
                   ))}
                 </ul>
                 <h2>{t('form.directions')}</h2>
-                <p>{t('display.stepsDesc.part1')}{i18n.language === 'en' ? `${title}` : `${chin_title}`}{t('display.stepsDesc.part2')}</p>
+                <p>
+                  <Trans i18nKey="display.stepsDesc" values={{ dish: i18n.language === 'en' ? title : chin_title }} />
+                </p>
                 <ol>
                   {recipe_instructions.map((step, index) => (
                     <li key={index}>{step}</li>

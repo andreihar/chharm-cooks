@@ -14,10 +14,17 @@ function Navbar() {
   const navigate = useNavigate();
 
   const changeLanguage = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    i18n.changeLanguage(event.target.value);
+    const newLang = event.target.value;
+    i18n.changeLanguage(newLang);
+    localStorage.setItem('i18nLang', newLang);
   };
 
   useEffect(() => {
+    const savedLang = localStorage.getItem('i18nLang');
+    if (savedLang) {
+      i18n.changeLanguage(savedLang);
+    }
+
     document.documentElement.classList.add('with-navbar');
     return () => {
       document.documentElement.classList.remove('with-navbar');
