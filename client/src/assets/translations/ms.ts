@@ -47,7 +47,7 @@ export const ms = {
       update: "Kemaskini"
     },
     display: {
-      authentic: "Hidangan Hokkien asli {{cuisine}} yang dibuat di rumah",
+      authentic: "Hidangan Hokkien {{cuisine}} asli yang dibuat di rumah",
       letsMake: "Jom buat <0>{{dish}}</0>!",
       by: "oleh:",
       posted: "Diterbitkan:",
@@ -68,7 +68,7 @@ export const ms = {
     authors: {
       top: "Penyumbang Utama Kami",
       recipe: "Resipi",
-      cuisine: "Masakan {{cuisine}}"
+      cuisine: "Masakan <0>{{cuisine}}</0>"
     },
     404: {
       message: "Kami nampaknya tidak dapat mencari halaman yang anda cari",

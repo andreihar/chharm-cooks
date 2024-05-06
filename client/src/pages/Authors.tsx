@@ -3,6 +3,7 @@ import { Recipe } from '../models/Recipe';
 import { User } from '../models/User';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { useLocalisationHelper } from '../libs/useLocalisationHelper';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DbService from '../services/DbService';
@@ -18,6 +19,7 @@ function getSpecialtyCuisine(authorRecipes: Recipe[]) {
 
 function Authors() {
   const { t, i18n } = useTranslation();
+  const { getCuisineName, getAuthorName } = useLocalisationHelper();
   const [authors, setAuthors] = useState<User[]>([]);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
 
@@ -58,11 +60,14 @@ function Authors() {
                           <img src={author.picture} alt="profile-image" className="profile rounded-circle position-absolute shadow" width={'100px'} height={'100px'} />
                         </div>
                         <div className="card-content p-3 position-relative bg-body-tertiary">
-                          <h3 className="card-title fs-4 mb-2">{i18n.language === 'zh' ? `${author.last_name} ${author.first_name}` : `${author.first_name} ${author.last_name}`}</h3>
+                          <h3 className="card-title fs-4 mb-2">{getAuthorName(author)}</h3>
                           <div><small>{authorRecipes.length} {authorRecipes.length === 1 ? t('authors.recipe') : t('home.recipes')}</small></div>
                           <div>
                             <small>
-                              <Trans i18nKey="authors.cuisine" values={{ cuisine: getSpecialtyCuisine(authorRecipes) }} />
+                              <Trans
+                                i18nKey="authors.cuisine"
+                                components={[<span className="text-primary fw-bold" />]}
+                                values={{ cuisine: getCuisineName(getSpecialtyCuisine(authorRecipes)) }} />
                             </small>
                           </div>
                         </div>

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
+import { useLocalisationHelper } from '../libs/useLocalisationHelper';
 import Select from 'react-select';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -37,10 +38,10 @@ function Form() {
   const [picture, setPicture] = useState('');
   const [ingredients, setIngreds] = useState([{ name: "" }]);
   const [steps, setSteps] = useState([{ name: "" }]);
-  const cuisineOptions = Object.values(adjectives).map(country => ({ value: country[0], label: country[0] }));
   const { user, isAuthenticated } = useAuth0();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
+  const { getCuisineName } = useLocalisationHelper();
 
   interface OptionType {
     label: string;
@@ -122,22 +123,20 @@ function Form() {
                 <input id="chinName" type="text" className="form-control" name="chinName" placeholder="雞肉飯" value={chinName} onChange={e => setChinName(e.target.value)} required maxLength={50} />
               </div>
               <div className="form-group">
-                {/* <label htmlFor="cuisine">{t('form.cuisine')} *</label>
-                <input id="cuisine" type="text" className="form-control" name="cuisine" placeholder="Taiwanese" value={cuisine} onChange={e => setCuisine(e.target.value)} required /> */}
                 <label htmlFor="cuisine">{t('form.cuisine')} *</label>
                 <Select
                   id="cuisine"
                   name="cuisine"
-                  options={Object.entries(adjectives).map(([code, country]) => ({
+                  options={Object.entries(adjectives).map(([code, _]) => ({
                     value: code,
-                    label: i18n.language === 'zh' ? country[1] : i18n.language === 'ms' ? country[2] : country[0]
+                    label: getCuisineName(code)
                   }))}
                   isClearable
                   isSearchable
-                  placeholder={i18n.language === 'zh' ? '台灣' : i18n.language === 'ms' ? 'Taiwan' : 'Taiwanese'}
-                  value={Object.entries(adjectives).map(([code, country]) => ({
+                  placeholder={getCuisineName('TW')}
+                  value={Object.entries(adjectives).map(([code, _]) => ({
                     value: code,
-                    label: i18n.language === 'zh' ? country[1] : i18n.language === 'ms' ? country[2] : country[0]
+                    label: getCuisineName(code)
                   })).find(option => option.value === cuisine)}
                   onChange={(option: OptionType | null) => setCuisine(option ? option.value : '')}
                   required

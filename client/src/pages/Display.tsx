@@ -8,6 +8,7 @@ import { faTrash, faPenToSquare, faClock, faBowlRice, faThumbsUp as faThumbsUpL 
 import { faThumbsUp as faThumbsUpN } from '@fortawesome/free-regular-svg-icons';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useLocalisationHelper } from '../libs/useLocalisationHelper';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DbService from '../services/DbService';
@@ -22,6 +23,7 @@ function Display() {
   const { user, isAuthenticated } = useAuth0();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const { getCuisineName, getAuthorName } = useLocalisationHelper();
 
   useEffect(() => {
     const loadData = async () => {
@@ -77,7 +79,7 @@ function Display() {
                   {i18n.language === 'zh' ? `${chin_title} | ${title}` : `${title} | ${chin_title}`}
                 </h1>
                 <h4 className="mb-3">
-                  <Trans i18nKey="display.authentic" values={{ cuisine }} />
+                  <Trans i18nKey="display.authentic" values={{ cuisine: getCuisineName(cuisine) }} />
                 </h4>
               </div>
             </div>
@@ -101,9 +103,7 @@ function Display() {
                     <Link to={`/user/${author!.username}`} className="text-dark-emphasis align-items-center d-flex">
                       {t('display.by')}
                       <img src={author!.picture} alt="User Picture" width={32} height={32} className="rounded-circle ms-2" />
-                      <span className="text-uppercase fs-5 ms-2">
-                        {i18n.language === 'zh' ? `${author?.last_name} ${author?.first_name}` : `${author?.first_name} ${author?.last_name}`}
-                      </span>
+                      <span className="text-uppercase fs-5 ms-2">{getAuthorName(author!)}</span>
                     </Link>
                   </div>
                   <div className="align-items-center d-flex fs-5">

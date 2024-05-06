@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useGetCuisineName } from '../libs/useGetCuisineName';
+import { useLocalisationHelper } from '../libs/useLocalisationHelper';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DbService from '../services/DbService';
@@ -16,7 +16,7 @@ function Home() {
   const [onlyMyRecipes, setOnlyMyRecipes] = useState(false);
   const { user, isAuthenticated } = useAuth0();
   const { t, i18n } = useTranslation();
-  const getCuisineName = useGetCuisineName();
+  const { getCuisineName } = useLocalisationHelper();
 
   useEffect(() => {
     DbService.getRecipes().then(setRecipes);

@@ -68,7 +68,7 @@ export const en = {
     authors: {
       top: "Our Top Contributors",
       recipe: "Recipe",
-      cuisine: "{{cuisine}} cuisine"
+      cuisine: "<0>{{cuisine}}</0> cuisine"
     },
     404: {
       message: "We can't seem to find a page you're looking for",

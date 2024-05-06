@@ -47,7 +47,7 @@ export const zh = {
       update: "更新"
     },
     display: {
-      authentic: "在家做正宗的 {{cuisine}} 福建菜",
+      authentic: "在家做正宗的{{cuisine}}福建菜",
       letsMake: "一起來做<0>{{dish}}</0>吧!",
       by: "作者",
       posted: "出版於",
@@ -68,7 +68,7 @@ export const zh = {
     authors: {
       top: "我們的傑出貢獻者",
       recipe: "配方",
-      cuisine: "{{cuisine}}菜"
+      cuisine: "<0>{{cuisine}}</0>菜"
     },
     404: {
       message: "我們似乎找不到您要找的頁面",
