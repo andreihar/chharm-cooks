@@ -72,7 +72,7 @@
     "AX": [
         "Åland Islands",
         "奧蘭群島",
-        "Kepulauan Aland"
+        "Kepulauan Åland"
     ],
     "AZ": [
         "Azerbaijan",
@@ -125,7 +125,7 @@
         "Benin"
     ],
     "BL": [
-        "St. Barthélemy",
+        "Saint Barthélemy",
         "聖巴瑟米",
         "Saint Barthélemy"
     ],
@@ -195,9 +195,9 @@
         "Kepulauan Cocos (Keeling)"
     ],
     "CD": [
-        "Congo - Kinshasa",
-        "剛果（金夏沙）",
-        "Congo - Kinshasa"
+        "Democratic Republic of the Congo",
+        "剛果民主共和國",
+        "Republik Demokratik Congo"
     ],
     "CF": [
         "Central African Republic",
@@ -205,9 +205,9 @@
         "Republik Afrika Tengah"
     ],
     "CG": [
-        "Congo - Brazzaville",
-        "剛果（布拉薩）",
-        "Congo - Brazzaville"
+        "Republic of the Congo",
+        "剛果共和國",
+        "Republik Congo"
     ],
     "CH": [
         "Switzerland",
@@ -215,9 +215,9 @@
         "Switzerland"
     ],
     "CI": [
-        "Côte d’Ivoire",
+        "Ivory Coast",
         "象牙海岸",
-        "Cote d’Ivoire"
+        "Ivory Coast"
     ],
     "CK": [
         "Cook Islands",
@@ -262,7 +262,7 @@
     "CW": [
         "Curaçao",
         "庫拉索",
-        "Curacao"
+        "Curaçao"
     ],
     "CX": [
         "Christmas Island",
@@ -445,7 +445,7 @@
         "Yunani"
     ],
     "GS": [
-        "South Georgia and South Sandwich Islands",
+        "South Georgia and the South Sandwich Islands",
         "南喬治亞與南三明治群島",
         "Kepulauan Georgia Selatan dan Sandwich Selatan"
     ],
@@ -462,7 +462,7 @@
     "GW": [
         "Guinea-Bissau",
         "幾內亞比索",
-        "Guinea Bissau"
+        "Guinea-Bissau"
     ],
     "GY": [
         "Guyana",
@@ -470,13 +470,13 @@
         "Guyana"
     ],
     "HK": [
-        "Hong Kong SAR China",
-        "中國香港特別行政區",
-        "Hong Kong SAR China"
+        "Hong Kong",
+        "香港",
+        "Hong Kong"
     ],
     "HM": [
-        "Heard and McDonald Islands",
-        "赫德島及麥唐納群島",
+        "Heard Island and McDonald Islands",
+        "赫德島和麥克唐納群島",
         "Pulau Heard dan Kepulauan McDonald"
     ],
     "HN": [
@@ -595,7 +595,7 @@
         "Comoros"
     ],
     "KN": [
-        "St. Kitts and Nevis",
+        "Saint Kitts and Nevis",
         "聖克里斯多福及尼維斯",
         "Saint Kitts dan Nevis"
     ],
@@ -635,7 +635,7 @@
         "Lubnan"
     ],
     "LC": [
-        "St. Lucia",
+        "Saint Lucia",
         "聖露西亞",
         "Saint Lucia"
     ],
@@ -700,7 +700,7 @@
         "Montenegro"
     ],
     "MF": [
-        "St. Martin",
+        "Saint Martin",
         "法屬聖馬丁",
         "Saint Martin"
     ],
@@ -725,9 +725,9 @@
         "Mali"
     ],
     "MM": [
-        "Myanmar (Burma)",
+        "Myanmar",
         "緬甸",
-        "Myanmar (Burma)"
+        "Myanmar"
     ],
     "MN": [
         "Mongolia",
@@ -735,9 +735,9 @@
         "Mongolia"
     ],
     "MO": [
-        "Macao SAR China",
-        "中國澳門特別行政區",
-        "Macau SAR China"
+        "Macao",
+        "澳門",
+        "Macau"
     ],
     "MP": [
         "Northern Mariana Islands",
@@ -895,7 +895,7 @@
         "Poland"
     ],
     "PM": [
-        "St. Pierre and Miquelon",
+        "Saint Pierre and Miquelon",
         "聖皮埃與密克隆群島",
         "Saint Pierre dan Miquelon"
     ],
@@ -910,9 +910,9 @@
         "Puerto Rico"
     ],
     "PS": [
-        "Palestinian Territories",
-        "巴勒斯坦自治區",
-        "Wilayah Palestin"
+        "Palestine",
+        "巴勒斯坦",
+        "Palestin"
     ],
     "PT": [
         "Portugal",
@@ -937,7 +937,7 @@
     "RE": [
         "Réunion",
         "留尼旺",
-        "Reunion"
+        "Réunion"
     ],
     "RO": [
         "Romania",
@@ -990,7 +990,7 @@
         "Singapura"
     ],
     "SH": [
-        "St. Helena",
+        "Saint Helena",
         "聖赫勒拿島",
         "Saint Helena"
     ],
@@ -1042,7 +1042,7 @@
     "ST": [
         "São Tomé and Príncipe",
         "聖多美普林西比",
-        "Sao Tome dan Principe"
+        "São Tomé dan Príncipe"
     ],
     "SV": [
         "El Salvador",
@@ -1062,7 +1062,7 @@
     "SZ": [
         "Eswatini",
         "史瓦帝尼",
-        "Swaziland"
+        "Eswatini"
     ],
     "TC": [
         "Turks and Caicos Islands",
@@ -1102,7 +1102,7 @@
     "TL": [
         "Timor-Leste",
         "東帝汶",
-        "Timor-Leste"
+        "Timor Leste"
     ],
     "TM": [
         "Turkmenistan",
@@ -1155,9 +1155,9 @@
         "Uganda"
     ],
     "UM": [
-        "U.S. Outlying Islands",
+        "U.S. Minor Outlying Islands",
         "美國本土外小島嶼",
-        "Kepulauan Terpencil A.S."
+        "Kepulauan Terpencil Kecil A.S"
     ],
     "US": [
         "United States",
@@ -1180,7 +1180,7 @@
         "Kota Vatican"
     ],
     "VC": [
-        "St. Vincent and Grenadines",
+        "Saint Vincent and the Grenadines",
         "聖文森及格瑞那丁",
         "Saint Vincent dan Grenadines"
     ],

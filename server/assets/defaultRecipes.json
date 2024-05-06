@@ -2,7 +2,7 @@
   {
     "title": "Hokkien char mee",
     "chinTitle": "福建炒麵",
-    "cuisine": "Malaysian",
+    "cuisine": "MY",
     "username": "auth0|662a1b785717fb24bc6e3103",
     "prepTime": 30,
     "cookTime": 45,
@@ -43,7 +43,7 @@
   {
     "title": "Bak kut teh",
     "chinTitle": "肉骨茶",
-    "cuisine": "Penang",
+    "cuisine": "MY-07",
     "username": "auth0|662a1bca96132b5427cffe73",
     "prepTime": 15,
     "cookTime": 120,
@@ -76,7 +76,7 @@
   {
     "title": "Hailam kue png",
     "chinTitle": "海南雞飯",
-    "cuisine": "Singaporean",
+    "cuisine": "SG",
     "username": "auth0|662a1bdc4da8ec45371eb422",
     "prepTime": 5,
     "cookTime": 150,
@@ -114,7 +114,7 @@
   {
     "title": "Ke bah png",
     "chinTitle": "鷄肉飯",
-    "cuisine": "Taiwanese",
+    "cuisine": "TW",
     "username": "auth0|662a1bef93cc4d2e64f5b17b",
     "prepTime": 5,
     "cookTime": 85,
@@ -145,7 +145,7 @@
   {
     "title": "Bakpia",
     "chinTitle": "肉餅",
-    "cuisine": "Indonesian",
+    "cuisine": "ID",
     "username": "auth0|662a1c0093cc4d2e64f5b185",
     "prepTime": 25,
     "cookTime": 20,
@@ -178,7 +178,7 @@
   {
     "title": "Tikoy",
     "chinTitle": "甜粿",
-    "cuisine": "Filipino",
+    "cuisine": "PH",
     "username": "auth0|662a1c1093cc4d2e64f5b18f",
     "prepTime": 5,
     "cookTime": 65,

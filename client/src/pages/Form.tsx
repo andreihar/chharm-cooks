@@ -3,11 +3,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
+import Select from 'react-select';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import isEqual from 'lodash.isequal';
 import DbService from '../services/DbService';
 import noRecipe from '../assets/noRecipe.png';
+import adjectives from '../assets/translations/adjectives.json';
 
 function InputList({ items, label, addLabel, add, remove, change }: { items: any[], label: string, addLabel: string, add: any, remove: any, change: any; }) {
   return (
@@ -35,9 +37,15 @@ function Form() {
   const [picture, setPicture] = useState('');
   const [ingredients, setIngreds] = useState([{ name: "" }]);
   const [steps, setSteps] = useState([{ name: "" }]);
+  const cuisineOptions = Object.values(adjectives).map(country => ({ value: country[0], label: country[0] }));
   const { user, isAuthenticated } = useAuth0();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+
+  interface OptionType {
+    label: string;
+    value: string;
+  }
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -114,8 +122,26 @@ function Form() {
                 <input id="chinName" type="text" className="form-control" name="chinName" placeholder="雞肉飯" value={chinName} onChange={e => setChinName(e.target.value)} required maxLength={50} />
               </div>
               <div className="form-group">
+                {/* <label htmlFor="cuisine">{t('form.cuisine')} *</label>
+                <input id="cuisine" type="text" className="form-control" name="cuisine" placeholder="Taiwanese" value={cuisine} onChange={e => setCuisine(e.target.value)} required /> */}
                 <label htmlFor="cuisine">{t('form.cuisine')} *</label>
-                <input id="cuisine" type="text" className="form-control" name="cuisine" placeholder="Taiwanese" value={cuisine} onChange={e => setCuisine(e.target.value)} required />
+                <Select
+                  id="cuisine"
+                  name="cuisine"
+                  options={Object.entries(adjectives).map(([code, country]) => ({
+                    value: code,
+                    label: i18n.language === 'zh' ? country[1] : i18n.language === 'ms' ? country[2] : country[0]
+                  }))}
+                  isClearable
+                  isSearchable
+                  placeholder={i18n.language === 'zh' ? '台灣' : i18n.language === 'ms' ? 'Taiwan' : 'Taiwanese'}
+                  value={Object.entries(adjectives).map(([code, country]) => ({
+                    value: code,
+                    label: i18n.language === 'zh' ? country[1] : i18n.language === 'ms' ? country[2] : country[0]
+                  })).find(option => option.value === cuisine)}
+                  onChange={(option: OptionType | null) => setCuisine(option ? option.value : '')}
+                  required
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="prepTime">{t('form.prepTime')} {t('form.min')} *</label>

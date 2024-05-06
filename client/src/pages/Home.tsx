@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useGetCuisineName } from '../libs/useGetCuisineName';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DbService from '../services/DbService';
@@ -15,6 +16,7 @@ function Home() {
   const [onlyMyRecipes, setOnlyMyRecipes] = useState(false);
   const { user, isAuthenticated } = useAuth0();
   const { t, i18n } = useTranslation();
+  const getCuisineName = useGetCuisineName();
 
   useEffect(() => {
     DbService.getRecipes().then(setRecipes);
@@ -69,7 +71,7 @@ function Home() {
                 <button key={cuisine}
                   className={`btn ${cuisine === selectedCuisine ? 'btn-primary' : 'btn-secondary'} me-2 mt-2`}
                   onClick={() => setSelectedCuisine(prev => prev === cuisine ? '' : cuisine)}>
-                  {cuisine}
+                  {getCuisineName(cuisine)}
                 </button>
               ))}
             </div>
@@ -83,7 +85,7 @@ function Home() {
                       <img className="card-img-top img-fluid hover-enlarge" style={{ height: "200px", objectFit: "cover" }} src={recipe.picture ? recipe.picture : noRecipe} alt="Card image" loading="lazy" />
                     </div>
                     <div className="card-body">
-                      <p className="card-subtitle mb-2 text-body-secondary fs-6 text-uppercase fw-light">{recipe.cuisine}</p>
+                      <p className="card-subtitle mb-2 text-body-secondary fs-6 text-uppercase fw-light">{getCuisineName(recipe.cuisine)}</p>
                       <h5 className="card-title text-uppercase">{i18n.language === 'zh' ? `${recipe.chin_title}` : `${recipe.title}`}</h5>
                       <h5 className="text-body-secondary">{i18n.language === 'zh' ? `${recipe.title}` : `${recipe.chin_title}`}</h5>
                     </div>
