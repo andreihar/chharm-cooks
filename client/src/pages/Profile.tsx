@@ -1,18 +1,19 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
 import { User } from '../models/User';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare, faClock, faBowlRice, faThumbsUp as faThumbsUpL } from '@fortawesome/free-solid-svg-icons';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DbService from '../services/DbService';
+import countries from '../assets/translations/countries.json';
 
 function Display() {
-  const { username } = useParams<{ username: string }>();
+  const { username } = useParams<{ username: string; }>();
   const [author, setAuthor] = useState<User>();
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [likedRecipes, setLikedRecipes] = useState<Recipe[]>([]);
@@ -20,9 +21,19 @@ function Display() {
   const [followers, setFollowers] = useState<User[]>([]);
   const [userFollows, setUserFollows] = useState<boolean>(false);
   const [followersCount, setFollowersCount] = useState<number>(0);
-  const { authUser, isLogged } = useAuth();
+  const { user, isAuthenticated } = useAuth0();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+
+  const getCountryName = (countryCode: string) => {
+    const langIndex = {
+      "en": 0,
+      "zh": 1,
+      "ms": 2
+    }[i18n.language] || 0;
+
+    return (countries as Record<string, string[]>)[countryCode][langIndex];
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -39,11 +50,11 @@ function Display() {
         // setLikedRecipes(foundLikedRecipes);
         setFollowing(foundFollowing);
         setFollowers(foundFollowers);
-        const followerUsernames = followersUsernames.map(user => user.follower);
-        if (followerUsernames.includes(authUser.username)) {
-          setUserFollows(true);
-        }
-        setFollowersCount(followersUsernames.length);
+        // const followerUsernames = followersUsernames.map(user => user.follower);
+        // if (followerUsernames.includes(authUser.username)) {
+        //   setUserFollows(true);
+        // }
+        // setFollowersCount(followersUsernames.length);
       } else {
         alert(t('display.error'));
         navigate('/');
@@ -59,17 +70,17 @@ function Display() {
     const newFollowing = await DbService.getFollowers(username || '');
     setFollowersCount(newFollowing.length);
     setUserFollows(true);
-  }
+  };
 
   const unfollow = async () => {
     await DbService.unfollowUser(username || '');
     const newFollowing = await DbService.getFollowers(username || '');
     setFollowersCount(newFollowing.length);
     setUserFollows(false);
-  }
+  };
 
   if (author) {
-    const { username, email, picture, social, first_name, last_name, bio, occupation, created_on } = author
+    const { username, picture, social, first_name, last_name, bio, occupation, country, created_on } = author;
     return (
       <>
         <Navbar />
@@ -89,15 +100,14 @@ function Display() {
                 <div style={{ transform: 'translateY(-20px)', display: 'flex', alignItems: 'center' }}>
                   <img src={picture} alt="User Picture" width={180} height={180} className="rounded-circle ms-2" style={{ border: '6px solid white' }} />
                   <div className="ms-4 text-light">
-                    <h2 className="display-5 mb-1">{i18n.language === 'en' ? `${first_name} ${last_name}` : `${last_name} ${first_name}`}</h2>
-                    <p className="fs-4 mb-0">New York, USA</p>
+                    <h2 className="display-5 mb-1">{i18n.language === 'zh' ? `${last_name} ${first_name}` : `${first_name} ${last_name}`}</h2>
+                    {country && <p className="fs-4 mb-0">{getCountryName(country)}</p>}
                   </div>
                 </div>
                 <div className="text-dark-emphasis align-items-center d-flex justify-content-between">
                   <div>
-                    <a href={social} target="_blank" rel="noopener noreferrer" className="text-dark-emphasis align-items-center d-flex">
+                    <a href={social ? social : '#'} target="_blank" rel="noopener noreferrer" className="text-dark-emphasis align-items-center d-flex">
                       <span className="fs-5 ms-2">{occupation}</span>
-
                     </a>
                   </div>
                   <div className="d-flex justify-content-end text-center py-1">
@@ -120,7 +130,7 @@ function Display() {
                   <p className="text-dark-emphasis">
                     Joined On <span className="">{`${new Date(created_on).toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>
                   </p>
-                  {isLogged && (authUser.username !== username) &&
+                  {isAuthenticated && user && (user.sub !== username) &&
                     <div className="align-items-center d-flex fs-5">
                       {userFollows
                         ? <button className="btn btn-outline-secondary" onClick={unfollow}>Unfollow</button>
@@ -172,8 +182,8 @@ function Display() {
         </main>
         <Footer />
       </>
-    )
+    );
   }
-}
+};
 
-export default Display
+export default Display;

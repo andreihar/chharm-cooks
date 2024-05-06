@@ -47,7 +47,7 @@ router.post('/', authMiddleware, async (req, res) => {
 
 router.delete('/:id', authMiddleware, async (req, res) => {
 	try {
-		await recipesService.deleteRecipeById(req.params.id, req.user.username);
+		await recipesService.deleteRecipeById(req.params.id, req.auth.sub);
 		res.json({ message: 'Recipe deleted successfully' });
 	} catch (err) {
 		res.status(500).json({ error: 'An error occurred while deleting the recipe' });
@@ -56,7 +56,7 @@ router.delete('/:id', authMiddleware, async (req, res) => {
 
 router.put('/:id', authMiddleware, async (req, res) => {
 	try {
-		await recipesService.updateRecipeById(req.params.id, req.body, req.user.username);
+		await recipesService.updateRecipeById(req.params.id, req.body, req.auth.sub);
 		res.json({ message: 'Recipe updated successfully' });
 	} catch (err) {
 		res.status(500).json({ error: 'An error occurred while updating the recipe' });

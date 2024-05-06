@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const usersService = require('./users.service');
-const { authenticateUser } = require('../../middleware/authMiddleware');
+const { authMiddleware } = require('../../middleware/authMiddleware');
 
 router.get('/', async (req, res) => {
 	try {
@@ -21,32 +21,21 @@ router.get('/:username', async (req, res) => {
 	}
 });
 
-router.post('/', async (req, res) => {
+router.post('/login', async (req, res) => {
 	try {
-		console.log(req.body);
-		const user = await usersService.addUser(req.body);
-		if (!user) {
-			return res.status(400).json({ error: 'Username is already taken' });
-		}
-		await authenticateUser(req, res, user);
+		const isNewUser = await usersService.addUser(req.body);
+		res.status(200).json({ isNewUser });
 	} catch (err) {
-		res.status(500).json({ error: 'An error occurred while adding the user' });
+		res.status(500).json({ error: 'An error occurred while logging in' });
 	}
 });
 
-router.post('/login', async (req, res, next) => {
+router.put('/:username', authMiddleware, async (req, res) => {
 	try {
-		const { username, password } = req.body;
-		const user = await usersService.login({ username, password });
-		await authenticateUser(req, res, user);
+		const success = await usersService.updateUser(req.params.username, req.body, req.auth.sub);
+		res.sendStatus(200);
 	} catch (err) {
-		if (err.message === 'Invalid username') {
-			res.status(404).json({ error: 'Invalid username' });
-		} else if (err.message === 'Invalid password') {
-			res.status(401).json({ error: 'Invalid password' });
-		} else {
-			next(err);
-		}
+		res.status(500).json({ error: 'An error occurred while updating the user' });
 	}
 });
 

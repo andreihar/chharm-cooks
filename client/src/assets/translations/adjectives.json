@@ -1,0 +1,2232 @@
+{
+    "AD": [
+        "Andorran",
+        "安道爾",
+        "Andorra"
+    ],
+    "AE": [
+        "Emirian",
+        "阿聯酋",
+        "Emirat"
+    ],
+    "AF": [
+        "Afghani",
+        "阿富汗",
+        "Afghan"
+    ],
+    "AG": [
+        "Antiguan",
+        "安地卡",
+        "Antigua"
+    ],
+    "AI": [
+        "Anguillan",
+        "安奎拉",
+        "Anguilla"
+    ],
+    "AL": [
+        "Albanian",
+        "阿爾巴尼亞",
+        "Albania"
+    ],
+    "AM": [
+        "Armenian",
+        "亞美尼亞",
+        "Armenia"
+    ],
+    "AO": [
+        "Angolan",
+        "安哥拉",
+        "Angola"
+    ],
+    "AQ": [
+        "Antarctic",
+        "南極",
+        "Antartik"
+    ],
+    "AR": [
+        "Argentine",
+        "阿根廷",
+        "Argentina"
+    ],
+    "AS": [
+        "Samoan",
+        "薩摩亞",
+        "Samoa"
+    ],
+    "AT": [
+        "Austrian",
+        "奧地利",
+        "Austria"
+    ],
+    "AU": [
+        "Australian",
+        "澳洲",
+        "Australia"
+    ],
+    "AW": [
+        "Arubian",
+        "荷屬阿魯巴",
+        "Aruba"
+    ],
+    "AX": [
+        "Ålandic",
+        "奧蘭",
+        "Åland"
+    ],
+    "AZ": [
+        "Azerbaijani",
+        "亞塞拜然",
+        "Azerbaijan"
+    ],
+    "BA": [
+        "Bosnian",
+        "波士尼亞",
+        "Bosnia"
+    ],
+    "BB": [
+        "Barbadian",
+        "巴貝多",
+        "Barbados"
+    ],
+    "BD": [
+        "Bangladeshi",
+        "孟加拉",
+        "Bangladesh"
+    ],
+    "BE": [
+        "Belgian",
+        "比利時",
+        "Belgium"
+    ],
+    "BF": [
+        "Burkinabe",
+        "布吉納法索",
+        "Burkinabe"
+    ],
+    "BG": [
+        "Bulgarian",
+        "保加利亞",
+        "Bulgaria"
+    ],
+    "BH": [
+        "Bahrainian",
+        "巴林",
+        "Bahrain"
+    ],
+    "BI": [
+        "Burundian",
+        "蒲隆地",
+        "Burundi"
+    ],
+    "BJ": [
+        "Beninese",
+        "貝南",
+        "Benin"
+    ],
+    "BL": [
+        "Barthélemois",
+        "巴瑟米",
+        "Barthélemy"
+    ],
+    "BM": [
+        "Bermudan",
+        "百慕達",
+        "Bermuda"
+    ],
+    "BN": [
+        "Bruneian",
+        "汶萊",
+        "Brunei"
+    ],
+    "BN-BE": [
+        "Belait",
+        "馬來奕",
+        "Belait"
+    ],
+    "BN-BM": [
+        "Brunei-Muara",
+        "摩拉縣",
+        "Daerah Brunei-Muara"
+    ],
+    "BN-TE": [
+        "Temburong",
+        "淡武隆縣",
+        "Daerah Temburong"
+    ],
+    "BN-TU": [
+        "Tutong",
+        "都東",
+        "Tutong"
+    ],
+    "BO": [
+        "Bolivian",
+        "玻利維亞",
+        "Bolivia"
+    ],
+    "BQ": [
+        "Dutch",
+        "荷蘭",
+        "Belanda"
+    ],
+    "BR": [
+        "Brazilian",
+        "巴西",
+        "Brazil"
+    ],
+    "BS": [
+        "Bahameese",
+        "巴哈馬",
+        "Bahamas"
+    ],
+    "BT": [
+        "Bhutanese",
+        "不丹",
+        "Bhutan"
+    ],
+    "BV": [
+        "Bouvet Island",
+        "布威島",
+        "Pulau Bouvet"
+    ],
+    "BW": [
+        "Motswana",
+        "波札那",
+        "Botswana"
+    ],
+    "BY": [
+        "Belarusian",
+        "白俄羅斯",
+        "Belarus"
+    ],
+    "BZ": [
+        "Belizean",
+        "貝里斯",
+        "Belize"
+    ],
+    "CA": [
+        "Canadian",
+        "加拿大",
+        "Kanada"
+    ],
+    "CC": [
+        "Cocossian",
+        "科克斯",
+        "Cocos"
+    ],
+    "CD": [
+        "Congolese",
+        "剛果",
+        "Congo"
+    ],
+    "CF": [
+        "Central African",
+        "中非共和國",
+        "Afrika Tengah"
+    ],
+    "CG": [
+        "Congolese",
+        "剛果",
+        "Congo"
+    ],
+    "CH": [
+        "Swiss",
+        "瑞士",
+        "Switzerland"
+    ],
+    "CI": [
+        "Ivorian",
+        "象牙海岸",
+        "Ivory Coast"
+    ],
+    "CK": [
+        "Cook Islander",
+        "庫克群島",
+        "Kepulauan Cook"
+    ],
+    "CL": [
+        "Chilean",
+        "智利",
+        "Chile"
+    ],
+    "CM": [
+        "Cameroonian",
+        "喀麥隆",
+        "Cameroon"
+    ],
+    "CN": [
+        "Chinese",
+        "中國",
+        "China"
+    ],
+    "CN-33": [
+        "Zhejiang",
+        "浙江",
+        "Zhejiang"
+    ],
+    "CN-35": [
+        "Fujian",
+        "福建",
+        "Fujian"
+    ],
+    "CN-44": [
+        "Guangdong",
+        "廣東",
+        "Guangdong"
+    ],
+    "CN-46": [
+        "Hainan",
+        "海南",
+        "Hainan"
+    ],
+    "CN-CZ": [
+        "Chaozhou",
+        "潮州",
+        "Chaozhou"
+    ],
+    "CN-JY": [
+        "Jieyang",
+        "揭陽",
+        "Jieyang"
+    ],
+    "CN-PT": [
+        "Putian",
+        "莆田",
+        "Putian"
+    ],
+    "CN-QZ": [
+        "Quanzhou",
+        "泉州",
+        "Quanzhou"
+    ],
+    "CN-ST": [
+        "Shantou",
+        "汕頭",
+        "Shantou"
+    ],
+    "CN-SW": [
+        "Shanwei",
+        "汕尾",
+        "Shanwei"
+    ],
+    "CN-XM": [
+        "Xiamen",
+        "廈門",
+        "Xiamen"
+    ],
+    "CN-ZJ": [
+        "Zhanjiang",
+        "湛江",
+        "Zhanjiang"
+    ],
+    "CN-ZZ": [
+        "Zhangzhou",
+        "漳州",
+        "Zhangzhou"
+    ],
+    "CO": [
+        "Colombian",
+        "哥倫比亞",
+        "Colombia"
+    ],
+    "CR": [
+        "Costa Rican",
+        "哥斯大黎加",
+        "Costa Rica"
+    ],
+    "CU": [
+        "Cuban",
+        "古巴",
+        "Cuba"
+    ],
+    "CV": [
+        "Cape Verdean",
+        "維德角",
+        "Cape Verde"
+    ],
+    "CW": [
+        "Curaçaoan",
+        "庫拉索",
+        "Curaçao"
+    ],
+    "CX": [
+        "Christmas Island",
+        "聖誕島",
+        "Pulau Krismas"
+    ],
+    "CY": [
+        "Cypriot",
+        "賽普勒斯",
+        "Cyprus"
+    ],
+    "CZ": [
+        "Czech",
+        "捷克",
+        "Czech"
+    ],
+    "DE": [
+        "German",
+        "德國",
+        "Jerman"
+    ],
+    "DJ": [
+        "Djiboutian",
+        "吉布地",
+        "Djibouti"
+    ],
+    "DK": [
+        "Danish",
+        "丹麥",
+        "Denmark"
+    ],
+    "DM": [
+        "Dominican",
+        "多米尼克",
+        "Dominica"
+    ],
+    "DO": [
+        "Dominican",
+        "多明尼加",
+        "Dominica"
+    ],
+    "DZ": [
+        "Algerian",
+        "阿爾及利亞",
+        "Algeria"
+    ],
+    "EC": [
+        "Ecuadorean",
+        "厄瓜多",
+        "Ecuador"
+    ],
+    "EE": [
+        "Estonian",
+        "愛沙尼亞",
+        "Estonia"
+    ],
+    "EG": [
+        "Egyptian",
+        "埃及",
+        "Mesir"
+    ],
+    "EH": [
+        "Western Saharan",
+        "西撒哈拉",
+        "Sahara Barat"
+    ],
+    "ER": [
+        "Eritrean",
+        "厄利垂亞",
+        "Eritrea"
+    ],
+    "ES": [
+        "Spanish",
+        "西班牙",
+        "Sepanyol"
+    ],
+    "ET": [
+        "Ethiopian",
+        "衣索比亞",
+        "Ethiopia"
+    ],
+    "FI": [
+        "Finnish",
+        "芬蘭",
+        "Finland"
+    ],
+    "FJ": [
+        "Fijian",
+        "斐濟",
+        "Fiji"
+    ],
+    "FK": [
+        "Falkland Island",
+        "福克蘭群島",
+        "Kepulauan Falkland"
+    ],
+    "FM": [
+        "Micronesian",
+        "密克羅尼西亞",
+        "Micronesia"
+    ],
+    "FO": [
+        "Faroese",
+        "法羅",
+        "Faroe"
+    ],
+    "FR": [
+        "French",
+        "法國",
+        "Perancis"
+    ],
+    "GA": [
+        "Gabonese",
+        "加彭",
+        "Gabon"
+    ],
+    "GB": [
+        "British",
+        "英國",
+        "Inggeris"
+    ],
+    "GD": [
+        "Grenadian",
+        "格瑞那達",
+        "Grenada"
+    ],
+    "GE": [
+        "Georgian",
+        "喬治亞",
+        "Georgia"
+    ],
+    "GF": [
+        "French Guianese",
+        "法屬圭亞那",
+        "Guiana Perancis"
+    ],
+    "GG": [
+        "Channel Island",
+        "根息",
+        "Guernsey"
+    ],
+    "GH": [
+        "Ghanaian",
+        "迦納",
+        "Ghana"
+    ],
+    "GI": [
+        "Gibralterian",
+        "直布羅陀",
+        "Gibraltar"
+    ],
+    "GL": [
+        "Greenlandic",
+        "格陵蘭",
+        "Greenland"
+    ],
+    "GM": [
+        "Gambian",
+        "甘比亞",
+        "Gambia"
+    ],
+    "GN": [
+        "Guinean",
+        "幾內亞",
+        "Guinea"
+    ],
+    "GP": [
+        "Guadeloupean",
+        "瓜地洛普",
+        "Guadeloupe"
+    ],
+    "GQ": [
+        "Equatorial Guinean",
+        "赤道幾內亞",
+        "Guinea Khatulistiwa"
+    ],
+    "GR": [
+        "Greek",
+        "希臘",
+        "Yunani"
+    ],
+    "GS": [
+        "South Georgia Island",
+        "南喬治亞群島",
+        "Kepulauan Georgia Selatan"
+    ],
+    "GT": [
+        "Guatemalan",
+        "瓜地馬拉",
+        "Guatemala"
+    ],
+    "GU": [
+        "Guamanian",
+        "關島",
+        "Guam"
+    ],
+    "GW": [
+        "Guinean",
+        "幾內亞",
+        "Guinea"
+    ],
+    "GY": [
+        "Guyanese",
+        "蓋亞那",
+        "Guyana"
+    ],
+    "HK": [
+        "Hong Kong",
+        "香港",
+        "Hong Kong"
+    ],
+    "HM": [
+        "Heard Island",
+        "赫德島",
+        "Pulau Heard"
+    ],
+    "HN": [
+        "Honduran",
+        "宏都拉斯",
+        "Honduras"
+    ],
+    "HR": [
+        "Croatian",
+        "克羅埃西亞",
+        "Croatia"
+    ],
+    "HT": [
+        "Haitian",
+        "海地",
+        "Haiti"
+    ],
+    "HU": [
+        "Hungarian",
+        "匈牙利",
+        "Hungary"
+    ],
+    "ID": [
+        "Indonesian",
+        "印尼",
+        "Indonesia"
+    ],
+    "ID-JW": [
+        "Jawa",
+        "爪哇",
+        "Jawa"
+    ],
+    "ID-KA": [
+        "Kalimantan",
+        "加里曼丹",
+        "Kalimantan"
+    ],
+    "ID-ML": [
+        "Maluku",
+        "馬魯古",
+        "Maluku"
+    ],
+    "ID-NU": [
+        "Nusa Tenggara",
+        "小巽他群島",
+        "Kepulauan Sunda Kecil"
+    ],
+    "ID-PP": [
+        "Papua",
+        "巴布亞",
+        "Papua"
+    ],
+    "ID-SL": [
+        "Sulawesi",
+        "蘇拉威西島",
+        "Sulawesi"
+    ],
+    "ID-SM": [
+        "Sumatera",
+        "蘇門答臘",
+        "Sumatera"
+    ],
+    "IE": [
+        "Irish",
+        "愛爾蘭",
+        "Ireland"
+    ],
+    "IL": [
+        "Israeli",
+        "以色列",
+        "Israel"
+    ],
+    "IM": [
+        "Manx",
+        "曼島",
+        "Man"
+    ],
+    "IN": [
+        "Indian",
+        "印度",
+        "India"
+    ],
+    "IO": [
+        "BIOT",
+        "英屬印度洋領地",
+        "BIOT"
+    ],
+    "IQ": [
+        "Iraqi",
+        "伊拉克",
+        "Iraq"
+    ],
+    "IR": [
+        "Iranian",
+        "伊朗",
+        "Iran"
+    ],
+    "IS": [
+        "Icelandic",
+        "冰島",
+        "Iceland"
+    ],
+    "IT": [
+        "Italian",
+        "義大利",
+        "Itali"
+    ],
+    "JE": [
+        "Channel Island",
+        "澤西島",
+        "Jersey"
+    ],
+    "JM": [
+        "Jamaican",
+        "牙買加",
+        "Jamaica"
+    ],
+    "JO": [
+        "Jordanian",
+        "約旦",
+        "Jordan"
+    ],
+    "JP": [
+        "Japanese",
+        "日本",
+        "Jepun"
+    ],
+    "KE": [
+        "Kenyan",
+        "肯亞",
+        "Kenya"
+    ],
+    "KG": [
+        "Kyrgyzstani",
+        "吉爾吉斯",
+        "Kyrgyzstan"
+    ],
+    "KH": [
+        "Cambodian",
+        "柬埔寨",
+        "Kemboja"
+    ],
+    "KH-1": [
+        "Banteay Mean Chey",
+        "班迭棉吉",
+        "Banteay Mean Chey"
+    ],
+    "KH-10": [
+        "Kracheh",
+        "橘井",
+        "Kracheh"
+    ],
+    "KH-11": [
+        "Mondol Kiri",
+        "蒙多基裏",
+        "Mondol Kiri"
+    ],
+    "KH-12": [
+        "Phnom Penh",
+        "金邊",
+        "Phnom Penh"
+    ],
+    "KH-13": [
+        "Preah Vihear",
+        "柏威夏",
+        "Preah Vihear"
+    ],
+    "KH-14": [
+        "Prey Veaeng",
+        "波蘿勉",
+        "Prey Veaeng"
+    ],
+    "KH-15": [
+        "Pousaat",
+        "菩薩",
+        "Pousaat"
+    ],
+    "KH-16": [
+        "Rotanak Kiri",
+        "臘塔納基裏",
+        "Rotanak Kiri"
+    ],
+    "KH-17": [
+        "Siem Reab",
+        "暹粒",
+        "Siem Reap"
+    ],
+    "KH-18": [
+        "Krong Preah Sihanouk",
+        "西哈努克",
+        "Krong Preah Sihanouk"
+    ],
+    "KH-19": [
+        "Stueng Traeng",
+        "上丁",
+        "Stueng Traeng"
+    ],
+    "KH-2": [
+        "Baat Dambang",
+        "馬德望",
+        "Baat Dambang"
+    ],
+    "KH-20": [
+        "Svaay Rieng",
+        "柴楨",
+        "Svaay Rieng"
+    ],
+    "KH-21": [
+        "Taakaev",
+        "茶膠",
+        "Taakaev"
+    ],
+    "KH-22": [
+        "Otdar Mean Chey",
+        "奧多棉吉",
+        "Otdar Mean Chey"
+    ],
+    "KH-23": [
+        "Krong Kaeb",
+        "白馬",
+        "Krong Kaeb"
+    ],
+    "KH-24": [
+        "Krong Pailin",
+        "拜林",
+        "Pailin"
+    ],
+    "KH-3": [
+        "Kampong Chaam",
+        "磅湛",
+        "Kampong Chaam"
+    ],
+    "KH-4": [
+        "Kampong Chhnang",
+        "磅清揚",
+        "Kampong Chhnang"
+    ],
+    "KH-5": [
+        "Kampong Spueu",
+        "磅士卑",
+        "Kampong Spueu"
+    ],
+    "KH-6": [
+        "Kampong Thum",
+        "磅同",
+        "Kampong Thum"
+    ],
+    "KH-7": [
+        "Kampot",
+        "貢布",
+        "Kampot"
+    ],
+    "KH-8": [
+        "Kandaal",
+        "幹丹",
+        "Kandal"
+    ],
+    "KH-9": [
+        "Kaoh Kong",
+        "戈公",
+        "Kaoh Kong"
+    ],
+    "KI": [
+        "I-Kiribati",
+        "吉里巴斯",
+        "I-Kiribati"
+    ],
+    "KM": [
+        "Comoran",
+        "葛摩",
+        "Comoros"
+    ],
+    "KN": [
+        "Kittian",
+        "克里斯多福",
+        "Kitts"
+    ],
+    "KP": [
+        "North Korean",
+        "北韓",
+        "Korea Utara"
+    ],
+    "KR": [
+        "South Korean",
+        "南韓",
+        "Korea Selatan"
+    ],
+    "KW": [
+        "Kuwaiti",
+        "科威特",
+        "Kuwait"
+    ],
+    "KY": [
+        "Caymanian",
+        "開曼",
+        "Cayman"
+    ],
+    "KZ": [
+        "Kazakhstani",
+        "哈薩克",
+        "Kazakhstan"
+    ],
+    "LA": [
+        "Laotian",
+        "寮國",
+        "Laos"
+    ],
+    "LA-AT": [
+        "Attapu",
+        "阿速坡",
+        "Attapeu"
+    ],
+    "LA-BK": [
+        "Bokèo",
+        "博膠",
+        "Bokeo"
+    ],
+    "LA-BL": [
+        "Bolikhamxai",
+        "波里坎塞",
+        "Bolikhamsai"
+    ],
+    "LA-CH": [
+        "Champasak",
+        "佔巴塞",
+        "Champasak"
+    ],
+    "LA-HO": [
+        "Houaphan",
+        "華潘",
+        "Houaphanh"
+    ],
+    "LA-KH": [
+        "Khammouan",
+        "甘蒙",
+        "Khammouane"
+    ],
+    "LA-LM": [
+        "Louang Namtha",
+        "琅南塔",
+        "Louang Namtha"
+    ],
+    "LA-LP": [
+        "Louangphabang",
+        "琅勃拉邦",
+        "Luang Prabang"
+    ],
+    "LA-OU": [
+        "Oudômxai",
+        "烏多姆塞",
+        "Oudomxay"
+    ],
+    "LA-PH": [
+        "Phôngsali",
+        "豐沙裏",
+        "Phongsaly"
+    ],
+    "LA-SL": [
+        "Salavan",
+        "沙拉灣",
+        "Salavan"
+    ],
+    "LA-SV": [
+        "Savannakhét",
+        "沙灣拿吉",
+        "Savannakhet"
+    ],
+    "LA-VT": [
+        "Vientiane",
+        "永珍",
+        "Vientiane"
+    ],
+    "LA-XA": [
+        "Xaignabouli",
+        "沙耶武裏",
+        "Sainyabuli"
+    ],
+    "LA-XE": [
+        "Xékong",
+        "塞公",
+        "Sekong"
+    ],
+    "LA-XI": [
+        "Xiangkhoang",
+        "川壙",
+        "Xiangkhouang"
+    ],
+    "LA-XN": [
+        "Xaisômboun",
+        "賽宋奔",
+        "Xaisômboun"
+    ],
+    "LB": [
+        "Lebanese",
+        "黎巴嫩",
+        "Lubnan"
+    ],
+    "LC": [
+        "Saint Lucian",
+        "聖露西亞",
+        "Saint Lucia"
+    ],
+    "LI": [
+        "Liechtensteiner",
+        "列支敦斯登",
+        "Liechtenstein"
+    ],
+    "LK": [
+        "Sri Lankan",
+        "斯里蘭卡",
+        "Sri Lanka"
+    ],
+    "LR": [
+        "Liberian",
+        "賴比瑞亞",
+        "Liberia"
+    ],
+    "LS": [
+        "Mosotho",
+        "賴索托",
+        "Lesotho"
+    ],
+    "LT": [
+        "Lithunian",
+        "立陶宛",
+        "Lithuania"
+    ],
+    "LU": [
+        "Luxembourger",
+        "盧森堡",
+        "Luxembourg"
+    ],
+    "LV": [
+        "Latvian",
+        "拉脫維亞",
+        "Latvia"
+    ],
+    "LY": [
+        "Libyan",
+        "利比亞",
+        "Libya"
+    ],
+    "MA": [
+        "Moroccan",
+        "摩洛哥",
+        "Maghribi"
+    ],
+    "MC": [
+        "Monacan",
+        "摩納哥",
+        "Monaco"
+    ],
+    "MD": [
+        "Moldovan",
+        "摩爾多瓦",
+        "Moldova"
+    ],
+    "ME": [
+        "Montenegrin",
+        "蒙特內哥羅",
+        "Montenegro"
+    ],
+    "MF": [
+        "Saint-Martinoise",
+        "法屬聖馬丁",
+        "Saint Martin"
+    ],
+    "MG": [
+        "Malagasy",
+        "馬達加斯加",
+        "Madagaskar"
+    ],
+    "MH": [
+        "Marshallese",
+        "馬紹爾",
+        "Marshall"
+    ],
+    "MK": [
+        "Macedonian",
+        "馬其頓",
+        "Macedonia"
+    ],
+    "ML": [
+        "Malian",
+        "馬利",
+        "Mali"
+    ],
+    "MM": [
+        "Myanmarese",
+        "緬甸",
+        "Myanmar"
+    ],
+    "MM-04": [
+        "Mandalay",
+        "曼德勒",
+        "Mandalay"
+    ],
+    "MM-05": [
+        "Tanintharyi",
+        "德林達依",
+        "Tanintharyi"
+    ],
+    "MM-06": [
+        "Yangon",
+        "仰光",
+        "Yangon"
+    ],
+    "MM-11": [
+        "Kachin",
+        "克欽",
+        "Kachin"
+    ],
+    "MM-17": [
+        "Shan",
+        "撣邦",
+        "Shan"
+    ],
+    "MN": [
+        "Mongolian",
+        "蒙古",
+        "Mongolia"
+    ],
+    "MO": [
+        "Macanese",
+        "澳門",
+        "Macau"
+    ],
+    "MP": [
+        "Northern Mariana Island",
+        "北馬利安納群島",
+        "Kepulauan Mariana Utara"
+    ],
+    "MQ": [
+        "Martinican",
+        "馬丁尼克",
+        "Martinique"
+    ],
+    "MR": [
+        "Mauritanian",
+        "茅利塔尼亞",
+        "Mauritania"
+    ],
+    "MS": [
+        "Montserratian",
+        "蒙哲臘",
+        "Montserrat"
+    ],
+    "MT": [
+        "Maltese",
+        "馬爾他",
+        "Malta"
+    ],
+    "MU": [
+        "Mauritian",
+        "模里西斯",
+        "Mauritius"
+    ],
+    "MV": [
+        "Maldivan",
+        "馬爾地夫",
+        "Maldives"
+    ],
+    "MW": [
+        "Malawian",
+        "馬拉威",
+        "Malawi"
+    ],
+    "MX": [
+        "Mexican",
+        "墨西哥",
+        "Mexico"
+    ],
+    "MY": [
+        "Malaysian",
+        "馬來西亞",
+        "Malaysia"
+    ],
+    "MY-01": [
+        "Johor",
+        "柔佛",
+        "Johor"
+    ],
+    "MY-02": [
+        "Kedah",
+        "吉打",
+        "Kedah"
+    ],
+    "MY-03": [
+        "Kelantan",
+        "吉蘭丹",
+        "Kelantan"
+    ],
+    "MY-04": [
+        "Melaka",
+        "馬六甲",
+        "Melaka"
+    ],
+    "MY-05": [
+        "Negeri Sembilan",
+        "森美蘭",
+        "Negeri Sembilan"
+    ],
+    "MY-06": [
+        "Pahang",
+        "彭亨",
+        "Pahang"
+    ],
+    "MY-07": [
+        "Penang",
+        "檳城",
+        "Pinang"
+    ],
+    "MY-08": [
+        "Perak",
+        "霹靂",
+        "Perak"
+    ],
+    "MY-09": [
+        "Perlis",
+        "玻璃",
+        "Perlis"
+    ],
+    "MY-10": [
+        "Selangor",
+        "雪蘭莪",
+        "Selangor"
+    ],
+    "MY-11": [
+        "Terengganu",
+        "登嘉樓",
+        "Terengganu"
+    ],
+    "MY-12": [
+        "Sabah",
+        "沙巴",
+        "Sabah"
+    ],
+    "MY-13": [
+        "Sarawak",
+        "砂拉越",
+        "Sarawak"
+    ],
+    "MY-14": [
+        "Kuala Lumpur",
+        "吉隆坡",
+        "Kuala Lumpur"
+    ],
+    "MY-15": [
+        "Labuan",
+        "納閩",
+        "Labuan"
+    ],
+    "MY-16": [
+        "Putrajaya",
+        "布城",
+        "Putrajaya"
+    ],
+    "MZ": [
+        "Mozambican",
+        "莫三比克",
+        "Mozambique"
+    ],
+    "NA": [
+        "Namibian",
+        "納米比亞",
+        "Namibia"
+    ],
+    "NC": [
+        "New Caledonian",
+        "新喀裏多尼亞",
+        "New Caledonia"
+    ],
+    "NE": [
+        "Nigerien",
+        "尼日",
+        "Niger"
+    ],
+    "NF": [
+        "Norfolk Island",
+        "諾福克島",
+        "Pulau Norfolk"
+    ],
+    "NG": [
+        "Nigerian",
+        "奈及利亞",
+        "Nigeria"
+    ],
+    "NI": [
+        "Nicaraguan",
+        "尼加拉瓜",
+        "Nicaragua"
+    ],
+    "NL": [
+        "Dutch",
+        "荷蘭",
+        "Belanda"
+    ],
+    "NO": [
+        "Norwegian",
+        "挪威",
+        "Norway"
+    ],
+    "NP": [
+        "Nepalese",
+        "尼泊爾",
+        "Nepal"
+    ],
+    "NR": [
+        "Nauruan",
+        "諾魯",
+        "Nauru"
+    ],
+    "NU": [
+        "Niuean",
+        "紐埃島",
+        "Niue"
+    ],
+    "NZ": [
+        "New Zealander",
+        "紐西蘭",
+        "New Zealand"
+    ],
+    "OM": [
+        "Omani",
+        "阿曼",
+        "Oman"
+    ],
+    "PA": [
+        "Panamanian",
+        "巴拿馬",
+        "Panama"
+    ],
+    "PE": [
+        "Peruvian",
+        "祕魯",
+        "Peru"
+    ],
+    "PF": [
+        "French Polynesian",
+        "法屬玻里尼西亞",
+        "Polinesia Perancis"
+    ],
+    "PG": [
+        "Papua New Guinean",
+        "巴布亞紐幾內亞",
+        "Papua New Guinea"
+    ],
+    "PH": [
+        "Filipino",
+        "菲律賓",
+        "Filipina"
+    ],
+    "PH-00": [
+        "Manila",
+        "馬尼拉",
+        "Manila"
+    ],
+    "PH-01": [
+        "Ilocos",
+        "伊羅戈區",
+        "Daerah Ilocos"
+    ],
+    "PH-02": [
+        "Cagayan",
+        "卡加延",
+        "Cagayan"
+    ],
+    "PH-03": [
+        "Central Luzon",
+        "中央呂宋",
+        "Luzon Tengah"
+    ],
+    "PH-05": [
+        "Bicol",
+        "比科爾",
+        "Bicol"
+    ],
+    "PH-06": [
+        "Western Visayas",
+        "西米沙鄢",
+        "Visayas Barat"
+    ],
+    "PH-07": [
+        "Central Visayas",
+        "中米沙鄢",
+        "Visayas Tengah"
+    ],
+    "PH-08": [
+        "Eastern Visayas",
+        "東米沙鄢",
+        "Visayas Timur"
+    ],
+    "PH-09": [
+        "Zamboanga",
+        "三寶顏",
+        "Zamboanga"
+    ],
+    "PH-10": [
+        "Northern Mindanao",
+        "北棉蘭老",
+        "Mindanao Utara"
+    ],
+    "PH-11": [
+        "Davao",
+        "達沃區",
+        "Davao"
+    ],
+    "PH-12": [
+        "Soccsksargen",
+        "索科斯克薩爾根",
+        "Soccsksargen"
+    ],
+    "PH-13": [
+        "Caraga",
+        "卡拉加",
+        "Caraga"
+    ],
+    "PH-14": [
+        "Mindanao",
+        "棉蘭老",
+        "Mindanao"
+    ],
+    "PH-15": [
+        "Cordillera",
+        "科迪勒拉",
+        "Cordillera"
+    ],
+    "PH-40": [
+        "Calabarzon",
+        "卡拉巴松",
+        "Calabarzon"
+    ],
+    "PH-41": [
+        "Mimaropa",
+        "民馬羅巴",
+        "Mimaropa"
+    ],
+    "PK": [
+        "Pakistani",
+        "巴基斯坦",
+        "Pakistan"
+    ],
+    "PL": [
+        "Polish",
+        "波蘭",
+        "Poland"
+    ],
+    "PM": [
+        "Saint-Pierrais",
+        "聖皮埃",
+        "Saint Pierre"
+    ],
+    "PN": [
+        "Pitcairn Islander",
+        "皮特肯群島",
+        "Kepulauan Pitcairn"
+    ],
+    "PR": [
+        "Puerto Rican",
+        "波多黎各",
+        "Puerto Rico"
+    ],
+    "PS": [
+        "Palestinian",
+        "巴勒斯坦",
+        "Palestin"
+    ],
+    "PT": [
+        "Portuguese",
+        "葡萄牙",
+        "Portugal"
+    ],
+    "PW": [
+        "Palauan",
+        "帛琉",
+        "Palau"
+    ],
+    "PY": [
+        "Paraguayan",
+        "巴拉圭",
+        "Paraguay"
+    ],
+    "QA": [
+        "Qatari",
+        "卡達",
+        "Qatar"
+    ],
+    "RE": [
+        "Réunionnais",
+        "留尼旺",
+        "Réunion"
+    ],
+    "RO": [
+        "Romanian",
+        "羅馬尼亞",
+        "Romania"
+    ],
+    "RS": [
+        "Serbian",
+        "塞爾維亞",
+        "Serbia"
+    ],
+    "RU": [
+        "Russian",
+        "俄羅斯",
+        "Rusia"
+    ],
+    "RW": [
+        "Rwandan",
+        "盧安達",
+        "Rwanda"
+    ],
+    "SA": [
+        "Saudi Arabian",
+        "沙烏地阿拉伯",
+        "Arab Saudi"
+    ],
+    "SB": [
+        "Solomon Islander",
+        "索羅門群島",
+        "Kepulauan Solomon"
+    ],
+    "SC": [
+        "Seychellois",
+        "塞席爾",
+        "Seychelles"
+    ],
+    "SD": [
+        "Sudanese",
+        "蘇丹",
+        "Sudan"
+    ],
+    "SE": [
+        "Swedish",
+        "瑞典",
+        "Sweden"
+    ],
+    "SG": [
+        "Singaporean",
+        "新加坡",
+        "Singapura"
+    ],
+    "SH": [
+        "Saint Helenian",
+        "聖赫勒拿島",
+        "Saint Helena"
+    ],
+    "SI": [
+        "Slovenian",
+        "斯洛維尼亞",
+        "Slovenia"
+    ],
+    "SJ": [
+        "Svalbard",
+        "斯瓦巴",
+        "Svalbard"
+    ],
+    "SK": [
+        "Slovakian",
+        "斯洛伐克",
+        "Slovakia"
+    ],
+    "SL": [
+        "Sierra Leonean",
+        "獅子山",
+        "Sierra Leone"
+    ],
+    "SM": [
+        "Sanmarinese",
+        "聖馬利諾",
+        "San Marino"
+    ],
+    "SN": [
+        "Senegalese",
+        "塞內加爾",
+        "Senegal"
+    ],
+    "SO": [
+        "Somali",
+        "索馬利亞",
+        "Somalia"
+    ],
+    "SR": [
+        "Surinamer",
+        "蘇利南",
+        "Surinam"
+    ],
+    "SS": [
+        "Sudanese",
+        "蘇丹",
+        "Sudan"
+    ],
+    "ST": [
+        "São Tomean",
+        "聖多美",
+        "São Tomé"
+    ],
+    "SV": [
+        "Salvadorean",
+        "薩爾瓦多",
+        "El Salvador"
+    ],
+    "SX": [
+        "Sint Maarten",
+        "荷屬聖馬丁",
+        "Sint Maarten"
+    ],
+    "SY": [
+        "Syrian",
+        "敘利亞",
+        "Syria"
+    ],
+    "SZ": [
+        "Swazi",
+        "史瓦帝尼",
+        "Eswatini"
+    ],
+    "TC": [
+        "Turks and Caicos Island",
+        "土克斯及開科斯群島",
+        "Kepulauan Turks dan Caicos"
+    ],
+    "TD": [
+        "Chadian",
+        "查德",
+        "Chad"
+    ],
+    "TF": [
+        "French Southern Territories",
+        "法屬南部屬地",
+        "Wilayah Selatan Perancis"
+    ],
+    "TG": [
+        "Togolese",
+        "多哥",
+        "Togo"
+    ],
+    "TH": [
+        "Thai",
+        "泰國",
+        "Thai"
+    ],
+    "TH-10": [
+        "Krung Thep Maha Nakhon",
+        "曼谷",
+        "Bangkok"
+    ],
+    "TH-11": [
+        "Samut Prakan",
+        "北欖府",
+        "Samut Prakan"
+    ],
+    "TH-12": [
+        "Nonthaburi",
+        "暖武裏",
+        "Nonthaburi"
+    ],
+    "TH-13": [
+        "Pathum Thani",
+        "巴吞他尼",
+        "Pathum Thani"
+    ],
+    "TH-14": [
+        "Phra Nakhon Si Ayutthaya",
+        "大城",
+        "Ayutthaya"
+    ],
+    "TH-15": [
+        "Ang Thong",
+        "紅統",
+        "Ang Thong"
+    ],
+    "TH-16": [
+        "Lop Buri",
+        "華富里",
+        "Lopburi"
+    ],
+    "TH-17": [
+        "Sing Buri",
+        "信武裏",
+        "Sing Buri"
+    ],
+    "TH-18": [
+        "Chai Nat",
+        "猜納",
+        "Chainat"
+    ],
+    "TH-19": [
+        "Saraburi",
+        "沙拉武裏",
+        "Saraburi"
+    ],
+    "TH-20": [
+        "Chon Buri",
+        "春武裏",
+        "Chonburi"
+    ],
+    "TH-21": [
+        "Rayong",
+        "羅勇",
+        "Rayong"
+    ],
+    "TH-22": [
+        "Chanthaburi",
+        "莊他武裏",
+        "Chanthaburi"
+    ],
+    "TH-23": [
+        "Trat",
+        "達叻",
+        "Trat"
+    ],
+    "TH-24": [
+        "Chachoengsao",
+        "差春騷",
+        "Chachoengsao"
+    ],
+    "TH-25": [
+        "Prachin Buri",
+        "巴真",
+        "Prachinburi"
+    ],
+    "TH-26": [
+        "Nakhon Nayok",
+        "那空那育",
+        "Nakhon Nayok"
+    ],
+    "TH-27": [
+        "Sa Kaeo",
+        "沙繳",
+        "Sa Kaeo"
+    ],
+    "TH-30": [
+        "Nakhon Ratchasima",
+        "那空叻差是瑪",
+        "Nakhon Ratchasima"
+    ],
+    "TH-31": [
+        "Buri Ram",
+        "武裏南",
+        "Buriram"
+    ],
+    "TH-32": [
+        "Surin",
+        "素林",
+        "Surin"
+    ],
+    "TH-33": [
+        "Sisaket",
+        "四色菊",
+        "Sisaket"
+    ],
+    "TH-34": [
+        "Ubon Ratchathani",
+        "烏汶叻差他尼",
+        "Ubon Ratchathani"
+    ],
+    "TH-35": [
+        "Yasothon",
+        "益梭通",
+        "Yasothon"
+    ],
+    "TH-36": [
+        "Chaiyaphum",
+        "猜也蓬",
+        "Chaiyaphum"
+    ],
+    "TH-37": [
+        "Amnat Charoen",
+        "安納乍倫",
+        "Amnat Charoen"
+    ],
+    "TH-38": [
+        "Bueng Kan",
+        "汶幹",
+        "Bueng Kan"
+    ],
+    "TH-39": [
+        "Nong Bua Lam Phu",
+        "農磨蘭普",
+        "Nongbua Lamphu"
+    ],
+    "TH-40": [
+        "Khon Kaen",
+        "孔敬",
+        "Khon Kaen"
+    ],
+    "TH-41": [
+        "Udon Thani",
+        "烏隆他尼",
+        "Udon Thani"
+    ],
+    "TH-42": [
+        "Loei",
+        "黎",
+        "Loei"
+    ],
+    "TH-43": [
+        "Nong Khai",
+        "廊開",
+        "Nong Khai"
+    ],
+    "TH-44": [
+        "Maha Sarakham",
+        "馬哈沙拉堪",
+        "Maha Sarakham"
+    ],
+    "TH-45": [
+        "Roi Et",
+        "黎逸",
+        "Roi Et"
+    ],
+    "TH-46": [
+        "Kalasin",
+        "加拉信",
+        "Kalasin"
+    ],
+    "TH-47": [
+        "Sakon Nakhon",
+        "沙功那空",
+        "Sakhon Nakhon"
+    ],
+    "TH-48": [
+        "Nakhon Phanom",
+        "那空拍儂",
+        "Nakhon Phanom"
+    ],
+    "TH-49": [
+        "Mukdahan",
+        "穆達漢",
+        "Mukdahan"
+    ],
+    "TH-51": [
+        "Lamphun",
+        "南奔",
+        "Lamphun"
+    ],
+    "TH-52": [
+        "Lampang",
+        "南邦",
+        "Lampang"
+    ],
+    "TH-53": [
+        "Uttaradit",
+        "程逸",
+        "Uttaradit"
+    ],
+    "TH-54": [
+        "Phrae",
+        "帕",
+        "Phrae"
+    ],
+    "TH-55": [
+        "Nan",
+        "難",
+        "Nan"
+    ],
+    "TH-56": [
+        "Phayao",
+        "帕堯",
+        "Phayao"
+    ],
+    "TH-57": [
+        "Chiang Rai",
+        "清萊",
+        "Chiang Rai"
+    ],
+    "TH-58": [
+        "Mae Hong Son",
+        "夜豐頌",
+        "Mae Hong Son"
+    ],
+    "TH-60": [
+        "Nakhon Sawan",
+        "那空沙旺",
+        "Nakhon Sawan"
+    ],
+    "TH-61": [
+        "Uthai Thani",
+        "烏泰他尼",
+        "Uthai Thani"
+    ],
+    "TH-62": [
+        "Kamphaeng Phet",
+        "甘烹碧",
+        "Kamphaeng Phet"
+    ],
+    "TH-63": [
+        "Tak",
+        "達",
+        "Tak"
+    ],
+    "TH-64": [
+        "Sukhothai",
+        "素可泰",
+        "Sukhothai"
+    ],
+    "TH-65": [
+        "Phitsanulok",
+        "彭世洛",
+        "Phitsanulok"
+    ],
+    "TH-66": [
+        "Phichit",
+        "披集",
+        "Phichit"
+    ],
+    "TH-67": [
+        "Phetchabun",
+        "碧差汶",
+        "Phetchabun"
+    ],
+    "TH-70": [
+        "Ratchaburi",
+        "叻武裏",
+        "Ratchaburi"
+    ],
+    "TH-71": [
+        "Kanchanaburi",
+        "北碧",
+        "Kanchanaburi"
+    ],
+    "TH-72": [
+        "Suphan Buri",
+        "素攀",
+        "Suphan Buri"
+    ],
+    "TH-73": [
+        "Nakhon Pathom",
+        "佛統",
+        "Nakhon Pathom"
+    ],
+    "TH-74": [
+        "Samut Sakhon",
+        "龍仔厝",
+        "Samut Sakhon"
+    ],
+    "TH-75": [
+        "Samut Songkhram",
+        "沙沒頌堪",
+        "Samut Songkhram"
+    ],
+    "TH-76": [
+        "Phetchaburi",
+        "碧武裏",
+        "Phetchaburi"
+    ],
+    "TH-77": [
+        "Prachuap Khiri Khan",
+        "巴蜀",
+        "Prachuap Khiri Khan"
+    ],
+    "TH-80": [
+        "Nakhon Si Thammarat",
+        "那空是貪瑪叻",
+        "Nakhon Si Thammarat"
+    ],
+    "TH-81": [
+        "Krabi",
+        "甲米",
+        "Krabi"
+    ],
+    "TH-82": [
+        "Phangnga",
+        "攀牙",
+        "Phang Nga"
+    ],
+    "TH-83": [
+        "Phuket",
+        "普吉府",
+        "Phuket"
+    ],
+    "TH-84": [
+        "Surat Thani",
+        "素叻他尼",
+        "Surat Thani"
+    ],
+    "TH-85": [
+        "Ranong",
+        "拉廊",
+        "Ranong"
+    ],
+    "TH-86": [
+        "Chumphon",
+        "春蓬",
+        "Chumphon"
+    ],
+    "TH-90": [
+        "Songkhla",
+        "宋卡",
+        "Singgora"
+    ],
+    "TH-91": [
+        "Satun",
+        "沙敦",
+        "Satun"
+    ],
+    "TH-92": [
+        "Trang",
+        "董裏",
+        "Trang"
+    ],
+    "TH-93": [
+        "Phatthalung",
+        "博他侖",
+        "Phatthalung"
+    ],
+    "TH-94": [
+        "Pattani",
+        "北大年",
+        "Pattani"
+    ],
+    "TH-95": [
+        "Yala",
+        "耶拉",
+        "Yala"
+    ],
+    "TH-96": [
+        "Narathiwat",
+        "那拉提瓦",
+        "Narathiwat"
+    ],
+    "TH-S": [
+        "Phatthaya",
+        "芭達雅",
+        "Pattaya"
+    ],
+    "TJ": [
+        "Tajikistani",
+        "塔吉克",
+        "Tajikistan"
+    ],
+    "TK": [
+        "Tokelauan",
+        "托克勞",
+        "Tokelau"
+    ],
+    "TL": [
+        "Timorese",
+        "帝汶",
+        "Timor"
+    ],
+    "TM": [
+        "Turkmen",
+        "土庫曼",
+        "Turkmen"
+    ],
+    "TN": [
+        "Tunisian",
+        "突尼西亞",
+        "Tunisia"
+    ],
+    "TO": [
+        "Tongan",
+        "東加",
+        "Tonga"
+    ],
+    "TR": [
+        "Turkish",
+        "土耳其",
+        "Turki"
+    ],
+    "TT": [
+        "Trinidadian",
+        "千里達",
+        "Trinidad"
+    ],
+    "TV": [
+        "Tuvaluan",
+        "吐瓦魯",
+        "Tuvalu"
+    ],
+    "TW": [
+        "Taiwanese",
+        "臺灣",
+        "Taiwan"
+    ],
+    "TW-CHA": [
+        "Changhua",
+        "彰化",
+        "Changhua"
+    ],
+    "TW-CYI": [
+        "Chiayi",
+        "嘉義",
+        "Chiayi"
+    ],
+    "TW-HSZ": [
+        "Hsinchu",
+        "新竹",
+        "Hsinchu"
+    ],
+    "TW-HUA": [
+        "Hualien",
+        "花蓮",
+        "Hualien"
+    ],
+    "TW-ILA": [
+        "Ilan",
+        "宜蘭",
+        "Ilan"
+    ],
+    "TW-KEE": [
+        "Keelung",
+        "基隆",
+        "Keelung"
+    ],
+    "TW-KHH": [
+        "Kaohsiung",
+        "高雄",
+        "Kaohsiung"
+    ],
+    "TW-MIA": [
+        "Miaoli",
+        "苗栗",
+        "Miaoli"
+    ],
+    "TW-NAN": [
+        "Nantou",
+        "南投",
+        "Nantou"
+    ],
+    "TW-PEN": [
+        "Penghu",
+        "澎湖",
+        "Penghu"
+    ],
+    "TW-PIF": [
+        "Pingtung",
+        "屏東",
+        "Pingtung"
+    ],
+    "TW-TAO": [
+        "Taoyuan",
+        "桃園",
+        "Taoyuan"
+    ],
+    "TW-TNN": [
+        "Tainan",
+        "臺南",
+        "Tainan"
+    ],
+    "TW-TPE": [
+        "Taipei",
+        "臺北",
+        "Taipei"
+    ],
+    "TW-TTT": [
+        "Taitung",
+        "臺東",
+        "Taitung"
+    ],
+    "TW-TXG": [
+        "Taichung",
+        "臺中",
+        "Taichung"
+    ],
+    "TW-YUN": [
+        "Yunlin",
+        "雲林縣",
+        "Yunlin"
+    ],
+    "TZ": [
+        "Tanzanian",
+        "坦尚尼亞",
+        "Tanzania"
+    ],
+    "UA": [
+        "Ukrainian",
+        "烏克蘭",
+        "Ukraine"
+    ],
+    "UG": [
+        "Ugandan",
+        "烏干達",
+        "Uganda"
+    ],
+    "UM": [
+        "American",
+        "美國",
+        "Amerika"
+    ],
+    "US": [
+        "American",
+        "美國",
+        "Amerika"
+    ],
+    "UY": [
+        "Uruguayan",
+        "烏拉圭",
+        "Uruguay"
+    ],
+    "UZ": [
+        "Uzbekistani",
+        "烏茲別克",
+        "Uzbekistan"
+    ],
+    "VA": [
+        "Vatican",
+        "梵蒂岡",
+        "Vatican"
+    ],
+    "VC": [
+        "Saint Vincentian",
+        "聖文森",
+        "Saint Vincent"
+    ],
+    "VE": [
+        "Venezuelan",
+        "委內瑞拉",
+        "Venezuela"
+    ],
+    "VG": [
+        "Virgin Island",
+        "維京群島",
+        "Kepulauan Virgin"
+    ],
+    "VI": [
+        "Virgin Island",
+        "維京群島",
+        "Kepulauan Virgin"
+    ],
+    "VN": [
+        "Vietnamese",
+        "越南",
+        "Vietnam"
+    ],
+    "VU": [
+        "Ni-Vanuatu",
+        "萬那杜",
+        "Ni-Vanuatu"
+    ],
+    "WF": [
+        "Wallisian",
+        "瓦利斯",
+        "Wallis"
+    ],
+    "WS": [
+        "Samoan",
+        "薩摩亞",
+        "Samoa"
+    ],
+    "YE": [
+        "Yemeni",
+        "葉門",
+        "Yaman"
+    ],
+    "YT": [
+        "Mahoran",
+        "馬約特島",
+        "Mahoran"
+    ],
+    "ZA": [
+        "South African",
+        "南非",
+        "Afrika Selatan"
+    ],
+    "ZM": [
+        "Zambian",
+        "尚比亞",
+        "Zambia"
+    ],
+    "ZW": [
+        "Zimbabwean",
+        "辛巴威",
+        "Zimbabwe"
+    ]
+}

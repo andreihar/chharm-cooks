@@ -1,15 +1,18 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
+import { useLocalisationHelper } from '../libs/useLocalisationHelper';
+import Select from 'react-select';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import isEqual from 'lodash.isequal';
 import DbService from '../services/DbService';
 import noRecipe from '../assets/noRecipe.png';
+import adjectives from '../assets/translations/adjectives.json';
 
-function InputList({ items, label, addLabel, add, remove, change }: { items: any[], label: string, addLabel: string, add: any, remove: any, change: any }) {
+function InputList({ items, label, addLabel, add, remove, change }: { items: any[], label: string, addLabel: string, add: any, remove: any, change: any; }) {
   return (
     <>
       {items.map((item, index) => (
@@ -25,7 +28,7 @@ function InputList({ items, label, addLabel, add, remove, change }: { items: any
 }
 
 function Form() {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{ id: string; }>();
   const [name, setName] = useState('');
   const [chinName, setChinName] = useState('');
   const [cuisine, setCuisine] = useState('');
@@ -35,17 +38,23 @@ function Form() {
   const [picture, setPicture] = useState('');
   const [ingredients, setIngreds] = useState([{ name: "" }]);
   const [steps, setSteps] = useState([{ name: "" }]);
-  const { authUser, isLogged } = useAuth();
+  const { user, isAuthenticated } = useAuth0();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { getCuisineName } = useLocalisationHelper();
+
+  interface OptionType {
+    label: string;
+    value: string;
+  }
 
   useEffect(() => {
     const fetchRecipe = async () => {
-      if (!isLogged) {
+      if (!isAuthenticated) {
         navigate('/login');
-      } else if (id) {
+      } else if (id && user) {
         const foundRecipe = await DbService.getRecipeById(Number(id));
-        if (foundRecipe && authUser?.username === foundRecipe.username) {
+        if (foundRecipe && user.sub === foundRecipe.username) {
           setName(foundRecipe.title);
           setChinName(foundRecipe.chin_title);
           setCuisine(foundRecipe.cuisine);
@@ -61,16 +70,16 @@ function Form() {
       }
     };
     fetchRecipe();
-  }, [id, isLogged, authUser]);
+  }, [id, isAuthenticated, user]);
 
-  const add = (setter: Function) => () => setter((prev: { name: string }[]) => [...prev, { name: "" }]);
-  const remove = (setter: Function) => (index: number) => setter((prev: { name: string }[]) => prev.filter((_: any, i: number) => i !== index));
+  const add = (setter: Function) => () => setter((prev: { name: string; }[]) => [...prev, { name: "" }]);
+  const remove = (setter: Function) => (index: number) => setter((prev: { name: string; }[]) => prev.filter((_: any, i: number) => i !== index));
   const change = (setter: Function) => (e: React.ChangeEvent<HTMLInputElement>, index: number) =>
-    setter((prev: { name: string }[]) => prev.map((item, i) => i === index ? { name: e.target.value } : item));
+    setter((prev: { name: string; }[]) => prev.map((item, i) => i === index ? { name: e.target.value } : item));
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    let newRecipe = new Recipe(name.trim(), chinName.trim(), cuisine.trim(), authUser.username, prepTime, cookTime, servings, picture.trim() || noRecipe, ingredients.map(i => i.name.trim()).filter(Boolean), steps.map(s => s.name.trim()).filter(Boolean));
+    let newRecipe = new Recipe(name.trim(), chinName.trim(), cuisine.trim(), (user!.sub as string), prepTime, cookTime, servings, picture.trim() || noRecipe, ingredients.map(i => i.name.trim()).filter(Boolean), steps.map(s => s.name.trim()).filter(Boolean));
     if (newRecipe.ingredients.length === 0) {
       alert(t('form.oneIngredient'));
       return;
@@ -115,7 +124,23 @@ function Form() {
               </div>
               <div className="form-group">
                 <label htmlFor="cuisine">{t('form.cuisine')} *</label>
-                <input id="cuisine" type="text" className="form-control" name="cuisine" placeholder="Taiwanese" value={cuisine} onChange={e => setCuisine(e.target.value)} required />
+                <Select
+                  id="cuisine"
+                  name="cuisine"
+                  options={Object.entries(adjectives).map(([code, _]) => ({
+                    value: code,
+                    label: getCuisineName(code)
+                  }))}
+                  isClearable
+                  isSearchable
+                  placeholder={getCuisineName('TW')}
+                  value={Object.entries(adjectives).map(([code, _]) => ({
+                    value: code,
+                    label: getCuisineName(code)
+                  })).find(option => option.value === cuisine)}
+                  onChange={(option: OptionType | null) => setCuisine(option ? option.value : '')}
+                  required
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="prepTime">{t('form.prepTime')} {t('form.min')} *</label>
@@ -155,7 +180,7 @@ function Form() {
       </div>
       <Footer />
     </>
-  )
+  );
 }
 
-export default Form
+export default Form;

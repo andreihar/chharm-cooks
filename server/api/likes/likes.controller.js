@@ -6,7 +6,7 @@ const { authMiddleware } = require('../../middleware/authMiddleware');
 router.post('/like', authMiddleware, async (req, res) => {
 	try {
 		const { rid } = req.body;
-		await likesService.likeRecipe(req.user.username, rid);
+		await likesService.likeRecipe(req.auth.sub, rid);
 		res.json({ message: 'Recipe liked successfully' });
 	} catch (err) {
 		res.status(500).json({ error: 'An error occurred while liking the recipe' });
@@ -16,7 +16,7 @@ router.post('/like', authMiddleware, async (req, res) => {
 router.post('/unlike', authMiddleware, async (req, res) => {
 	try {
 		const { rid } = req.body;
-		await likesService.unlikeRecipe(req.user.username, rid);
+		await likesService.unlikeRecipe(req.auth.sub, rid);
 		res.json({ message: 'Recipe unliked successfully' });
 	} catch (err) {
 		res.status(500).json({ error: 'An error occurred while unliking the recipe' });
@@ -46,7 +46,7 @@ router.get('/recipe/:rid', async (req, res) => {
 router.get('/user/:rid', authMiddleware, async (req, res) => {
 	try {
 		const { rid } = req.params;
-		const liked = await likesService.getUserLikedRecipe(req.user.username, rid);
+		const liked = await likesService.getUserLikedRecipe(req.auth.sub, rid);
 		res.json(liked);
 	} catch (err) {
 		res.status(500).json({ error: 'An error occurred while fetching if user liked the recipe' });

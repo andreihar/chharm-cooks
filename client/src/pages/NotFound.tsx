@@ -19,7 +19,7 @@ function NotFound() {
         </main>
       </div>
     </>
-  )
+  );
 }
 
-export default NotFound
+export default NotFound;

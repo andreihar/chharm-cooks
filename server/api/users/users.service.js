@@ -8,30 +8,21 @@ const getUserByUsername = async (username) => {
 	return await db.helpers.getUserByUsername(username);
 };
 
-const addUser = async ({ username, email, picture, social, first_name, last_name, bio, occupation, password }) => {
-	const user = await db.helpers.addUser(username, email, picture, social, first_name, last_name, bio, occupation, password);
-	if (!user) {
-		return null;
-	}
-	return user;
+const addUser = async ({ username, picture, social, first_name, last_name, bio, occupation, country }) => {
+	const isNewUser = await db.helpers.addUser(username, picture, social, first_name, last_name, bio, occupation, country);
+	return isNewUser;
 };
 
-const login = async ({ username, password }) => {
-	const user = await db.helpers.checkIdentification(username);
-	if (!user) {
-		throw new Error('Invalid username');
+const updateUser = async (username, userData, authUsername) => {
+	if (username !== authUsername) {
+		throw new Error('You are not authorized to update this user');
 	}
-	const isPasswordValid = await db.helpers.checkPassword(username, password);
-	if (!isPasswordValid) {
-		throw new Error('Invalid password');
-	}
-	delete user.password;
-	return user;
+	return await db.helpers.updateUser(username, userData.picture, userData.social, userData.first_name, userData.last_name, userData.bio, userData.occupation, userData.country);
 };
 
 module.exports = {
 	getUsers,
 	getUserByUsername,
 	addUser,
-	login
+	updateUser
 };
