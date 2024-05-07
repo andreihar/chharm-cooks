@@ -20,6 +20,9 @@ export const ms = {
       welcome: "Selamat datang ke<0/><1>komuniti masakan Hokkien anda</1>",
       unleash: "Lepaskan artis masakan Hokkien dalam diri anda!",
       social: "Pautan Sosial",
+      next: "Seterusnya",
+      finish: "Selesai",
+      step: "Langkah <strong>{{now}}</strong> dari <strong>{{total}}</strong>",
       join: "Sertai"
     },
     form: {
@@ -67,7 +70,6 @@ export const ms = {
     },
     authors: {
       top: "Penyumbang Utama Kami",
-      recipe: "Resipi",
       cuisine: "Masakan <0>{{cuisine}}</0>"
     },
     404: {

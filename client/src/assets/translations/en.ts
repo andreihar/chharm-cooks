@@ -20,6 +20,9 @@ export const en = {
       welcome: "Welcome to your<0/><1>Hokkien culinary community</1>",
       unleash: "Unleash the Hokkien culinary artist in you!",
       social: "Social Link",
+      next: "Next",
+      finish: "Finish",
+      step: "Step <strong>{{now}}</strong> of <strong>{{total}}</strong>",
       join: "Join"
     },
     form: {
@@ -67,7 +70,6 @@ export const en = {
     },
     authors: {
       top: "Our Top Contributors",
-      recipe: "Recipe",
       cuisine: "<0>{{cuisine}}</0> cuisine"
     },
     404: {

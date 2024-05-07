@@ -29,5 +29,11 @@ export function useLocalisationHelper() {
       : `${author.first_name} ${author.last_name}`;
   };
 
-  return { getCuisineName, getAuthorName };
+  const getFullName = (author: AuthorType): string => {
+    return i18n.language === 'zh'
+      ? `${author.last_name} ${author.first_name}`
+      : `${author.first_name} ${author.last_name}`;
+  };
+
+  return { getCuisineName, getAuthorName, getFullName };
 }

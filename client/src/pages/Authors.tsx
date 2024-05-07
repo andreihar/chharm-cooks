@@ -19,7 +19,7 @@ function getSpecialtyCuisine(authorRecipes: Recipe[]) {
 
 function Authors() {
   const { t, i18n } = useTranslation();
-  const { getCuisineName, getAuthorName } = useLocalisationHelper();
+  const { getCuisineName, getAuthorName, getFullName } = useLocalisationHelper();
   const [authors, setAuthors] = useState<User[]>([]);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
 
@@ -38,12 +38,10 @@ function Authors() {
             {authors
               .filter(author => recipes.some(recipe => recipe.username === author.username))
               .sort((a, b) => {
-                const aFullName = i18n.language === 'zh' ? `${a.last_name} ${a.first_name}` : `${a.first_name} ${a.last_name}`;
-                const bFullName = i18n.language === 'zh' ? `${b.last_name} ${b.first_name}` : `${b.first_name} ${b.last_name}`;
                 const aRecipes = recipes.filter(recipe => recipe.username === a.username).length;
                 const bRecipes = recipes.filter(recipe => recipe.username === b.username).length;
                 if (aRecipes === bRecipes)
-                  return aFullName.localeCompare(bFullName);
+                  return getFullName(a).localeCompare(getFullName(b));
                 else
                   return bRecipes - aRecipes;
               }).map((author, index) => {
@@ -61,7 +59,7 @@ function Authors() {
                         </div>
                         <div className="card-content p-3 position-relative bg-body-tertiary">
                           <h3 className="card-title fs-4 mb-2">{getAuthorName(author)}</h3>
-                          <div><small>{authorRecipes.length} {authorRecipes.length === 1 ? t('authors.recipe') : t('home.recipes')}</small></div>
+                          <div><small>{authorRecipes.length} {authorRecipes.length === 1 ? t('form.recipe') : t('home.recipes')}</small></div>
                           <div>
                             <small>
                               <Trans
