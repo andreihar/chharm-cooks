@@ -24,7 +24,7 @@ const createRecipeTable = `
 		rid SERIAL PRIMARY KEY,
 		title VARCHAR(50),
 		chin_title VARCHAR(50),
-		cuisine VARCHAR(50),
+		cuisine VARCHAR(6),
 		username VARCHAR(255),
 		FOREIGN KEY (username) REFERENCES users(username),
 		prep_time INT,

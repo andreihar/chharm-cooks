@@ -1,6 +1,4 @@
 const { Pool } = require('pg');
-const bcrypt = require('bcryptjs');
-const saltRounds = 10;
 
 require('dotenv').config({ path: './process.env' });
 const pool = new Pool({
@@ -89,7 +87,7 @@ const helpers = {
 			FROM recipe
 			INNER JOIN ingredient
 			ON recipe.iid = ingredient.iid
-    `);
+    	`);
 		return res.rows;
 	},
 
@@ -100,7 +98,7 @@ const helpers = {
 			INNER JOIN ingredient
 			ON recipe.iid = ingredient.iid
 			WHERE rid = $1
-    `, [id]);
+    	`, [id]);
 		return res.rows[0];
 	},
 

@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const db = require("./database/db");
-const { authMiddleware } = require('./middleware/authMiddleware');
 const app = express();
 const usersController = require('./api/users/users.controller');
 const recipesController = require('./api/recipes/recipes.controller');
