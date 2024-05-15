@@ -151,3 +151,11 @@ li::marker {
     transform: translate(-50%, 0%);
     z-index:3;
 }
+
+/* Editor */
+.Bubblemenu {
+	div:hover {
+		background: #555555;
+		cursor: pointer;
+	}
+}

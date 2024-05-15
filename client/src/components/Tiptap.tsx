@@ -1,9 +1,10 @@
-import { EditorContent, useEditor, BubbleMenu } from '@tiptap/react';
+import { EditorContent, BubbleMenu, Editor, useEditor } from '@tiptap/react';
 import { History } from '@tiptap/extension-history';
 import { Document } from '@tiptap/extension-document';
 import { Text } from '@tiptap/extension-text';
 import { Bold } from '@tiptap/extension-bold';
 import { Italic } from '@tiptap/extension-italic';
+import { Link } from '@tiptap/extension-link';
 import { Paragraph } from '@tiptap/extension-paragraph';
 import { Heading } from '@tiptap/extension-heading';
 import { ListItem } from '@tiptap/extension-list-item';
@@ -11,12 +12,15 @@ import { BulletList } from '@tiptap/extension-bullet-list';
 import { OrderedList } from '@tiptap/extension-ordered-list';
 import { HardBreak } from '@tiptap/extension-hard-break';
 import { Blockquote } from '@tiptap/extension-blockquote';
-import { useCallback } from 'react';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBold } from '@fortawesome/free-solid-svg-icons';
-import { faItalic } from '@fortawesome/free-solid-svg-icons';
+import { faBold, faItalic, faHeading, faT, faLink, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
 
 function Tiptap() {
+  const [isAddingLink, setIsAddingLink] = useState(false);
+  const [linkUrl, setLinkUrl] = useState('');
+
   const content = `
   <h2>
     Hi there,
@@ -49,13 +53,17 @@ function Tiptap() {
   `;
 
   const extensions = [
-    History, Document, Text, Bold, Italic,
+    History, Document, Text, Bold, Italic, Link,
     Paragraph.configure({
       HTMLAttributes: {
         class: 'fs-5',
       }
     }),
-    Heading, ListItem, BulletList, OrderedList, HardBreak,
+    Heading.configure({
+      HTMLAttributes: {
+        class: 'fw-bold',
+      },
+    }), ListItem, BulletList, OrderedList, HardBreak,
     Blockquote.configure({
       HTMLAttributes: {
         class: 'blockquote-footer',
@@ -65,26 +73,62 @@ function Tiptap() {
 
   const editor = useEditor({ extensions, content });
 
-  const toggleBold = useCallback(() => {
-    if (editor)
-      editor.chain().focus().toggleBold().run();
-  }, [editor]);
-  const toggleItalic = useCallback(() => {
-    if (editor)
-      editor.chain().focus().toggleItalic().run();
-  }, [editor]);
+  if (!editor) {
+    return null;
+  }
+
+  const isSelectionOverLink = editor && editor.getAttributes('link').href;
+
+  function setLink(editor: Editor) {
+    if (linkUrl === '') {
+      editor.chain().focus().extendMarkRange('link').unsetLink().run();
+    } else {
+      editor.chain().focus().extendMarkRange('link').setLink({ href: linkUrl }).run();
+    }
+    setIsAddingLink(false);
+    setLinkUrl('');
+  }
+
+  function handleLinkInputKeyDown(event: React.KeyboardEvent) {
+    if (editor && event.key === 'Enter') {
+      event.preventDefault();
+      setLink(editor);
+    }
+  }
 
   return (
     <>
-      <BubbleMenu pluginKey="bubbleMenuText" tippyOptions={{ duration: 150 }} editor={editor}
-        shouldShow={({ editor, view, state, oldState, from, to }) => { return from !== to; }}
-      >
-        <button onClick={toggleBold}>
-          <FontAwesomeIcon icon={faBold} />
-        </button>
-        <button onClick={toggleItalic}>
-          <FontAwesomeIcon icon={faItalic} />
-        </button>
+      <BubbleMenu className="Bubblemenu bg-dark rounded p-1 d-flex text-white" editor={editor} pluginKey="bubbleMenuText" tippyOptions={{ duration: 150 }}
+        shouldShow={({ from, to }) => { return from !== to; }}>
+        {isAddingLink ? (
+          <input className="border-0 bg-dark text-white" type="text" value={linkUrl} onChange={event => setLinkUrl(event.target.value)} onKeyDown={handleLinkInputKeyDown} onBlur={() => setLink(editor)} style={{ outline: 'none' }} autoFocus />
+        ) : (
+          <>
+            <div style={{ width: '24px', height: '24px' }} className={`ms-1 icon d-flex justify-content-center align-items-center rounded ${editor.isActive('bold') ? 'text-primary' : ''}`} onClick={() => editor.chain().focus().toggleBold().run()}>
+              <FontAwesomeIcon icon={faBold} />
+            </div>
+            <div style={{ width: '24px', height: '24px' }} className={`ms-1 icon d-flex justify-content-center align-items-center rounded ${editor.isActive('italic') ? 'text-primary' : ''}`} onClick={() => editor.chain().focus().toggleItalic().run()}>
+              <FontAwesomeIcon icon={faItalic} />
+            </div>
+            <div style={{ width: '24px', height: '24px' }} className={`ms-1 icon d-flex justify-content-center align-items-center rounded ${editor.isActive('heading', { level: 1 }) ? 'text-primary' : ''}`} onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}>
+              <FontAwesomeIcon icon={faHeading} />
+            </div>
+            <div style={{ width: '24px', height: '24px' }} className={`ms-1 icon d-flex justify-content-center align-items-center rounded ${editor.isActive('heading', { level: 2 }) ? 'text-primary' : ''}`} onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}>
+              <FontAwesomeIcon icon={faT} />
+            </div>
+            <div style={{ width: '24px', height: '24px' }} className="mx-1 icon d-flex justify-content-center align-items-center rounded"
+              onClick={() => {
+                if (isSelectionOverLink) {
+                  editor.chain().focus().unsetLink().run();
+                } else {
+                  setIsAddingLink(true);
+                }
+              }}
+            >
+              {isSelectionOverLink ? <FontAwesomeIcon icon={faLinkSlash} /> : <FontAwesomeIcon icon={faLink} />}
+            </div>
+          </>
+        )}
       </BubbleMenu>
       <EditorContent editor={editor} />
     </>
