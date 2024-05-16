@@ -26,6 +26,7 @@ export const ms = {
       join: "Sertai"
     },
     form: {
+      editor: "Klik di sini untuk menerangkan hidangan, dan menyelidiki bahan-bahan dan arahan memasak secara terperinci!",
       edit: "Sunting",
       create: "Cipta",
       recipe: " Resipi",

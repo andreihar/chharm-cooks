@@ -154,12 +154,18 @@ li::marker {
 
 /* Editor */
 .Bubblemenu {
-	div:hover {
-		background: #555555;
-		cursor: pointer;
-	}
+    div:hover {
+        background: #555555;
+        cursor: pointer;
+    }
 }
 .ProseMirror .is-empty:before {
-    content: attr(data-placeholder);
     color: #aaa;
-  }
+    content: attr(data-placeholder);
+	float: left;
+	height: 0;
+	pointer-events: none;
+}
+.ProseMirror:focus {
+    outline: none;
+}

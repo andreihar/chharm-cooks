@@ -26,6 +26,7 @@ export const en = {
       join: "Join"
     },
     form: {
+      editor: "Click here to describe the dish, and delve into ingredients and cooking instructions in detail!",
       edit: "Edit",
       create: "Create",
       recipe: " Recipe",

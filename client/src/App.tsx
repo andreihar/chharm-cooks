@@ -8,7 +8,6 @@ import Authors from './pages/Authors';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 import Signup from './pages/Signup';
-import Tiptap from './components/Tiptap';
 
 function App() {
   return (
@@ -20,7 +19,6 @@ function App() {
         <Route path="/contributors" element={<Authors />} />
         <Route path="/user/:username" element={<Profile />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/tiptap" element={<Tiptap />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </I18nextProvider>

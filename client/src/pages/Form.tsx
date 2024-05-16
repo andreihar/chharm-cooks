@@ -4,6 +4,7 @@ import { Recipe } from '../models/Recipe';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
 import { useLocalisationHelper } from '../libs/useLocalisationHelper';
+import TextEditor from '../components/TextEditor.tsx';
 import Select from 'react-select';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -164,6 +165,7 @@ function Form() {
                 </div>
               )}
             </fieldset>
+            <TextEditor />
             <fieldset className="p-4 my-4">
               <legend className="text-primary">{t('form.ingredients')}</legend>
               <InputList items={ingredients} label={t('form.ingredient')} addLabel={t('form.add')} add={add(setIngreds)} remove={remove(setIngreds)} change={change(setIngreds)} />

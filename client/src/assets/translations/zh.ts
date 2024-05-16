@@ -26,6 +26,7 @@ export const zh = {
       join: "註冊"
     },
     form: {
+      editor: "點擊此處描述這道菜，並詳細研究食材和烹飪說明！",
       edit: "編輯",
       create: "創造",
       recipe: "食譜",
