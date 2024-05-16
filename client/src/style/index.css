@@ -159,3 +159,7 @@ li::marker {
 		cursor: pointer;
 	}
 }
+.ProseMirror .is-empty:before {
+    content: attr(data-placeholder);
+    color: #aaa;
+  }

@@ -6,13 +6,12 @@ import { Bold } from '@tiptap/extension-bold';
 import { Italic } from '@tiptap/extension-italic';
 import { Link } from '@tiptap/extension-link';
 import { Paragraph } from '@tiptap/extension-paragraph';
+import { Placeholder } from '@tiptap/extension-placeholder';
 import { Heading } from '@tiptap/extension-heading';
 import { ListItem } from '@tiptap/extension-list-item';
 import { BulletList } from '@tiptap/extension-bullet-list';
 import { OrderedList } from '@tiptap/extension-ordered-list';
 import { HardBreak } from '@tiptap/extension-hard-break';
-import { Blockquote } from '@tiptap/extension-blockquote';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBold, faItalic, faHeading, faT, faLink, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
@@ -21,37 +20,6 @@ function Tiptap() {
   const [isAddingLink, setIsAddingLink] = useState(false);
   const [linkUrl, setLinkUrl] = useState('');
 
-  const content = `
-  <h2>
-    Hi there,
-  </h2>
-  <p>
-    this is a <em>basic</em> example of <strong>tiptap</strong>. Sure, there are all kind of basic text styles you’d probably expect from a text editor. But wait until you see the lists:
-  </p>
-  <ul>
-    <li>
-      That’s a bullet list with one …
-    </li>
-    <li>
-      … or two list items.
-    </li>
-  </ul>
-  <p>
-    Isn’t that great? And all of that is editable. But wait, there’s more. Let’s try a code block:
-  </p>
-  <pre><code class="language-css">body {
-  display: none;
-  }</code></pre>
-  <p>
-    I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forget to check the other examples too.
-  </p>
-  <blockquote>
-    Wow, that’s amazing. Good work, boy! 👏
-    <br />
-    — Mom
-  </blockquote>
-  `;
-
   const extensions = [
     History, Document, Text, Bold, Italic, Link,
     Paragraph.configure({
@@ -59,19 +27,18 @@ function Tiptap() {
         class: 'fs-5',
       }
     }),
+    Placeholder.configure({
+      placeholder: 'My Custom Placeholder',
+      emptyEditorClass: 'text-black',
+    }),
     Heading.configure({
       HTMLAttributes: {
         class: 'fw-bold',
       },
-    }), ListItem, BulletList, OrderedList, HardBreak,
-    Blockquote.configure({
-      HTMLAttributes: {
-        class: 'blockquote-footer',
-      },
-    }),
+    }), ListItem, BulletList, OrderedList, HardBreak
   ];
 
-  const editor = useEditor({ extensions, content });
+  const editor = useEditor({ extensions });
 
   if (!editor) {
     return null;
@@ -133,6 +100,28 @@ function Tiptap() {
       <EditorContent editor={editor} />
     </>
   );
+  const content = `
+  <h2>
+    Hi there,
+  </h2>
+  <p>
+    this is a <em>basic</em> example of <strong>tiptap</strong>. Sure, there are all kind of basic text styles you’d probably expect from a text editor. But wait until you see the lists:
+  </p>
+  <ul>
+    <li>
+      That’s a bullet list with one …
+    </li>
+    <li>
+      … or two list items.
+    </li>
+  </ul>
+  <p>
+    Isn’t that great? And all of that is editable. But wait, there’s more. Let’s try a code block:
+  </p>
+  <p>
+    I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forget to check the other examples too.
+  </p>
+  `;
 }
 
 export default Tiptap;
