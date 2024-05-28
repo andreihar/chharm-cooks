@@ -124,37 +124,37 @@ const unfollowUser = (followed: string) => {
 };
 
 // Likes
-const likeRecipe = (rid: number) => {
-  return axios.post(`${BASE_URL}/likes/like`, { rid });
+const rateRecipe = (rid: number, rating: number) => {
+  return axios.post(`${BASE_URL}/ratings/rate`, { rid, rating });
 };
 
-const unlikeRecipe = (rid: number) => {
-  return axios.post(`${BASE_URL}/likes/unlike`, { rid });
+const unrateRecipe = (rid: number) => {
+  return axios.post(`${BASE_URL}/ratings/unrate`, { rid });
 };
 
-const getLikesByUsername = (username: string): Promise<Recipe[]> => {
-  return axios.get<Recipe[]>(`${BASE_URL}/likes/${username}`)
+const getRatingsByUsername = (username: string): Promise<Recipe[]> => {
+  return axios.get<Recipe[]>(`${BASE_URL}/ratings/${username}`)
     .then(response => response.data)
     .catch(error => {
-      console.error('Error fetching likes', error);
+      console.error('Error fetching ratings', error);
       throw error;
     });
 };
 
-const getLikesForRecipe = (rid: number): Promise<number> => {
-  return axios.get<number>(`${BASE_URL}/likes/recipe/${rid}`)
+const getAverageRatingForRecipe = (rid: number): Promise<number> => {
+  return axios.get<number>(`${BASE_URL}/ratings/recipe/${rid}`)
     .then(response => response.data)
     .catch(error => {
-      console.error('Error fetching likes for recipe', error);
+      console.error('Error fetching average rating for recipe', error);
       throw error;
     });
 };
 
-const getUserLikedRecipe = (rid: number): Promise<boolean> => {
-  return axios.get<boolean>(`${BASE_URL}/likes/user/${rid}`)
+const getUserRatingForRecipe = (rid: number): Promise<number> => {
+  return axios.get<number>(`${BASE_URL}/ratings/user/${rid}`)
     .then(response => response.data)
     .catch(error => {
-      console.error('Error fetching if user liked the recipe', error);
+      console.error('Error fetching user rating for recipe', error);
       throw error;
     });
 };
@@ -175,11 +175,11 @@ const DbService = {
   getFollowing,
   followUser,
   unfollowUser,
-  likeRecipe,
-  unlikeRecipe,
-  getLikesByUsername,
-  getLikesForRecipe,
-  getUserLikedRecipe
+  rateRecipe,
+  // unrateRecipe,
+  getRatingsByUsername,
+  getAverageRatingForRecipe,
+  getUserRatingForRecipe
 };
 
 export default DbService;
