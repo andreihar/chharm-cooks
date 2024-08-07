@@ -123,13 +123,9 @@ const unfollowUser = (followed: string) => {
   return axios.post(`${BASE_URL}/followers/unfollow`, { followed });
 };
 
-// Likes
+// Ratings
 const rateRecipe = (rid: number, rating: number) => {
   return axios.post(`${BASE_URL}/ratings/rate`, { rid, rating });
-};
-
-const unrateRecipe = (rid: number) => {
-  return axios.post(`${BASE_URL}/ratings/unrate`, { rid });
 };
 
 const getRatingsByUsername = (username: string): Promise<Recipe[]> => {
@@ -142,17 +138,17 @@ const getRatingsByUsername = (username: string): Promise<Recipe[]> => {
 };
 
 const getAverageRatingForRecipe = (rid: number): Promise<number> => {
-  return axios.get<number>(`${BASE_URL}/ratings/recipe/${rid}`)
-    .then(response => response.data)
+  return axios.get<{ averageRating: number; }>(`${BASE_URL}/ratings/recipe/${rid}`)
+    .then(response => response.data.averageRating)
     .catch(error => {
       console.error('Error fetching average rating for recipe', error);
       throw error;
     });
 };
 
-const getUserRatingForRecipe = (rid: number): Promise<number> => {
-  return axios.get<number>(`${BASE_URL}/ratings/user/${rid}`)
-    .then(response => response.data)
+const getUserRatingForRecipe = (rid: number): Promise<number | null> => {
+  return axios.get<{ rating: number | null; }>(`${BASE_URL}/ratings/user/${rid}`)
+    .then(response => response.data.rating)
     .catch(error => {
       console.error('Error fetching user rating for recipe', error);
       throw error;

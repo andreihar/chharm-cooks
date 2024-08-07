@@ -4,8 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
 import { User } from '../models/User';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPenToSquare, faClock, faBowlRice, faThumbsUp as faThumbsUpL, faStar } from '@fortawesome/free-solid-svg-icons';
-import { faThumbsUp as faThumbsUpN, faStar as faNoStar } from '@fortawesome/free-regular-svg-icons';
+import { faTrash, faPenToSquare, faClock, faBowlRice, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar as faNoStar } from '@fortawesome/free-regular-svg-icons';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocalisationHelper } from '../libs/useLocalisationHelper';
@@ -25,6 +25,8 @@ function Display() {
   const navigate = useNavigate();
   const { getCuisineName, getAuthorName } = useLocalisationHelper();
 
+  const [hoverRating, setHoverRating] = useState<number | null>(null);
+
   useEffect(() => {
     const loadData = async () => {
       const recipes = await DbService.getRecipes();
@@ -35,9 +37,10 @@ function Display() {
         setRecipe(foundRecipe);
         setAuthor(foundAuthor);
         if (isAuthenticated) {
-          setUserRating(await DbService.getUserRatingForRecipe(Number(id)));
+          const rating = await DbService.getUserRatingForRecipe(Number(id));
+          setUserRating(rating !== null ? rating : 0);
         }
-        // setLikes(await DbService.getLikesForRecipe(Number(id)));
+        setAverageRating(await DbService.getAverageRatingForRecipe(Number(id)));
       } else {
         alert(t('display.error'));
         navigate('/');
@@ -54,17 +57,6 @@ function Display() {
       navigate('/');
     }
   };
-
-  // const handleLike = async () => {
-  //   if (userLiked) {
-  //     await DbService.unlikeRecipe(Number(id));
-  //     setLikes(Number(likes) - 1);
-  //   } else {
-  //     await DbService.likeRecipe(Number(id));
-  //     setLikes(Number(likes) + 1);
-  //   }
-  //   setUserLiked(!userLiked);
-  // };
 
   if (recipe) {
     const { picture, title, chin_title, created_on, time_last_modified, cuisine, ingredients, recipe_instructions, prep_time, cook_time, servings } = recipe;
@@ -106,17 +98,6 @@ function Display() {
                       <span className="text-uppercase fs-5 ms-2">{getAuthorName(author!)}</span>
                     </Link>
                   </div>
-                  {/* <div className="align-items-center d-flex fs-5">
-                    <button
-                      onClick={handleLike}
-                      className="btn"
-                      disabled={!isAuthenticated}
-                      style={{ border: 'none' }}
-                    >
-                      <FontAwesomeIcon icon={userLiked ? faThumbsUpL : faThumbsUpN} />
-                    </button>
-                    {likes}
-                  </div> */}
                 </div>
                 <hr />
                 <div className="d-flex justify-content-between">
@@ -124,21 +105,30 @@ function Display() {
                     {t('display.posted')} <span className="">{`${created_on.toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>&nbsp;|&nbsp;
                     {t('display.updated')} <span className="">{`${time_last_modified.toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>
                   </p>
+                  {isAuthenticated && user &&
+                    <div className="mb-3">
+                      {[...Array(5)].map((_, i) => {
+                        const newRating = i + 1;
+                        return (
+                          <FontAwesomeIcon
+                            key={i}
+                            icon={newRating <= (hoverRating ?? userRating) ? faStar : faNoStar}
+                            className="text-warning mr-1"
+                            onClick={async () => {
+                              await DbService.rateRecipe(Number(id), newRating);
+                              setUserRating(newRating);
+                            }}
+                            onMouseEnter={() => setHoverRating(newRating)}
+                            onMouseLeave={() => setHoverRating(null)}
+                          />
+                        );
+                      })}
+                    </div>
+                  }
                   {isAuthenticated && user && (user.sub === author!.username) &&
                     <div>
                       <button onClick={deleteRecipe} className="btn btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button>
                       <button onClick={() => navigate('/form/' + id)} className="btn btn-outline-secondary ms-2"><FontAwesomeIcon icon={faPenToSquare} /></button>
-                      <div className="mb-3">
-                        {[...Array(5)].map((_, i) => {
-                          const newRating = i + 1;
-                          return (
-                            <FontAwesomeIcon key={i} icon={i < userRating ? faStar : faNoStar} className="text-warning mr-1" onClick={async () => {
-                              DbService.rateRecipe(Number(id), newRating);
-                              setUserRating(newRating);
-                            }} />
-                          );
-                        })}
-                      </div>
                     </div>
                   }
                 </div>
