@@ -5,7 +5,7 @@ const app = express();
 const usersController = require('./api/users/users.controller');
 const recipesController = require('./api/recipes/recipes.controller');
 const followersController = require('./api/followers/followers.controller');
-const likesController = require('./api/likes/likes.controller');
+const ratingsController = require('./api/ratings/ratings.controller');
 const notificationsController = require('./api/notifications/notifications.controller');
 
 app.use(express.json());
@@ -15,7 +15,7 @@ let port = 4000;
 app.use('/users', usersController);
 app.use('/recipes', recipesController);
 app.use('/followers', followersController);
-app.use('/likes', likesController);
+app.use('/ratings', ratingsController);
 app.use('/notifications', notificationsController);
 
 app.use((err, req, res, next) => {

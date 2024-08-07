@@ -28,7 +28,7 @@ const helpers = {
 			createIngredientTable,
 			createRecipeTable,
 			createFollowersTable,
-			createLikesTable,
+			createRatingsTable,
 			createNotificationsTable
 		} = require('./tables');
 
@@ -36,7 +36,7 @@ const helpers = {
 		await pool.query(createIngredientTable);
 		await pool.query(createRecipeTable);
 		await pool.query(createFollowersTable);
-		await pool.query(createLikesTable);
+		await pool.query(createRatingsTable);
 		await pool.query(createNotificationsTable);
 		if (!(await pool.query("SELECT EXISTS (SELECT 1 FROM recipe LIMIT 1);")).rows[0].exists)
 			await defaultData();
@@ -169,40 +169,39 @@ const helpers = {
 		return res.rows[0];
 	},
 
-	// Likes
-	likeRecipe: async function (username, rid) {
-		const q = 'INSERT INTO likes(username, rid) VALUES($1, $2) ON CONFLICT (username, rid) DO NOTHING';
-		const res = await pool.query(q, [username, rid]);
-		return res.rows[0];
-	},
-
-	unlikeRecipe: async function (username, rid) {
-		const q = 'DELETE FROM likes WHERE username = $1 AND rid = $2';
-		const res = await pool.query(q, [username, rid]);
-		return res.rows[0];
-	},
-
-	getLikesOfUser: async function (username) {
+	// Ratings
+	rateRecipe: async function (username, rid, rating) {
 		const q = `
-			SELECT recipes.* 
-			FROM likes 
-			INNER JOIN recipes ON likes.rid = recipes.id 
-			WHERE likes.username = $1
+			INSERT INTO ratings(username, rid, rating) 
+			VALUES($1, $2, $3) 
+			ON CONFLICT (username, rid) 
+			DO UPDATE SET rating = EXCLUDED.rating
+		`;
+		const res = await pool.query(q, [username, rid, rating]);
+		return res.rows[0];
+	},
+
+	getRatingsOfUser: async function (username) {
+		const q = `
+			SELECT recipes.*, ratings.rating
+			FROM ratings 
+			INNER JOIN recipes ON ratings.rid = recipes.id 
+			WHERE ratings.username = $1
 		`;
 		const res = await pool.query(q, [username]);
 		return res.rows;
 	},
 
-	getLikesForRecipe: async function (rid) {
-		const q = 'SELECT COUNT(username) as likes FROM likes WHERE rid = $1';
+	getAverageRatingForRecipe: async function (rid) {
+		const q = 'SELECT AVG(rating) as average_rating FROM ratings WHERE rid = $1';
 		const res = await pool.query(q, [rid]);
-		return res.rows[0].likes;
+		return res.rows[0].average_rating;
 	},
 
-	getUserLikedRecipe: async function (username, rid) {
-		const q = 'SELECT EXISTS(SELECT 1 FROM likes WHERE username = $1 AND rid = $2)';
+	getUserRatedRecipe: async function (username, rid) {
+		const q = 'SELECT rating FROM ratings WHERE username = $1 AND rid = $2';
 		const res = await pool.query(q, [username, rid]);
-		return res.rows[0].exists;
+		return res.rows[0] ? res.rows[0].rating : null;
 	},
 
 	// Notifications

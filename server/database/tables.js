@@ -49,10 +49,11 @@ const createFollowersTable = `
 	);
 `;
 
-const createLikesTable = `
-	CREATE TABLE IF NOT EXISTS likes(
+const createRatingsTable = `
+	CREATE TABLE IF NOT EXISTS ratings(
 		username VARCHAR(255),
 		rid SERIAL,
+		rating INT CHECK (rating BETWEEN 1 AND 5),
 		PRIMARY KEY (username, rid),
 		FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE,
 		FOREIGN KEY (rid) REFERENCES recipe(rid) ON DELETE CASCADE
@@ -75,6 +76,6 @@ module.exports = {
 	createIngredientTable,
 	createRecipeTable,
 	createFollowersTable,
-	createLikesTable,
+	createRatingsTable,
 	createNotificationsTable
 };
