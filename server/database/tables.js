@@ -15,7 +15,7 @@ const createUsersTable = `
 const createIngredientTable = `
 	CREATE TABLE IF NOT EXISTS ingredient(
 		iid SERIAL PRIMARY KEY, 
-		ingredients TEXT[]
+		ingredients JSONB[]
 	);
 `;
 

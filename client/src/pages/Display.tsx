@@ -137,7 +137,9 @@ function Display() {
                 </p>
                 <ul>
                   {ingredients.map((ingredient, index) => (
-                    <li key={index}>{ingredient}</li>
+                    <li key={index}>
+                      {ingredient.name} {ingredient.quantity}
+                    </li>
                   ))}
                 </ul>
                 <h2>{t('form.directions')}</h2>

@@ -12,17 +12,35 @@ import DbService from '../services/DbService';
 import noRecipe from '../assets/noRecipe.png';
 import adjectives from '../assets/translations/adjectives.json';
 
-function InputList({ items, label, addLabel, add, remove, change }: { items: any[], label: string, addLabel: string, add: any, remove: any, change: any; }) {
+function InputList({ items, label, addLabel, add, remove, change, mode }: { items: any[], label: string, addLabel: string, add: () => void, remove: (index: number) => void, change: (e: React.ChangeEvent<HTMLInputElement>, index: number, field: string) => void; mode: string; }) {
   return (
     <>
       {items.map((item, index) => (
         <div className="form-group d-flex align-items-center mb-2" key={index}>
           <label className="fw-bold me-2" htmlFor={`${label}-${index}`}>{index + 1}</label>
-          <input id={`${label}-${index}`} type="text" className="form-control" name={`${label}-${index}`} value={item.name} onChange={e => change(e, index)} />
+          {mode === 'ingredient' && (
+            <input
+              id={`${label}-quantity-${index}`}
+              type="text"
+              className="form-control me-2"
+              name={`${label}-quantity-${index}`}
+              value={item.quantity}
+              onChange={e => change(e, index, 'quantity')}
+              style={{ maxWidth: '200px' }}
+            />
+          )}
+          <input
+            id={`${label}-${index}`}
+            type="text"
+            className="form-control me-2"
+            name={`${label}-${index}`}
+            value={item.name}
+            onChange={e => change(e, index, 'name')}
+          />
           <button type="button" className="btn btn-outline-danger fw-bold ms-2" onClick={() => remove(index)}>-</button>
         </div>
       ))}
-      <button type="button" className="btn btn-outline-primary fw-bold px-4" onClick={add}>{addLabel}{label}</button>
+      <button type="button" className="btn btn-outline-primary fw-bold px-4" onClick={add}>{addLabel} {label}</button>
     </>
   );
 }
@@ -36,7 +54,7 @@ function Form() {
   const [cookTime, setCookTime] = useState(0);
   const [servings, setServings] = useState(0);
   const [picture, setPicture] = useState('');
-  const [ingredients, setIngreds] = useState([{ name: "" }]);
+  const [ingredients, setIngreds] = useState([{ name: "", quantity: "" }]);
   const [steps, setSteps] = useState([{ name: "" }]);
   const { user, isAuthenticated } = useAuth0();
   const { t } = useTranslation();
@@ -62,7 +80,7 @@ function Form() {
           setCookTime(foundRecipe.cook_time);
           setServings(foundRecipe.servings);
           setPicture(foundRecipe.picture);
-          setIngreds(foundRecipe.ingredients.map((ingredient: string) => ({ name: ingredient })));
+          setIngreds(foundRecipe.ingredients.map((ingredient: { name: string, quantity: string; }) => ({ name: ingredient.name, quantity: ingredient.quantity })));
           setSteps(foundRecipe.recipe_instructions.map((step: string) => ({ name: step })));
         } else {
           navigate('/');
@@ -72,14 +90,15 @@ function Form() {
     fetchRecipe();
   }, [id, isAuthenticated, user]);
 
-  const add = (setter: Function) => () => setter((prev: { name: string; }[]) => [...prev, { name: "" }]);
-  const remove = (setter: Function) => (index: number) => setter((prev: { name: string; }[]) => prev.filter((_: any, i: number) => i !== index));
-  const change = (setter: Function) => (e: React.ChangeEvent<HTMLInputElement>, index: number) =>
-    setter((prev: { name: string; }[]) => prev.map((item, i) => i === index ? { name: e.target.value } : item));
+  const add = (setter: Function) => () => setter((prev: { name: string; quantity: string; }[]) => [...prev, { name: "", quantity: "" }]);
+  const remove = (setter: Function) => (index: number) => setter((prev: { name: string; quantity: string; }[]) => prev.filter((_: any, i: number) => i !== index));
+  const change = (setter: Function) => (e: React.ChangeEvent<HTMLInputElement>, index: number, field: string) =>
+    setter((prev: { name: string; quantity: string; }[]) => prev.map((item, i) => i === index ? { ...item, [field]: e.target.value } : item));
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    let newRecipe = new Recipe(name.trim(), chinName.trim(), cuisine.trim(), (user!.sub as string), prepTime, cookTime, servings, picture.trim() || noRecipe, ingredients.map(i => i.name.trim()).filter(Boolean), steps.map(s => s.name.trim()).filter(Boolean));
+
+    let newRecipe = new Recipe(name.trim(), chinName.trim(), cuisine.trim(), (user!.sub as string), prepTime, cookTime, servings, picture.trim() || noRecipe, ingredients.map(i => ({ name: i.name.trim(), quantity: i.quantity.trim() })).filter(i => i.name && i.quantity), steps.map(s => s.name.trim()).filter(Boolean));
     if (newRecipe.ingredients.length === 0) {
       alert(t('form.oneIngredient'));
       return;
@@ -144,15 +163,36 @@ function Form() {
               </div>
               <div className="form-group">
                 <label htmlFor="prepTime">{t('form.prepTime')} {t('form.min')} *</label>
-                <input id="prepTime" type="number" className="form-control" name="prepTime" placeholder="Preparation time in minutes" value={prepTime} onChange={e => setPrepTime(Math.max(0, Number(e.target.value)))} required />
+                <input id="prepTime" type="text" className="form-control" name="prepTime" placeholder="5" value={prepTime === 0 ? '' : prepTime} required
+                  onChange={e => {
+                    const value = e.target.value;
+                    if (value === '' || /^[0-9\b]+$/.test(value)) {
+                      setPrepTime(value === '' ? 0 : Math.max(0, Number(value)));
+                    }
+                  }}
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="cookTime">{t('form.cookTime')} {t('form.min')} *</label>
-                <input id="cookTime" type="number" className="form-control" name="cookTime" placeholder="Cooking time in minutes" value={cookTime} onChange={e => setCookTime(Math.max(0, Number(e.target.value)))} required />
+                <input id="cookTime" type="text" className="form-control" name="cookTime" placeholder="22" value={cookTime === 0 ? '' : cookTime} required
+                  onChange={e => {
+                    const value = e.target.value;
+                    if (value === '' || /^[0-9\b]+$/.test(value)) {
+                      setCookTime(value === '' ? 0 : Math.max(0, Number(value)));
+                    }
+                  }}
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="servings">{t('form.servings')} *</label>
-                <input id="servings" type="number" className="form-control" name="servings" placeholder="Number of servings" value={servings} onChange={e => setServings(Math.max(0, Number(e.target.value)))} required />
+                <input id="servings" type="text" className="form-control" name="servings" placeholder="6" value={servings === 0 ? '' : servings} required
+                  onChange={e => {
+                    const value = e.target.value;
+                    if (value === '' || /^[0-9\b]+$/.test(value)) {
+                      setServings(value === '' ? 0 : Math.max(0, Number(value)));
+                    }
+                  }}
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="picture">{t('form.picture')} {t('form.optional')}</label>
@@ -166,11 +206,11 @@ function Form() {
             </fieldset>
             <fieldset className="p-4 my-4">
               <legend className="text-primary">{t('form.ingredients')}</legend>
-              <InputList items={ingredients} label={t('form.ingredient')} addLabel={t('form.add')} add={add(setIngreds)} remove={remove(setIngreds)} change={change(setIngreds)} />
+              <InputList items={ingredients} label={t('form.ingredient')} addLabel={t('form.add')} add={add(setIngreds)} remove={remove(setIngreds)} change={change(setIngreds)} mode='ingredient' />
             </fieldset>
             <fieldset className="p-4 my-4">
               <legend className="text-primary">{t('form.directions')}</legend>
-              <InputList items={steps} label={t('form.step')} addLabel={t('form.add')} add={add(setSteps)} remove={remove(setSteps)} change={change(setSteps)} />
+              <InputList items={steps} label={t('form.step')} addLabel={t('form.add')} add={add(setSteps)} remove={remove(setSteps)} change={change(setSteps)} mode='step' />
             </fieldset>
             <div className="controls d-flex justify-content-center">
               <button type="submit" className="btn btn-outline-primary px-4 text-uppercase">{id ? t('form.update') : t('form.submit')}</button>
