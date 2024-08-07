@@ -10,6 +10,14 @@ if (token) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
 
+const convertRecipeDates = (recipe: Recipe): Recipe => {
+  return {
+    ...recipe,
+    created_on: new Date(recipe.created_on),
+    time_last_modified: new Date(recipe.time_last_modified)
+  };
+};
+
 const login = (user: User, token: string): Promise<boolean> => {
   Cookies.set('token', token);
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -57,7 +65,7 @@ const logout = () => {
 // Recipes
 const getRecipes = (): Promise<Recipe[]> => {
   return axios.get<Recipe[]>(`${BASE_URL}/recipes`)
-    .then(response => response.data)
+    .then(response => response.data.map(convertRecipeDates))
     .catch(error => {
       console.error('Error fetching recipes', error);
       return [];
@@ -66,7 +74,7 @@ const getRecipes = (): Promise<Recipe[]> => {
 
 const getRecipeById = (id: number): Promise<Recipe> => {
   return axios.get<Recipe>(`${BASE_URL}/recipes/${id}`)
-    .then(response => response.data)
+    .then(response => convertRecipeDates(response.data))
     .catch(error => {
       console.error('Error fetching recipe', error);
       throw error;
@@ -75,7 +83,7 @@ const getRecipeById = (id: number): Promise<Recipe> => {
 
 const getRecipesByUsername = (username: string): Promise<Recipe[]> => {
   return axios.get<Recipe[]>(`${BASE_URL}/recipes/user/${username}`)
-    .then(response => response.data)
+    .then(response => response.data.map(convertRecipeDates))
     .catch(error => {
       console.error('Error fetching recipes by username', error);
       return [];
@@ -130,7 +138,7 @@ const rateRecipe = (rid: number, rating: number) => {
 
 const getRatingsByUsername = (username: string): Promise<Recipe[]> => {
   return axios.get<Recipe[]>(`${BASE_URL}/ratings/${username}`)
-    .then(response => response.data)
+    .then(response => response.data.map(convertRecipeDates))
     .catch(error => {
       console.error('Error fetching ratings', error);
       throw error;
@@ -172,7 +180,6 @@ const DbService = {
   followUser,
   unfollowUser,
   rateRecipe,
-  // unrateRecipe,
   getRatingsByUsername,
   getAverageRatingForRecipe,
   getUserRatingForRecipe

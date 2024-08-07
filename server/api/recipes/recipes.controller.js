@@ -12,7 +12,7 @@ const formatRecipe = (recipe) => ({
 router.get('/', async (req, res) => {
 	try {
 		const recipes = await recipesService.getRecipes();
-		res.json(recipes.map(formatRecipe));
+		res.json(recipes);
 	} catch (err) {
 		res.status(500).json({ error: 'An error occurred while fetching recipes' });
 	}
@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
 	try {
 		const recipe = await recipesService.getRecipeById(req.params.id);
-		res.json(formatRecipe(recipe));
+		res.json(recipe);
 	} catch (err) {
 		res.status(500).json({ error: 'An error occurred while fetching the recipe' });
 	}
@@ -30,7 +30,7 @@ router.get('/:id', async (req, res) => {
 router.get('/user/:username', async (req, res) => {
 	try {
 		const recipes = await recipesService.getRecipesByUser(req.params.username);
-		res.json(recipes.map(formatRecipe));
+		res.json(recipes);
 	} catch (err) {
 		res.status(500).json({ error: 'An error occurred while fetching the recipes' });
 	}

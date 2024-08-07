@@ -87,7 +87,7 @@ const helpers = {
 			FROM recipe
 			INNER JOIN ingredient
 			ON recipe.iid = ingredient.iid
-    	`);
+		`);
 		return res.rows;
 	},
 
@@ -98,7 +98,7 @@ const helpers = {
 			INNER JOIN ingredient
 			ON recipe.iid = ingredient.iid
 			WHERE rid = $1
-    	`, [id]);
+		`, [id]);
 		return res.rows[0];
 	},
 
@@ -119,6 +119,11 @@ const helpers = {
 			const ingredientRes = await pool.query('INSERT INTO ingredient(ingredients) VALUES($1) RETURNING iid', [ingredients]);
 			const iid = ingredientRes.rows[0].iid;
 			const recipeRes = await pool.query('INSERT INTO recipe(title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, iid, recipe_instructions) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING rid', [title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, iid, recipe_instructions]);
+			const rid = recipeRes.rows[0].rid;
+
+			const followers = await this.getFollowers(username);
+			await Promise.all(followers.map(follower => this.addNotification(follower.follower, rid)));
+
 			await pool.query('COMMIT');
 			return recipeRes.rows[0];
 		} catch (e) {
@@ -202,6 +207,56 @@ const helpers = {
 		const q = 'SELECT rating FROM ratings WHERE username = $1 AND rid = $2';
 		const res = await pool.query(q, [username, rid]);
 		return res.rows[0] ? res.rows[0].rating : null;
+	},
+
+	// Comments
+	addComment: async function (username, rid, comment) {
+		try {
+			const query = `
+				INSERT INTO comments (username, rid, comment, created_on, time_last_modified)
+				VALUES ($1, $2, $3, NOW(), NOW())
+				ON CONFLICT (username, rid)
+				DO UPDATE SET comment = EXCLUDED.comment, time_last_modified = NOW()
+				RETURNING *;
+			`;
+			const res = await pool.query(query, [username, rid, comment]);
+			return res.rows[0];
+		} catch (error) {
+			console.error('Error adding or updating comment:', error);
+			throw error;
+		}
+	},
+
+	getCommentsForRecipe: async function (rid) {
+		try {
+			const q = `
+				SELECT comments.*, users.username
+				FROM comments
+				INNER JOIN users ON comments.username = users.username
+				WHERE comments.rid = $1
+				ORDER BY comments.created_on DESC;
+			`;
+			const res = await pool.query(q, [rid]);
+			return res.rows;
+		} catch (error) {
+			console.error('Error getting comments for recipe:', error);
+			throw error;
+		}
+	},
+
+	deleteComment: async function (username, rid) {
+		try {
+			const q = `
+				DELETE FROM comments
+				WHERE username = $1 AND rid = $2
+				RETURNING *;
+			`;
+			const res = await pool.query(q, [username, rid]);
+			return res.rows[0];
+		} catch (error) {
+			console.error('Error deleting comment:', error);
+			throw error;
+		}
 	},
 
 	// Notifications

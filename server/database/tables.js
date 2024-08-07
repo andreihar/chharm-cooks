@@ -52,8 +52,20 @@ const createFollowersTable = `
 const createRatingsTable = `
 	CREATE TABLE IF NOT EXISTS ratings(
 		username VARCHAR(255),
-		rid SERIAL,
+		rid INT,
 		rating INT CHECK (rating BETWEEN 1 AND 5),
+		PRIMARY KEY (username, rid),
+		FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE,
+		FOREIGN KEY (rid) REFERENCES recipe(rid) ON DELETE CASCADE
+	);
+`;
+
+const createCommentsTable = `
+	CREATE TABLE IF NOT EXISTS comments(
+		username VARCHAR(255),
+		rid INT,
+		comment TEXT,
+		time_last_modified TIMESTAMPTZ DEFAULT NOW(),
 		PRIMARY KEY (username, rid),
 		FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE,
 		FOREIGN KEY (rid) REFERENCES recipe(rid) ON DELETE CASCADE
@@ -77,5 +89,6 @@ module.exports = {
 	createRecipeTable,
 	createFollowersTable,
 	createRatingsTable,
+	createCommentsTable,
 	createNotificationsTable
 };

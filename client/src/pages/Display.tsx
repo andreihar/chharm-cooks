@@ -48,8 +48,7 @@ function Display() {
       }
     };
     loadData();
-
-  }, [id]);
+  }, [id, isAuthenticated]);
 
   const deleteRecipe = () => {
     if (window.confirm(t('display.delete', { dish: recipe!.title }))) {
