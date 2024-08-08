@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
 import { User } from '../models/User';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPenToSquare, faClock, faBowlRice, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPenToSquare, faClock, faBowlRice, faStar, faComments, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faNoStar } from '@fortawesome/free-regular-svg-icons';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -18,8 +18,10 @@ function Display() {
   const [recipe, setRecipe] = useState<Recipe>();
   const [author, setAuthor] = useState<User>();
   const [userRating, setUserRating] = useState<number>(0);
-  const [averageRating, setAverageRating] = useState<number>(0);
+  const [averageRating, setAverageRating] = useState<{ value: number; count: number; }>({ value: 0, count: 0 });
   const [viewAlsoRecipes, setViewRecipes] = useState<Recipe[]>([]);
+  const [commentsData, setCommentsData] = useState<{ comments: Array<{ user: string; comment: string; timestamp: string; }>; totalCount: number; }>({ comments: [], totalCount: 0 });
+  const [activeScale, setActiveScale] = useState(1);
   const { user, isAuthenticated } = useAuth0();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
@@ -40,7 +42,9 @@ function Display() {
           const rating = await DbService.getUserRatingForRecipe(Number(id));
           setUserRating(rating !== null ? rating : 0);
         }
-        setAverageRating(await DbService.getAverageRatingForRecipe(Number(id)));
+        const averageRating = await DbService.getAverageRatingForRecipe(Number(id));
+        setAverageRating({ value: averageRating.averageRating, count: averageRating.ratingCount });
+        setCommentsData(await DbService.getCommentsForRecipe(Number(id)));
       } else {
         alert(t('display.error'));
         navigate('/');
@@ -55,6 +59,32 @@ function Display() {
       DbService.deleteRecipe(Number(id));
       navigate('/');
     }
+  };
+
+  const scaleQuantity = (quantity: string) => {
+    const match = quantity.match(/^(\d+\/\d+|\d+\s\d+\/\d+|\d+)(.*)$/);
+    if (!match) return quantity;
+    const [_, numericPart, unit] = match;
+    let scaledQuantity;
+    if (numericPart.includes('/')) {
+      const [whole, fraction] = numericPart.split(' ');
+      const [numerator, denominator] = fraction ? fraction.split('/') : numericPart.split('/');
+      scaledQuantity = ((whole ? parseInt(whole) : 0) + parseInt(numerator) / parseInt(denominator)) * activeScale;
+    } else {
+      scaledQuantity = parseFloat(numericPart) * activeScale;
+    }
+    return `${Number.isInteger(scaledQuantity) ? scaledQuantity : toFraction(scaledQuantity)} ${unit.trim()}`;
+  };
+
+  const toFraction = (decimal: number) => {
+    let h1 = 1, h2 = 0, k1 = 0, k2 = 1, b = decimal;
+    while (Math.abs(decimal - h1 / k1) > decimal * 1.0E-6) {
+      const a = Math.floor(b);
+      [h1, h2] = [a * h1 + h2, h1];
+      [k1, k2] = [a * k1 + k2, k1];
+      b = 1 / (b - a);
+    }
+    return `${h1}/${k1}`;
   };
 
   if (recipe) {
@@ -80,12 +110,12 @@ function Display() {
 
         <main className="container">
           <div className="row g-5">
-            <div className="col-md-8">
+            <div className="col-md-8 recipe-content">
               <article className="blog-post">
                 <h2 className="display-5 link-body-emphasis mb-1">
                   <Trans
                     i18nKey="display.letsMake"
-                    components={[<span className="text-primary" />]}
+                    components={[<span className="text-primary text-capitalize" />]}
                     values={{ dish: i18n.language === 'zh' ? chin_title : title }}
                   />
                 </h2>
@@ -97,13 +127,31 @@ function Display() {
                       <span className="text-uppercase fs-5 ms-2">{getAuthorName(author!)}</span>
                     </Link>
                   </div>
+                  {isAuthenticated && user && (user.sub === author!.username) &&
+                    <div>
+                      <button onClick={deleteRecipe} className="btn btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button>
+                      <button onClick={() => navigate('/form/' + id)} className="btn btn-outline-secondary ms-2"><FontAwesomeIcon icon={faPenToSquare} /></button>
+                    </div>
+                  }
                 </div>
                 <hr />
-                <div className="d-flex justify-content-between">
-                  <p className="text-dark-emphasis">
-                    {t('display.posted')} <span className="">{`${created_on.toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>&nbsp;|&nbsp;
-                    {t('display.updated')} <span className="">{`${time_last_modified.toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>
-                  </p>
+                <div className="d-flex justify-content-between text-dark-emphasis mb-4">
+                  <div className="d-flex align-items-center me-3">
+                    <FontAwesomeIcon icon={faCalendarAlt} className="text-primary me-1" />
+                    <span>{t('display.posted')} {`${created_on.toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>
+                  </div>
+                  <div className="d-flex align-items-center me-3">
+                    <FontAwesomeIcon icon={faCalendarAlt} className="text-primary me-1" />
+                    <span>{t('display.updated')} {`${time_last_modified.toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>
+                  </div>
+                  <div className="d-flex align-items-center me-3">
+                    <FontAwesomeIcon icon={faComments} className="text-primary me-1" />
+                    <span>{commentsData.totalCount}</span>
+                  </div>
+                  <div className="d-flex align-items-center me-3">
+                    <FontAwesomeIcon icon={faStar} className=" text-warning me-1" />
+                    <span>{averageRating.value} / {averageRating.count} reviews</span>
+                  </div>
                   {isAuthenticated && user &&
                     <div className="mb-3">
                       {[...Array(5)].map((_, i) => {
@@ -122,12 +170,6 @@ function Display() {
                           />
                         );
                       })}
-                    </div>
-                  }
-                  {isAuthenticated && user && (user.sub === author!.username) &&
-                    <div>
-                      <button onClick={deleteRecipe} className="btn btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button>
-                      <button onClick={() => navigate('/form/' + id)} className="btn btn-outline-secondary ms-2"><FontAwesomeIcon icon={faPenToSquare} /></button>
                     </div>
                   }
                 </div>
@@ -151,6 +193,72 @@ function Display() {
                     <li key={index}>{step}</li>
                   ))}
                 </ol>
+                <div className="card border-primary border-5 bg-primary col-lg-12 col-xl-9 mx-auto">
+                  <div className="card-header text-center text-white bg-primary">
+                    <img src={picture} alt={title} className="rounded-circle" style={{ width: '150px', height: '150px' }} />
+                    <h2 className="text-capitalize mt-2">{i18n.language === 'zh' ? chin_title : title}</h2>
+                    <hr />
+                    <div>
+                      {[...Array(5)].map((_, index) => (
+                        <FontAwesomeIcon
+                          key={index}
+                          icon={index < averageRating.value ? faStar : faNoStar}
+                          className="text-white mr-1"
+                        />
+                      ))}
+                      <p className="small">{`${averageRating.value} from ${averageRating.count} reviews`}</p>
+                    </div>
+                    <div className="d-flex justify-content-around">
+                      <div className="col-4">
+                        <strong><FontAwesomeIcon icon={faClock} className="text-white" /> {t('display.prep')}</strong>
+                        <p>{prep_time} {t('display.mins')}</p>
+                      </div>
+                      <div className="col-4">
+                        <strong><FontAwesomeIcon icon={faClock} className="text-white" /> {t('display.cook')}</strong>
+                        <p>{cook_time} {t('display.mins')}</p>
+                      </div>
+                      <div className="col-4">
+                        <strong><FontAwesomeIcon icon={faBowlRice} className="text-white" /> {t('display.serves')}</strong>
+                        <p>{t('display.servings', { count: servings, quantity: scaleQuantity(String(servings)) })}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card-body fs-5 bg-white">
+                    <div className="d-flex mb-2">
+                      <h2>{t('form.ingredients')}</h2>
+                      <div className="d-flex ms-auto gap-2">
+                        <button className={`btn btn-outline-secondary btn-sm ${activeScale === 0.5 ? 'active' : ''}`} onClick={() => setActiveScale(0.5)}>1/2x</button>
+                        <button className={`btn btn-outline-secondary btn-sm ${activeScale === 1 ? 'active' : ''}`} onClick={() => setActiveScale(1)}>1x</button>
+                        <button className={`btn btn-outline-secondary btn-sm ${activeScale === 2 ? 'active' : ''}`} onClick={() => setActiveScale(2)}>2x</button>
+                      </div>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                      <p>
+                        <Trans i18nKey="display.ingredientDesc" values={{ dish: i18n.language === 'zh' ? chin_title : title }} />
+                      </p>
+                    </div>
+                    <ul className="list-unstyled">
+                      {ingredients.map((ingredient, index) => (
+                        <li key={index} className="d-flex align-items-center">
+                          <input type="checkbox" className="me-2" id={`ingredient-${index}`} style={{ accentColor: 'gray' }} />
+                          <label htmlFor={`ingredient-${index}`} className="ingredient-label" style={{ cursor: 'pointer' }}>
+                            {scaleQuantity(ingredient.quantity)} <span className="fw-bold">{ingredient.name}</span>
+                          </label>
+                        </li>
+                      ))}
+                    </ul>
+                    <hr />
+                    <h2>{t('form.directions')}</h2>
+                    <p>
+                      <Trans i18nKey="display.stepsDesc" values={{ dish: i18n.language === 'zh' ? chin_title : title }} />
+                    </p>
+                    <ol>
+                      {recipe_instructions.map((step, index) => (
+                        <li key={index}>{step}</li>
+                      ))}
+                    </ol>
+                  </div>
+                </div>
               </article>
             </div>
             <div className="col-md-4">
@@ -164,6 +272,31 @@ function Display() {
               </div>
             </div>
           </div>
+          <section>
+            <div className="container my-5 py-5">
+              <div className="row d-flex justify-content-center">
+                <div className="col-md-12 col-lg-10 col-xl-8">
+                  <div>
+                    <div className="p-4">
+                      <h4 className="text-center mb-4 pb-2">Nested comments section</h4>
+                      <div className="d-flex flex-start mb-4">
+                        <img className="rounded-circle shadow-sm me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp" alt="avatar" width="65" height="65" />
+                        <div className="flex-grow-1 flex-shrink-1">
+                          <p className="mb-1 text-uppercase fw-bold">
+                            Maria Smantha <span className="ms-2 small">{[...Array(5)].map((_, index) => (<FontAwesomeIcon key={index} icon={index < averageRating.value ? faStar : faNoStar} className="text-warning mr-1" />))}</span>
+                          </p>
+                          <p className="small">October 16, 2020</p>
+                          <p className="mb-0">
+                            It is a long established fact that a reader will be distracted by the readable content of a page.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
         </main>
         <div className="album mt-5 bg-body-tertiary">
           <div className="container-fluid">

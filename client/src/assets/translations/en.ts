@@ -59,15 +59,18 @@ export const en = {
       ingredientDesc: "Embark on a culinary journey with this simple yet sensational {{dish}}. Gather fresh, quality ingredients that will harmonise in a symphony of flavours. Here's the lineup:",
       stepsDesc: "Now that your kitchen is adorned with the finest ingredients, let's weave them together into a culinary masterpiece. Follow these straightforward steps to unlock the full potential of each component, creating {{dish}} that tantalises the taste buds:",
       about: "About ",
-      prep: "Prep:",
-      cook: "Cook:",
+      prep: "Prep",
+      cook: "Cook",
       mins: "minutes",
       serves: "Serves",
-      person: "person",
-      people: "people",
+      servings: "{{quantity}} person",
+      servings_other: "{{quantity}} people",
       aboutText: "This Hokkien classic is a flavour journey, balancing savoury and umami notes in every bite. From perfectly cooked proteins to crisp veggies, it tells the storey of Hokkien culinary heritage, enriched by a time-honoured sauce. Savour a taste of tradition and innovation in this delectable dish.",
       error: "Error: Recipe or author not found.",
-      delete: "Are you sure you want to delete {{dish}}?"
+      delete: "Are you sure you want to delete {{dish}}?",
+      addComment: "Add a comment",
+      updateComment: "Update a comment",
+
     },
     authors: {
       top: "Our Top Contributors",

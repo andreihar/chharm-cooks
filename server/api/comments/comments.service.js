@@ -8,12 +8,7 @@ const getCommentsForRecipe = async (rid) => {
 	return await db.helpers.getCommentsForRecipe(rid);
 };
 
-const deleteComment = async (rid, username) => {
-	return await db.helpers.deleteComment(rid, username);
-};
-
 module.exports = {
 	addComment,
-	getCommentsForRecipe,
-	deleteComment
+	getCommentsForRecipe
 };

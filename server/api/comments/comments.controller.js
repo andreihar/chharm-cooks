@@ -23,14 +23,4 @@ router.get('/recipe/:rid', async (req, res) => {
 	}
 });
 
-router.delete('/delete', authMiddleware, async (req, res) => {
-	try {
-		const { rid } = req.body;
-		await commentsService.deleteComment(rid, req.auth.sub);
-		res.json({ message: 'Comment deleted successfully' });
-	} catch (err) {
-		res.status(500).json({ error: 'An error occurred while deleting the comment' });
-	}
-});
-
 module.exports = router;

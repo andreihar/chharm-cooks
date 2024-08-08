@@ -6,6 +6,7 @@ const usersController = require('./api/users/users.controller');
 const recipesController = require('./api/recipes/recipes.controller');
 const followersController = require('./api/followers/followers.controller');
 const ratingsController = require('./api/ratings/ratings.controller');
+const commentsController = require('./api/comments/comments.controller');
 const notificationsController = require('./api/notifications/notifications.controller');
 
 app.use(express.json());
@@ -16,6 +17,7 @@ app.use('/users', usersController);
 app.use('/recipes', recipesController);
 app.use('/followers', followersController);
 app.use('/ratings', ratingsController);
+app.use('/comments', commentsController);
 app.use('/notifications', notificationsController);
 
 app.use((err, req, res, next) => {

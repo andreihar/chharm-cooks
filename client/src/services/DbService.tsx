@@ -145,12 +145,17 @@ const getRatingsByUsername = (username: string): Promise<Recipe[]> => {
     });
 };
 
-const getAverageRatingForRecipe = (rid: number): Promise<number> => {
-  return axios.get<{ averageRating: number; }>(`${BASE_URL}/ratings/recipe/${rid}`)
-    .then(response => response.data.averageRating)
+const getAverageRatingForRecipe = (rid: number): Promise<{ averageRating: number; ratingCount: number; }> => {
+  return axios.get<{ averageRating: { average_rating: number; rating_count: number; }; }>(`${BASE_URL}/ratings/recipe/${rid}`)
+    .then(response => {
+      return {
+        averageRating: response.data.averageRating.average_rating,
+        ratingCount: response.data.averageRating.rating_count
+      };
+    })
     .catch(error => {
       console.error('Error fetching average rating for recipe', error);
-      throw error;
+      return { averageRating: 0, ratingCount: 0 };
     });
 };
 
@@ -159,6 +164,27 @@ const getUserRatingForRecipe = (rid: number): Promise<number | null> => {
     .then(response => response.data.rating)
     .catch(error => {
       console.error('Error fetching user rating for recipe', error);
+      throw error;
+    });
+};
+
+const addComment = (rid: number, comment: string): Promise<{ message: string; }> => {
+  return axios.post<{ message: string; }>(`${BASE_URL}/comments/add`, { rid, comment })
+    .then(response => response.data)
+    .catch(error => {
+      console.error('Error adding comment', error);
+      throw error;
+    });
+};
+
+const getCommentsForRecipe = (rid: number): Promise<{ comments: Array<{ user: string; comment: string; timestamp: string; }>; totalCount: number; }> => {
+  return axios.get<{ comments: Array<{ user: string; comment: string; timestamp: string; }>; commentCount: number; }>(`${BASE_URL}/comments/recipe/${rid}`)
+    .then(response => ({
+      comments: response.data.comments,
+      totalCount: response.data.commentCount
+    }))
+    .catch(error => {
+      console.error('Error fetching comments for recipe', error);
       throw error;
     });
 };
@@ -182,7 +208,9 @@ const DbService = {
   rateRecipe,
   getRatingsByUsername,
   getAverageRatingForRecipe,
-  getUserRatingForRecipe
+  getUserRatingForRecipe,
+  addComment,
+  getCommentsForRecipe
 };
 
 export default DbService;

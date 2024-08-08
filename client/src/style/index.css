@@ -151,3 +151,13 @@ li::marker {
     transform: translate(-50%, 0%);
     z-index:3;
 }
+
+@media (min-width: 768px) {
+    .recipe-content {
+        border-right: 1px solid #ccc;
+    }
+}
+  
+  input[type="checkbox"]:checked + .ingredient-label {
+    text-decoration: line-through;
+  }

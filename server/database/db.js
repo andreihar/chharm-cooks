@@ -13,11 +13,16 @@ const defaultData = async function () {
 	const fs = require('fs');
 	const users = JSON.parse(fs.readFileSync('./assets/defaultUsers.json', 'utf8'));
 	const recipes = JSON.parse(fs.readFileSync('./assets/defaultRecipes.json', 'utf8'));
+	const comments = JSON.parse(fs.readFileSync('./assets/defaultComments.json', 'utf8'));
 	for (const { username, picture, social, first_name, last_name, bio, occupation, country } of users) {
 		await helpers.addUser(username, picture, social, first_name, last_name, bio, occupation, country);
 	}
 	for (const { title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, ingredients, recipeInstructions } of recipes) {
 		await helpers.addRecipe(title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, ingredients, recipeInstructions);
+	}
+	for (const { username, rid, rating, comment } of comments) {
+		await helpers.rateRecipe(username, rid, rating);
+		await helpers.addComment(username, rid, comment);
 	}
 };
 
@@ -29,6 +34,7 @@ const helpers = {
 			createRecipeTable,
 			createFollowersTable,
 			createRatingsTable,
+			createCommentsTable,
 			createNotificationsTable
 		} = require('./tables');
 
@@ -37,6 +43,7 @@ const helpers = {
 		await pool.query(createRecipeTable);
 		await pool.query(createFollowersTable);
 		await pool.query(createRatingsTable);
+		await pool.query(createCommentsTable);
 		await pool.query(createNotificationsTable);
 		if (!(await pool.query("SELECT EXISTS (SELECT 1 FROM recipe LIMIT 1);")).rows[0].exists)
 			await defaultData();
@@ -198,9 +205,12 @@ const helpers = {
 	},
 
 	getAverageRatingForRecipe: async function (rid) {
-		const q = 'SELECT AVG(rating) as average_rating FROM ratings WHERE rid = $1';
+		const q = 'SELECT AVG(rating) as average_rating, COUNT(rating) as rating_count FROM ratings WHERE rid = $1';
 		const res = await pool.query(q, [rid]);
-		return res.rows[0].average_rating;
+		return {
+			average_rating: res.rows[0].average_rating !== null ? parseFloat(res.rows[0].average_rating) : 0,
+			rating_count: parseInt(res.rows[0].rating_count, 10)
+		};
 	},
 
 	getUserRatedRecipe: async function (username, rid) {
@@ -213,8 +223,8 @@ const helpers = {
 	addComment: async function (username, rid, comment) {
 		try {
 			const query = `
-				INSERT INTO comments (username, rid, comment, created_on, time_last_modified)
-				VALUES ($1, $2, $3, NOW(), NOW())
+				INSERT INTO comments (username, rid, comment, time_last_modified)
+				VALUES ($1, $2, $3, NOW())
 				ON CONFLICT (username, rid)
 				DO UPDATE SET comment = EXCLUDED.comment, time_last_modified = NOW()
 				RETURNING *;
@@ -234,27 +244,19 @@ const helpers = {
 				FROM comments
 				INNER JOIN users ON comments.username = users.username
 				WHERE comments.rid = $1
-				ORDER BY comments.created_on DESC;
+				ORDER BY comments.time_last_modified DESC;
 			`;
 			const res = await pool.query(q, [rid]);
-			return res.rows;
+
+			const countQuery = `SELECT COUNT(*) AS comment_count FROM comments WHERE rid = $1;`;
+			const countRes = await pool.query(countQuery, [rid]);
+
+			return {
+				comments: res.rows,
+				commentCount: parseInt(countRes.rows[0].comment_count, 10)
+			};
 		} catch (error) {
 			console.error('Error getting comments for recipe:', error);
-			throw error;
-		}
-	},
-
-	deleteComment: async function (username, rid) {
-		try {
-			const q = `
-				DELETE FROM comments
-				WHERE username = $1 AND rid = $2
-				RETURNING *;
-			`;
-			const res = await pool.query(q, [username, rid]);
-			return res.rows[0];
-		} catch (error) {
-			console.error('Error deleting comment:', error);
 			throw error;
 		}
 	},
