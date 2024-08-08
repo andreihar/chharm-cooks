@@ -56,17 +56,27 @@ export const ms = {
       by: "oleh:",
       posted: "Diterbitkan:",
       updated: "Dikemaskini:",
+      reviews: "{{count}} penilaian",
       ingredientDesc: "Mulakan perjalanan kulinari dengan {{dish}} yang ringkas namun sensasi ini. Kumpulkan bahan-bahan segar dan berkualiti yang akan mengharmonikan dalam simfoni rasa. Berikut ialah barisan:",
       stepsDesc: "Memandangkan dapur anda telah dihiasi dengan bahan-bahan terbaik, mari kita menganyamnya menjadi karya kulinari. Ikuti langkah mudah ini untuk membuka kunci potensi penuh setiap komponen, mencipta {{dish}} yang menggoda selera:",
-      about: "Mengenai ",
+      about: "Hai, saya <0>{{name}}</0>!",
+      learnMore: "Ketahui lebih lanjut",
       prep: "Persediaan",
       cook: "Masak",
       mins: "minit",
       serves: "Melayan",
       servings: "{{quantity}} orang",
-      aboutText: "Klasik Hokkien ini adalah perjalanan rasa, mengimbangi nota gurih dan umami dalam setiap suapan. Daripada protein yang dimasak dengan sempurna hinggalah kepada sayur-sayuran yang segar, ia menceritakan tentang warisan masakan Hokkien, diperkaya dengan sos yang terkenal pada zamannya. Nikmati rasa tradisi dan inovasi dalam hidangan lazat ini.",
       error: "Ralat: Resipi atau pengarang tidak ditemui.",
-      delete: "Adakah anda pasti mahu memadamkan {{dish}}?"
+      delete: "Adakah anda pasti mahu memadamkan {{dish}}?",
+      comments: "{{count}} Komen",
+      comment: {
+        share: "Kongsi Pendapat anda!",
+        placeholder: "Klasik Hokkien ini adalah perjalanan rasa, mengimbangi nota gurih dan umami dalam setiap suapan. Daripada protein yang dimasak dengan sempurna hinggalah kepada sayur-sayuran yang segar, ia menceritakan tentang warisan masakan Hokkien, diperkaya dengan sos yang terkenal pada zamannya. Nikmati rasa tradisi dan inovasi dalam hidangan lazat ini.",
+        rateFirst: "Sila nilaikan resipi ini terlebih dahulu sebelum memberi komen.",
+        post: "Pos Komen",
+        success: "Komen berjaya ditambahkan!",
+        your: "Komen Anda"
+      }
     },
     authors: {
       top: "Penyumbang Utama Kami",

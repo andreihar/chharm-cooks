@@ -222,6 +222,12 @@ const helpers = {
 	// Comments
 	addComment: async function (username, rid, comment) {
 		try {
+			const ratingCheckQuery = `SELECT 1 FROM ratings WHERE username = $1 AND rid = $2;`;
+			const ratingCheckRes = await pool.query(ratingCheckQuery, [username, rid]);
+			if (ratingCheckRes.rowCount === 0) {
+				throw new Error('User must rate the recipe before leaving a comment.');
+			}
+
 			const query = `
 				INSERT INTO comments (username, rid, comment, time_last_modified)
 				VALUES ($1, $2, $3, NOW())
@@ -240,14 +246,14 @@ const helpers = {
 	getCommentsForRecipe: async function (rid) {
 		try {
 			const q = `
-				SELECT comments.*, users.username
+				SELECT comments.*, users.first_name, users.last_name, users.picture, COALESCE(ratings.rating, 0) AS rating
 				FROM comments
 				INNER JOIN users ON comments.username = users.username
+				LEFT JOIN ratings ON comments.username = ratings.username AND comments.rid = ratings.rid
 				WHERE comments.rid = $1
 				ORDER BY comments.time_last_modified DESC;
 			`;
 			const res = await pool.query(q, [rid]);
-
 			const countQuery = `SELECT COUNT(*) AS comment_count FROM comments WHERE rid = $1;`;
 			const countRes = await pool.query(countQuery, [rid]);
 

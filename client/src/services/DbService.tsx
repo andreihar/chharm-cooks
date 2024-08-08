@@ -177,8 +177,8 @@ const addComment = (rid: number, comment: string): Promise<{ message: string; }>
     });
 };
 
-const getCommentsForRecipe = (rid: number): Promise<{ comments: Array<{ user: string; comment: string; timestamp: string; }>; totalCount: number; }> => {
-  return axios.get<{ comments: Array<{ user: string; comment: string; timestamp: string; }>; commentCount: number; }>(`${BASE_URL}/comments/recipe/${rid}`)
+const getCommentsForRecipe = (rid: number): Promise<{ comments: Array<{ username: string; comment: string; time_last_modified: string; first_name: string; last_name: string; picture: string; rating: number; }>; totalCount: number; }> => {
+  return axios.get<{ comments: Array<{ username: string; comment: string; time_last_modified: string; first_name: string; last_name: string; picture: string; rating: number; }>; commentCount: number; }>(`${BASE_URL}/comments/recipe/${rid}`)
     .then(response => ({
       comments: response.data.comments,
       totalCount: response.data.commentCount

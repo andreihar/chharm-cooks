@@ -20,7 +20,9 @@ function Display() {
   const [userRating, setUserRating] = useState<number>(0);
   const [averageRating, setAverageRating] = useState<{ value: number; count: number; }>({ value: 0, count: 0 });
   const [viewAlsoRecipes, setViewRecipes] = useState<Recipe[]>([]);
-  const [commentsData, setCommentsData] = useState<{ comments: Array<{ user: string; comment: string; timestamp: string; }>; totalCount: number; }>({ comments: [], totalCount: 0 });
+  const [commentsData, setCommentsData] = useState<{ comments: Array<{ username: string; comment: string; time_last_modified: string; first_name: string; last_name: string; picture: string; rating: number; }>; totalCount: number; }>({ comments: [], totalCount: 0 });
+  const [userComment, setUserComment] = useState<{ username: string; comment: string; time_last_modified: string; first_name: string; last_name: string; picture: string; rating: number; }>({ username: '', comment: '', time_last_modified: '', first_name: '', last_name: '', picture: '', rating: 0 });
+  const [newUserComment, setNewUserComment] = useState<string>('');
   const [activeScale, setActiveScale] = useState(1);
   const { user, isAuthenticated } = useAuth0();
   const { t, i18n } = useTranslation();
@@ -38,13 +40,20 @@ function Display() {
       if (foundRecipe && foundAuthor) {
         setRecipe(foundRecipe);
         setAuthor(foundAuthor);
-        if (isAuthenticated) {
+        const averageRating = await DbService.getAverageRatingForRecipe(Number(id));
+        setAverageRating({ value: averageRating.averageRating, count: averageRating.ratingCount });
+        const comments = await DbService.getCommentsForRecipe(Number(id));
+        if (isAuthenticated && user) {
+          const userCommentIndex = comments.comments.findIndex(comment => comment.username === user.sub);
+          if (userCommentIndex !== -1) {
+            const userComment = comments.comments.splice(userCommentIndex, 1)[0];
+            setUserComment(userComment);
+            setNewUserComment(userComment.comment);
+          }
           const rating = await DbService.getUserRatingForRecipe(Number(id));
           setUserRating(rating !== null ? rating : 0);
         }
-        const averageRating = await DbService.getAverageRatingForRecipe(Number(id));
-        setAverageRating({ value: averageRating.averageRating, count: averageRating.ratingCount });
-        setCommentsData(await DbService.getCommentsForRecipe(Number(id)));
+        setCommentsData(comments);
       } else {
         alert(t('display.error'));
         navigate('/');
@@ -59,6 +68,18 @@ function Display() {
       DbService.deleteRecipe(Number(id));
       navigate('/');
     }
+  };
+
+  const handleCommentSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    DbService.addComment(Number(id), newUserComment)
+      .then(() => {
+        alert(t('display.comment.success'));
+        setUserComment({ ...userComment, comment: newUserComment, time_last_modified: new Date().toISOString(), rating: userRating });
+      })
+      .catch(error => {
+        console.error('Error posting comment:', error);
+      });
   };
 
   const scaleQuantity = (quantity: string) => {
@@ -150,28 +171,8 @@ function Display() {
                   </div>
                   <div className="d-flex align-items-center me-3">
                     <FontAwesomeIcon icon={faStar} className=" text-warning me-1" />
-                    <span>{averageRating.value} / {averageRating.count} reviews</span>
+                    <span>{averageRating.value} / {t('display.reviews', { count: averageRating.count })}</span>
                   </div>
-                  {isAuthenticated && user &&
-                    <div className="mb-3">
-                      {[...Array(5)].map((_, i) => {
-                        const newRating = i + 1;
-                        return (
-                          <FontAwesomeIcon
-                            key={i}
-                            icon={newRating <= (hoverRating ?? userRating) ? faStar : faNoStar}
-                            className="text-warning mr-1"
-                            onClick={async () => {
-                              await DbService.rateRecipe(Number(id), newRating);
-                              setUserRating(newRating);
-                            }}
-                            onMouseEnter={() => setHoverRating(newRating)}
-                            onMouseLeave={() => setHoverRating(null)}
-                          />
-                        );
-                      })}
-                    </div>
-                  }
                 </div>
                 <h2>{t('form.ingredients')}</h2>
                 <p>
@@ -259,45 +260,103 @@ function Display() {
                     </ol>
                   </div>
                 </div>
-              </article>
-            </div>
-            <div className="col-md-4">
-              <div className="position-sticky" style={{ top: "90px" }}>
-                <div className="p-4 mb-3 bg-body-tertiary rounded">
-                  <h4 className="fst-italic">{t('display.about')}<span className="text-primary">{i18n.language === 'zh' ? `${chin_title}` : `${title}`}</span></h4>
-                  <p className="mb-2"><FontAwesomeIcon icon={faClock} className="text-primary" /> <span className="text-uppercase">{t('display.prep')}</span> <span className="text-dark-emphasis">{`${prep_time} `}{t('display.mins')}</span> <span className="ms-1 text-uppercase">{t('display.cook')}</span> <span className="text-dark-emphasis">{`${cook_time} `}{t('display.mins')}</span></p>
-                  <p><span className="text-uppercase"><FontAwesomeIcon icon={faBowlRice} className="text-primary" /> {t('display.serves')}</span> <span className="text-dark-emphasis">{`${servings} ${servings > 1 ? t('display.people') : t('display.person')}`}</span></p>
-                  <p className="mb-0">{t('display.aboutText')}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <section>
-            <div className="container my-5 py-5">
-              <div className="row d-flex justify-content-center">
-                <div className="col-md-12 col-lg-10 col-xl-8">
-                  <div>
-                    <div className="p-4">
-                      <h4 className="text-center mb-4 pb-2">Nested comments section</h4>
-                      <div className="d-flex flex-start mb-4">
-                        <img className="rounded-circle shadow-sm me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp" alt="avatar" width="65" height="65" />
-                        <div className="flex-grow-1 flex-shrink-1">
-                          <p className="mb-1 text-uppercase fw-bold">
-                            Maria Smantha <span className="ms-2 small">{[...Array(5)].map((_, index) => (<FontAwesomeIcon key={index} icon={index < averageRating.value ? faStar : faNoStar} className="text-warning mr-1" />))}</span>
-                          </p>
-                          <p className="small">October 16, 2020</p>
-                          <p className="mb-0">
-                            It is a long established fact that a reader will be distracted by the readable content of a page.
-                          </p>
+                <section>
+                  <div className="container mt-3">
+                    {isAuthenticated && user &&
+                      <div className="row d-flex py-4 justify-content-center bg-body-tertiary rounded">
+                        <div className="">
+                          <div className="">
+                            <div className="d-flex flex-column align-items-center">
+                              <h4 className="card-title mb-2">{t('display.comment.share')}</h4>
+                              <div className="mb-3 d-flex justify-content-center">
+                                {[...Array(5)].map((_, i) => {
+                                  const newRating = i + 1;
+                                  return (
+                                    <FontAwesomeIcon key={i} icon={newRating <= (hoverRating ?? userRating) ? faStar : faNoStar} className="text-warning mr-1"
+                                      onClick={async () => {
+                                        await DbService.rateRecipe(Number(id), newRating);
+                                        setUserRating(newRating);
+                                        setUserComment({ ...userComment, rating: newRating });
+                                      }}
+                                      onMouseEnter={() => setHoverRating(newRating)} onMouseLeave={() => setHoverRating(null)}
+                                    />
+                                  );
+                                })}
+                              </div>
+                              <form className="w-100 d-flex flex-column align-items-center" onSubmit={handleCommentSubmit}>
+                                <div className="form-group mb-3 w-75">
+                                  <textarea className="form-control" id="comment" rows={5} value={newUserComment} onChange={(e) => setNewUserComment(e.target.value)} required disabled={userRating === 0} placeholder={userRating === 0 ? t('display.comment.rateFirst') : t('display.comment.placeholder')} />
+                                </div>
+                                <button type="submit" className="btn btn-primary" disabled={userRating === 0}>{t('display.comment.post')}</button>
+                              </form>
+                            </div>
+                          </div>
                         </div>
+                      </div>
+                    }
+                    <div className="row d-flex justify-content-center">
+                      <div className="p-4">
+                        <hr />
+                        <h4 className="mb-4 pb-2">{t('display.comments', { count: commentsData.totalCount })}</h4>
+                        {userComment.username &&
+                          <div className="d-flex flex-start mb-5">
+                            <img className="rounded-circle shadow-sm me-3" src={userComment.picture} alt={`Avatar of ${userComment.first_name}`} width={75} height={75} />
+                            <div className="flex-grow-1 flex-shrink-1">
+                              <h5 className="mb-1 text-uppercase fw-bold">
+                                {t('display.comment.your')}
+                                <span className="ms-4 small">
+                                  {[...Array(5)].map((_, starIndex) => (
+                                    <FontAwesomeIcon key={starIndex} icon={starIndex < userComment.rating ? faStar : faNoStar} className="text-warning mr-1" />
+                                  ))}
+                                </span>
+                              </h5>
+                              <p className="small">{new Date(userComment.time_last_modified).toLocaleString(i18n.language, { dateStyle: 'long', timeStyle: 'short' })}</p>
+                              <p className="mb-0 fs-5">{userComment.comment}</p>
+                            </div>
+                          </div>
+                        }
+                        {commentsData.comments.map((comment, index) => (
+                          <div key={index} className="d-flex flex-start mb-4">
+                            <img className="rounded-circle shadow-sm me-3" src={comment.picture} alt={`Avatar of ${comment.first_name}`} width={65} height={65} />
+                            <div className="flex-grow-1 flex-shrink-1">
+                              <p className="mb-1 text-uppercase fw-bold">
+                                <Link to={`/user/${comment.username}`}>{getAuthorName({ first_name: comment.first_name, last_name: comment.last_name })}</Link>
+                                <span className="ms-4 small">
+                                  {[...Array(5)].map((_, starIndex) => (
+                                    <FontAwesomeIcon key={starIndex} icon={starIndex < comment.rating ? faStar : faNoStar} className="text-warning mr-1" />
+                                  ))}
+                                </span>
+                              </p>
+                              <p className="small">{new Date(comment.time_last_modified).toLocaleString(i18n.language, { dateStyle: 'long', timeStyle: 'short' })}</p>
+                              <p className="mb-0">{comment.comment}</p>
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
+                </section>
+              </article>
+            </div>
+            {author && (
+              <div className="col-md-4">
+                <div className="position-sticky" style={{ top: "140px" }}>
+                  <div className="p-4 mb-3 bg-body-tertiary rounded text-center" style={{ position: 'relative' }}>
+                    <img src={author.picture} alt="User Picture" width={180} height={180} className="rounded-circle" style={{ border: '6px solid white', position: 'absolute', top: '-60px', left: '50%', transform: 'translateX(-50%)' }} />
+                    <h3 style={{ marginTop: '100px' }}>
+                      <Trans i18nKey="display.about"
+                        components={[<span className="text-primary fw-bold" />]}
+                        values={{ name: author.first_name }}
+                      />
+                    </h3>
+                    <p className="mb-0">{author.bio}</p>
+                    <Link to={`/user/${author.username}`} className="btn btn-primary mt-3">{t('display.learnMore')}</Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
-        </main>
+            )}
+          </div>
+        </main >
         <div className="album mt-5 bg-body-tertiary">
           <div className="container-fluid">
             <div className="row d-flex align-items-stretch">
