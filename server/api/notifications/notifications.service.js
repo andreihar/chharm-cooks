@@ -4,8 +4,8 @@ const getNotifications = async (username) => {
 	return await db.helpers.getNotifications(username);
 };
 
-const markNotificationAsRead = async (username, rid) => {
-	return await db.helpers.markNotificationAsRead(username, rid);
+const markNotificationAsRead = async (username, followed, mode, rid) => {
+	return await db.helpers.markNotificationAsRead(username, followed, mode, rid);
 };
 
 module.exports = {

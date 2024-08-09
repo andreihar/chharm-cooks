@@ -8,7 +8,8 @@
 		"last_name": "Wang",
 		"bio": "我来自中国，是一名科技爱好者，对闽南菜情有独钟。我花时间尝试传统食谱，完善自己的烹饪技巧。当我不钻研最新的科技创新时，你会发现我在厨房里尝试新的闽南菜。我最喜欢的活动包括探索新口味并与朋友和家人分享我的作品。",
 		"occupation": "Software Developer",
-		"country": "CN"
+		"country": "CN",
+		"follows": ["auth0|662a1bdc4da8ec45371eb422", "auth0|662a1c0093cc4d2e64f5b185", "auth0|662a1c1093cc4d2e64f5b18f"]
 	},
 	{
 		"username": "auth0|662a1bca96132b5427cffe73",
@@ -19,7 +20,8 @@
 		"last_name": "Jen",
 		"bio": "我是來自台灣的美食家，熱衷於烹飪和嘗試閩南語食譜。工作之餘，我喜歡在廚房度過時光，製作具有現代風味的傳統菜餚。我最喜歡的事情包括發現新食譜、完善我的烹飪技能以及與親人分享美味佳餚。",
 		"occupation": "Culinary Blogger",
-		"country": "TW"
+		"country": "TW",
+		"follows": ["auth0|662a1b785717fb24bc6e3103", "auth0|662a1bdc4da8ec45371eb422", "auth0|662a1c1093cc4d2e64f5b18f", "auth0|662a1c0093cc4d2e64f5b185", "auth0|662a1bef93cc4d2e64f5b17b"]
 	},
 	{
 		"username": "auth0|662a1bdc4da8ec45371eb422",
@@ -28,9 +30,10 @@
 		"social": "https://www.instagram.com/k.ojx/",
 		"first_name": "Keane Junxian",
 		"last_name": "Ong",
-		"bio": "Wa si Singaporean, sibei zai with my Hokkien roots lah. I suka spend time masak traditional dishes. After NS, I focus on buat swee Hokkien recipes and chifan all shiok flavours from my heritage. When tak boleh tahan army, wa ai buat family favourites and lepak in kitchen, no need stress one.",
+		"bio": "Wa si Singaporean, sibei zai with my Hokkien roots lah. I suka spend time masak traditional dishes. After NS, I focus on buat swee Hokkien recipes and makan all shiok flavours from my heritage. When tak boleh tahan army, wa ai buat family favourites and lepak in kitchen, no need stress one.",
 		"occupation": "Minister of Defence",
-		"country": "SG"
+		"country": "SG",
+		"follows": []
 	},
 	{
 		"username": "auth0|662a1bef93cc4d2e64f5b17b",
@@ -41,7 +44,8 @@
 		"last_name": "Tsai",
 		"bio": "我是來自台灣的煮食愛好者，對閩南菜嘛足有興趣。我佮意深入研究傳統食譜並試新的變化。彼个我無工課的時陣，你會當發現我完善我的煮食技術，閣佮朋友佮厝內的人分享我對福建菜的熱愛。",
 		"occupation": "Food Critic",
-		"country": "TW"
+		"country": "TW",
+		"follows": ["auth0|662a1b785717fb24bc6e3103", "auth0|662a1bdc4da8ec45371eb422", "auth0|662a1c1093cc4d2e64f5b18f", "auth0|662a1c0093cc4d2e64f5b185"]
 	},
 	{
 		"username": "auth0|662a1c0093cc4d2e64f5b185",
@@ -52,7 +56,8 @@
 		"last_name": "Mei",
 		"bio": "I’m a student from Hong Kong who loves both cold winters and cooking up a storm in the kitchen. My passion for Chinese cuisine drives me to experiment with traditional recipes and find new ways to enjoy my favourite dishes. My favourite things include exploring flavours, developing banger games at game jams, and sharing my culinary creations.",
 		"occupation": "University Student",
-		"country": "HK"
+		"country": "HK",
+		"follows": ["auth0|662a1b785717fb24bc6e3103", "auth0|662a1bdc4da8ec45371eb422", "auth0|662a1c1093cc4d2e64f5b18f"]
 	},
 	{
 		"username": "auth0|662a1c1093cc4d2e64f5b18f",
@@ -63,6 +68,7 @@
 		"last_name": "Doknjas",
 		"bio": "I’m a half-European half-Cantonese chess player with a love for Hokkien cooking. When I’m not strategising over chess games, I’m in the kitchen perfecting traditional recipes. My favourite things include combining my strategic mindset with culinary creativity and sharing my Hokkien-inspired dishes with friends and family.",
 		"occupation": "Professional Chess Player",
-		"country": "CA"
+		"country": "CA",
+		"follows": ["auth0|662a1b785717fb24bc6e3103", "auth0|662a1bdc4da8ec45371eb422", "auth0|662a1c0093cc4d2e64f5b185"]
 	}
 ]

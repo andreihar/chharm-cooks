@@ -75,10 +75,12 @@ const createCommentsTable = `
 const createNotificationsTable = `
 	CREATE TABLE IF NOT EXISTS notifications(
 		username VARCHAR(255),
+		followed VARCHAR(255),
 		rid INT,
-		read BOOLEAN DEFAULT FALSE,
-		PRIMARY KEY (username, rid),
+		mode VARCHAR(7),
+		PRIMARY KEY (username, followed, rid, mode),
 		FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE,
+		FOREIGN KEY (followed) REFERENCES users(username) ON DELETE CASCADE,
 		FOREIGN KEY (rid) REFERENCES recipe(rid) ON DELETE CASCADE
 	);
 `;

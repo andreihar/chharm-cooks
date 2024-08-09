@@ -17,6 +17,11 @@ const defaultData = async function () {
 	for (const { username, picture, social, first_name, last_name, bio, occupation, country } of users) {
 		await helpers.addUser(username, picture, social, first_name, last_name, bio, occupation, country);
 	}
+	for (const { username, follows } of users) {
+		for (const followed of follows) {
+			await helpers.followUser(username, followed);
+		}
+	}
 	for (const { title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, ingredients, recipeInstructions } of recipes) {
 		await helpers.addRecipe(title, chinTitle, cuisine, username, prepTime, cookTime, servings, picture, ingredients, recipeInstructions);
 	}
@@ -127,9 +132,7 @@ const helpers = {
 			const iid = ingredientRes.rows[0].iid;
 			const recipeRes = await pool.query('INSERT INTO recipe(title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, iid, recipe_instructions) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING rid', [title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, iid, recipe_instructions]);
 			const rid = recipeRes.rows[0].rid;
-
-			const followers = await this.getFollowers(username);
-			await Promise.all(followers.map(follower => this.addNotification(follower.follower, rid)));
+			await this.addNotification(username, 'recipe', rid);
 
 			await pool.query('COMMIT');
 			return recipeRes.rows[0];
@@ -236,6 +239,7 @@ const helpers = {
 				RETURNING *;
 			`;
 			const res = await pool.query(query, [username, rid, comment]);
+			await this.addNotification(username, 'comment', rid);
 			return res.rows[0];
 		} catch (error) {
 			console.error('Error adding or updating comment:', error);
@@ -270,24 +274,30 @@ const helpers = {
 	// Notifications
 	getNotifications: async function (username) {
 		const q = `
-			SELECT notifications.*, recipes.*, users.first_name 
+			SELECT notifications.*, first_name, last_name, users.picture AS picture, title, chin_title
 			FROM notifications 
-			INNER JOIN recipes ON notifications.recipe_id = recipes.id 
-			INNER JOIN users ON recipes.user_id = users.id 
+			INNER JOIN recipe ON notifications.rid = recipe.rid 
+			INNER JOIN users ON notifications.followed = users.username
 			WHERE notifications.username = $1
 		`;
 		const res = await pool.query(q, [username]);
 		return res.rows;
 	},
 
-	markNotificationAsRead: async function (username, rid) {
-		const q = 'UPDATE notifications SET read = TRUE WHERE username = $1 AND rid = $2';
-		await pool.query(q, [username, rid]);
+	markNotificationAsRead: async function (username, followed, mode, rid) {
+		const q = 'DELETE FROM notifications WHERE username = $1 AND followed = $2 AND rid = $3 AND mode = $4';
+		await pool.query(q, [username, followed, rid, mode]);
 	},
 
-	addNotification: async function (username, rid) {
-		const q = 'INSERT INTO notifications(username, rid) VALUES($1, $2)';
-		await pool.query(q, [username, rid]);
+	addNotification: async function (username, mode, rid) {
+		const followers = await this.getFollowers(username);
+		const insertNotificationQuery = `
+			INSERT INTO notifications(username, followed, rid, mode)
+			VALUES($1, $2, $3, $4)
+		`;
+		for (const follower of followers) {
+			await pool.query(insertNotificationQuery, [follower.follower, username, rid, mode]);
+		}
 	}
 };
 
