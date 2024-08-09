@@ -67,24 +67,29 @@ function Form() {
   }
 
   useEffect(() => {
-    const fetchRecipe = async () => {
+    const fetchRecipe = () => {
       if (!isAuthenticated) {
         navigate('/login');
       } else if (id && user) {
-        const foundRecipe = await DbService.getRecipeById(Number(id));
-        if (foundRecipe && user.sub === foundRecipe.username) {
-          setName(foundRecipe.title);
-          setChinName(foundRecipe.chin_title);
-          setCuisine(foundRecipe.cuisine);
-          setPrepTime(foundRecipe.prep_time);
-          setCookTime(foundRecipe.cook_time);
-          setServings(foundRecipe.servings);
-          setPicture(foundRecipe.picture);
-          setIngreds(foundRecipe.ingredients.map((ingredient: { name: string, quantity: string; }) => ({ name: ingredient.name, quantity: ingredient.quantity })));
-          setSteps(foundRecipe.recipe_instructions.map((step: string) => ({ name: step })));
-        } else {
-          navigate('/');
-        }
+        DbService.getRecipeById(Number(id))
+          .then((foundRecipe) => {
+            if (foundRecipe && user.sub === foundRecipe.username) {
+              setName(foundRecipe.title);
+              setChinName(foundRecipe.chin_title);
+              setCuisine(foundRecipe.cuisine);
+              setPrepTime(foundRecipe.prep_time);
+              setCookTime(foundRecipe.cook_time);
+              setServings(foundRecipe.servings);
+              setPicture(foundRecipe.picture);
+              setIngreds(foundRecipe.ingredients.map((ingredient: { name: string, quantity: string; }) => ({ name: ingredient.name, quantity: ingredient.quantity })));
+              setSteps(foundRecipe.recipe_instructions.map((step: string) => ({ name: step })));
+            } else {
+              navigate('/');
+            }
+          })
+          .catch(() => {
+            navigate('/');
+          });
       }
     };
     fetchRecipe();
@@ -95,9 +100,8 @@ function Form() {
   const change = (setter: Function) => (e: React.ChangeEvent<HTMLInputElement>, index: number, field: string) =>
     setter((prev: { name: string; quantity: string; }[]) => prev.map((item, i) => i === index ? { ...item, [field]: e.target.value } : item));
 
-  async function submit(e: React.FormEvent<HTMLFormElement>) {
+  function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
     let newRecipe = new Recipe(name.trim(), chinName.trim(), cuisine.trim(), (user!.sub as string), prepTime, cookTime, servings, picture.trim() || noRecipe, ingredients.map(i => ({ name: i.name.trim(), quantity: i.quantity.trim() })).filter(i => i.name && i.quantity), steps.map(s => s.name.trim()).filter(Boolean));
     if (newRecipe.ingredients.length === 0) {
       alert(t('form.oneIngredient'));
@@ -108,16 +112,24 @@ function Form() {
       return;
     }
     if (id) {
-      const oldRecipe = await DbService.getRecipeById(Number(id));
-      if (oldRecipe && !isEqual(
-        (({ created_on, time_last_modified, rid, ...rest }) => rest)(oldRecipe),
-        (({ created_on, time_last_modified, rid, ...rest }) => rest)(newRecipe)
-      )) {
-        newRecipe.created_on = oldRecipe.created_on;
-        DbService.updateRecipe(Number(id), newRecipe);
-      }
+      DbService.getRecipeById(Number(id))
+        .then((oldRecipe) => {
+          if (oldRecipe && !isEqual(
+            (({ created_on, time_last_modified, rid, ...rest }) => rest)(oldRecipe),
+            (({ created_on, time_last_modified, rid, ...rest }) => rest)(newRecipe)
+          )) {
+            newRecipe.created_on = oldRecipe.created_on;
+            DbService.updateRecipe(Number(id), newRecipe);
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching old recipe:', error);
+        });
     } else {
-      DbService.addRecipe(newRecipe);
+      DbService.addRecipe(newRecipe)
+        .catch((error) => {
+          console.error('Error adding new recipe:', error);
+        });
     }
     navigate('/');
   }

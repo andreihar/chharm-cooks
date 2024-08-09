@@ -103,24 +103,22 @@ const updateRecipe = (id: number, updateRecipe: Recipe) => {
 };
 
 // Followers
-const getFollowers = async (username: string): Promise<string[]> => {
-  try {
-    const response = await axios.get(`${BASE_URL}/followers/${username}`);
-    return response.data;
-  } catch (error) {
-    console.error('An error occurred while fetching followers', error);
-    throw error;
-  }
+const getFollowers = (username: string): Promise<string[]> => {
+  return axios.get(`${BASE_URL}/followers/${username}`)
+    .then(response => response.data)
+    .catch(error => {
+      console.error('An error occurred while fetching followers', error);
+      throw error;
+    });
 };
 
-const getFollowing = async (username: string): Promise<string[]> => {
-  try {
-    const response = await axios.get(`${BASE_URL}/followers/following/${username}`);
-    return response.data;
-  } catch (error) {
-    console.error('An error occurred while fetching following', error);
-    throw error;
-  }
+const getFollowing = (username: string): Promise<string[]> => {
+  return axios.get(`${BASE_URL}/followers/following/${username}`)
+    .then(response => response.data)
+    .catch(error => {
+      console.error('An error occurred while fetching following', error);
+      throw error;
+    });
 };
 
 const followUser = (followed: string) => {

@@ -32,36 +32,51 @@ function Display() {
   const [hoverRating, setHoverRating] = useState<number | null>(null);
 
   useEffect(() => {
-    const loadData = async () => {
-      const recipes = await DbService.getRecipes();
-      setViewRecipes(recipes.filter(recipe => recipe.rid !== Number(id)).sort(() => Math.random() - 0.5).slice(0, 4));
-      const foundRecipe = await DbService.getRecipeById(Number(id));
-      const foundAuthor = foundRecipe && await DbService.getUserByName(foundRecipe.username);
-      if (foundRecipe && foundAuthor) {
-        setRecipe(foundRecipe);
-        setAuthor(foundAuthor);
-        const averageRating = await DbService.getAverageRatingForRecipe(Number(id));
-        setAverageRating({ value: averageRating.averageRating, count: averageRating.ratingCount });
-        const comments = await DbService.getCommentsForRecipe(Number(id));
-        if (isAuthenticated && user) {
-          const userCommentIndex = comments.comments.findIndex(comment => comment.username === user.sub);
-          if (userCommentIndex !== -1) {
-            const userComment = comments.comments.splice(userCommentIndex, 1)[0];
-            setUserComment(userComment);
-            setNewUserComment(userComment.comment);
+    const loadData = () => {
+      setUserComment({ username: '', comment: '', time_last_modified: '', first_name: '', last_name: '', picture: '', rating: 0 });
+      setNewUserComment('');
+      Promise.all([
+        DbService.getRecipes(),
+        DbService.getRecipeById(Number(id)),
+        DbService.getAverageRatingForRecipe(Number(id)),
+        DbService.getCommentsForRecipe(Number(id)),
+        DbService.getUserRatingForRecipe(Number(id))
+      ])
+        .then(([recipes, foundRecipe, averageRating, comments, rating]) => {
+          setViewRecipes(recipes.filter(recipe => recipe.rid !== Number(id)).sort(() => Math.random() - 0.5).slice(0, 4));
+          if (!foundRecipe) {
+            alert(t('display.error'));
+            navigate('/');
           }
-          const rating = await DbService.getUserRatingForRecipe(Number(id));
-          setUserRating(rating !== null ? rating : 0);
-        }
-        setCommentsData(comments);
-      } else {
-        alert(t('display.error'));
-        navigate('/');
-        return;
-      }
+          // Load Authenticated user data
+          if (isAuthenticated && user) {
+            const userCommentIndex = comments.comments.findIndex(comment => comment.username === user.sub);
+            if (userCommentIndex !== -1) {
+              const userComment = comments.comments.splice(userCommentIndex, 1)[0];
+              setUserComment(userComment);
+              setNewUserComment(userComment.comment);
+            }
+            setUserRating(rating !== null ? rating : 0);
+          }
+          setCommentsData(comments);
+          return DbService.getUserByName(foundRecipe.username)
+            .then((foundAuthor) => {
+              if (!foundAuthor) {
+                alert(t('display.error'));
+                navigate('/');
+              }
+              setRecipe(foundRecipe);
+              setAuthor(foundAuthor);
+              setAverageRating({ value: averageRating.averageRating, count: averageRating.ratingCount });
+            });
+        })
+        .catch(() => {
+          alert(t('display.error'));
+          navigate('/');
+        });
     };
     loadData();
-  }, [id, isAuthenticated]);
+  }, [id, isAuthenticated, t, navigate, user]);
 
   const deleteRecipe = () => {
     if (window.confirm(t('display.delete', { dish: recipe!.title }))) {
@@ -228,15 +243,11 @@ function Display() {
                     <div className="d-flex mb-2">
                       <h2>{t('form.ingredients')}</h2>
                       <div className="d-flex ms-auto gap-2">
-                        <button className={`btn btn-outline-secondary btn-sm ${activeScale === 0.5 ? 'active' : ''}`} onClick={() => setActiveScale(0.5)}>1/2x</button>
-                        <button className={`btn btn-outline-secondary btn-sm ${activeScale === 1 ? 'active' : ''}`} onClick={() => setActiveScale(1)}>1x</button>
-                        <button className={`btn btn-outline-secondary btn-sm ${activeScale === 2 ? 'active' : ''}`} onClick={() => setActiveScale(2)}>2x</button>
+                        {[0.5, 1, 2].map(scale => (<button key={scale} className={`btn btn-outline-secondary btn-sm ${activeScale === scale ? 'active' : ''}`} onClick={() => setActiveScale(scale)}>{scale}x</button>))}
                       </div>
                     </div>
                     <div className="d-flex justify-content-between">
-                      <p>
-                        <Trans i18nKey="display.ingredientDesc" values={{ dish: getRecipeTitle(recipe) }} />
-                      </p>
+                      <p><Trans i18nKey="display.ingredientDesc" values={{ dish: getRecipeTitle(recipe) }} /></p>
                     </div>
                     <ul className="list-unstyled">
                       {ingredients.map((ingredient, index) => (
@@ -250,13 +261,9 @@ function Display() {
                     </ul>
                     <hr />
                     <h2>{t('form.directions')}</h2>
-                    <p>
-                      <Trans i18nKey="display.stepsDesc" values={{ dish: getRecipeTitle(recipe) }} />
-                    </p>
+                    <p><Trans i18nKey="display.stepsDesc" values={{ dish: getRecipeTitle(recipe) }} /></p>
                     <ol>
-                      {recipe_instructions.map((step, index) => (
-                        <li key={index}>{step}</li>
-                      ))}
+                      {recipe_instructions.map((step, index) => (<li key={index}>{step}</li>))}
                     </ol>
                   </div>
                 </div>
@@ -273,10 +280,15 @@ function Display() {
                                   const newRating = i + 1;
                                   return (
                                     <FontAwesomeIcon key={i} icon={newRating <= (hoverRating ?? userRating) ? faStar : faNoStar} className="text-warning mr-1"
-                                      onClick={async () => {
-                                        await DbService.rateRecipe(Number(id), newRating);
-                                        setUserRating(newRating);
-                                        setUserComment({ ...userComment, rating: newRating });
+                                      onClick={() => {
+                                        DbService.rateRecipe(Number(id), newRating)
+                                          .then(() => {
+                                            setUserRating(newRating);
+                                            setUserComment({ ...userComment, rating: newRating });
+                                          })
+                                          .catch(() => {
+                                            alert(t('display.error'));
+                                          });
                                       }}
                                       onMouseEnter={() => setHoverRating(newRating)} onMouseLeave={() => setHoverRating(null)}
                                     />
@@ -295,9 +307,9 @@ function Display() {
                       </div>
                     }
                     <div className="row d-flex justify-content-center">
-                      <div className="p-4">
+                      <div className="p-4 album">
                         <hr />
-                        <h4 className="mb-4 pb-2">{t('display.comments', { count: commentsData.totalCount })}</h4>
+                        <h2 className="mb-4 pb-2">{t('display.comments', { count: commentsData.totalCount })}</h2>
                         {userComment.username &&
                           <div className="d-flex flex-start mb-5">
                             <img className="rounded-circle shadow-sm me-3" src={userComment.picture} alt={`Avatar of ${userComment.first_name}`} width={75} height={75} />
@@ -344,10 +356,7 @@ function Display() {
                   <div className="p-4 mb-3 bg-body-tertiary rounded text-center" style={{ position: 'relative' }}>
                     <img src={author.picture} alt="User Picture" width={180} height={180} className="rounded-circle" style={{ border: '6px solid white', position: 'absolute', top: '-60px', left: '50%', transform: 'translateX(-50%)' }} />
                     <h3 style={{ marginTop: '100px' }}>
-                      <Trans i18nKey="display.about"
-                        components={[<span className="text-primary fw-bold" />]}
-                        values={{ name: author.first_name }}
-                      />
+                      <Trans i18nKey="display.about" components={[<span className="text-primary fw-bold" />]} values={{ name: author.first_name }} />
                     </h3>
                     <p className="mb-0">{author.bio}</p>
                     <Link to={`/user/${author.username}`} className="btn btn-primary mt-3">{t('display.learnMore')}</Link>
@@ -356,7 +365,7 @@ function Display() {
               </div>
             )}
           </div>
-        </main >
+        </main>
         <div className="album mt-5 bg-body-tertiary">
           <div className="container-fluid">
             <div className="row d-flex align-items-stretch">

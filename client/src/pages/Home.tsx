@@ -6,8 +6,8 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useLocalisationHelper } from '../libs/useLocalisationHelper';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import RecipeCard from '../components/RecipeCard';
 import DbService from '../services/DbService';
-import noRecipe from '../assets/noRecipe.png';
 
 function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -15,8 +15,8 @@ function Home() {
   const [selectedCuisine, setSelectedCuisine] = useState('');
   const [onlyMyRecipes, setOnlyMyRecipes] = useState(false);
   const { user, isAuthenticated } = useAuth0();
-  const { t, i18n } = useTranslation();
-  const { getCuisineName, getRecipeTitle } = useLocalisationHelper();
+  const { t } = useTranslation();
+  const { getCuisineName } = useLocalisationHelper();
 
   useEffect(() => {
     DbService.getRecipes().then(setRecipes);
@@ -77,21 +77,8 @@ function Home() {
             </div>
           </div>
           <div className="row">
-            {recipes.filter(item => item.title.toLowerCase().includes(searchTerm.toLowerCase()) && (!selectedCuisine || item.cuisine === selectedCuisine) && (!onlyMyRecipes || item.username === user!.sub)).map((recipe, index) => (
-              <div key={index} className="col-12 col-sm-6 col-md-4 col-lg-3 my-3">
-                <Link to={`/recipe/${recipe.rid}`}>
-                  <div className="card h-100">
-                    <div className="img-container" style={{ overflow: 'hidden' }}>
-                      <img className="card-img-top img-fluid hover-enlarge" style={{ height: "200px", objectFit: "cover" }} src={recipe.picture ? recipe.picture : noRecipe} alt="Card image" loading="lazy" />
-                    </div>
-                    <div className="card-body">
-                      <p className="card-subtitle mb-2 text-body-secondary fs-6 text-uppercase fw-light">{getCuisineName(recipe.cuisine)}</p>
-                      <h5 className="card-title text-uppercase">{getRecipeTitle(recipe)}</h5>
-                      <h5 className="text-body-secondary">{i18n.language === 'zh' ? `${recipe.title}` : `${recipe.chin_title}`}</h5>
-                    </div>
-                  </div>
-                </Link>
-              </div>
+            {recipes.filter(item => item.title.toLowerCase().includes(searchTerm.toLowerCase()) && (!selectedCuisine || item.cuisine === selectedCuisine) && (!onlyMyRecipes || item.username === user!.sub)).map((recipe) => (
+              <RecipeCard key={recipe.rid} recipe={recipe} />
             ))}
           </div>
         </div>

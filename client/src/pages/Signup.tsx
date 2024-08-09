@@ -20,22 +20,24 @@ function Signup() {
   const navigate = useNavigate();
 
   const [step, setStep] = useState(1);
+  const langIndex = { "en": 0, "zh": 1, "ms": 2 }[i18n.language] || 0;
 
-  const langIndex = {
-    "en": 0,
-    "zh": 1,
-    "ms": 2
-  }[i18n.language] || 0;
-
-  async function submit(e: React.FormEvent<HTMLFormElement>) {
+  function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (user) {
       const { sub, picture, name } = user;
       const [given_name = '', family_name = ''] = name ? name.split(' ') : [];
       const newUser = new User(sub!, picture!, social, given_name!, family_name!, bio, occupation, country, new Date());
-      await DbService.updateUser(sub!, newUser);
+      DbService.updateUser(sub!, newUser)
+        .then(() => {
+          navigate('/');
+        })
+        .catch((error) => {
+          console.error('Error updating user:', error);
+        });
+    } else {
+      navigate('/');
     }
-    navigate('/');
   }
 
   const nextStep = () => {
