@@ -1,4 +1,7 @@
 import { useTranslation } from 'react-i18next';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faLink } from '@fortawesome/free-solid-svg-icons';
+import { faFacebook, faTwitter, faInstagram, faLinkedin, faYoutube, faPinterest, faSnapchat, faTiktok, faReddit, faTumblr } from '@fortawesome/free-brands-svg-icons';
 import adjectives from '../assets/translations/adjectives.json';
 import countries from '../assets/translations/countries.json';
 
@@ -46,5 +49,42 @@ export function useLocalisationHelper() {
     return (countries as Record<string, string[]>)[countryCode][langIndex];
   };
 
-  return { getCuisineName, getAuthorName, getRecipeTitle, getCountryName };
+  const getCountries = () => {
+    return Object.entries(countries)
+      .sort((a, b) => getCountryName(a[0]).localeCompare(getCountryName(b[0])))
+      .map(([code]) => (
+        <option key={code} value={code}>
+          {getCountryName(code)}
+        </option>
+      ));
+  };
+
+  const getWebsiteName = (url: string): string => {
+    try {
+      const domainParts = new URL(url).hostname.replace(/^www\./, '').split('.');
+      const mainDomain = domainParts.length > 1 ? domainParts[domainParts.length - 2] : domainParts[0];
+      return mainDomain.charAt(0).toUpperCase() + mainDomain.slice(1);
+    } catch (error) {
+      console.error('Invalid URL:', error);
+      return 'Unknown';
+    }
+  };
+
+  const getIconByWebsiteName = (name: string): IconProp => {
+    const iconMap: { [key: string]: IconProp; } = {
+      facebook: faFacebook as IconProp,
+      twitter: faTwitter as IconProp,
+      instagram: faInstagram as IconProp,
+      linkedin: faLinkedin as IconProp,
+      youtube: faYoutube as IconProp,
+      pinterest: faPinterest as IconProp,
+      snapchat: faSnapchat as IconProp,
+      tiktok: faTiktok as IconProp,
+      reddit: faReddit as IconProp,
+      tumblr: faTumblr as IconProp
+    };
+    return iconMap[name.toLowerCase()] || (faLink as IconProp);
+  };
+
+  return { getCuisineName, getAuthorName, getRecipeTitle, getCountryName, getCountries, getWebsiteName, getIconByWebsiteName };
 }

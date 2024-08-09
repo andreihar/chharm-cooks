@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { User } from '../models/User';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useLocalisationHelper } from '../libs/useLocalisationHelper';
 import DbService from '../services/DbService';
-import countries from '../assets/translations/countries.json';
 import Lottie from 'lottie-react';
 import socialAnim from '../assets/signup/social.json';
 import bioAnim from '../assets/signup/bio.json';
@@ -15,12 +15,11 @@ function Signup() {
   const [bio, setBio] = useState('');
   const [country, setCountry] = useState('');
   const { isAuthenticated, user } = useAuth0();
-  const { i18n } = useTranslation();
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
+  const { getCountries } = useLocalisationHelper();
   const navigate = useNavigate();
 
   const [step, setStep] = useState(1);
-  const langIndex = { "en": 0, "zh": 1, "ms": 2 }[i18n.language] || 0;
 
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -49,6 +48,10 @@ function Signup() {
     e.preventDefault();
     nextStep();
   };
+
+  if (!isAuthenticated) {
+    navigate('/');
+  }
 
   return (
     <div className="container-fluid bg-body-tertiary">
@@ -102,11 +105,7 @@ function Signup() {
             <form style={{ minWidth: '330px' }} onSubmit={validateForm}>
               <div className="form-floating mb-4">
                 <select className="form-select" value={country} onChange={e => setCountry(e.target.value)}>
-                  {Object.entries(countries).map(([code, names]) => (
-                    <option key={code} value={code}>
-                      {names[langIndex]}
-                    </option>
-                  ))}
+                  {getCountries()}
                 </select>
                 <label htmlFor="countrySelect">Country</label>
               </div>

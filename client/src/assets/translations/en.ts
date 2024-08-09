@@ -103,6 +103,18 @@ export const en = {
       about: "About me",
       joined: "Joined on {{date}}",
     },
+    settings: {
+      picture: "Profile picture",
+      social: "Social Link",
+      account: "{{name}} Account",
+      general: "General Information",
+      first: "First Name",
+      last: "Last Name",
+      occupation: "Occupation",
+      country: "Country",
+      save: "Save All Changes",
+      success: "Settings updated successfully!"
+    },
     404: {
       message: "We can't seem to find a page you're looking for",
       home: "Back to Home"

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import logo from '../assets/logo.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser, faBowlRice, faCommentDots, faBell } from '@fortawesome/free-solid-svg-icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocalisationHelper } from '../libs/useLocalisationHelper';
@@ -16,6 +16,12 @@ function Navbar() {
   const { i18n, t } = useTranslation();
   const { getAuthorName, getRecipeTitle } = useLocalisationHelper();
   const navigate = useNavigate();
+
+  const links = [
+    { path: '/', label: 'navbar.home' },
+    { path: '/form', label: 'navbar.addRecipe' },
+    { path: '/contributors', label: 'navbar.contributors' }
+  ];
 
   const changeLanguage = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newLang = event.target.value;
@@ -87,9 +93,7 @@ function Navbar() {
         </button>
         <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul className="navbar-nav mb-lg-0 mx-auto">
-            <li className="nav-item fs-5 me-3"><Link to='/' className="nav-link">{t('navbar.home')}</Link></li>
-            <li className="nav-item fs-5 me-3"><Link to='/form' className="nav-link">{t('navbar.addRecipe')}</Link></li>
-            <li className="nav-item fs-5"><Link to='/contributors' className="nav-link">{t('navbar.contributors')}</Link></li>
+            {links.map((link) => (<li key={link.path} className="nav-item fs-5 me-3"><NavLink to={link.path} className={({ isActive }) => isActive ? "nav-link text-primary" : "nav-link"}>{t(link.label)}</NavLink></li>))}
           </ul>
           <div className='d-flex justify-content-between flex-wrap py-2'>
             <div className={`d-flex ${isAuthenticated && user ? 'order-mobile-last' : ''}`}>
@@ -141,7 +145,7 @@ function Navbar() {
                   </div>
                   <div className="dropdown">
                     <a href="#" className="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                      <img src={userInfo?.picture} alt="User Picture" width={32} height={32} className="rounded-circle" />
+                      <img src={userInfo?.picture || user.picture} alt="User Picture" width={32} height={32} className="rounded-circle" />
                     </a>
                     <ul className="dropdown-menu dropdown-menu-end text-small" style={{}}>
                       <Link to={`/user/${user.sub}`}><button type="button" className="dropdown-item">{t('navbar.profile')}</button></Link>

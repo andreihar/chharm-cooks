@@ -6,6 +6,7 @@ import Form from './pages/Form';
 import Display from './pages/Display';
 import Authors from './pages/Authors';
 import Profile from './pages/Profile';
+import Settings from './pages/Settings';
 import NotFound from './pages/NotFound';
 import Signup from './pages/Signup';
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/recipe/:id" element={<Display />} />
         <Route path="/contributors" element={<Authors />} />
         <Route path="/user/:username" element={<Profile />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -94,7 +94,6 @@ function Display() {
           </div>
         </div>
         <div className="angled-div" />
-
         <main className="container">
           <div className="row g-5">
             <div className="col-md-8 mx-auto">
@@ -113,18 +112,12 @@ function Display() {
                     </a>
                   </div>
                   <div className="d-flex justify-content-end text-center py-1">
-                    <div>
-                      <p className="mb-1 h5">{recipes.length}</p>
-                      <p className="text-muted mb-0">{t('home.recipes')}</p>
-                    </div>
-                    <div className="px-3">
-                      <p className="mb-1 h5">{followers.length}</p>
-                      <p className="text-muted mb-0">{t('profile.followers')}</p>
-                    </div>
-                    <div>
-                      <p className="mb-1 h5">{following.length}</p>
-                      <p className="text-muted mb-0">{t('profile.following')}</p>
-                    </div>
+                    {[{ count: recipes.length, label: t('home.recipes') }, { count: followers.length, label: t('profile.followers') }, { count: following.length, label: t('profile.following') }].map((item, index) => (
+                      <div key={index} className={index === 1 ? "px-3" : ""}>
+                        <h5 className="mb-1">{item.count}</h5>
+                        <p className="text-muted mb-0">{item.label}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
                 <hr />

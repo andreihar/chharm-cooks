@@ -30,9 +30,9 @@ router.post('/login', async (req, res) => {
 	}
 });
 
-router.put('/:username', authMiddleware, async (req, res) => {
+router.put('/', authMiddleware, async (req, res) => {
 	try {
-		const success = await usersService.updateUser(req.params.username, req.body, req.auth.sub);
+		const success = await usersService.updateUser(req.body, req.auth.sub);
 		res.sendStatus(200);
 	} catch (err) {
 		res.status(500).json({ error: 'An error occurred while updating the user' });
