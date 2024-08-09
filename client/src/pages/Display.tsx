@@ -27,7 +27,7 @@ function Display() {
   const { user, isAuthenticated } = useAuth0();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const { getCuisineName, getAuthorName } = useLocalisationHelper();
+  const { getCuisineName, getAuthorName, getRecipeTitle } = useLocalisationHelper();
 
   const [hoverRating, setHoverRating] = useState<number | null>(null);
 
@@ -137,7 +137,7 @@ function Display() {
                   <Trans
                     i18nKey="display.letsMake"
                     components={[<span className="text-primary text-capitalize" />]}
-                    values={{ dish: i18n.language === 'zh' ? chin_title : title }}
+                    values={{ dish: getRecipeTitle(recipe) }}
                   />
                 </h2>
                 <div className="text-dark-emphasis align-items-center d-flex justify-content-between">
@@ -176,7 +176,7 @@ function Display() {
                 </div>
                 <h2>{t('form.ingredients')}</h2>
                 <p>
-                  <Trans i18nKey="display.ingredientDesc" values={{ dish: i18n.language === 'zh' ? chin_title : title }} />
+                  <Trans i18nKey="display.ingredientDesc" values={{ dish: getRecipeTitle(recipe) }} />
                 </p>
                 <ul>
                   {ingredients.map((ingredient, index) => (
@@ -187,7 +187,7 @@ function Display() {
                 </ul>
                 <h2>{t('form.directions')}</h2>
                 <p>
-                  <Trans i18nKey="display.stepsDesc" values={{ dish: i18n.language === 'zh' ? chin_title : title }} />
+                  <Trans i18nKey="display.stepsDesc" values={{ dish: getRecipeTitle(recipe) }} />
                 </p>
                 <ol>
                   {recipe_instructions.map((step, index) => (
@@ -197,7 +197,7 @@ function Display() {
                 <div className="card border-primary border-5 bg-primary col-lg-12 col-xl-9 mx-auto">
                   <div className="card-header text-center text-white bg-primary">
                     <img src={picture} alt={title} className="rounded-circle" style={{ width: '150px', height: '150px' }} />
-                    <h2 className="text-capitalize mt-2">{i18n.language === 'zh' ? chin_title : title}</h2>
+                    <h2 className="text-capitalize mt-2">{getRecipeTitle(recipe)}</h2>
                     <hr />
                     <div>
                       {[...Array(5)].map((_, index) => (
@@ -235,7 +235,7 @@ function Display() {
                     </div>
                     <div className="d-flex justify-content-between">
                       <p>
-                        <Trans i18nKey="display.ingredientDesc" values={{ dish: i18n.language === 'zh' ? chin_title : title }} />
+                        <Trans i18nKey="display.ingredientDesc" values={{ dish: getRecipeTitle(recipe) }} />
                       </p>
                     </div>
                     <ul className="list-unstyled">
@@ -251,7 +251,7 @@ function Display() {
                     <hr />
                     <h2>{t('form.directions')}</h2>
                     <p>
-                      <Trans i18nKey="display.stepsDesc" values={{ dish: i18n.language === 'zh' ? chin_title : title }} />
+                      <Trans i18nKey="display.stepsDesc" values={{ dish: getRecipeTitle(recipe) }} />
                     </p>
                     <ol>
                       {recipe_instructions.map((step, index) => (
@@ -366,7 +366,7 @@ function Display() {
                     <div className="card text-bg-dark h-100 rounded-0 border-0 hover-effect position-relative">
                       <img src={`${viewRecipe.picture}`} className="card-img rounded-0" style={{ height: '13rem', objectFit: 'cover' }} alt="..." />
                       <div className="card-img-overlay text-uppercase">
-                        <h5 className="bg-primary card-title position-absolute bottom-0 left-0 py-1 px-2 fs-6 fw-normal" style={{ color: 'inherit', transition: 'none' }}>{i18n.language === 'zh' ? `${viewRecipe.chin_title}` : `${viewRecipe.title}`}</h5>
+                        <h5 className="bg-primary card-title position-absolute bottom-0 left-0 py-1 px-2 fs-6 fw-normal" style={{ color: 'inherit', transition: 'none' }}>{getRecipeTitle(viewRecipe)}</h5>
                       </div>
                     </div>
                   </Link>

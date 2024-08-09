@@ -14,7 +14,14 @@ export const zh = {
       addRecipe: "添加食譜",
       contributors: "貢獻者",
       signIn: "登錄",
-      signOut: "退出"
+      signOut: "退出",
+      notifications: {
+        title: "通知",
+        empty: "沒有新通知",
+        readAll: "將所有標記為已讀",
+        recipe: "<0>{{name}}</0>添加了新的<1>{{title}}</1>食譜。一探究竟！",
+        comment: "<0>{{name}}</0>分享了他對<1>{{title}}</1>食譜的看法。看看他怎麼說！",
+      }
     },
     signup: {
       welcome: "歡迎來到您的<0/><1>福建烹飪天地</1>",

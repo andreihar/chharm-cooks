@@ -18,8 +18,8 @@ function getSpecialtyCuisine(authorRecipes: Recipe[]) {
 }
 
 function Authors() {
-  const { t, i18n } = useTranslation();
-  const { getCuisineName, getAuthorName, getFullName } = useLocalisationHelper();
+  const { t } = useTranslation();
+  const { getCuisineName, getAuthorName } = useLocalisationHelper();
   const [authors, setAuthors] = useState<User[]>([]);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
 
@@ -41,7 +41,7 @@ function Authors() {
                 const aRecipes = recipes.filter(recipe => recipe.username === a.username).length;
                 const bRecipes = recipes.filter(recipe => recipe.username === b.username).length;
                 if (aRecipes === bRecipes)
-                  return getFullName(a).localeCompare(getFullName(b));
+                  return getAuthorName(a).localeCompare(getAuthorName(b));
                 else
                   return bRecipes - aRecipes;
               }).map((author, index) => {

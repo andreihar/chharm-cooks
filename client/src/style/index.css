@@ -161,3 +161,12 @@ li::marker {
   input[type="checkbox"]:checked + .ingredient-label {
     text-decoration: line-through;
   }
+
+  @media (max-width: 991.98px) {
+    .order-mobile-first {
+      order: -1;
+    }
+    .order-mobile-last {
+      order: 1;
+    }
+  }

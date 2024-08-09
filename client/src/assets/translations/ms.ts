@@ -14,7 +14,14 @@ export const ms = {
       addRecipe: "Tambah Resipi",
       contributors: "Penyumbang",
       signIn: "Masuk",
-      signOut: "Keluar"
+      signOut: "Keluar",
+      notifications: {
+        title: "Pemberitahuan",
+        empty: "Tiada pemberitahuan baharu",
+        readAll: "Tandai semua sebagai dibaca",
+        recipe: "<0>{{name}}</0> telah menambah resipi <1>{{title}}</1> yang baharu. Semak ia keluar!",
+        comment: "<0>{{name}}</0> telah berkongsi pendapatnya tentang resipi <1>{{title}}</1>. Lihat apa yang dia katakan!",
+      }
     },
     signup: {
       welcome: "Selamat datang ke<0/><1>komuniti masakan Hokkien anda</1>",

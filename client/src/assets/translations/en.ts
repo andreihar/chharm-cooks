@@ -14,7 +14,14 @@ export const en = {
       addRecipe: "Add Recipe",
       contributors: "Contributors",
       signIn: "Sign In",
-      signOut: "Sign Out"
+      signOut: "Sign Out",
+      notifications: {
+        title: "Notifications",
+        empty: "No new notifications",
+        readAll: "Mark all as read",
+        recipe: "<0>{{name}}</0> has added a new <1>{{title}}</1> recipe. Check it out!",
+        comment: "<0>{{name}}</0> has shared their opinion on the <1>{{title}}</1> recipe. See what they have to say!",
+      }
     },
     signup: {
       welcome: "Welcome to your<0/><1>Hokkien culinary community</1>",

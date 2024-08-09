@@ -168,6 +168,7 @@ const getUserRatingForRecipe = (rid: number): Promise<number | null> => {
     });
 };
 
+// Comments
 const addComment = (rid: number, comment: string): Promise<{ message: string; }> => {
   return axios.post<{ message: string; }>(`${BASE_URL}/comments/add`, { rid, comment })
     .then(response => response.data)
@@ -185,6 +186,25 @@ const getCommentsForRecipe = (rid: number): Promise<{ comments: Array<{ username
     }))
     .catch(error => {
       console.error('Error fetching comments for recipe', error);
+      throw error;
+    });
+};
+
+// Notifications
+const getNotifications = (): Promise<Array<{ followed: string; rid: number; mode: string; seen: boolean; first_name: string; last_name: string; picture: string; title: string; chin_title: string; }>> => {
+  return axios.get<Array<{ followed: string; rid: number; mode: string; seen: boolean; first_name: string; last_name: string; picture: string; title: string; chin_title: string; }>>(`${BASE_URL}/notifications`)
+    .then(response => response.data)
+    .catch(error => {
+      console.error('Error fetching notifications', error);
+      throw error;
+    });
+};
+
+const markNotificationAsRead = (followed: string, mode: string, rid: number): Promise<{ message: string; }> => {
+  return axios.post<{ message: string; }>(`${BASE_URL}/notifications`, { followed, mode, rid })
+    .then(response => response.data)
+    .catch(error => {
+      console.error('Error marking notification as read', error);
       throw error;
     });
 };
@@ -210,7 +230,9 @@ const DbService = {
   getAverageRatingForRecipe,
   getUserRatingForRecipe,
   addComment,
-  getCommentsForRecipe
+  getCommentsForRecipe,
+  getNotifications,
+  markNotificationAsRead
 };
 
 export default DbService;

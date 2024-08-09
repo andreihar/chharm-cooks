@@ -10,6 +10,11 @@ interface AuthorType {
   last_name: string;
 }
 
+interface RecipeTitleType {
+  title: string;
+  chin_title: string;
+}
+
 export function useLocalisationHelper() {
   const { i18n } = useTranslation();
 
@@ -29,11 +34,11 @@ export function useLocalisationHelper() {
       : `${author.first_name} ${author.last_name}`;
   };
 
-  const getFullName = (author: AuthorType): string => {
+  const getRecipeTitle = (recipe: RecipeTitleType): string => {
     return i18n.language === 'zh'
-      ? `${author.last_name} ${author.first_name}`
-      : `${author.first_name} ${author.last_name}`;
+      ? recipe.chin_title
+      : recipe.title;
   };
 
-  return { getCuisineName, getAuthorName, getFullName };
+  return { getCuisineName, getAuthorName, getRecipeTitle };
 }

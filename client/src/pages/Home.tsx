@@ -16,7 +16,7 @@ function Home() {
   const [onlyMyRecipes, setOnlyMyRecipes] = useState(false);
   const { user, isAuthenticated } = useAuth0();
   const { t, i18n } = useTranslation();
-  const { getCuisineName } = useLocalisationHelper();
+  const { getCuisineName, getRecipeTitle } = useLocalisationHelper();
 
   useEffect(() => {
     DbService.getRecipes().then(setRecipes);
@@ -86,7 +86,7 @@ function Home() {
                     </div>
                     <div className="card-body">
                       <p className="card-subtitle mb-2 text-body-secondary fs-6 text-uppercase fw-light">{getCuisineName(recipe.cuisine)}</p>
-                      <h5 className="card-title text-uppercase">{i18n.language === 'zh' ? `${recipe.chin_title}` : `${recipe.title}`}</h5>
+                      <h5 className="card-title text-uppercase">{getRecipeTitle(recipe)}</h5>
                       <h5 className="text-body-secondary">{i18n.language === 'zh' ? `${recipe.title}` : `${recipe.chin_title}`}</h5>
                     </div>
                   </div>
