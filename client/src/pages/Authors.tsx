@@ -37,7 +37,7 @@ function Authors() {
                   return bRecipes - aRecipes;
               })
               .map(author => (
-                <UserCard key={author.username} user={author} />
+                <UserCard key={author.username} user={author} classes={'col-12 col-sm-6 col-md-4 col-lg-3'} />
               ))}
           </div>
         </div>

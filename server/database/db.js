@@ -164,12 +164,12 @@ const helpers = {
 	// Followers
 	getFollowers: async function (username) {
 		const res = await pool.query('SELECT follower FROM followers WHERE followed = $1', [username]);
-		return res.rows;
+		return res.rows.map(row => row.follower);
 	},
 
 	getFollowing: async function (username) {
 		const res = await pool.query('SELECT followed FROM followers WHERE follower = $1', [username]);
-		return res.rows;
+		return res.rows.map(row => row.followed);
 	},
 
 	followUser: async function (follower, followed) {
@@ -296,7 +296,7 @@ const helpers = {
 			VALUES($1, $2, $3, $4)
 		`;
 		for (const follower of followers) {
-			await pool.query(insertNotificationQuery, [follower.follower, username, rid, mode]);
+			await pool.query(insertNotificationQuery, [follower, username, rid, mode]);
 		}
 	}
 };

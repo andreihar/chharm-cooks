@@ -147,7 +147,7 @@ li::marker {
     transform: rotate(-13deg);
 }
 .profile-card .profile {
-    bottom: 40%;
+    bottom: 45%;
     transform: translate(-50%, 0%);
     z-index:3;
 }

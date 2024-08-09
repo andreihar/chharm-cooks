@@ -78,7 +78,7 @@ function Home() {
           </div>
           <div className="row">
             {recipes.filter(item => item.title.toLowerCase().includes(searchTerm.toLowerCase()) && (!selectedCuisine || item.cuisine === selectedCuisine) && (!onlyMyRecipes || item.username === user!.sub)).map((recipe) => (
-              <RecipeCard key={recipe.rid} recipe={recipe} />
+              <RecipeCard key={recipe.rid} recipe={recipe} classes={'col-12 col-sm-6 col-md-4 col-lg-3'} />
             ))}
           </div>
         </div>

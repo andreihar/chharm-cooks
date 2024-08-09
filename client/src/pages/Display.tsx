@@ -35,13 +35,7 @@ function Display() {
     const loadData = () => {
       setUserComment({ username: '', comment: '', time_last_modified: '', first_name: '', last_name: '', picture: '', rating: 0 });
       setNewUserComment('');
-      Promise.all([
-        DbService.getRecipes(),
-        DbService.getRecipeById(Number(id)),
-        DbService.getAverageRatingForRecipe(Number(id)),
-        DbService.getCommentsForRecipe(Number(id)),
-        DbService.getUserRatingForRecipe(Number(id))
-      ])
+      Promise.all([DbService.getRecipes(), DbService.getRecipeById(Number(id)), DbService.getAverageRatingForRecipe(Number(id)), DbService.getCommentsForRecipe(Number(id)), DbService.getUserRatingForRecipe(Number(id))])
         .then(([recipes, foundRecipe, averageRating, comments, rating]) => {
           setViewRecipes(recipes.filter(recipe => recipe.rid !== Number(id)).sort(() => Math.random() - 0.5).slice(0, 4));
           if (!foundRecipe) {
@@ -174,11 +168,11 @@ function Display() {
                 <div className="d-flex justify-content-between text-dark-emphasis mb-4">
                   <div className="d-flex align-items-center me-3">
                     <FontAwesomeIcon icon={faCalendarAlt} className="text-primary me-1" />
-                    <span>{t('display.posted')} {`${created_on.toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>
+                    <span>{t('display.posted')} {`${created_on.toLocaleString(i18n.language, { dateStyle: 'short', timeStyle: 'short' })}`}</span>
                   </div>
                   <div className="d-flex align-items-center me-3">
                     <FontAwesomeIcon icon={faCalendarAlt} className="text-primary me-1" />
-                    <span>{t('display.updated')} {`${time_last_modified.toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })}`}</span>
+                    <span>{t('display.updated')} {`${time_last_modified.toLocaleString(i18n.language, { dateStyle: 'short', timeStyle: 'short' })}`}</span>
                   </div>
                   <div className="d-flex align-items-center me-3">
                     <FontAwesomeIcon icon={faComments} className="text-primary me-1" />

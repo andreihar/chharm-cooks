@@ -15,6 +15,8 @@ export const ms = {
       contributors: "Penyumbang",
       signIn: "Masuk",
       signOut: "Keluar",
+      profile: "Profil",
+      settings: "Tetapan",
       notifications: {
         title: "Pemberitahuan",
         empty: "Tiada pemberitahuan baharu",
@@ -88,6 +90,15 @@ export const ms = {
     authors: {
       top: "Penyumbang Utama Kami",
       cuisine: "Masakan <0>{{cuisine}}</0>"
+    },
+    profile: {
+      biography: "Biografi",
+      following: "Mengikuti",
+      followers: "Pengikut",
+      follow: "Ikuti",
+      unfollow: "Setop Ikuti",
+      about: "Tentang saya",
+      joined: "Bergabung pada {{date}}",
     },
     404: {
       message: "Kami nampaknya tidak dapat mencari halaman yang anda cari",

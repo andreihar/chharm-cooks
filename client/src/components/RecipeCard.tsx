@@ -9,7 +9,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faNoStar } from '@fortawesome/free-regular-svg-icons';
 import { useState, useEffect } from 'react';
 
-const RecipeCard = ({ recipe }: { recipe: Recipe; }) => {
+const RecipeCard = ({ recipe, classes }: { recipe: Recipe; classes: string; }) => {
   const { getCuisineName, getRecipeTitle } = useLocalisationHelper();
   const [averageRating, setAverageRating] = useState({ averageRating: 0, ratingCount: 0 });
 
@@ -27,7 +27,7 @@ const RecipeCard = ({ recipe }: { recipe: Recipe; }) => {
   }, [recipe]);
 
   return (
-    <div className="col-12 col-sm-6 col-md-4 col-lg-3 my-3">
+    <div className={`${classes} my-3`}>
       <Link to={`/recipe/${recipe.rid}`}>
         <div className="card h-100">
           <div className="img-container" style={{ overflow: 'hidden' }}>

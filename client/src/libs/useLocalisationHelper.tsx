@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import adjectives from '../assets/translations/adjectives.json';
+import countries from '../assets/translations/countries.json';
 
 interface AdjectivesType {
   [key: string]: string[];
@@ -40,5 +41,10 @@ export function useLocalisationHelper() {
       : recipe.title;
   };
 
-  return { getCuisineName, getAuthorName, getRecipeTitle };
+  const getCountryName = (countryCode: string) => {
+    const langIndex = { "en": 0, "zh": 1, "ms": 2 }[i18n.language] || 0;
+    return (countries as Record<string, string[]>)[countryCode][langIndex];
+  };
+
+  return { getCuisineName, getAuthorName, getRecipeTitle, getCountryName };
 }

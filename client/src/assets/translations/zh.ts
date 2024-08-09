@@ -15,6 +15,8 @@ export const zh = {
       contributors: "貢獻者",
       signIn: "登錄",
       signOut: "退出",
+      profile: "個人資料",
+      settings: "設定",
       notifications: {
         title: "通知",
         empty: "沒有新通知",
@@ -88,6 +90,15 @@ export const zh = {
     authors: {
       top: "我們的傑出貢獻者",
       cuisine: "<0>{{cuisine}}</0>菜"
+    },
+    profile: {
+      biography: "個人簡介",
+      following: "正在關注",
+      followers: "粉絲",
+      follow: "關注",
+      unfollow: "取消關注",
+      about: "關於我",
+      joined: "{{date}}加入",
     },
     404: {
       message: "我們似乎找不到您要找的頁面",

@@ -15,6 +15,8 @@ export const en = {
       contributors: "Contributors",
       signIn: "Sign In",
       signOut: "Sign Out",
+      profile: "Profile",
+      settings: "Settings",
       notifications: {
         title: "Notifications",
         empty: "No new notifications",
@@ -91,6 +93,15 @@ export const en = {
     authors: {
       top: "Our Top Contributors",
       cuisine: "<0>{{cuisine}}</0> cuisine"
+    },
+    profile: {
+      biography: "Biography",
+      following: "Following",
+      followers: "Followers",
+      follow: "Follow",
+      unfollow: "Unfollow",
+      about: "About me",
+      joined: "Joined on {{date}}",
     },
     404: {
       message: "We can't seem to find a page you're looking for",

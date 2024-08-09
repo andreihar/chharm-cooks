@@ -12,6 +12,7 @@ import { User } from '../models/User';
 function Navbar() {
   const { logout, loginWithRedirect, isAuthenticated, user, getAccessTokenSilently } = useAuth0();
   const [notifications, setNotifications] = useState<Array<{ followed: string; rid: number; mode: string; seen: boolean; first_name: string; last_name: string; picture: string; title: string; chin_title: string; }>>([]);
+  const [userInfo, setUserInfo] = useState<User>();
   const { i18n, t } = useTranslation();
   const { getAuthorName, getRecipeTitle } = useLocalisationHelper();
   const navigate = useNavigate();
@@ -46,17 +47,12 @@ function Navbar() {
               if (isNewUser) {
                 navigate('/signup');
                 console.log('New user created');
-              } else {
-                DbService.updateUser(sub!, newUser)
-                  .then(success => {
-                    if (!success) {
-                      console.log('An error occurred while updating the user');
-                    }
-                  })
-                  .catch(error => console.error('An error occurred while updating the user', error));
               }
             });
           DbService.getNotifications().then(notifications => setNotifications(notifications));
+          if (user.sub) {
+            DbService.getUserByName(user.sub).then(user => setUserInfo(user));
+          }
         })
         .catch(e => {
           console.log(e);
@@ -145,10 +141,11 @@ function Navbar() {
                   </div>
                   <div className="dropdown">
                     <a href="#" className="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                      <img src={user.picture} alt="User Picture" width={32} height={32} className="rounded-circle" />
+                      <img src={userInfo?.picture} alt="User Picture" width={32} height={32} className="rounded-circle" />
                     </a>
                     <ul className="dropdown-menu dropdown-menu-end text-small" style={{}}>
                       <Link to={`/user/${user.sub}`}><button type="button" className="dropdown-item">{t('navbar.profile')}</button></Link>
+                      <Link to={`/settings`}><button type="button" className="dropdown-item">{t('navbar.settings')}</button></Link>
                       <li><button className="dropdown-item" onClick={(e) => logOut(e)}>{t('navbar.signOut')}</button></li>
                     </ul>
                   </div>
