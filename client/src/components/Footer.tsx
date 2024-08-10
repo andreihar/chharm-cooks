@@ -16,58 +16,65 @@ function Footer() {
 		logout();
 	};
 
-	return (
-		<div className="container">
-			<footer className="pt-3 mt-5 border-top">
-				<div className="row">
-					<div className="col-md-4 offset-md-1 mb-3 pe-5">
-						<div className="d-flex align-items-center mb-3">
-							<img src={logo} alt="ChhármCooks Logo" className="img-fluid me-2" style={{ width: '50px', height: '50px' }} />
-							<h3 className="text-primary mb-0"><b className="text-primary fw-bold">Chhárm</b>Cooks</h3>
-						</div>
-						<p className="text-body-secondary">{t('footer.about')}</p>
-					</div>
-					<div className="col-6 col-md-3 mb-3">
-						<h5>{t('footer.main')}</h5>
-						<ul className="nav flex-column">
-							<li className="mb-2"><Link to="/" className="nav-link p-0 text-body-secondary">{t('navbar.home')}</Link></li>
-							<li className="mb-2"><Link to="/form" className="nav-link p-0 text-body-secondary">{t('navbar.addRecipe')}</Link></li>
-							<li className="mb-2"><Link to="/contributors" className="nav-link p-0 text-body-secondary">{t('navbar.contributors')}</Link></li>
-						</ul>
-					</div>
-					<div className="col-6 col-md-3 mb-3">
-						<h5>{t('footer.user')}</h5>
-						<ul className="nav flex-column">
-							{user ? (
-								<>
-									<li className="mb-2"><Link to={`/user/${user.sub}`} className="nav-link p-0 text-body-secondary">{t('navbar.profile')}</Link></li>
-									<li className="mb-2"><Link to="/settings" className="nav-link p-0 text-body-secondary">{t('navbar.settings')}</Link></li>
-									<li className="mb-2"><button className="nav-link p-0 text-body-secondary" onClick={(e) => logOut(e)}>{t('navbar.signOut')}</button></li>
-								</>
-							) : (
-								<li className="mb-2"><button className="nav-link p-0 text-body-secondary" onClick={() => loginWithRedirect()}>{t('navbar.signIn')}</button></li>
-							)}
-						</ul>
-					</div>
-				</div>
+	const NavSection: React.FC<{ title: string; links: { to: string; text: string; isButton?: boolean; onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void; }[]; }> = ({ title, links }) => (
+		<div className="col-6 col-md-3 mb-3">
+			<h5>{title}</h5>
+			<ul className="nav flex-column">
+				{links.map((link, index) => (
+					<li key={index} className="mb-2">
+						{link.isButton ? (
+							<button className="nav-link p-0 text-body-secondary" onClick={link.onClick?.bind(null)}>{link.text}</button>
+						) : (
+							<Link to={link.to} className="nav-link p-0 text-body-secondary">{link.text}</Link>
+						)}
+					</li>
+				))}
+			</ul>
+		</div>
+	);
 
-				<div className="d-flex flex-row justify-content-between py-4 mt-4 border-top">
-					<p>{`© 2024 Andrei Harbachov. ${t('footer.rights')}.`}</p>
-					<ul className="list-unstyled d-flex">
-						<li className="ms-3">
-							<a className="link-body-emphasis" href="https://www.linkedin.com/in/andreihar/" target="_blank" rel="noopener noreferrer">
+	return (
+		<>
+			<div className="bg-primary text-white py-2">
+				<div className="container d-flex justify-content-between align-items-center">
+					<p className="mb-0 fw-bold">{t('footer.social')}</p>
+					<ul className="list-unstyled d-flex my-3">
+						<li className="">
+							<a className="nav-link text-white" href="https://www.linkedin.com/in/andreihar/" target="_blank" rel="noopener noreferrer">
 								<FontAwesomeIcon icon={faLinkedinIn} fontSize="1.5rem" />
 							</a>
 						</li>
 						<li className="ms-3">
-							<a className="link-body-emphasis" href="https://github.com/andreihar/" target="_blank" rel="noopener noreferrer">
+							<a className="nav-link text-white" href="https://github.com/andreihar/" target="_blank" rel="noopener noreferrer">
 								<FontAwesomeIcon icon={faGithub} fontSize="1.5rem" />
 							</a>
 						</li>
 					</ul>
 				</div>
-			</footer>
-		</div>
+			</div>
+			<div className="container">
+				<footer className="pt-3 mt-5">
+					<div className="row">
+						<div className="col-md-4 offset-md-1 mb-3 pe-5">
+							<div className="d-flex align-items-center mb-3">
+								<img src={logo} alt="ChhármCooks Logo" className="img-fluid me-2" style={{ width: '50px', height: '50px' }} />
+								<h3 className="text-primary mb-0"><b className="text-primary fw-bold">Chhárm</b>Cooks</h3>
+							</div>
+							<p className="text-body-secondary">{t('footer.about')}</p>
+						</div>
+						<NavSection title={t('footer.main')} links={[{ to: '/', text: t('navbar.home') }, { to: '/form', text: t('navbar.addRecipe') }, { to: '/contributors', text: t('navbar.contributors') }]} />
+						<NavSection title={t('footer.user')} links={(user ? [
+							{ to: `/user/${user?.sub}`, text: t('navbar.profile'), isButton: false },
+							{ to: '/settings', text: t('navbar.settings'), isButton: false },
+							{ to: '#', text: t('navbar.signOut'), isButton: true, onClick: logOut }
+						] : [{ to: '#', text: t('navbar.signIn'), isButton: true, onClick: (e: React.MouseEvent<HTMLButtonElement>) => { e.preventDefault(); loginWithRedirect(); } }])} />
+					</div>
+					<div className="d-flex flex-row justify-content-center pt-3 border-top">
+						<p>{`© 2024 Andrei Harbachov. ${t('footer.rights')}.`}</p>
+					</div>
+				</footer>
+			</div>
+		</>
 	);
 }
 

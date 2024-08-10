@@ -1,7 +1,7 @@
 const { expressjwt: jwt } = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
 
-require('dotenv').config({ path: './process.env' });
+require('dotenv').config({ path: './.env' });
 const authMiddleware = jwt({
   secret: jwksRsa.expressJwtSecret({
     cache: true,

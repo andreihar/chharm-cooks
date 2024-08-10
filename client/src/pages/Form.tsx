@@ -4,14 +4,12 @@ import { Recipe } from '../models/Recipe';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
 import { useLocalisationHelper } from '../libs/useLocalisationHelper';
-import Select from 'react-select';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import TextEditor from '../components/TextEditor';
 import isEqual from 'lodash.isequal';
 import DbService from '../services/DbService';
 import noRecipe from '../assets/noRecipe.png';
-import adjectives from '../assets/translations/adjectives.json';
 
 function InputList({ items, label, addLabel, add, remove, change, mode }: { items: any[], label: string, addLabel: string, add: () => void, remove: (index: number) => void, change: (e: React.ChangeEvent<HTMLInputElement>, index: number, field: string) => void; mode: string; }) {
   return (
@@ -49,7 +47,7 @@ function Form() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const editorRef = useRef<{ getContent: () => string; }>(null);
-  const { getCuisineName } = useLocalisationHelper();
+  const { getCuisines } = useLocalisationHelper();
 
   useEffect(() => {
     const fetchRecipe = () => {
@@ -143,11 +141,7 @@ function Form() {
               </div>
               <div className="form-group">
                 <label htmlFor="cuisine">{t('form.cuisine')} *</label>
-                <Select id="cuisine" name="cuisine" isClearable isSearchable required placeholder={getCuisineName('TW')}
-                  options={Object.entries(adjectives).map(([code, _]) => ({ value: code, label: getCuisineName(code) }))}
-                  value={Object.entries(adjectives).map(([code, _]) => ({ value: code, label: getCuisineName(code) })).find(option => option.value === cuisine)}
-                  onChange={(option: { label: string; value: string; } | null) => setCuisine(option ? option.value : '')}
-                />
+                {getCuisines(cuisine, setCuisine)}
               </div>
               <div className="form-group">
                 <label htmlFor="prepTime">{t('form.prepTime')} {t('form.min')} *</label>
@@ -192,7 +186,10 @@ function Form() {
                 </div>
               )}
             </fieldset>
-            <TextEditor ref={editorRef} content={content} />
+            <fieldset className="p-4 my-4">
+              <legend className="text-primary">{t('form.blog')}</legend>
+              <TextEditor ref={editorRef} content={content} />
+            </fieldset>
             <fieldset className="p-4 my-4">
               <legend className="text-primary">{t('form.ingredients')}</legend>
               <InputList items={ingredients} label={t('form.ingredient')} addLabel={t('form.add')} add={add(setIngreds)} remove={remove(setIngreds)} change={change(setIngreds)} mode='ingredient' />
@@ -202,7 +199,7 @@ function Form() {
               <InputList items={steps} label={t('form.step')} addLabel={t('form.add')} add={add(setSteps)} remove={remove(setSteps)} change={change(setSteps)} mode='step' />
             </fieldset>
             <div className="controls d-flex justify-content-center">
-              <button type="submit" className="btn btn-outline-primary px-4 text-uppercase">{id ? t('form.update') : t('form.submit')}</button>
+              <button type="submit" className="btn btn-outline-primary btn-lg px-4 text-uppercase fw-bold">{id ? t('form.update') : t('form.submit')}</button>
             </div>
           </form>
         </main>

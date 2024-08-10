@@ -10,6 +10,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocalisationHelper } from '../libs/useLocalisationHelper';
 import parse, { DOMNode, domToReact, Element } from 'html-react-parser';
+import { Helmet } from 'react-helmet-async';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DbService from '../services/DbService';
@@ -126,19 +127,30 @@ function Display() {
       replace: (domNode: DOMNode) => {
         if (domNode instanceof Element) {
           switch (domNode.name) {
-            case 'p': return <p className="fs-5">{domToReact(domNode.children as DOMNode[], options)}</p>;
+            case 'p': return <p className="fs-5 my-4">{domToReact(domNode.children as DOMNode[], options)}</p>;
             case 'img': return <img className="img-fluid w-75 mx-auto d-block" {...domNode.attribs} />;
           }
         }
       },
     };
-    return <div>{parse(content, options)}</div>;
+    return <div className="my-5">{parse(content, options)}</div>;
   };
 
   if (recipe) {
     const { picture, title, chin_title, created_on, time_last_modified, cuisine, ingredients, recipe_instructions, prep_time, cook_time, servings, content } = recipe;
     return (
       <>
+        <Helmet>
+          <title>{`${i18n.language === 'zh' ? chin_title : title} | ChhármCooks`}</title>
+          <meta name="description" content={content ? content.slice(0, 150) : `${title} classic is a flavour journey, balancing savoury and umami notes in every bite. From perfectly cooked proteins to crisp veggies, it tells the story of Hokkien culinary heritage.`} />
+          <meta name="keywords" content={`recipe, ${title}, ${chin_title}, ${getCuisineName(cuisine)}, ChhármCooks`} />
+          <meta name="author" content={getAuthorName(author!)} />
+          <meta property="og:title" content={`${title} | ${chin_title} - ChhármCooks`} />
+          <meta property="og:description" content={content.slice(0, 150)} />
+          <meta property="og:image" content={picture} />
+          <meta property="og:type" content="article" />
+          <meta property="og:url" content={window.location.href} />
+        </Helmet>
         <Navbar />
         <div className="p-5 text-center bg-image text-uppercase position-relative" style={{ backgroundImage: `url(${picture})` }}>
           <div className="mask position-absolute top-0 start-0 bottom-0 end-0">

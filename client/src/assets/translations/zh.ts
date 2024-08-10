@@ -26,10 +26,11 @@ export const zh = {
       }
     },
     footer: {
+      social: "在社群網路上與我們聯繫",
       rights: "版權所有",
       main: "主要",
       user: "用戶",
-      about: "ChhármCooks 致力於弘揚和保留福建美食的豐富傳統。我們的使命是透過分享正宗的食譜和烹飪經驗來連結美食愛好者，圍繞著這個深受喜愛的美食培育一個充滿活力的社區。"
+      about: "ChhármCooks 的使命是透過分享正宗的食譜和烹飪經驗來連結美食愛好者，圍繞著這個深受喜愛的美食培育一個充滿活力的社區。"
     },
     signup: {
       steps: {
@@ -65,6 +66,7 @@ export const zh = {
       servings: "份數",
       picture: "圖片鏈接",
       optional: "(自選)",
+      blog: "網誌",
       ingredients: "食材",
       ingredient: "食材",
       directions: "步驟",

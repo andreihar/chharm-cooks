@@ -3,6 +3,7 @@ import { Recipe } from '../models/Recipe';
 import { User } from '../models/User';
 import { useTranslation } from 'react-i18next';
 import { useLocalisationHelper } from '../libs/useLocalisationHelper';
+import { Helmet } from 'react-helmet-async';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import UserCard from '../components/UserCard';
@@ -21,6 +22,11 @@ function Authors() {
 
   return (
     <>
+      <Helmet>
+        <title>{`${t('navbar.contributors')} | ChhármCooks`}</title>
+        <meta name="description" content="Discover the top contributors and authors of ChhármCooks. Explore their recipes and culinary expertise." />
+        <meta name="keywords" content="ChhármCooks, authors, contributors, recipes, culinary experts, top chefs" />
+      </Helmet>
       <Navbar />
       <div className="album py-5">
         <div className="container">

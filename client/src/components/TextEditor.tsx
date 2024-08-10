@@ -27,14 +27,14 @@ const TextEditor = forwardRef(({ content }: { content: string; }, ref) => {
 
 	const extensions = [
 		History, Document, Text, Bold, Italic, Link,
-		Paragraph.configure({ HTMLAttributes: { class: 'fs-5' } }),
+		Paragraph.configure({ HTMLAttributes: { class: 'fs-5 my-4' } }),
 		Placeholder.configure({
 			placeholder: t('form.editor'),
 			considerAnyAsEmpty: false,
 			showOnlyCurrent: true
 		}),
 		Heading.configure({ HTMLAttributes: { class: 'fw-bold' } }),
-		Image.configure({ HTMLAttributes: { class: 'img-fluid w-75 mx-auto d-block' } }),
+		Image.configure({ HTMLAttributes: { class: 'img-fluid w-75 mx-auto d-block mb-4' } }),
 		ListItem, BulletList, OrderedList, HardBreak
 	];
 

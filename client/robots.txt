@@ -1,2 +1,6 @@
 User-agent: *
 Disallow: /form/
+Disallow: /settings/
+Disallow: /signup/
+
+Sitemap: https://chharmcooks.andreihar.com/sitemap.xml

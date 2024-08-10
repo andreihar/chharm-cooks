@@ -12,6 +12,7 @@ import Footer from '../components/Footer';
 import RecipeCard from '../components/RecipeCard';
 import UserCard from '../components/UserCard';
 import DbService from '../services/DbService';
+import { Helmet } from 'react-helmet-async';
 
 function Display() {
   const { username } = useParams<{ username: string; }>();
@@ -95,6 +96,12 @@ function Display() {
     const { username, picture, social, bio, occupation, country, created_on } = author;
     return (
       <>
+        <Helmet>
+          <title>{`${getAuthorName(author)} | ChhármCooks}`}</title>
+          <meta name="description" content={bio ? bio.slice(0, 150) : `Explore the profile of ${username}. Discover their favorite recipes, cooking tips, and more on ChhármCooks.`} />
+          <meta name="keywords" content="profile, user, details, recipe, ChhármCooks" />
+          <meta name="author" content={getAuthorName(author)} />
+        </Helmet>
         <Navbar />
         <div className="p-5 text-center bg-image text-uppercase position-relative" style={{ backgroundImage: recipes.length > 0 ? `url(${recipes[0].picture})` : 'none' }}>
           <div className="mask position-absolute top-0 start-0 bottom-0 end-0">
@@ -103,7 +110,7 @@ function Display() {
           </div>
         </div>
         <div className="angled-div" />
-        <main className="container">
+        <main className="container mb-5">
           <div className="row g-5">
             <div className="col-md-8 mx-auto">
               <article className="blog-post" style={{ marginTop: '-190px' }}>

@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import Select from 'react-select';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faInstagram, faLinkedin, faYoutube, faPinterest, faSnapchat, faTiktok, faReddit, faTumblr } from '@fortawesome/free-brands-svg-icons';
@@ -59,6 +60,16 @@ export function useLocalisationHelper() {
       ));
   };
 
+  const getCuisines = (cuisine: string, setCuisine: (value: string) => void) => {
+    return (
+      <Select id="cuisine" name="cuisine" isClearable isSearchable required placeholder={getCuisineName('TW')}
+        options={Object.entries(adjectives).sort((a, b) => getCuisineName(a[0]).localeCompare(getCuisineName(b[0]))).map(([code, _]) => ({ value: code, label: getCuisineName(code) }))}
+        value={Object.entries(adjectives).map(([code, _]) => ({ value: code, label: getCuisineName(code) })).find(option => option.value === cuisine)}
+        onChange={(option: { label: string; value: string; } | null) => setCuisine(option ? option.value : '')}
+      />
+    );
+  };
+
   const getWebsiteName = (url: string): string => {
     try {
       const domainParts = new URL(url).hostname.replace(/^www\./, '').split('.');
@@ -86,5 +97,5 @@ export function useLocalisationHelper() {
     return iconMap[getWebsiteName(url).toLowerCase()] || faLink;
   };
 
-  return { getCuisineName, getAuthorName, getRecipeTitle, getCountryName, getCountries, getWebsiteName, getIconByWebsite };
+  return { getCuisineName, getAuthorName, getRecipeTitle, getCountryName, getCountries, getCuisines, getWebsiteName, getIconByWebsite };
 }

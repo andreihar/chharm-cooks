@@ -6,7 +6,6 @@ const { authMiddleware } = require('../../middleware/authMiddleware');
 router.get('/', authMiddleware, async (req, res) => {
 	try {
 		const notifications = await notificationsService.getNotifications(req.auth.sub);
-		// const sanitizedNotifications = notifications.map(({ username, ...rest }) => rest);
 		res.json(notifications.map(({ username, ...rest }) => rest));
 	} catch (err) {
 		res.status(500).json({ error: 'An error occurred while fetching notifications' });

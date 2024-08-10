@@ -26,10 +26,11 @@ export const en = {
       }
     },
     footer: {
+      social: "Get connected with us on Social Networks",
       rights: "All rights reserved",
       main: "Main",
       user: "User",
-      about: "ChhármCooks is dedicated to celebrating and preserving the rich traditions of Hokkien food. Our mission is to connect food enthusiasts through the sharing of authentic recipes and culinary experiences, fostering a vibrant community around this beloved cuisine."
+      about: "ChhármCooks's Our mission is to connect food enthusiasts through the sharing of authentic recipes and culinary experiences, fostering a vibrant community around this beloved cuisine."
     },
     signup: {
       steps: {
@@ -65,6 +66,7 @@ export const en = {
       servings: "Number of Servings",
       picture: "Image URL",
       optional: "(optional)",
+      blog: "Blog",
       ingredients: "Ingredients",
       ingredient: "Ingredient",
       directions: "Directions",

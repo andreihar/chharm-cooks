@@ -4,6 +4,7 @@ import { Recipe } from '../models/Recipe';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocalisationHelper } from '../libs/useLocalisationHelper';
+import { Helmet } from 'react-helmet-async';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import RecipeCard from '../components/RecipeCard';
@@ -28,6 +29,10 @@ function Home() {
 
   return (
     <>
+      <Helmet>
+        <title>{`${t('navbar.home')} | ChhármCooks}`}</title>
+        <meta name="description" content={t('footer.about')} />
+      </Helmet>
       <Navbar />
       <div className="min-height overflow-hidden d-flex w-100">
         <div className="d-flex flex-grow-1 align-items-center justify-content-center p-1" style={{ flex: "1" }}>

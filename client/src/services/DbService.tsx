@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import { User } from '../models/User';
 import { Recipe } from '../models/Recipe';
 
-const BASE_URL = 'http://localhost:4000';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const token = Cookies.get('token');
 if (token) {

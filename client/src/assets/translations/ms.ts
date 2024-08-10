@@ -26,10 +26,11 @@ export const ms = {
       }
     },
     footer: {
+      social: "Berhubung dengan kami di Rangkaian Sosial",
       rights: "Semua hak cipta terpelihara",
       main: "Utama",
       user: "Pengguna",
-      about: "ChhármCooks berdedikasi untuk meraikan dan mengekalkan tradisi makanan Hokkien yang kaya. Misi kami adalah untuk menghubungkan penggemar makanan melalui perkongsian resipi asli dan pengalaman masakan, memupuk komuniti yang bertenaga di sekitar masakan kegemaran ini."
+      about: "Misi ChhármCooks adalah untuk menghubungkan penggemar makanan melalui perkongsian resipi asli dan pengalaman masakan, memupuk komuniti yang bertenaga di sekitar masakan kegemaran ini."
     },
     signup: {
       steps: {
@@ -65,6 +66,7 @@ export const ms = {
       servings: "Bilangan Hidangan",
       picture: "URL imej",
       optional: "(pilihan)",
+      blog: "Blog",
       ingredients: "Bahan-bahan",
       ingredient: "Bahan",
       directions: "Arahan",
