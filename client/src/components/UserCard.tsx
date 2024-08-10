@@ -41,16 +41,16 @@ const UserCard = ({ user, classes }: { user: User; classes: string; }) => {
   const recipeImage = authorRecipes.filter(recipe => recipe.picture && recipe.picture.startsWith('http')).sort((a, b) => new Date(b.created_on).getTime() - new Date(a.created_on).getTime())[0]?.picture || noRecipe;
 
   return (
-    <div className={`section-ting ${classes} my-3`}>
+    <div className={`${classes} my-3`}>
       <Link to={`/user/${user.username}`}>
         <div className="card profile-card text-center">
-          <div className="background-block">
-            <img src={recipeImage} alt="profile-sample1" className="background" />
+          <div className="background-block" style={{ height: 200 }}>
+            <img src={recipeImage} alt={`${user.first_name} ${user.last_name}'s recipe background`} className="background w-100" style={{ filter: 'blur(0.4px)', transform: 'scale(1.8)' }} />
           </div>
           <div>
-            <img src={user.picture} alt="profile-image" className="profile rounded-circle position-absolute shadow" width={100} height={100} />
+            <img src={user.picture} alt={`Profile picture of ${user.first_name} ${user.last_name}`} className="z-3 rounded-circle position-absolute shadow" width={100} height={100} style={{ bottom: '45%', transform: 'translate(-50%, 0%)' }} />
           </div>
-          <div className="card-content p-3 position-relative bg-body-tertiary">
+          <div className="card-content z-2 p-3 position-relative bg-body-tertiary">
             <h3 className="card-title fs-4 mb-2">{getAuthorName(user)}</h3>
             <div className="d-flex justify-content-center align-items-center text-center py-1" style={{ gap: '2rem' }}>
               {[{ count: authorRecipes.length, label: t('home.recipes') }, { count: followers, label: t('profile.followers') }, { count: following, label: t('profile.following') }].map((item) => (

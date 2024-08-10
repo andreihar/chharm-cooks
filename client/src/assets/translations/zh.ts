@@ -25,6 +25,9 @@ export const zh = {
         comment: "<0>{{name}}</0>分享了他對<1>{{title}}</1>食譜的看法。看看他怎麼說！",
       }
     },
+    footer: {
+      rights: "版權所有",
+    },
     signup: {
       welcome: "歡迎來到您的<0/><1>福建烹飪天地</1>",
       unleash: "解放你心中的福建烹飪藝術！",
@@ -35,6 +38,7 @@ export const zh = {
       join: "註冊"
     },
     form: {
+      login: "登入以新增食譜",
       editor: "點擊此處描述這道菜，並詳細研究食材和烹飪說明！",
       edit: "編輯",
       create: "創造",

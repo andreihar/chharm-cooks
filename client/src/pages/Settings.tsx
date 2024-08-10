@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DbService from '../services/DbService';
+import { useNavigate } from 'react-router-dom';
 
 function Display() {
   const [picture, setPicture] = useState('');
@@ -19,7 +20,8 @@ function Display() {
 
   const { user, isAuthenticated } = useAuth0();
   const { t } = useTranslation();
-  const { getCountries, getWebsiteName, getIconByWebsiteName } = useLocalisationHelper();
+  const navigate = useNavigate();
+  const { getCountries, getWebsiteName, getIconByWebsite } = useLocalisationHelper();
 
   useEffect(() => {
     if (isAuthenticated && user) {
@@ -36,6 +38,8 @@ function Display() {
           }
         });
       }
+    } else {
+      navigate('/');
     }
   }, [isAuthenticated, user]);
 
@@ -74,7 +78,7 @@ function Display() {
                   <div className="card-body">
                     <h3 className="card-title text-dark">{t('settings.social')}</h3>
                     <div className="d-flex align-items-center">
-                      <FontAwesomeIcon icon={getIconByWebsiteName(social)} size="2x" className="text-primary me-3" />
+                      <FontAwesomeIcon icon={getIconByWebsite(social)} size="2x" className="text-primary me-3" />
                       <div className="flex-grow-1">
                         <span className="d-block text-dark fw-bold">{t('settings.account', { name: getWebsiteName(social) })}</span>
                         <input type="text" className="form-control text-primary" id="imageUrl" value={social} onChange={e => setSocial(e.target.value)} placeholder="www.facebook.com/example" aria-label={t('settings.social')} />

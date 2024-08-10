@@ -31,14 +31,14 @@ const RecipeCard = ({ recipe, classes }: { recipe: Recipe; classes: string; }) =
       <Link to={`/recipe/${recipe.rid}`}>
         <div className="card h-100">
           <div className="img-container" style={{ overflow: 'hidden' }}>
-            <img className="card-img-top img-fluid hover-enlarge" style={{ height: '200px', objectFit: 'cover' }} src={recipe.picture ? recipe.picture : noRecipe} alt="Card image" loading="lazy" />
+            <img className="card-img-top img-fluid hover-enlarge" style={{ height: '200px', objectFit: 'cover', transition: 'transform .3s ease-in-out' }} src={recipe.picture ? recipe.picture : noRecipe} alt="Card image" loading="lazy" />
           </div>
           <div className="card-body">
             <div className="d-flex card-subtitle justify-content-between align-items-center text-body-secondary fs-6 text-uppercase fw-light">
               <p className="mb-2">{getCuisineName(recipe.cuisine)}</p>
               <div>
                 {[...Array(5)].map((_, index) => (
-                  <FontAwesomeIcon key={index} icon={index < averageRating.averageRating ? faStar : faNoStar} className="text-warning mr-1" />
+                  <FontAwesomeIcon key={index} icon={index < Math.floor(averageRating.averageRating) ? faStar : faNoStar} className="text-warning mr-1" />
                 ))}
                 {` (${averageRating.ratingCount})`}
               </div>

@@ -25,8 +25,22 @@ export const en = {
         comment: "<0>{{name}}</0> has shared their opinion on the <1>{{title}}</1> recipe. See what they have to say!",
       }
     },
+    footer: {
+      rights: "All rights reserved"
+    },
     signup: {
-      welcome: "Welcome to your<0/><1>Hokkien culinary community</1>",
+      steps: {
+        header1: "<0>Connect</0> with Us!",
+        step1: "Share your social media profile and join our vibrant community. Discover, share, and connect with fellow Hokkien cuisine enthusiasts!",
+        header2: "Where are you <0>From</0>?",
+        step2: "Let us know your location! Connect you with others in your region who share your passion for Hokkien cuisine.",
+        header3: "Your Culinary <0>Role</0>",
+        step3: "Tell us about your occupation in the culinary world. Share your expertise and gain insights from others in similar fields!",
+        header4: "A Little <0>About</0> You",
+        step4: "Share a brief bio to introduce yourself. Tell your story, your culinary journey, and what inspires you about Hokkien cuisine. Let your passion shine!",
+        header5: "Welcome to your<1/><0>Hokkien culinary community</0>",
+        step5: "Congratulations! Your account is now set up. Explore Hokkien recipes, connect with others, and start sharing your culinary creations. Welcome aboard!"
+      },
       unleash: "Unleash the Hokkien culinary artist in you!",
       social: "Social Link",
       next: "Next",
@@ -35,6 +49,7 @@ export const en = {
       join: "Join"
     },
     form: {
+      login: "Login to add a recipe",
       editor: "Click here to describe the dish, and delve into ingredients and cooking instructions in detail!",
       edit: "Edit",
       create: "Create",

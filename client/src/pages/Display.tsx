@@ -35,10 +35,11 @@ function Display() {
     const loadData = () => {
       setUserComment({ username: '', comment: '', time_last_modified: '', first_name: '', last_name: '', picture: '', rating: 0 });
       setNewUserComment('');
-      Promise.all([DbService.getRecipes(), DbService.getRecipeById(Number(id)), DbService.getAverageRatingForRecipe(Number(id)), DbService.getCommentsForRecipe(Number(id)), DbService.getUserRatingForRecipe(Number(id))])
-        .then(([recipes, foundRecipe, averageRating, comments, rating]) => {
+      Promise.all([DbService.getRecipes(), DbService.getRecipeById(Number(id)), DbService.getAverageRatingForRecipe(Number(id)), DbService.getCommentsForRecipe(Number(id))])
+        .then(([recipes, foundRecipe, averageRating, comments]) => {
           setViewRecipes(recipes.filter(recipe => recipe.rid !== Number(id)).sort(() => Math.random() - 0.5).slice(0, 4));
           if (!foundRecipe) {
+            console.log('Recipe not found');
             alert(t('display.error'));
             navigate('/');
           }
@@ -50,7 +51,9 @@ function Display() {
               setUserComment(userComment);
               setNewUserComment(userComment.comment);
             }
-            setUserRating(rating !== null ? rating : 0);
+            DbService.getUserRatingForRecipe(Number(id)).then((rating) => {
+              setUserRating(rating !== null ? rating : 0);
+            });
           }
           setCommentsData(comments);
           return DbService.getUserByName(foundRecipe.username)
@@ -210,11 +213,7 @@ function Display() {
                     <hr />
                     <div>
                       {[...Array(5)].map((_, index) => (
-                        <FontAwesomeIcon
-                          key={index}
-                          icon={index < averageRating.value ? faStar : faNoStar}
-                          className="text-white mr-1"
-                        />
+                        <FontAwesomeIcon key={index} icon={index < Math.floor(averageRating.value) ? faStar : faNoStar} className="text-white mr-1" />
                       ))}
                       <p className="small">{`${averageRating.value} from ${averageRating.count} reviews`}</p>
                     </div>
@@ -367,7 +366,7 @@ function Display() {
                 <div key={index} className="col-12 col-sm-6 col-lg-3 p-0">
                   <Link to={`/recipe/${viewRecipe.rid}`}>
                     <div className="card text-bg-dark h-100 rounded-0 border-0 hover-effect position-relative">
-                      <img src={`${viewRecipe.picture}`} className="card-img rounded-0" style={{ height: '13rem', objectFit: 'cover' }} alt="..." />
+                      <img src={`${viewRecipe.picture}`} className="card-img rounded-0" style={{ height: '13rem', objectFit: 'cover', transition: 'transform .3s ease-in-out' }} alt="..." />
                       <div className="card-img-overlay text-uppercase">
                         <h5 className="bg-primary card-title position-absolute bottom-0 left-0 py-1 px-2 fs-6 fw-normal" style={{ color: 'inherit', transition: 'none' }}>{getRecipeTitle(viewRecipe)}</h5>
                       </div>

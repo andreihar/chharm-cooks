@@ -69,7 +69,8 @@ function Form() {
   useEffect(() => {
     const fetchRecipe = () => {
       if (!isAuthenticated) {
-        navigate('/login');
+        alert(t('form.login'));
+        navigate('/');
       } else if (id && user) {
         DbService.getRecipeById(Number(id))
           .then((foundRecipe) => {

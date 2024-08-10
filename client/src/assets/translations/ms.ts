@@ -25,6 +25,9 @@ export const ms = {
         comment: "<0>{{name}}</0> telah berkongsi pendapatnya tentang resipi <1>{{title}}</1>. Lihat apa yang dia katakan!",
       }
     },
+    footer: {
+      rights: "Semua hak cipta terpelihara"
+    },
     signup: {
       welcome: "Selamat datang ke<0/><1>komuniti masakan Hokkien anda</1>",
       unleash: "Lepaskan artis masakan Hokkien dalam diri anda!",
@@ -35,6 +38,7 @@ export const ms = {
       join: "Sertai"
     },
     form: {
+      login: "Log masuk untuk menambah resipi",
       editor: "Klik di sini untuk menerangkan hidangan, dan menyelidiki bahan-bahan dan arahan memasak secara terperinci!",
       edit: "Sunting",
       create: "Cipta",

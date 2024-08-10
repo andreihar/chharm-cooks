@@ -50,8 +50,8 @@ function Home() {
             </div>
           </div>
         </div>
-        <div className="hero-image position-relative flex-grow-1" style={{ flex: "1" }}>
-          <img alt="Home banner" className="position-absolute top-0 bottom-0 start-0 left-0 h-100" src="https://asianinspirations.com.au/wp-content/uploads/2020/09/20200901-Malaysian-Cuisine-Kaleidoscope-of-Flavours-00-Feat-Img_1920w.jpg" />
+        <div className="position-relative flex-grow-1 d-none d-lg-block" style={{ flex: "1" }}>
+          <img alt="Home banner" className="position-absolute top-0 bottom-0 start-0 left-0 h-100" style={{ objectFit: 'cover', clipPath: 'polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%)' }} src="https://asianinspirations.com.au/wp-content/uploads/2020/09/20200901-Malaysian-Cuisine-Kaleidoscope-of-Flavours-00-Feat-Img_1920w.jpg" />
         </div>
       </div>
       <div className="album py-5 bg-body-tertiary">

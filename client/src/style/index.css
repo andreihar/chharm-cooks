@@ -33,18 +33,6 @@ div.wrapper {
 .min-height {
     min-height: calc(100vh - var(--navbar-height));
 }
-.hero-image {
-    display: none;
-}
-@media (min-width: 992px) {
-    .hero-image {
-      display: block;
-    }
-}  
-.hero-image img {
-    object-fit: cover;
-    clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
-}
 
 /* Main */
 .card {
@@ -59,9 +47,6 @@ div.wrapper {
 }
 .card:hover .card-img, .card:hover .card-img-top {
     transform: scale(1.1);
-}
-.card-img, .card-img-top {
-    transition: transform .3s ease-in-out;
 }
 .album h2 {
     text-decoration: underline;
@@ -114,14 +99,6 @@ li::marker {
 }
 
 /* Authors */
-.profile-card .background-block {
-    height: 200px;
-}
-.profile-card .background-block .background {
-    width:100%;
-    filter: blur(0.4px);
-    transform: scale(1.8);
-}
 .profile-card .background-block::before {
     content: "";
     position: absolute;
@@ -131,9 +108,6 @@ li::marker {
     left: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: 1;
-}
-.profile-card .card-content {
-    z-index: 2;
 }
 .profile-card .card-content::before {
     content: '';
@@ -146,27 +120,22 @@ li::marker {
     z-index: -1;
     transform: rotate(-13deg);
 }
-.profile-card .profile {
-    bottom: 45%;
-    transform: translate(-50%, 0%);
-    z-index:3;
-}
 
 @media (min-width: 768px) {
     .recipe-content {
         border-right: 1px solid #ccc;
     }
 }
-  
-  input[type="checkbox"]:checked + .ingredient-label {
-    text-decoration: line-through;
-  }
 
-  @media (max-width: 991.98px) {
+input[type="checkbox"]:checked + .ingredient-label {
+    text-decoration: line-through;
+}
+
+@media (max-width: 991.98px) {
     .order-mobile-first {
-      order: -1;
+        order: -1;
     }
     .order-mobile-last {
-      order: 1;
+        order: 1;
     }
-  }
+}

@@ -7,7 +7,10 @@ import { useLocalisationHelper } from '../libs/useLocalisationHelper';
 import DbService from '../services/DbService';
 import Lottie from 'lottie-react';
 import socialAnim from '../assets/signup/social.json';
+import countryAnim from '../assets/signup/country.json';
+import occupationAnim from '../assets/signup/occupation.json';
 import bioAnim from '../assets/signup/bio.json';
+import endAnim from '../assets/signup/end.json';
 
 function Signup() {
   const [social, setSocial] = useState('');
@@ -27,7 +30,7 @@ function Signup() {
       const { sub, picture, name } = user;
       const [given_name = '', family_name = ''] = name ? name.split(' ') : [];
       const newUser = new User(sub!, picture!, social, given_name!, family_name!, bio, occupation, country, new Date());
-      DbService.updateUser(sub!, newUser)
+      DbService.updateUser(newUser)
         .then(() => {
           navigate('/');
         })
@@ -35,7 +38,7 @@ function Signup() {
           console.error('Error updating user:', error);
         });
     } else {
-      navigate('/');
+      // navigate('/');
     }
   }
 
@@ -50,86 +53,67 @@ function Signup() {
   };
 
   if (!isAuthenticated) {
-    navigate('/');
+    // navigate('/');
   }
+
+  const animations = [socialAnim, countryAnim, occupationAnim, bioAnim, endAnim];
+  const renderForm = () => {
+    const commonFormProps = { style: { minWidth: '330px' }, onSubmit: validateForm };
+    const renderButton = (label: string) => (
+      <button type="submit" className="btn btn-primary w-100 py-2 text-uppercase my-4">{label}</button>
+    );
+
+    const renderInputField = () => {
+      switch (step) {
+        case 1:
+          return (
+            <><input type="text" className="form-control" id="social" placeholder={t('settings.social')} onChange={e => setSocial(e.target.value)} />
+              <label htmlFor="social">{t('signup.social')} {t('form.optional')}</label></>
+          );
+        case 2:
+          return (
+            <><select className="form-select" value={country} onChange={e => setCountry(e.target.value)}>{getCountries()}</select>
+              <label htmlFor="countrySelect">{t('settings.country')}</label></>
+          );
+        case 3:
+          return (
+            <><input type="text" className="form-control" id="occupation" placeholder={t('settings.occupation')} onChange={e => setOccupation(e.target.value)} />
+              <label htmlFor="occupation">{t('signup.occupation')} {t('form.optional')}</label></>
+          );
+        default:
+          return (
+            <><textarea className="form-control" id="bio" placeholder={t('profile.biography')} onChange={e => setBio(e.target.value)} style={{ height: '200px' }}></textarea>
+              <label htmlFor="bio">{t('signup.bio')} {t('form.optional')}</label></>
+          );
+      }
+    };
+
+    if (step === 5) {
+      return (
+        <form style={{ minWidth: '330px' }} onSubmit={submit}>{renderButton(t('signup.finish'))}</form>
+      );
+    }
+
+    return (
+      <form {...commonFormProps}>
+        <div className="form-floating mb-4">{renderInputField()} {renderButton(t('signup.next'))}</div>
+      </form>
+    );
+  };
 
   return (
     <div className="container-fluid bg-body-tertiary">
       <section style={{ minHeight: "100vh" }} className="row d-flex align-items-center justify-content-center">
-        <div className="col-5 py-2 d-flex flex-column justify-content-center align-items-center bg-white rounded border">
-          {step === 1 && (<>
-            <Lottie animationData={socialAnim} style={{ maxWidth: '50%' }} />
-          </>)}
-          {step === 2 && (<>
-          </>)}
-          {step === 3 && (<>
-          </>)}
-          {step === 4 && (<>
-            <Lottie animationData={bioAnim} style={{ maxWidth: '50%' }} />
-          </>)}
-          {/* <h2 className="mb-1 fw-normal text-center mb-5">
-            <Trans
-              i18nKey="signup.welcome"
-              components={[
-                <br />,
-                <span className="text-primary" />
-              ]}
-            />
-          </h2> */}
+        <div className="col-12 col-md-8 col-lg-5 py-2 d-flex flex-column justify-content-center align-items-center bg-white rounded border">
+          <Lottie animationData={animations[step - 1]} style={{ maxWidth: '50%' }} />
           <p className="card-subtitle my-1 text-body-secondary fs-6 text-uppercase">
-            <Trans
-              i18nKey="signup.step"
-              components={[<span className="text-primary fw-bold" />]}
-              values={{ now: step, total: 5 }} />
+            <Trans i18nKey="signup.step" components={[<span className="text-primary fw-bold" />]} values={{ now: step, total: 5 }} />
           </p>
-          {step === 1 && (<>
-            <h2 className="mb-1 fw-normal text-center mb-5">
-              <Trans
-                i18nKey="signup.welcome"
-                components={[
-                  <br />,
-                  <span className="text-primary" />
-                ]}
-              />
-            </h2>
-            <p className="fs-5">Something else, a call for action</p>
-            <form style={{ minWidth: '330px' }} onSubmit={validateForm}>
-              <div className="form-floating mb-4">
-                <input type="text" className="form-control" id="social" placeholder="Social" onChange={e => setSocial(e.target.value)} />
-                <label htmlFor="social">{t('signup.social')} {t('form.optional')}</label>
-              </div>
-              <button type="submit" className="btn btn-primary w-100 py-2 text-uppercase mb-4">{t('signup.next')}</button>
-            </form>
-          </>)}
-          {step === 2 && (<>
-            <form style={{ minWidth: '330px' }} onSubmit={validateForm}>
-              <div className="form-floating mb-4">
-                <select className="form-select" value={country} onChange={e => setCountry(e.target.value)}>
-                  {getCountries()}
-                </select>
-                <label htmlFor="countrySelect">Country</label>
-              </div>
-              <button type="submit" className="btn btn-primary w-100 py-2 text-uppercase mb-4">{t('signup.next')}</button>
-            </form>
-          </>)}
-          {step === 3 && (<>
-            <form style={{ minWidth: '330px' }} onSubmit={validateForm}>
-              <div className="form-floating mb-4">
-                <input type="text" className="form-control" id="occupation" placeholder="Occupation" onChange={e => setOccupation(e.target.value)} />
-                <label htmlFor="occupation">{t('signup.occupation')} {t('form.optional')}</label>
-              </div>
-              <button type="submit" className="btn btn-primary w-100 py-2 text-uppercase mb-4">{t('signup.next')}</button>
-            </form>
-          </>)}
-          {step === 4 && (<>
-            <form style={{ minWidth: '330px' }} onSubmit={submit}>
-              <div className="form-floating mb-4">
-                <textarea className="form-control" id="bio" placeholder="Biography" onChange={e => setBio(e.target.value)} style={{ height: '200px' }}></textarea>
-                <label htmlFor="bio">{t('signup.bio')} {t('form.optional')}</label>
-              </div>
-              <button type="submit" className="btn btn-primary w-100 py-2 text-uppercase mb-4">{t('signup.finish')}</button>
-            </form>
-          </>)}
+          <h2 className="mb-1 fw-normal text-center mb-5">
+            <Trans i18nKey={`signup.steps.header${step}`} components={[<span className="text-primary" />, <br />]} />
+          </h2>
+          <p className="fs-5 text-center">{t(`signup.steps.step${step}`)}</p>
+          {renderForm()}
         </div>
       </section>
     </div>

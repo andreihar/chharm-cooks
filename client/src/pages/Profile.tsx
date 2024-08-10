@@ -3,8 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
 import { User } from '../models/User';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faTrash, faPenToSquare, faClock, faBowlRice, faThumbsUp as faThumbsUpL } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
 import { useLocalisationHelper } from '../libs/useLocalisationHelper';
@@ -23,12 +22,22 @@ function Display() {
   const [userFollows, setUserFollows] = useState<boolean>(false);
   const { user, isAuthenticated } = useAuth0();
   const { t, i18n } = useTranslation();
-  const { getAuthorName, getCountryName } = useLocalisationHelper();
+  const { getAuthorName, getCountryName, getIconByWebsite } = useLocalisationHelper();
   const navigate = useNavigate();
 
   if (!username) {
     navigate('/');
     return;
+  }
+
+  function getPrimaryUrl(url: string): string {
+    try {
+      const parsedUrl = new URL(url);
+      return parsedUrl.hostname;
+    } catch (error) {
+      console.error('Invalid URL:', error);
+      return '';
+    }
   }
 
   useEffect(() => {
@@ -107,9 +116,15 @@ function Display() {
                 </div>
                 <div className="text-dark-emphasis align-items-center d-flex justify-content-between">
                   <div>
-                    <a href={social ? social : '#'} target="_blank" rel="noopener noreferrer" className="text-dark-emphasis align-items-center d-flex">
-                      <span className="fs-5 ms-2">{occupation}</span>
-                    </a>
+                    <div className="fs-5">{occupation}</div>
+                    {social && (
+                      <a href={social ? social : '#'} target="_blank" rel="noopener noreferrer" className="text-dark-emphasis align-items-center">
+                        <div className="d-flex align-items-center text-primary">
+                          <FontAwesomeIcon icon={getIconByWebsite(social)} fontSize="1.5rem" className="me-2" />
+                          {getPrimaryUrl(social)}
+                        </div>
+                      </a>
+                    )}
                   </div>
                   <div className="d-flex justify-content-end text-center py-1">
                     {[{ count: recipes.length, label: t('home.recipes') }, { count: followers.length, label: t('profile.followers') }, { count: following.length, label: t('profile.following') }].map((item, index) => (

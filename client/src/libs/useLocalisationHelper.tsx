@@ -70,21 +70,21 @@ export function useLocalisationHelper() {
     }
   };
 
-  const getIconByWebsiteName = (name: string): IconProp => {
-    const iconMap: { [key: string]: IconProp; } = {
-      facebook: faFacebook as IconProp,
-      twitter: faTwitter as IconProp,
-      instagram: faInstagram as IconProp,
-      linkedin: faLinkedin as IconProp,
-      youtube: faYoutube as IconProp,
-      pinterest: faPinterest as IconProp,
-      snapchat: faSnapchat as IconProp,
-      tiktok: faTiktok as IconProp,
-      reddit: faReddit as IconProp,
-      tumblr: faTumblr as IconProp
+  const getIconByWebsite = (url: string): IconProp => {
+    const iconMap: Record<string, IconProp> = {
+      facebook: faFacebook,
+      twitter: faTwitter,
+      instagram: faInstagram,
+      linkedin: faLinkedin,
+      youtube: faYoutube,
+      pinterest: faPinterest,
+      snapchat: faSnapchat,
+      tiktok: faTiktok,
+      reddit: faReddit,
+      tumblr: faTumblr
     };
-    return iconMap[name.toLowerCase()] || (faLink as IconProp);
+    return iconMap[getWebsiteName(url).toLowerCase()] || faLink;
   };
 
-  return { getCuisineName, getAuthorName, getRecipeTitle, getCountryName, getCountries, getWebsiteName, getIconByWebsiteName };
+  return { getCuisineName, getAuthorName, getRecipeTitle, getCountryName, getCountries, getWebsiteName, getIconByWebsite };
 }
