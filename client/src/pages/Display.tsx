@@ -9,6 +9,7 @@ import { faStar as faNoStar } from '@fortawesome/free-regular-svg-icons';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocalisationHelper } from '../libs/useLocalisationHelper';
+import parse, { DOMNode, domToReact, Element } from 'html-react-parser';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DbService from '../services/DbService';
@@ -120,8 +121,22 @@ function Display() {
     return `${h1}/${k1}`;
   };
 
+  const BlogContent: React.FC<{ content: string; }> = ({ content }) => {
+    const options = {
+      replace: (domNode: DOMNode) => {
+        if (domNode instanceof Element) {
+          switch (domNode.name) {
+            case 'p': return <p className="fs-5">{domToReact(domNode.children as DOMNode[], options)}</p>;
+            case 'img': return <img className="img-fluid w-75 mx-auto d-block" {...domNode.attribs} />;
+          }
+        }
+      },
+    };
+    return <div>{parse(content, options)}</div>;
+  };
+
   if (recipe) {
-    const { picture, title, chin_title, created_on, time_last_modified, cuisine, ingredients, recipe_instructions, prep_time, cook_time, servings } = recipe;
+    const { picture, title, chin_title, created_on, time_last_modified, cuisine, ingredients, recipe_instructions, prep_time, cook_time, servings, content } = recipe;
     return (
       <>
         <Navbar />
@@ -186,26 +201,7 @@ function Display() {
                     <span>{averageRating.value} / {t('display.reviews', { count: averageRating.count })}</span>
                   </div>
                 </div>
-                <h2>{t('form.ingredients')}</h2>
-                <p>
-                  <Trans i18nKey="display.ingredientDesc" values={{ dish: getRecipeTitle(recipe) }} />
-                </p>
-                <ul>
-                  {ingredients.map((ingredient, index) => (
-                    <li key={index}>
-                      {ingredient.name} {ingredient.quantity}
-                    </li>
-                  ))}
-                </ul>
-                <h2>{t('form.directions')}</h2>
-                <p>
-                  <Trans i18nKey="display.stepsDesc" values={{ dish: getRecipeTitle(recipe) }} />
-                </p>
-                <ol>
-                  {recipe_instructions.map((step, index) => (
-                    <li key={index}>{step}</li>
-                  ))}
-                </ol>
+                <BlogContent content={content} />
                 <div className="card border-primary border-5 bg-primary col-lg-12 col-xl-9 mx-auto">
                   <div className="card-header text-center text-white bg-primary">
                     <img src={picture} alt={title} className="rounded-circle" style={{ width: '150px', height: '150px' }} />
@@ -232,19 +228,16 @@ function Display() {
                       </div>
                     </div>
                   </div>
-                  <div className="card-body fs-5 bg-white">
+                  <div className="card-body bg-white">
                     <div className="d-flex mb-2">
                       <h2>{t('form.ingredients')}</h2>
                       <div className="d-flex ms-auto gap-2">
                         {[0.5, 1, 2].map(scale => (<button key={scale} className={`btn btn-outline-secondary btn-sm ${activeScale === scale ? 'active' : ''}`} onClick={() => setActiveScale(scale)}>{scale}x</button>))}
                       </div>
                     </div>
-                    <div className="d-flex justify-content-between">
-                      <p><Trans i18nKey="display.ingredientDesc" values={{ dish: getRecipeTitle(recipe) }} /></p>
-                    </div>
                     <ul className="list-unstyled">
                       {ingredients.map((ingredient, index) => (
-                        <li key={index} className="d-flex align-items-center">
+                        <li key={index} className="d-flex align-items-center my-1">
                           <input type="checkbox" className="me-2" id={`ingredient-${index}`} style={{ accentColor: 'gray' }} />
                           <label htmlFor={`ingredient-${index}`} className="ingredient-label" style={{ cursor: 'pointer' }}>
                             {scaleQuantity(ingredient.quantity)} <span className="fw-bold">{ingredient.name}</span>
@@ -254,7 +247,6 @@ function Display() {
                     </ul>
                     <hr />
                     <h2>{t('form.directions')}</h2>
-                    <p><Trans i18nKey="display.stepsDesc" values={{ dish: getRecipeTitle(recipe) }} /></p>
                     <ol>
                       {recipe_instructions.map((step, index) => (<li key={index}>{step}</li>))}
                     </ol>

@@ -38,7 +38,8 @@
 			"Pour in sauce, stir-fry until simmering. Add pork belly and shrimp, stir to combine.",
 			"Stir in half of cornstarch mixture. Adjust thickness with more slurry or water if needed.",
 			"Transfer to serving dish, sprinkle pork cracklings on top, and serve!"
-		]
+		],
+		"content": ""
 	},
 	{
 		"title": "Bak kut teh",
@@ -71,7 +72,8 @@
 			"Add tied spices and garlic, simmer covered for 30 minutes. Stir in mushrooms and tofu puffs, simmer covered for 30-45 minutes until pork is tender.",
 			"Add soy sauce and fish sauce to taste. Divide into 4 bowls. Serve hakken style with rice and chili soy sauce.",
 			"For chili soy sauce, pour light soy sauce into 4 bowls and add finely chopped red chilies to taste."
-		]
+		],
+		"content": ""
 	},
 	{
 		"title": "Hailam kue png",
@@ -109,7 +111,8 @@
 			"Turn off heat. Scoop rice into rice cooker, add chicken stock and salt. Close lid, press START.",
 			"Without rice cooker, soak rice for 20 mins, drain, and follow same steps in a pot with 3 cups chicken stock and salt. Simmer covered for 10-15 mins.",
 			"While rice cooks, prepare dipping sauces. Grind ginger and garlic in a food processor. Heat oil, fry ginger and garlic until aromatic. Add salt, transfer to sauce dish."
-		]
+		],
+		"content": ""
 	},
 	{
 		"title": "Ke bah png",
@@ -140,7 +143,8 @@
 			"Heat vegetable oil in a pot. Add sliced shallots and cook until golden brown, about 3 minutes. Transfer to a paper towel-lined plate and reserve the cooking oil.",
 			"Combine shallot cooking oil with ½ cup reserved turkey juices. Add water, sugar, soy sauce, Sichuan peppercorns, and ¼ teaspoon each of salt and white pepper. Add half of the fried shallots, saving the rest for garnish. Whisk over medium heat to dissolve sugar. Bring to a gentle boil and simmer, uncovered until sauce is reduced by half, about 30 minutes. Strain sauce and discard solids.",
 			"To serve, scoop rice into bowls and top with shredded turkey. Spoon sauce over each bowl. Finish with fried shallots and cilantro for garnish."
-		]
+		],
+		"content": ""
 	},
 	{
 		"title": "Bakpia",
@@ -173,7 +177,8 @@
 			"Shape into balls and press them.",
 			"Brush a pan with butter or vegetable oil, then heat it.",
 			"Bake filled dough for 5 minutes on each side."
-		]
+		],
+		"content": ""
 	},
 	{
 		"title": "Tikoy",
@@ -201,6 +206,7 @@
 			"Heat 2 tablespoons oil in a pan. Slice tikoy into ¼ inch pieces.",
 			"Beat eggs in a bowl. Dip slices in beaten eggs.",
 			"Fry slices in the pan for 2-3 minutes on each side until golden brown and crispy outside, soft inside."
-		]
+		],
+		"content": ""
 	}
 ]

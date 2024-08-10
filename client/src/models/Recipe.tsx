@@ -12,8 +12,9 @@ export class Recipe {
     time_last_modified: Date;
     ingredients: { name: string, quantity: string; }[];
     recipe_instructions: string[];
+    content: string;
 
-    constructor(title: string, chin_title: string, cuisine: string, username: string, prep_time: number, cook_time: number, servings: number, picture: string, ingredients: { name: string, quantity: string; }[], recipe_instructions: string[]) {
+    constructor(title: string, chin_title: string, cuisine: string, username: string, prep_time: number, cook_time: number, servings: number, picture: string, ingredients: { name: string, quantity: string; }[], recipe_instructions: string[], content: string) {
         this.rid = 0;
         this.title = title;
         this.chin_title = chin_title;
@@ -27,5 +28,6 @@ export class Recipe {
         this.time_last_modified = new Date();
         this.ingredients = ingredients;
         this.recipe_instructions = recipe_instructions;
+        this.content = content;
     }
 }

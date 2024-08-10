@@ -13,12 +13,8 @@ const getRecipesByUser = async (username) => {
 };
 
 const addRecipe = async (recipe) => {
-	const { title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, ingredients, recipe_instructions } = recipe;
-	const newRecipe = await db.helpers.addRecipe(title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, ingredients, recipe_instructions);
-	// const followers = await db.helpers.getFollowers(username);
-	// for (let follower of followers) {
-	// 	await db.helpers.addNotification(follower.follower, newRecipe.rid);
-	// }
+	const { title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, ingredients, recipe_instructions, content } = recipe;
+	const newRecipe = await db.helpers.addRecipe(title, chin_title, cuisine, username, prep_time, cook_time, servings, picture, ingredients, recipe_instructions, content);
 	return newRecipe;
 };
 
@@ -35,8 +31,8 @@ const updateRecipeById = async (id, recipe, username) => {
 	if (existingRecipe.username !== username) {
 		throw new Error('You are not authorized to update this recipe');
 	}
-	const { title, chin_title, cuisine, prep_time, cook_time, servings, picture, ingredients, recipe_instructions } = recipe;
-	await db.helpers.updateRecipeById(id, title, chin_title, cuisine, prep_time, cook_time, servings, picture, ingredients, recipe_instructions);
+	const { title, chin_title, cuisine, prep_time, cook_time, servings, picture, ingredients, recipe_instructions, content } = recipe;
+	await db.helpers.updateRecipeById(id, title, chin_title, cuisine, prep_time, cook_time, servings, picture, ingredients, recipe_instructions, content);
 };
 
 module.exports = {

@@ -139,3 +139,21 @@ input[type="checkbox"]:checked + .ingredient-label {
         order: 1;
     }
 }
+
+/* Editor */
+.Bubblemenu {
+    div:hover {
+        background: #555555;
+        cursor: pointer;
+    }
+}
+.ProseMirror .is-empty:before {
+    color: #aaa;
+    content: attr(data-placeholder);
+	float: left;
+	height: 0;
+	pointer-events: none;
+}
+.ProseMirror:focus {
+    outline: none;
+}

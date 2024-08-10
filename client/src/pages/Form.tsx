@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -7,6 +7,7 @@ import { useLocalisationHelper } from '../libs/useLocalisationHelper';
 import Select from 'react-select';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import TextEditor from '../components/TextEditor';
 import isEqual from 'lodash.isequal';
 import DbService from '../services/DbService';
 import noRecipe from '../assets/noRecipe.png';
@@ -19,24 +20,11 @@ function InputList({ items, label, addLabel, add, remove, change, mode }: { item
         <div className="form-group d-flex align-items-center mb-2" key={index}>
           <label className="fw-bold me-2" htmlFor={`${label}-${index}`}>{index + 1}</label>
           {mode === 'ingredient' && (
-            <input
-              id={`${label}-quantity-${index}`}
-              type="text"
-              className="form-control me-2"
-              name={`${label}-quantity-${index}`}
-              value={item.quantity}
-              onChange={e => change(e, index, 'quantity')}
-              style={{ maxWidth: '200px' }}
-            />
+            <input id={`${label}-quantity-${index}`} type="text" className="form-control me-2" name={`${label}-quantity-${index}`}
+              value={item.quantity} onChange={e => change(e, index, 'quantity')} style={{ maxWidth: '200px' }} />
           )}
-          <input
-            id={`${label}-${index}`}
-            type="text"
-            className="form-control me-2"
-            name={`${label}-${index}`}
-            value={item.name}
-            onChange={e => change(e, index, 'name')}
-          />
+          <input id={`${label}-${index}`} type="text" className="form-control me-2" name={`${label}-${index}`}
+            value={item.name} onChange={e => change(e, index, 'name')} />
           <button type="button" className="btn btn-outline-danger fw-bold ms-2" onClick={() => remove(index)}>-</button>
         </div>
       ))}
@@ -56,15 +44,12 @@ function Form() {
   const [picture, setPicture] = useState('');
   const [ingredients, setIngreds] = useState([{ name: "", quantity: "" }]);
   const [steps, setSteps] = useState([{ name: "" }]);
+  const [content, setContent] = useState('');
   const { user, isAuthenticated } = useAuth0();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const editorRef = useRef<{ getContent: () => string; }>(null);
   const { getCuisineName } = useLocalisationHelper();
-
-  interface OptionType {
-    label: string;
-    value: string;
-  }
 
   useEffect(() => {
     const fetchRecipe = () => {
@@ -84,6 +69,7 @@ function Form() {
               setPicture(foundRecipe.picture);
               setIngreds(foundRecipe.ingredients.map((ingredient: { name: string, quantity: string; }) => ({ name: ingredient.name, quantity: ingredient.quantity })));
               setSteps(foundRecipe.recipe_instructions.map((step: string) => ({ name: step })));
+              setContent(foundRecipe.content);
             } else {
               navigate('/');
             }
@@ -103,7 +89,8 @@ function Form() {
 
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    let newRecipe = new Recipe(name.trim(), chinName.trim(), cuisine.trim(), (user!.sub as string), prepTime, cookTime, servings, picture.trim() || noRecipe, ingredients.map(i => ({ name: i.name.trim(), quantity: i.quantity.trim() })).filter(i => i.name && i.quantity), steps.map(s => s.name.trim()).filter(Boolean));
+    const content = editorRef.current?.getContent() || '';
+    let newRecipe = new Recipe(name.trim(), chinName.trim(), cuisine.trim(), (user!.sub as string), prepTime, cookTime, servings, picture.trim() || noRecipe, ingredients.map(i => ({ name: i.name.trim(), quantity: i.quantity.trim() })).filter(i => i.name && i.quantity), steps.map(s => s.name.trim()).filter(Boolean), content);
     if (newRecipe.ingredients.length === 0) {
       alert(t('form.oneIngredient'));
       return;
@@ -156,22 +143,10 @@ function Form() {
               </div>
               <div className="form-group">
                 <label htmlFor="cuisine">{t('form.cuisine')} *</label>
-                <Select
-                  id="cuisine"
-                  name="cuisine"
-                  options={Object.entries(adjectives).map(([code, _]) => ({
-                    value: code,
-                    label: getCuisineName(code)
-                  }))}
-                  isClearable
-                  isSearchable
-                  placeholder={getCuisineName('TW')}
-                  value={Object.entries(adjectives).map(([code, _]) => ({
-                    value: code,
-                    label: getCuisineName(code)
-                  })).find(option => option.value === cuisine)}
-                  onChange={(option: OptionType | null) => setCuisine(option ? option.value : '')}
-                  required
+                <Select id="cuisine" name="cuisine" isClearable isSearchable required placeholder={getCuisineName('TW')}
+                  options={Object.entries(adjectives).map(([code, _]) => ({ value: code, label: getCuisineName(code) }))}
+                  value={Object.entries(adjectives).map(([code, _]) => ({ value: code, label: getCuisineName(code) })).find(option => option.value === cuisine)}
+                  onChange={(option: { label: string; value: string; } | null) => setCuisine(option ? option.value : '')}
                 />
               </div>
               <div className="form-group">
@@ -217,6 +192,7 @@ function Form() {
                 </div>
               )}
             </fieldset>
+            <TextEditor ref={editorRef} content={content} />
             <fieldset className="p-4 my-4">
               <legend className="text-primary">{t('form.ingredients')}</legend>
               <InputList items={ingredients} label={t('form.ingredient')} addLabel={t('form.add')} add={add(setIngreds)} remove={remove(setIngreds)} change={change(setIngreds)} mode='ingredient' />

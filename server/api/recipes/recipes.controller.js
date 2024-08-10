@@ -1,18 +1,17 @@
 const express = require('express');
 const router = express.Router();
+const TurndownService = require('turndown');
+const turndownService = new TurndownService();
+const markdownit = require('markdown-it');
+const md = new markdownit();
 const recipesService = require('./recipes.service');
 const { authMiddleware } = require('../../middleware/authMiddleware');
-
-const formatRecipe = (recipe) => ({
-	...recipe,
-	created_on: new Date(recipe.created_on),
-	time_last_modified: new Date(recipe.time_last_modified)
-});
 
 router.get('/', async (req, res) => {
 	try {
 		const recipes = await recipesService.getRecipes();
-		res.json(recipes);
+		const modifiedRecipes = recipes.map(recipe => ({ ...recipe, content: md.render(recipe.content) }));
+		res.json(modifiedRecipes);
 	} catch (err) {
 		res.status(500).json({ error: 'An error occurred while fetching recipes' });
 	}
@@ -21,7 +20,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
 	try {
 		const recipe = await recipesService.getRecipeById(req.params.id);
-		res.json(recipe);
+		res.json({ ...recipe, content: md.render(recipe.content) });
 	} catch (err) {
 		res.status(500).json({ error: 'An error occurred while fetching the recipe' });
 	}
@@ -30,7 +29,8 @@ router.get('/:id', async (req, res) => {
 router.get('/user/:username', async (req, res) => {
 	try {
 		const recipes = await recipesService.getRecipesByUser(req.params.username);
-		res.json(recipes);
+		const modifiedRecipes = recipes.map(recipe => ({ ...recipe, content: md.render(recipe.content) }));
+		res.json(modifiedRecipes);
 	} catch (err) {
 		res.status(500).json({ error: 'An error occurred while fetching the recipes' });
 	}
@@ -38,6 +38,7 @@ router.get('/user/:username', async (req, res) => {
 
 router.post('/', authMiddleware, async (req, res) => {
 	try {
+		req.body.content = turndownService.turndown(req.body.content);
 		await recipesService.addRecipe(req.body);
 		res.status(200).json({ message: 'Recipe added successfully' });
 	} catch (err) {
@@ -56,6 +57,7 @@ router.delete('/:id', authMiddleware, async (req, res) => {
 
 router.put('/:id', authMiddleware, async (req, res) => {
 	try {
+		req.body.content = turndownService.turndown(req.body.content);
 		await recipesService.updateRecipeById(req.params.id, req.body, req.auth.sub);
 		res.json({ message: 'Recipe updated successfully' });
 	} catch (err) {

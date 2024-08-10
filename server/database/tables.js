@@ -35,7 +35,8 @@ const createRecipeTable = `
 		time_last_modified TIMESTAMPTZ DEFAULT NOW(),
 		iid INT,
 		FOREIGN KEY (iid) REFERENCES ingredient(iid) ON DELETE CASCADE,
-		recipe_instructions TEXT[]
+		recipe_instructions TEXT[],
+		content TEXT
 	);
 `;
 
