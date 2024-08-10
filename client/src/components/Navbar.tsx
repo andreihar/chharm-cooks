@@ -149,7 +149,7 @@ function Navbar() {
                     </a>
                     <ul className="dropdown-menu dropdown-menu-end text-small" style={{}}>
                       <Link to={`/user/${user.sub}`}><button type="button" className="dropdown-item">{t('navbar.profile')}</button></Link>
-                      <Link to={`/settings`}><button type="button" className="dropdown-item">{t('navbar.settings')}</button></Link>
+                      <Link to="/settings"><button type="button" className="dropdown-item">{t('navbar.settings')}</button></Link>
                       <li><button className="dropdown-item" onClick={(e) => logOut(e)}>{t('navbar.signOut')}</button></li>
                     </ul>
                   </div>

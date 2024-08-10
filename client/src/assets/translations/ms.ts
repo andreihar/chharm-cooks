@@ -26,12 +26,24 @@ export const ms = {
       }
     },
     footer: {
-      rights: "Semua hak cipta terpelihara"
+      rights: "Semua hak cipta terpelihara",
+      main: "Utama",
+      user: "Pengguna",
+      about: "ChhármCooks berdedikasi untuk meraikan dan mengekalkan tradisi makanan Hokkien yang kaya. Misi kami adalah untuk menghubungkan penggemar makanan melalui perkongsian resipi asli dan pengalaman masakan, memupuk komuniti yang bertenaga di sekitar masakan kegemaran ini."
     },
     signup: {
-      welcome: "Selamat datang ke<0/><1>komuniti masakan Hokkien anda</1>",
-      unleash: "Lepaskan artis masakan Hokkien dalam diri anda!",
-      social: "Pautan Sosial",
+      steps: {
+        header1: "<0>Berhubung</0> dengan Kami!",
+        step1: "Kongsi profil media sosial anda dan sertai komuniti kami yang bertenaga. Temui, kongsi dan berhubung dengan rakan-rakan peminat masakan Hokkien!",
+        header2: "Awak <0>Dari</0> Mana?",
+        step2: "Beritahu kami lokasi anda! Sambungkan anda dengan orang lain di rantau anda yang berkongsi minat anda terhadap masakan Hokkien.",
+        header3: "<0>Peranan</0> Masakan Anda",
+        step3: "Beritahu kami tentang pekerjaan anda dalam dunia masakan. Kongsi kepakaran anda dan dapatkan pandangan daripada orang lain dalam bidang yang sama!",
+        header4: "Sedikit <0>Tentang</0> Anda",
+        step4: "Kongsi bio ringkas untuk memperkenalkan diri anda. Ceritakan kisah anda, perjalanan masakan anda dan perkara yang memberi inspirasi kepada anda tentang masakan Hokkien. Biarkan semangat anda bersinar!",
+        header5: "Selamat datang ke<1/><0>komuniti masakan Hokkien anda</0>",
+        step5: "Tahniah! Akaun anda kini disediakan. Terokai resipi Hokkien, berhubung dengan orang lain dan mula berkongsi ciptaan masakan anda. Selamat datang menaiki kapal!"
+      },
       next: "Seterusnya",
       finish: "Selesai",
       step: "Langkah <strong>{{now}}</strong> dari <strong>{{total}}</strong>",
@@ -103,6 +115,18 @@ export const ms = {
       unfollow: "Setop Ikuti",
       about: "Tentang saya",
       joined: "Bergabung pada {{date}}",
+    },
+    settings: {
+      picture: "Gambar profil",
+      social: "Pautan sosial",
+      account: "Akaun {{name}}",
+      general: "Maklumat umum",
+      first: "Nama bepan",
+      last: "Nama belakang",
+      occupation: "Pekerjaan",
+      country: "Negara",
+      save: "Simpan semua perubahan",
+      success: "Tetapan berjaya dikemas kini!"
     },
     404: {
       message: "Kami nampaknya tidak dapat mencari halaman yang anda cari",

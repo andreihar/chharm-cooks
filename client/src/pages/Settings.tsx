@@ -69,16 +69,16 @@ function Display() {
                     <img className="rounded-circle mb-4 mb-sm-0" src={picture} alt="Profile picture" style={{ width: '7rem', height: '7rem' }}
                     />
                     <div className="ms-sm-4">
-                      <h3 className="card-title text-dark">{t('settings.picture')}</h3>
+                      <h3 className="card-title text-dark text-capitalize">{t('settings.picture')}</h3>
                       <input type="text" className="form-control" id="imageUrl" value={picture} onChange={e => setPicture(e.target.value)} placeholder="https://media.istockphoto.com/id/1" aria-label={t('settings.picture')} />
                     </div>
                   </div>
                 </div>
                 <div className="card shadow-sm border-light mb-4">
                   <div className="card-body">
-                    <h3 className="card-title text-dark">{t('settings.social')}</h3>
+                    <h3 className="card-title text-dark text-capitalize">{t('settings.social')}</h3>
                     <div className="d-flex align-items-center">
-                      <FontAwesomeIcon icon={getIconByWebsite(social)} size="2x" className="text-primary me-3" />
+                      <FontAwesomeIcon icon={getIconByWebsite(social)} size="2x" className="text-primary me-3 text-capitalize" />
                       <div className="flex-grow-1">
                         <span className="d-block text-dark fw-bold">{t('settings.account', { name: getWebsiteName(social) })}</span>
                         <input type="text" className="form-control text-primary" id="imageUrl" value={social} onChange={e => setSocial(e.target.value)} placeholder="www.facebook.com/example" aria-label={t('settings.social')} />
@@ -90,7 +90,7 @@ function Display() {
               <div className="col-12 col-md-8">
                 <div className="card shadow-sm border-light mb-4">
                   <div className="card-body">
-                    <h3 className="card-title text-dark">{t('settings.general')}</h3>
+                    <h3 className="card-title text-dark text-capitalize">{t('settings.general')}</h3>
                     <div className="row g-3">
                       <div className="col-12 col-sm-6">
                         <div className="form-group">
@@ -129,7 +129,7 @@ function Display() {
                 </div>
               </div>
             </div>
-            <button type="submit" className="btn btn-primary btn-lg d-block mx-auto">{t('settings.save')}</button>
+            <button type="submit" className="btn btn-primary btn-lg d-block mx-auto text-capitalize">{t('settings.save')}</button>
           </form>
         </article>
       </main>

@@ -26,7 +26,10 @@ export const en = {
       }
     },
     footer: {
-      rights: "All rights reserved"
+      rights: "All rights reserved",
+      main: "Main",
+      user: "User",
+      about: "ChhármCooks is dedicated to celebrating and preserving the rich traditions of Hokkien food. Our mission is to connect food enthusiasts through the sharing of authentic recipes and culinary experiences, fostering a vibrant community around this beloved cuisine."
     },
     signup: {
       steps: {
@@ -41,8 +44,6 @@ export const en = {
         header5: "Welcome to your<1/><0>Hokkien culinary community</0>",
         step5: "Congratulations! Your account is now set up. Explore Hokkien recipes, connect with others, and start sharing your culinary creations. Welcome aboard!"
       },
-      unleash: "Unleash the Hokkien culinary artist in you!",
-      social: "Social Link",
       next: "Next",
       finish: "Finish",
       step: "Step <strong>{{now}}</strong> of <strong>{{total}}</strong>",
@@ -120,14 +121,14 @@ export const en = {
     },
     settings: {
       picture: "Profile picture",
-      social: "Social Link",
-      account: "{{name}} Account",
-      general: "General Information",
-      first: "First Name",
-      last: "Last Name",
+      social: "Social link",
+      account: "{{name}} account",
+      general: "General information",
+      first: "First name",
+      last: "Last name",
       occupation: "Occupation",
       country: "Country",
-      save: "Save All Changes",
+      save: "Save all changes",
       success: "Settings updated successfully!"
     },
     404: {

@@ -283,7 +283,7 @@ const helpers = {
 			WHERE notifications.username = $1
 		`;
 		const res = await pool.query(q, [username]);
-		return res.rows.reverse();
+		return res.rows;
 	},
 
 	markNotificationAsRead: async function (username, followed, mode, rid) {

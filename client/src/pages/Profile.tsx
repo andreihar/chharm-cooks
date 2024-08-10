@@ -118,8 +118,8 @@ function Display() {
                   <div>
                     <div className="fs-5">{occupation}</div>
                     {social && (
-                      <a href={social ? social : '#'} target="_blank" rel="noopener noreferrer" className="text-dark-emphasis align-items-center">
-                        <div className="d-flex align-items-center text-primary">
+                      <a href={social ? social : '#'} target="_blank" rel="noopener noreferrer" className="text-dark-emphasis align-items-center nav-link">
+                        <div className="d-flex align-items-center">
                           <FontAwesomeIcon icon={getIconByWebsite(social)} fontSize="1.5rem" className="me-2" />
                           {getPrimaryUrl(social)}
                         </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User } from '../models/User';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -24,6 +24,7 @@ function Signup() {
 
   const [step, setStep] = useState(1);
 
+
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (user) {
@@ -38,7 +39,7 @@ function Signup() {
           console.error('Error updating user:', error);
         });
     } else {
-      // navigate('/');
+      navigate('/');
     }
   }
 
@@ -53,8 +54,15 @@ function Signup() {
   };
 
   if (!isAuthenticated) {
-    // navigate('/');
+    navigate('/');
   }
+
+  useEffect(() => {
+    const savedLang = localStorage.getItem('i18nLang');
+    if (savedLang) {
+      i18n.changeLanguage(savedLang);
+    }
+  }, []);
 
   const animations = [socialAnim, countryAnim, occupationAnim, bioAnim, endAnim];
   const renderForm = () => {
@@ -68,7 +76,7 @@ function Signup() {
         case 1:
           return (
             <><input type="text" className="form-control" id="social" placeholder={t('settings.social')} onChange={e => setSocial(e.target.value)} />
-              <label htmlFor="social">{t('signup.social')} {t('form.optional')}</label></>
+              <label htmlFor="social">{t('settings.social')} {t('form.optional')}</label></>
           );
         case 2:
           return (
@@ -78,12 +86,12 @@ function Signup() {
         case 3:
           return (
             <><input type="text" className="form-control" id="occupation" placeholder={t('settings.occupation')} onChange={e => setOccupation(e.target.value)} />
-              <label htmlFor="occupation">{t('signup.occupation')} {t('form.optional')}</label></>
+              <label htmlFor="occupation">{t('settings.occupation')} {t('form.optional')}</label></>
           );
         default:
           return (
             <><textarea className="form-control" id="bio" placeholder={t('profile.biography')} onChange={e => setBio(e.target.value)} style={{ height: '200px' }}></textarea>
-              <label htmlFor="bio">{t('signup.bio')} {t('form.optional')}</label></>
+              <label htmlFor="bio">{t('profile.bio')} {t('form.optional')}</label></>
           );
       }
     };
