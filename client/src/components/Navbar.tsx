@@ -8,10 +8,11 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useLocalisationHelper } from '../libs/useLocalisationHelper';
 import DbService from '../services/DbService';
 import { User } from '../models/User';
+import { Notification } from '../models/Notification';
 
 function Navbar() {
   const { logout, loginWithRedirect, isAuthenticated, user, getAccessTokenSilently } = useAuth0();
-  const [notifications, setNotifications] = useState<Array<{ followed: string; rid: number; mode: string; seen: boolean; first_name: string; last_name: string; picture: string; title: string; chin_title: string; }>>([]);
+  const [notifications, setNotifications] = useState<Array<Notification>>([]);
   const [userInfo, setUserInfo] = useState<User>();
   const { i18n, t } = useTranslation();
   const { getAuthorName, getRecipeTitle } = useLocalisationHelper();

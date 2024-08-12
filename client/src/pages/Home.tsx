@@ -30,7 +30,7 @@ function Home() {
   return (
     <>
       <Helmet>
-        <title>{`${t('navbar.home')} | ChhármCooks}`}</title>
+        <title>{`${t('navbar.home')} | ChhármCooks`}</title>
         <meta name="description" content={t('footer.about')} />
       </Helmet>
       <Navbar />

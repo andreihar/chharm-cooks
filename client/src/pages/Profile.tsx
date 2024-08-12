@@ -97,7 +97,7 @@ function Display() {
     return (
       <>
         <Helmet>
-          <title>{`${getAuthorName(author)} | ChhármCooks}`}</title>
+          <title>{`${getAuthorName(author)} | ChhármCooks`}</title>
           <meta name="description" content={bio ? bio.slice(0, 150) : `Explore the profile of ${username}. Discover their favorite recipes, cooking tips, and more on ChhármCooks.`} />
           <meta name="keywords" content="profile, user, details, recipe, ChhármCooks" />
           <meta name="author" content={getAuthorName(author)} />

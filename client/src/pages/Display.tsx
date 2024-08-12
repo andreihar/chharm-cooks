@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
 import { User } from '../models/User';
+import { Comment } from '../models/Comment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare, faClock, faBowlRice, faStar, faComments, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faNoStar } from '@fortawesome/free-regular-svg-icons';
@@ -22,8 +23,8 @@ function Display() {
   const [userRating, setUserRating] = useState<number>(0);
   const [averageRating, setAverageRating] = useState<{ value: number; count: number; }>({ value: 0, count: 0 });
   const [viewAlsoRecipes, setViewRecipes] = useState<Recipe[]>([]);
-  const [commentsData, setCommentsData] = useState<{ comments: Array<{ username: string; comment: string; time_last_modified: string; first_name: string; last_name: string; picture: string; rating: number; }>; totalCount: number; }>({ comments: [], totalCount: 0 });
-  const [userComment, setUserComment] = useState<{ username: string; comment: string; time_last_modified: string; first_name: string; last_name: string; picture: string; rating: number; }>({ username: '', comment: '', time_last_modified: '', first_name: '', last_name: '', picture: '', rating: 0 });
+  const [commentsData, setCommentsData] = useState<{ comments: Array<Comment>; totalCount: number; }>({ comments: [], totalCount: 0 });
+  const [userComment, setUserComment] = useState<Comment>(new Comment('', '', '', '', '', '', 0));
   const [newUserComment, setNewUserComment] = useState<string>('');
   const [activeScale, setActiveScale] = useState(1);
   const { user, isAuthenticated } = useAuth0();
@@ -35,7 +36,7 @@ function Display() {
 
   useEffect(() => {
     const loadData = () => {
-      setUserComment({ username: '', comment: '', time_last_modified: '', first_name: '', last_name: '', picture: '', rating: 0 });
+      setUserComment(new Comment('', '', '', '', '', '', 0));
       setNewUserComment('');
       Promise.all([DbService.getRecipes(), DbService.getRecipeById(Number(id)), DbService.getAverageRatingForRecipe(Number(id)), DbService.getCommentsForRecipe(Number(id))])
         .then(([recipes, foundRecipe, averageRating, comments]) => {

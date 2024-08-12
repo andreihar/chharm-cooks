@@ -2,6 +2,8 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { User } from '../models/User';
 import { Recipe } from '../models/Recipe';
+import { Comment } from '../models/Comment';
+import { Notification } from '../models/Notification';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -176,8 +178,8 @@ const addComment = (rid: number, comment: string): Promise<{ message: string; }>
     });
 };
 
-const getCommentsForRecipe = (rid: number): Promise<{ comments: Array<{ username: string; comment: string; time_last_modified: string; first_name: string; last_name: string; picture: string; rating: number; }>; totalCount: number; }> => {
-  return axios.get<{ comments: Array<{ username: string; comment: string; time_last_modified: string; first_name: string; last_name: string; picture: string; rating: number; }>; commentCount: number; }>(`${BASE_URL}/comments/recipe/${rid}`)
+const getCommentsForRecipe = (rid: number): Promise<{ comments: Array<Comment>; totalCount: number; }> => {
+  return axios.get<{ comments: Array<Comment>; commentCount: number; }>(`${BASE_URL}/comments/recipe/${rid}`)
     .then(response => ({
       comments: response.data.comments,
       totalCount: response.data.commentCount
@@ -189,8 +191,8 @@ const getCommentsForRecipe = (rid: number): Promise<{ comments: Array<{ username
 };
 
 // Notifications
-const getNotifications = (): Promise<Array<{ followed: string; rid: number; mode: string; seen: boolean; first_name: string; last_name: string; picture: string; title: string; chin_title: string; }>> => {
-  return axios.get<Array<{ followed: string; rid: number; mode: string; seen: boolean; first_name: string; last_name: string; picture: string; title: string; chin_title: string; }>>(`${BASE_URL}/notifications`)
+const getNotifications = (): Promise<Array<Notification>> => {
+  return axios.get<Array<Notification>>(`${BASE_URL}/notifications`)
     .then(response => response.data)
     .catch(error => {
       console.error('Error fetching notifications', error);
