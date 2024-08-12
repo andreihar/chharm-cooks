@@ -151,6 +151,7 @@ function Display() {
           <meta property="og:image" content={picture} />
           <meta property="og:type" content="article" />
           <meta property="og:url" content={window.location.href} />
+          <meta property="og:site_name" content="ChhármCooks" />
         </Helmet>
         <Navbar />
         <div className="p-5 text-center bg-image text-uppercase position-relative" style={{ backgroundImage: `url(${picture})` }}>
@@ -170,7 +171,7 @@ function Display() {
         <div className="angled-div" />
 
         <main className="container">
-          <div className="row g-5">
+          <div className="row">
             <div className="col-md-8 recipe-content">
               <article className="blog-post">
                 <h2 className="display-5 link-body-emphasis mb-1">
@@ -196,21 +197,21 @@ function Display() {
                   }
                 </div>
                 <hr />
-                <div className="d-flex justify-content-between text-dark-emphasis mb-4">
-                  <div className="d-flex align-items-center me-3">
+                <div className="container row text-dark-emphasis mb-4">
+                  <div className="col-6 col-xl-3 d-flex align-items-center mb-3">
                     <FontAwesomeIcon icon={faCalendarAlt} className="text-primary me-1" />
                     <span>{t('display.posted')} {`${created_on.toLocaleString(i18n.language, { dateStyle: 'short', timeStyle: 'short' })}`}</span>
                   </div>
-                  <div className="d-flex align-items-center me-3">
+                  <div className="col-6 col-xl-3 d-flex align-items-center mb-3">
                     <FontAwesomeIcon icon={faCalendarAlt} className="text-primary me-1" />
                     <span>{t('display.updated')} {`${time_last_modified.toLocaleString(i18n.language, { dateStyle: 'short', timeStyle: 'short' })}`}</span>
                   </div>
-                  <div className="d-flex align-items-center me-3">
+                  <div className="col-6 col-xl-3 d-flex align-items-center mb-3">
                     <FontAwesomeIcon icon={faComments} className="text-primary me-1" />
                     <span>{commentsData.totalCount}</span>
                   </div>
-                  <div className="d-flex align-items-center me-3">
-                    <FontAwesomeIcon icon={faStar} className=" text-warning me-1" />
+                  <div className="col-6 col-xl-3 d-flex align-items-center mb-3">
+                    <FontAwesomeIcon icon={faStar} className="text-warning me-1" />
                     <span>{averageRating.value} / {t('display.reviews', { count: averageRating.count })}</span>
                   </div>
                 </div>
