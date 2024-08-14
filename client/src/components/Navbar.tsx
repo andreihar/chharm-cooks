@@ -88,7 +88,7 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg fixed-top navbar-light bg-white p-0 shadow">
       <div className="container-fluid container-lg bg-white" style={{ boxShadow: '0 0.5rem 1rem -10px rgba(0, 0, 0, 0.15)' }}>
-        <Link to='/' className="navbar-brand me-5"><img src={logo} alt="ChhármCooks Logo" /></Link>
+        <Link to='/' className="navbar-brand me-5"><img src={logo} alt="ChhármCooks Logo" height={70} width={70} /></Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon" />
         </button>
