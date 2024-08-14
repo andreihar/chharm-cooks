@@ -65,6 +65,7 @@ export const zh = {
       min: "(分鐘)",
       servings: "份數",
       picture: "圖片鏈接",
+      link: "鏈接網址",
       optional: "(自選)",
       blog: "網誌",
       ingredients: "食材",

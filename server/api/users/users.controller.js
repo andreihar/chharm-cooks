@@ -3,7 +3,7 @@ const router = express.Router();
 const usersService = require('./users.service');
 const { authMiddleware } = require('../../middleware/authMiddleware');
 
-router.get('/', async (req, res) => {
+router.get('/', async (_req, res) => {
 	try {
 		let users = await usersService.getUsers();
 		res.json(users);

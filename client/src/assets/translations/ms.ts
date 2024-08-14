@@ -65,6 +65,7 @@ export const ms = {
       min: "(min)",
       servings: "Bilangan Hidangan",
       picture: "URL imej",
+      link: "URL pautan",
       optional: "(pilihan)",
       blog: "Blog",
       ingredients: "Bahan-bahan",

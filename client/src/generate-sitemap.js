@@ -10,18 +10,8 @@ const WEBSITE_URL = process.env.VITE_WEBSITE_URL;
 
 const config = {
 	baseUrl: WEBSITE_URL,
-	changeFreq: {
-		root: 'daily',
-		contributors: 'weekly',
-		recipes: 'weekly',
-		users: 'weekly'
-	},
-	priority: {
-		root: '1.0',
-		contributors: '0.8',
-		recipes: '0.8',
-		users: '0.8'
-	}
+	changeFreq: { root: 'daily', contributors: 'weekly', recipes: 'weekly', users: 'weekly' },
+	priority: { root: '1.0', contributors: '0.8', recipes: '0.8', users: '0.8' }
 };
 
 function generateSitemap(recipes, users) {
@@ -94,3 +84,4 @@ const getUsers = () => {
 };
 
 generateSitemapFile();
+generateRobotsTxt();

@@ -65,6 +65,7 @@ export const en = {
       min: "(min)",
       servings: "Number of Servings",
       picture: "Image URL",
+      link: "Link URL",
       optional: "(optional)",
       blog: "Blog",
       ingredients: "Ingredients",

@@ -1,4 +1,4 @@
-import { EditorContent, BubbleMenu, Editor, useEditor } from '@tiptap/react';
+import { EditorContent, BubbleMenu, FloatingMenu, Editor, useEditor } from '@tiptap/react';
 import { History } from '@tiptap/extension-history';
 import { Document } from '@tiptap/extension-document';
 import { Text } from '@tiptap/extension-text';
@@ -142,6 +142,44 @@ const TextEditor = forwardRef(({ content }: { content: string; }, ref) => {
 					</>
 				)}
 			</BubbleMenu>
+			<FloatingMenu className="FloatingMenu bg-light rounded p-1 d-flex text-dark" editor={editor} tippyOptions={{ duration: 150 }}>
+				{isAddingLink ? (
+					<input className="border-0 bg-light text-dark" type="text" placeholder={t('form.link')} value={linkUrl} onChange={event => setLinkUrl(event.target.value)} onKeyDown={handleLinkInputKeyDown} onBlur={() => setLink(editor)} style={{ outline: 'none' }} autoFocus />
+				) : isAddingImage ? (
+					<div className="d-flex flex-column align-items-start">
+						<input className="border-0 bg-light text-dark mb-1" type="text" placeholder={t('form.picture')} value={imageUrl} onChange={event => setImageUrl(event.target.value)} onKeyDown={handleImageInputKeyDown} onBlur={handleImageBlur} style={{ outline: 'none' }} autoFocus />
+					</div>
+				) : (
+					<>
+						<div style={{ width: '24px', height: '24px' }} className={`ms-1 icon d-flex justify-content-center align-items-center rounded ${editor.isActive('bold') ? 'text-primary' : ''}`} onClick={() => editor.chain().focus().toggleBold().run()}>
+							<FontAwesomeIcon icon={faBold} />
+						</div>
+						<div style={{ width: '24px', height: '24px' }} className={`ms-1 icon d-flex justify-content-center align-items-center rounded ${editor.isActive('italic') ? 'text-primary' : ''}`} onClick={() => editor.chain().focus().toggleItalic().run()}>
+							<FontAwesomeIcon icon={faItalic} />
+						</div>
+						<div style={{ width: '24px', height: '24px' }} className={`ms-1 icon d-flex justify-content-center align-items-center rounded ${editor.isActive('heading', { level: 2 }) ? 'text-primary' : ''}`} onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}>
+							<FontAwesomeIcon icon={faHeading} />
+						</div>
+						<div style={{ width: '24px', height: '24px' }} className={`ms-1 icon d-flex justify-content-center align-items-center rounded ${editor.isActive('heading', { level: 3 }) ? 'text-primary' : ''}`} onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}>
+							<FontAwesomeIcon icon={faT} />
+						</div>
+						<div style={{ width: '24px', height: '24px' }} className="mx-1 icon d-flex justify-content-center align-items-center rounded"
+							onClick={() => {
+								if (isSelectionOverLink) {
+									editor.chain().focus().unsetLink().run();
+								} else {
+									setIsAddingLink(true);
+								}
+							}}
+						>
+							{isSelectionOverLink ? <FontAwesomeIcon icon={faLinkSlash} /> : <FontAwesomeIcon icon={faLink} />}
+						</div>
+						<div style={{ width: '24px', height: '24px' }} className="mx-1 icon d-flex justify-content-center align-items-center rounded" onClick={() => setIsAddingImage(true)}>
+							<FontAwesomeIcon icon={faImage} />
+						</div>
+					</>
+				)}
+			</FloatingMenu>
 			<EditorContent editor={editor} />
 		</>
 	);

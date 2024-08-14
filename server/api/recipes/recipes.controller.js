@@ -7,7 +7,7 @@ const md = new markdownit();
 const recipesService = require('./recipes.service');
 const { authMiddleware } = require('../../middleware/authMiddleware');
 
-router.get('/', async (req, res) => {
+router.get('/', async (_req, res) => {
 	try {
 		const recipes = await recipesService.getRecipes();
 		const modifiedRecipes = recipes.map(recipe => ({ ...recipe, content: md.render(recipe.content) }));
