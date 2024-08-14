@@ -35,17 +35,17 @@ function Footer() {
 
 	return (
 		<>
-			<div className="bg-primary text-white py-2">
+			<div className="bg-primary py-2">
 				<div className="container d-flex justify-content-between align-items-center">
 					<p className="mb-0 fw-bold">{t('footer.social')}</p>
 					<ul className="list-unstyled d-flex my-3">
-						<li className="">
-							<a className="nav-link text-white" href="https://www.linkedin.com/in/andreihar/" target="_blank" rel="noopener noreferrer">
+						<li>
+							<a className="nav-link" href="https://www.linkedin.com/in/andreihar/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
 								<FontAwesomeIcon icon={faLinkedinIn} fontSize="1.5rem" />
 							</a>
 						</li>
 						<li className="ms-3">
-							<a className="nav-link text-white" href="https://github.com/andreihar/" target="_blank" rel="noopener noreferrer">
+							<a className="nav-link" href="https://github.com/andreihar/" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
 								<FontAwesomeIcon icon={faGithub} fontSize="1.5rem" />
 							</a>
 						</li>

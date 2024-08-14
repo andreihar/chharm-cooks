@@ -66,7 +66,7 @@ function Display() {
               <div className="col-12 col-md-4 mb-4">
                 <div className="card shadow-sm border-light mb-4">
                   <div className="card-body d-flex flex-column flex-sm-row align-items-center">
-                    <img className="rounded-circle mb-4 mb-sm-0" src={picture} alt="Profile picture" style={{ width: '7rem', height: '7rem' }}
+                    <img className="rounded-circle mb-4 mb-sm-0" src={picture} alt="Profile picture" style={{ width: '7rem', height: '7rem', objectFit: 'cover' }}
                     />
                     <div className="ms-sm-4">
                       <h3 className="card-title text-dark text-capitalize">{t('settings.picture')}</h3>

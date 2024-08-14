@@ -146,7 +146,7 @@ function Navbar() {
                   </div>
                   <div className="dropdown">
                     <a href="#" className="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                      <img src={userInfo?.picture || user.picture} alt="User Picture" width={32} height={32} className="rounded-circle" />
+                      <img src={userInfo?.picture || user.picture} alt="User Picture" width={32} height={32} className="rounded-circle" style={{ objectFit: 'cover' }} />
                     </a>
                     <ul className="dropdown-menu dropdown-menu-end text-small" style={{}}>
                       <Link to={`/user/${user.sub}`}><button type="button" className="dropdown-item">{t('navbar.profile')}</button></Link>
@@ -162,7 +162,10 @@ function Navbar() {
               )}
             </div>
             <div className={`ms-2 ${isAuthenticated && user ? 'order-mobile-first' : ''}`}>
-              <select value={i18n.language} onChange={changeLanguage} className="form-select" name="Language">
+              <label htmlFor="language-select" style={{ position: 'absolute', width: '1px', height: '1px', padding: '0', margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', border: '0' }}>
+                Language
+              </label>
+              <select id="language-select" value={i18n.language} onChange={changeLanguage} className="form-select" name="Language">
                 <option value="en">EN</option>
                 <option value="zh">華語</option>
                 <option value="ms">MS</option>

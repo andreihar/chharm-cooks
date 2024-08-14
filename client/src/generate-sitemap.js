@@ -11,7 +11,8 @@ const WEBSITE_URL = process.env.VITE_WEBSITE_URL;
 const config = {
 	baseUrl: WEBSITE_URL,
 	changeFreq: { root: 'daily', contributors: 'weekly', recipes: 'weekly', users: 'weekly' },
-	priority: { root: '1.0', contributors: '0.8', recipes: '0.8', users: '0.8' }
+	priority: { root: '1.0', contributors: '0.1', recipes: '0.5', users: '0.3' },
+	disallowedRoutes: ['form', 'settings', 'signup']
 };
 
 function generateSitemap(recipes, users) {
@@ -45,19 +46,23 @@ async function generateSitemapFile() {
 		const users = await getUsers();
 		const sitemap = generateSitemap(recipes, users);
 		const __dirname = path.dirname(fileURLToPath(import.meta.url));
-		const filePath = path.join(__dirname, '..', 'sitemap.xml');
-		fs.writeFileSync(filePath, sitemap);
+		const dirPath = path.join(__dirname, '..', 'public');
+		fs.mkdirSync(dirPath, { recursive: true });
+		fs.writeFileSync(path.join(dirPath, 'sitemap.xml'), sitemap);
 	} catch (error) {
 		console.error('Error generating sitemap:', error);
 	}
 }
 
 function generateRobotsTxt() {
-	const disallowedRoutes = config.disallowedRoutes.map(route => `Disallow: ${route}`).join('\n');
-	return `User-agent: *
-	${disallowedRoutes}
+	const disallowedRoutes = config.disallowedRoutes.map(route => `Disallow: /${route}`).join('\n');
+	const robots = `User-agent: *
+${disallowedRoutes}
 
-	Sitemap: ${config.baseUrl}/sitemap.xml`;
+Sitemap: ${config.baseUrl}/sitemap.xml`;
+	const dirPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'public');
+	fs.mkdirSync(dirPath, { recursive: true });
+	fs.writeFileSync(path.join(dirPath, 'robots.txt'), robots);
 }
 
 const convertRecipeDates = (recipe) => {

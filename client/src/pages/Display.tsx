@@ -183,16 +183,16 @@ function Display() {
                 </h2>
                 <div className="text-dark-emphasis align-items-center d-flex justify-content-between">
                   <div>
-                    <Link to={`/user/${author!.username}`} className="text-dark-emphasis align-items-center d-flex">
+                    <Link to={`/user/${author!.username}`} className="text-dark-emphasis align-items-center d-flex" aria-label={`View profile of ${author!.first_name}`}>
                       {t('display.by')}
-                      <img src={author!.picture} alt="User Picture" width={32} height={32} className="rounded-circle ms-2" />
+                      <img src={author!.picture} alt="User Picture" width={32} height={32} className="rounded-circle ms-2" style={{ objectFit: 'cover' }} />
                       <span className="text-uppercase fs-5 ms-2">{getAuthorName(author!)}</span>
                     </Link>
                   </div>
                   {isAuthenticated && user && (user.sub === author!.username) &&
                     <div>
-                      <button onClick={deleteRecipe} className="btn btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button>
-                      <button onClick={() => navigate('/form/' + id)} className="btn btn-outline-secondary ms-2"><FontAwesomeIcon icon={faPenToSquare} /></button>
+                      <button onClick={deleteRecipe} className="btn btn-outline-danger" aria-label="Delete Recipe"><FontAwesomeIcon icon={faTrash} /></button>
+                      <button onClick={() => navigate('/form/' + id)} className="btn btn-outline-secondary ms-2" aria-label="Edit Recipe"><FontAwesomeIcon icon={faPenToSquare} /></button>
                     </div>
                   }
                 </div>
@@ -217,27 +217,27 @@ function Display() {
                 </div>
                 <BlogContent content={content} />
                 <div className="card border-primary border-5 bg-primary col-lg-12 col-xl-9 mx-auto">
-                  <div className="card-header text-center text-white bg-primary">
-                    <img src={picture} alt={title} className="rounded-circle" style={{ width: '150px', height: '150px' }} />
+                  <div className="card-header text-center bg-primary">
+                    <img src={picture} alt={title} className="rounded-circle" width={150} height={150} style={{ objectFit: 'cover' }} />
                     <h2 className="text-capitalize mt-2">{getRecipeTitle(recipe)}</h2>
                     <hr />
                     <div>
                       {[...Array(5)].map((_, index) => (
-                        <FontAwesomeIcon key={index} icon={index < Math.floor(averageRating.value) ? faStar : faNoStar} className="text-white mr-1" />
+                        <FontAwesomeIcon key={index} icon={index < Math.floor(averageRating.value) ? faStar : faNoStar} className="mr-1" />
                       ))}
                       <p className="small">{`${averageRating.value} from ${averageRating.count} reviews`}</p>
                     </div>
                     <div className="d-flex justify-content-around">
                       <div className="col-4">
-                        <strong><FontAwesomeIcon icon={faClock} className="text-white" /> {t('display.prep')}</strong>
+                        <strong><FontAwesomeIcon icon={faClock} /> {t('display.prep')}</strong>
                         <p>{prep_time} {t('display.mins')}</p>
                       </div>
                       <div className="col-4">
-                        <strong><FontAwesomeIcon icon={faClock} className="text-white" /> {t('display.cook')}</strong>
+                        <strong><FontAwesomeIcon icon={faClock} /> {t('display.cook')}</strong>
                         <p>{cook_time} {t('display.mins')}</p>
                       </div>
                       <div className="col-4">
-                        <strong><FontAwesomeIcon icon={faBowlRice} className="text-white" /> {t('display.serves')}</strong>
+                        <strong><FontAwesomeIcon icon={faBowlRice} /> {t('display.serves')}</strong>
                         <p>{t('display.servings', { count: servings, quantity: scaleQuantity(String(servings)) })}</p>
                       </div>
                     </div>
@@ -270,38 +270,34 @@ function Display() {
                   <div className="container mt-3">
                     {isAuthenticated && user &&
                       <div className="row d-flex py-4 justify-content-center bg-body-tertiary rounded">
-                        <div className="">
-                          <div className="">
-                            <div className="d-flex flex-column align-items-center">
-                              <h4 className="card-title mb-2">{t('display.comment.share')}</h4>
-                              <div className="mb-3 d-flex justify-content-center">
-                                {[...Array(5)].map((_, i) => {
-                                  const newRating = i + 1;
-                                  return (
-                                    <FontAwesomeIcon key={i} icon={newRating <= (hoverRating ?? userRating) ? faStar : faNoStar} className="text-warning mr-1"
-                                      onClick={() => {
-                                        DbService.rateRecipe(Number(id), newRating)
-                                          .then(() => {
-                                            setUserRating(newRating);
-                                            setUserComment({ ...userComment, rating: newRating });
-                                          })
-                                          .catch(() => {
-                                            alert(t('display.error'));
-                                          });
-                                      }}
-                                      onMouseEnter={() => setHoverRating(newRating)} onMouseLeave={() => setHoverRating(null)}
-                                    />
-                                  );
-                                })}
-                              </div>
-                              <form className="w-100 d-flex flex-column align-items-center" onSubmit={handleCommentSubmit}>
-                                <div className="form-group mb-3 w-75">
-                                  <textarea className="form-control" id="comment" rows={5} value={newUserComment} onChange={(e) => setNewUserComment(e.target.value)} required disabled={userRating === 0} placeholder={userRating === 0 ? t('display.comment.rateFirst') : t('display.comment.placeholder')} />
-                                </div>
-                                <button type="submit" className="btn btn-primary" disabled={userRating === 0}>{t('display.comment.post')}</button>
-                              </form>
-                            </div>
+                        <div className="d-flex flex-column align-items-center">
+                          <h4 className="card-title mb-2">{t('display.comment.share')}</h4>
+                          <div className="mb-3 d-flex justify-content-center">
+                            {[...Array(5)].map((_, i) => {
+                              const newRating = i + 1;
+                              return (
+                                <FontAwesomeIcon key={i} icon={newRating <= (hoverRating ?? userRating) ? faStar : faNoStar} className="text-warning mr-1"
+                                  onClick={() => {
+                                    DbService.rateRecipe(Number(id), newRating)
+                                      .then(() => {
+                                        setUserRating(newRating);
+                                        setUserComment({ ...userComment, rating: newRating });
+                                      })
+                                      .catch(() => {
+                                        alert(t('display.error'));
+                                      });
+                                  }}
+                                  onMouseEnter={() => setHoverRating(newRating)} onMouseLeave={() => setHoverRating(null)}
+                                />
+                              );
+                            })}
                           </div>
+                          <form className="w-100 d-flex flex-column align-items-center" onSubmit={handleCommentSubmit}>
+                            <div className="form-group mb-3 w-75">
+                              <textarea className="form-control" id="comment" rows={5} value={newUserComment} onChange={(e) => setNewUserComment(e.target.value)} required disabled={userRating === 0} placeholder={userRating === 0 ? t('display.comment.rateFirst') : t('display.comment.placeholder')} />
+                            </div>
+                            <button type="submit" className="btn btn-primary" disabled={userRating === 0}>{t('display.comment.post')}</button>
+                          </form>
                         </div>
                       </div>
                     }
@@ -311,7 +307,7 @@ function Display() {
                         <h2 className="mb-4 pb-2">{t('display.comments', { count: commentsData.totalCount })}</h2>
                         {userComment.username &&
                           <div className="d-flex flex-start mb-5">
-                            <img className="rounded-circle shadow-sm me-3" src={userComment.picture} alt={`Avatar of ${userComment.first_name}`} width={75} height={75} />
+                            <img className="rounded-circle shadow-sm me-3" src={userComment.picture} alt={`Avatar of ${userComment.first_name}`} width={75} height={75} style={{ objectFit: 'cover' }} />
                             <div className="flex-grow-1 flex-shrink-1">
                               <h5 className="mb-1 text-uppercase fw-bold">
                                 {t('display.comment.your')}
@@ -328,10 +324,10 @@ function Display() {
                         }
                         {commentsData.comments.map((comment, index) => (
                           <div key={index} className="d-flex flex-start mb-4">
-                            <img className="rounded-circle shadow-sm me-3" src={comment.picture} alt={`Avatar of ${comment.first_name}`} width={65} height={65} />
+                            <img className="rounded-circle shadow-sm me-3" src={comment.picture} alt={`Avatar of ${comment.first_name}`} width={65} height={65} style={{ objectFit: 'cover' }} />
                             <div className="flex-grow-1 flex-shrink-1">
                               <p className="mb-1 text-uppercase fw-bold">
-                                <Link to={`/user/${comment.username}`}>{getAuthorName({ first_name: comment.first_name, last_name: comment.last_name })}</Link>
+                                <Link to={`/user/${comment.username}`} aria-label={`View profile of ${comment.first_name}`}>{getAuthorName({ first_name: comment.first_name, last_name: comment.last_name })}</Link>
                                 <span className="ms-4 small">
                                   {[...Array(5)].map((_, starIndex) => (
                                     <FontAwesomeIcon key={starIndex} icon={starIndex < comment.rating ? faStar : faNoStar} className="text-warning mr-1" />
@@ -353,12 +349,12 @@ function Display() {
               <div className="col-md-4">
                 <div className="position-sticky" style={{ top: "140px" }}>
                   <div className="p-4 mb-3 bg-body-tertiary rounded text-center" style={{ position: 'relative' }}>
-                    <img src={author.picture} alt="User Picture" width={180} height={180} className="rounded-circle" style={{ border: '6px solid white', position: 'absolute', top: '-60px', left: '50%', transform: 'translateX(-50%)' }} />
+                    <img src={author.picture} alt="User Picture" width={180} height={180} className="rounded-circle" style={{ border: '6px solid white', position: 'absolute', top: '-60px', left: '50%', transform: 'translateX(-50%)', objectFit: 'cover' }} />
                     <h3 style={{ marginTop: '100px' }}>
                       <Trans i18nKey="display.about" components={[<span className="text-primary fw-bold" />]} values={{ name: author.first_name }} />
                     </h3>
                     <p className="mb-0">{author.bio}</p>
-                    <Link to={`/user/${author.username}`} className="btn btn-primary mt-3">{t('display.learnMore')}</Link>
+                    <Link to={`/user/${author.username}`} className="btn btn-primary mt-3" aria-label={`View profile of ${author.first_name}`}>{t('display.learnMore')}</Link>
                   </div>
                 </div>
               </div>
@@ -374,7 +370,7 @@ function Display() {
                     <div className="card text-bg-dark h-100 rounded-0 border-0 hover-effect position-relative">
                       <img src={`${viewRecipe.picture}`} className="card-img rounded-0" style={{ height: '13rem', objectFit: 'cover', transition: 'transform .3s ease-in-out' }} alt="..." />
                       <div className="card-img-overlay text-uppercase">
-                        <h5 className="bg-primary card-title position-absolute bottom-0 left-0 py-1 px-2 fs-6 fw-normal" style={{ color: 'inherit', transition: 'none' }}>{getRecipeTitle(viewRecipe)}</h5>
+                        <h5 className="bg-primary card-title text-black position-absolute bottom-0 left-0 py-1 px-2 fs-6 fw-normal" style={{ transition: 'none' }}>{getRecipeTitle(viewRecipe)}</h5>
                       </div>
                     </div>
                   </Link>

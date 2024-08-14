@@ -48,7 +48,7 @@ const UserCard = ({ user, classes }: { user: User; classes: string; }) => {
             <img src={recipeImage} alt={`${user.first_name} ${user.last_name}'s recipe background`} className="background w-100" style={{ filter: 'blur(0.4px)', transform: 'scale(1.8)' }} />
           </div>
           <div>
-            <img src={user.picture} alt={`Profile picture of ${user.first_name} ${user.last_name}`} className="z-3 rounded-circle position-absolute shadow" width={100} height={100} style={{ bottom: '45%', transform: 'translate(-50%, 0%)' }} />
+            <img src={user.picture} alt={`Profile picture of ${user.first_name} ${user.last_name}`} className="z-3 rounded-circle position-absolute shadow" width={100} height={100} style={{ bottom: '45%', transform: 'translate(-50%, 0%)', objectFit: 'cover' }} />
           </div>
           <div className="card-content z-2 p-3 position-relative bg-body-tertiary">
             <h3 className="card-title fs-4 mb-2">{getAuthorName(user)}</h3>

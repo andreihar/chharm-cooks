@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /form
+Disallow: /settings
+Disallow: /signup
+
+Sitemap: http://localhost:5173/sitemap.xml

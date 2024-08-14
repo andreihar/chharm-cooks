@@ -120,7 +120,7 @@ function Display() {
           <div className="col-md-8 mx-auto">
             <article className="blog-post" style={{ marginTop: '-190px' }}>
               <div style={{ transform: 'translateY(-20px)', display: 'flex', alignItems: 'center' }}>
-                <img src={picture} alt="User Picture" width={180} height={180} className="rounded-circle ms-2" style={{ border: '6px solid white' }} />
+                <img src={picture} alt="User Picture" width={180} height={180} className="rounded-circle ms-2" style={{ border: '6px solid white', objectFit: 'cover' }} />
                 <div className="ms-4 text-light">
                   <h2 className="display-5 mb-1">{getAuthorName(author)}</h2>
                   {country && <p className="fs-4 mb-0">{getCountryName(country)}</p>}
