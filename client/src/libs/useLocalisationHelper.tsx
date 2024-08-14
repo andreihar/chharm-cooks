@@ -61,11 +61,25 @@ export function useLocalisationHelper() {
   };
 
   const getCuisines = (cuisine: string, setCuisine: (value: string) => void) => {
+    const sortedOptions = Object.entries(adjectives)
+      .reduce<{ topLevel: { value: string; label: string; }[], subLevel: { value: string; label: string; }[]; }>(
+        (acc, [code, _]) => {
+          const option = { value: code, label: code.includes('-') ? getCuisineName(code) : `<b>${getCuisineName(code)}</b>` };
+          code.includes('-') ? acc.subLevel.push(option) : acc.topLevel.push(option);
+          return acc;
+        },
+        { topLevel: [], subLevel: [] }
+      );
+    const finalOptions = sortedOptions.topLevel.sort((a, b) => a.label.localeCompare(b.label)).flatMap(topOption => [
+      topOption,
+      ...sortedOptions.subLevel.sort((a, b) => a.label.localeCompare(b.label)).filter(subOption => subOption.value.startsWith(`${topOption.value}-`))
+    ]);
+
     return (
-      <Select id="cuisine" name="cuisine" isClearable isSearchable required placeholder={getCuisineName('TW')}
-        options={Object.entries(adjectives).sort((a, b) => getCuisineName(a[0]).localeCompare(getCuisineName(b[0]))).map(([code, _]) => ({ value: code, label: getCuisineName(code) }))}
-        value={Object.entries(adjectives).map(([code, _]) => ({ value: code, label: getCuisineName(code) })).find(option => option.value === cuisine)}
+      <Select id="cuisine" name="cuisine" isClearable isSearchable required placeholder={getCuisineName('TW')} options={finalOptions}
+        value={finalOptions.find(option => option.value === cuisine)}
         onChange={(option: { label: string; value: string; } | null) => setCuisine(option ? option.value : '')}
+        formatOptionLabel={({ label }) => <span dangerouslySetInnerHTML={{ __html: label }} />}
       />
     );
   };

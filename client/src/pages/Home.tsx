@@ -27,6 +27,26 @@ function Home() {
     return () => clearInterval(intervalId);
   }, []);
 
+
+  // Cuisine thing
+  const handleCuisineClick = (cuisine: string) => {
+    if (selectedCuisine === cuisine) {
+      setSelectedCuisine(cuisine.includes('-') ? cuisine.split('-')[0] : '');
+    } else {
+      setSelectedCuisine(cuisine);
+    }
+  };
+
+  const filteredRecipes = recipes.filter(item => {
+    const matchesSearchTerm = item.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCuisine = selectedCuisine
+      ? item.cuisine === selectedCuisine || item.cuisine.startsWith(`${selectedCuisine.split('-')[0]}-`)
+      : true;
+    const matchesUser = onlyMyRecipes ? item.username === user!.sub : true;
+    return matchesSearchTerm && matchesCuisine && matchesUser;
+  });
+  const topLevelCuisines = [...new Set(recipes.map(recipe => recipe.cuisine.split('-')[0]))];
+
   return (
     <>
       <Helmet>
@@ -65,24 +85,32 @@ function Home() {
           <div className="row justify-content-center my-4">
             <div className="col-md-6">
               <input id="search" type="text" className="form-control border-dark-subtle" placeholder={t('home.search')} onChange={e => setSearchTerm(e.target.value)} />
-              {isAuthenticated &&
-                <button
-                  className={`btn ${onlyMyRecipes ? 'btn-primary' : 'btn-secondary'} me-2 mt-2`}
-                  onClick={() => setOnlyMyRecipes(prev => !prev)}>
+              {isAuthenticated && (
+                <button className={`btn ${onlyMyRecipes ? 'btn-primary' : 'btn-secondary'} me-2 mt-2`} onClick={() => setOnlyMyRecipes(prev => !prev)}>
                   {onlyMyRecipes ? t('home.showAll') : t('home.showMy')}
                 </button>
-              }
-              {[...new Set(recipes.map(recipe => recipe.cuisine))].map(cuisine => (
-                <button key={cuisine}
-                  className={`btn ${cuisine === selectedCuisine ? 'btn-primary' : 'btn-secondary'} me-2 mt-2`}
-                  onClick={() => setSelectedCuisine(prev => prev === cuisine ? '' : cuisine)}>
-                  {getCuisineName(cuisine)}
+              )}
+              {topLevelCuisines.map(countryCode => (
+                <button key={countryCode} className={`btn ${countryCode === selectedCuisine.split('-')[0] ? 'btn-primary' : 'btn-secondary'} me-2 mt-2`} onClick={() => handleCuisineClick(countryCode)}>
+                  {getCuisineName(countryCode)}
                 </button>
               ))}
+              {selectedCuisine && (
+                <div>
+                  {recipes
+                    .map(recipe => recipe.cuisine)
+                    .filter(cuisine => cuisine.startsWith(`${selectedCuisine.split('-')[0]}-`))
+                    .map(subCuisine => (
+                      <button key={subCuisine} className={`btn btn-sm ${subCuisine === selectedCuisine ? 'btn-primary' : 'btn-secondary'} me-2 mt-2`} onClick={() => handleCuisineClick(subCuisine)}>
+                        {getCuisineName(subCuisine)}
+                      </button>
+                    ))}
+                </div>
+              )}
             </div>
           </div>
           <div className="row">
-            {recipes.filter(item => item.title.toLowerCase().includes(searchTerm.toLowerCase()) && (!selectedCuisine || item.cuisine === selectedCuisine) && (!onlyMyRecipes || item.username === user!.sub)).map((recipe) => (
+            {filteredRecipes.map(recipe => (
               <RecipeCard key={recipe.rid} recipe={recipe} classes={'col-12 col-sm-6 col-md-4 col-lg-3'} />
             ))}
           </div>
