@@ -83,7 +83,7 @@ ChhármCooks is the assignment project created for the course in Server-side Dev
 
 The platform aims to provide a dynamic space for users to share, explore, and celebrate Hokkien cuisine through a diverse array of recipes. With a focus on user experience and functionality, the project incorporates features such as Commenting, seamless Recipe Creation, Filtering and Searching, Notifications, and more.
 
-Guided by a dedication to preserving and promoting Hokkien cuisine, this project has been developed to empower users to share their favorite recipes. Through this platform, users can contribute to the preservation and celebration of this rich culinary tradition for generations to come.
+Guided by a dedication to preserving and promoting Hokkien cuisine, this project has been developed to empower users to share their favourite recipes. Through this platform, users can contribute to the preservation and celebration of this rich culinary tradition for generations to come.
 
 ### Built With
 

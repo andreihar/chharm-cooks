@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Recipe } from '../models/Recipe';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -8,9 +8,10 @@ import { Helmet } from 'react-helmet-async';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import RecipeCard from '../components/RecipeCard';
+import DbService from '../services/DbService';
 
 function Home() {
-  const [recipes] = useState<Recipe[]>([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCuisine, setSelectedCuisine] = useState('');
   const [onlyMyRecipes, setOnlyMyRecipes] = useState(false);
@@ -18,6 +19,13 @@ function Home() {
   const { t } = useTranslation();
   const { getCuisineName } = useLocalisationHelper();
 
+  useEffect(() => {
+    DbService.getRecipes().then(setRecipes);
+    const intervalId = setInterval(() => {
+      DbService.getRecipes().then(setRecipes);
+    }, 5000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   // Cuisine thing
   const handleCuisineClick = (cuisine: string) => {
