@@ -91,7 +91,7 @@ function Signup() {
         default:
           return (
             <><textarea className="form-control" id="bio" placeholder={t('profile.biography')} onChange={e => setBio(e.target.value)} style={{ height: '200px' }}></textarea>
-              <label htmlFor="bio">{t('profile.bio')} {t('form.optional')}</label></>
+              <label htmlFor="bio">{t('profile.biography')} {t('form.optional')}</label></>
           );
       }
     };
