@@ -1,90 +1,125 @@
-/* General */
-:root {
-    --primary: #FDAA04;
-    --secondary: #000220;
-    --navbar-height: 80px;
-}
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+// Custom Variables
+$primary: #FDAA04;
+$navbar-height: 80px;
+$font-family-base: -apple-system, "Nunito", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+// import bootstrap
+@import "node_modules/bootstrap/scss/bootstrap";
+
 html.with-navbar {
-    scroll-padding-top: var(--navbar-height);
-    margin-top: var(--navbar-height);
+    scroll-padding-top: $navbar-height;
+    margin-top: $navbar-height;
 }
+
 a {
     text-decoration: none !important;
 }
+
 div.wrapper {
     padding: 2em 15vw;
 }
 
 /* Navbar */
 .navbar {
-    height: var(--navbar-height);
+    height: $navbar-height;
 }
+
 .navbar-brand img {
     width: 70px;
 }
+
 .nav-link:hover {
-    color: var(--primary) !important;
+    color: $primary !important;
 }
+
 .dropdown-menu {
-    --bs-dropdown-min-width: 0!important;
+    --bs-dropdown-min-width: 0 !important;
+}
+
+@media (max-width: 991.98px) {
+    .order-mobile-first {
+        order: -1;
+    }
+
+    .order-mobile-last {
+        order: 1;
+    }
 }
 
 /* Hero */
 .min-height {
-    min-height: calc(100vh - var(--navbar-height));
+    min-height: calc(100vh - $navbar-height);
 }
 
 /* Main */
 .card {
-    padding: 0px!important;
+    padding: 0px !important;
     overflow: hidden;
 }
+
 .card .card-title {
     transition: .3s;
 }
+
 .card:hover .card-title {
-    color: var(--primary);
+    color: $primary;
 }
-.card:hover .card-img, .card:hover .card-img-top {
+
+.card:hover .card-img,
+.card:hover .card-img-top {
     transform: scale(1.1);
 }
+
 .album h2 {
     text-decoration: underline;
     text-underline-offset: 0.3em;
     text-decoration-thickness: 4px;
-    text-decoration-color: var(--primary);
+    text-decoration-color: $primary;
 }
 
 /* Form */
 header {
     padding-top: 2em;
 }
+
 fieldset:hover {
     background-color: #f3f3f3;
 }
+
 .form-group label {
     margin: 0.5em 0 0.25em;
 }
 
+input[type="checkbox"]:checked+.ingredient-label {
+    text-decoration: line-through;
+}
+
 /* Display */
 .mask {
-	background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.7);
 }
+
 .bg-image {
     background-position: 50% 0%;
     background-repeat: no-repeat;
     background-size: cover;
-	height: 400px;
+    height: 400px;
 }
+
 .angled-div {
     background: #ffffff;
     height: 3rem;
     transform: skewY(-1.5deg);
     transform-origin: top left;
 }
+
 li::marker {
-    color: var(--primary);
+    color: $primary;
 }
+
 .hover-effect::after {
     content: '';
     position: absolute;
@@ -94,8 +129,15 @@ li::marker {
     left: 0;
     transition: background-color .3s;
 }
+
 .hover-effect:hover::after {
     background-color: rgba(253, 170, 4, 0.3);
+}
+
+@media (min-width: 768px) {
+    .recipe-content {
+        border-right: 1px solid #ccc;
+    }
 }
 
 /* Authors */
@@ -109,6 +151,7 @@ li::marker {
     background: rgba(0, 0, 0, 0.5);
     z-index: 1;
 }
+
 .profile-card .card-content::before {
     content: '';
     background: #f8f9fa;
@@ -121,25 +164,6 @@ li::marker {
     transform: rotate(-13deg);
 }
 
-@media (min-width: 768px) {
-    .recipe-content {
-        border-right: 1px solid #ccc;
-    }
-}
-
-input[type="checkbox"]:checked + .ingredient-label {
-    text-decoration: line-through;
-}
-
-@media (max-width: 991.98px) {
-    .order-mobile-first {
-        order: -1;
-    }
-    .order-mobile-last {
-        order: 1;
-    }
-}
-
 /* Editor */
 .Bubblemenu {
     div:hover {
@@ -147,13 +171,15 @@ input[type="checkbox"]:checked + .ingredient-label {
         cursor: pointer;
     }
 }
+
 .ProseMirror .is-empty:before {
     color: #aaa;
     content: attr(data-placeholder);
-	float: left;
-	height: 0;
-	pointer-events: none;
+    float: left;
+    height: 0;
+    pointer-events: none;
 }
+
 .ProseMirror:focus {
     outline: none;
 }

@@ -126,7 +126,7 @@ function Display() {
                   {country && <p className="fs-4 mb-0">{getCountryName(country)}</p>}
                 </div>
               </div>
-              <div className="text-dark-emphasis align-items-center d-flex justify-content-between">
+              <div className="text-dark-emphasis d-flex flex-column flex-md-row align-items-center justify-content-between">
                 <div>
                   <div className="fs-5">{occupation}</div>
                   {social && (
@@ -138,7 +138,7 @@ function Display() {
                     </a>
                   )}
                 </div>
-                <div className="d-flex justify-content-end text-center py-1">
+                <div className="d-flex justify-content-end text-center py-1 mt-3 mt-md-0">
                   {[{ count: recipes.length, label: t('home.recipes') }, { count: followers.length, label: t('profile.followers') }, { count: following.length, label: t('profile.following') }].map((item, index) => (
                     <div key={index} className={index === 1 ? "px-3" : ""}>
                       <h5 className="mb-1">{item.count}</h5>

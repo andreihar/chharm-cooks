@@ -4,8 +4,7 @@ import App from './App.tsx';
 import { BrowserRouter } from 'react-router-dom';
 import { Auth0Provider } from '@auth0/auth0-react';
 import ScrollToTop from './components/ScrollToTop';
-import './style/index.css';
-import './style/sass.scss';
+import './style/index.scss';
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
 const domain = import.meta.env.VITE_AUTH0_DOMAIN;

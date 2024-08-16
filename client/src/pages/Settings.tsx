@@ -66,8 +66,7 @@ function Display() {
               <div className="col-12 col-md-4 mb-4">
                 <div className="card shadow-sm border-light mb-4">
                   <div className="card-body d-flex flex-column flex-sm-row align-items-center">
-                    <img className="rounded-circle mb-4 mb-sm-0" src={picture} alt="Profile picture" style={{ width: '7rem', height: '7rem', objectFit: 'cover' }}
-                    />
+                    <img className="rounded-circle mb-4 mb-sm-0" src={picture} alt="Profile picture" style={{ width: '7rem', height: '7rem', objectFit: 'cover' }} />
                     <div className="ms-sm-4">
                       <h3 className="card-title text-dark text-capitalize">{t('settings.picture')}</h3>
                       <input type="text" className="form-control" id="imageUrl" value={picture} onChange={e => setPicture(e.target.value)} placeholder="https://media.istockphoto.com/id/1" aria-label={t('settings.picture')} />
