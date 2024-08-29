@@ -141,7 +141,7 @@ The website can be accessed through the URL `http://localhost:5173/`.
 Users can sign up or sign in to the platform using Auth0. Authentication ensures that only authenticated users can create, delete, and modify recipes. Upon registration, new users are guided through a multi-step signup process, allowing them to provide additional information beyond the basic details collected by Auth0. This extra layer of customisation enhances user profiles and enriches the overall user experience on the platform.
 
 <p align="center">
-<img src="readme/signup.jpg" alt="Sign Up" height="400">
+<img src="readme/signup.jpg" alt="Sign Up" width="600">
 </p>
 
 ### Filtering and Searching
@@ -149,7 +149,7 @@ Users can sign up or sign in to the platform using Auth0. Authentication ensures
 To provide a personalised browsing experience, the platform offers a robust filtering and search feature. Users can search for recipes by name or filter them by both national and regional cuisines, reflecting the diverse culinary traditions within Hokkien cuisine. This allows users to explore recipes that align with their specific interests, whether they're looking for broader categories or more localised variations.
 
 <p align="center">
-<img src="readme/filter.jpg" alt="Filtering and Searching" height="400">
+<img src="readme/filter.jpg" alt="Filtering and Searching" width="600">
 </p>
 
 ### Recipe Creation
@@ -157,7 +157,7 @@ To provide a personalised browsing experience, the platform offers a robust filt
 Users can create recipes via the "Add Recipe" button, which reveals a user-friendly form. The form includes a real-time preview of the banner image provided via URL, ensuring accurate display. The cuisine selection process is intuitive, featuring a hierarchical structure where regional cuisines are listed under their corresponding national categories, with the option to search by name for added convenience. Users can add or remove ingredient and direction fields as needed, making the recipe creation process flexible and straightforward.
 
 <p align="center">
-<img src="readme/form.jpg" alt="Form" height="400">
+<img src="readme/form.jpg" alt="Form" width="600">
 </p>
 
 #### Blog Creation
@@ -165,7 +165,7 @@ Users can create recipes via the "Add Recipe" button, which reveals a user-frien
 Users can enhance their recipes with rich, blog-style descriptions. Using the integrated text editor, users can format their content with headings, titles, bold and italic text, and easily embed links and images. This feature empowers users to share not only the recipe itself but also personal stories, cooking tips, and cultural insights, making each recipe more engaging and informative.
 
 <p align="center">
-<img src="readme/form_blog.jpg" alt="Blog Form" height="400">
+<img src="readme/form_blog.jpg" alt="Blog Form" width="600">
 </p>
 
 ### Recipe Showcase
@@ -175,7 +175,7 @@ Users can view recipes by clicking on recipe cards on the Home Page. To ensure c
 Users can view recipes by clicking on recipe cards on the Home Page. Each recipe offers a wealth of content, including essential details like its popularity, creation, and modification dates, along with a blog-style narrative featuring cooking tips, serving suggestions, and cultural insights. To ensure content integrity, only logged-in users who authored a recipe have the privilege to delete them.
 
 <p align="center">
-<img src="readme/recipe.jpg" alt="Recipe Showcase" height="400">
+<img src="readme/recipe.jpg" alt="Recipe Showcase" width="600">
 </p>
 
 #### Recipe Edit
@@ -183,7 +183,7 @@ Users can view recipes by clicking on recipe cards on the Home Page. Each recipe
 Logged-in users who authored a recipe can edit it by clicking the edit option. This redirects them to the Form page, where all input fields are pre-populated with the existing recipe information. After making changes, users can submit the form to update the recipe entry instantly.
 
 <p align="center">
-<img src="readme/edit.jpg" alt="Edit" height="400">
+<img src="readme/edit.jpg" alt="Edit" width="600">
 </p>
 
 #### Recipe Card
@@ -191,7 +191,7 @@ Logged-in users who authored a recipe can edit it by clicking the edit option. T
 The Recipe Card provides a streamlined and easy-to-follow format that includes all essential details needed to recreate the dish. With a simple layout, users can effortlessly adjust the recipe to match the desired number of servings. The interactive ingredients list allows users to mark off items as they go, ensuring an organised and efficient cooking experience.
 
 <p align="center">
-<img src="readme/card.jpg" alt="Recipe Card" height="400">
+<img src="readme/card.jpg" alt="Recipe Card" width="600">
 </p>
 
 ### Rating and Commeting
@@ -199,7 +199,7 @@ The Recipe Card provides a streamlined and easy-to-follow format that includes a
 Users are allowed to share their thoughts and feedback on recipes by rating them from 1 to 5 stars and leaving comments. After trying a recipe, users can rate it and provide detailed feedback, which will be visible to others. Each recipe's average rating is displayed on the recipe cards, offering a quick overview of its popularity.
 
 <p align="center">
-<img src="readme/rating_and_comment.jpg" alt="Rating and Commenting" height="400">
+<img src="readme/rating_and_comment.jpg" alt="Rating and Commenting" width="600">
 </p>
 
 ### User Profile
@@ -207,7 +207,7 @@ Users are allowed to share their thoughts and feedback on recipes by rating them
 The User Profile feature allows users to follow or unfollow others and view detailed information on their profiles. Each profile displays the user's name, occupation, location, and their social media link. Users can also explore the individual's biography, a list of their recipes, and their connections, including those they follow and who follows them.
 
 <p align="center">
-<img src="readme/profile.jpg" alt="User Profile" height="400">
+<img src="readme/profile.jpg" alt="User Profile" width="600">
 </p>
 
 ### Notifications
@@ -215,7 +215,7 @@ The User Profile feature allows users to follow or unfollow others and view deta
 The Notifications feature keeps users updated on activities related to their connections and interests. Whenever someone they follow adds a new recipe or comments on a recipe, users receive a notification alerting them to the new content. This feature ensures that users stay informed about updates and interactions within their network, helping them engage with the latest recipes and discussions.
 
 <p align="center">
-<img src="readme/notifications.jpg" alt="Notifications" height="400">
+<img src="readme/notifications.jpg" alt="Notifications" width="600">
 </p>
 
 ### Settings
@@ -223,7 +223,7 @@ The Notifications feature keeps users updated on activities related to their con
 The Settings provide users with a centralised area to update and manage their essential profile information. Users can modify their profile picture, social media link, and general details including their first name, last name, occupation, and country. Additionally, users can update their biography to reflect personal interests and achievements. This feature ensures that users can keep their profiles current and accurately represent themselves within the platform.
 
 <p align="center">
-<img src="readme/settings.jpg" alt="Settings" height="400">
+<img src="readme/settings.jpg" alt="Settings" width="600">
 </p>
 
 ### User Ranking
@@ -231,7 +231,7 @@ The Settings provide users with a centralised area to update and manage their es
 A list of users is displayed based on the number of recipes they've created, sorted alphabetically by name. Additionally, the most common cuisine of the recipes posted by each user is indicated, providing insight into the cuisines they specialise in.
 
 <p align="center">
-<img src="readme/users.jpg" alt="User Ranking" height="400">
+<img src="readme/users.jpg" alt="User Ranking" width="600">
 </p>
 
 ### Localisation
@@ -239,8 +239,8 @@ A list of users is displayed based on the number of recipes they've created, sor
 Users can switch between English, Chinese, and Malay languages by selecting the desired option from the language selector drop-down menu in the Navbar.
 
 <p align="center">
-<img src="readme/zh.jpg" alt="Chinese" height="400">
-<img src="readme/ms.jpg" alt="Malay" height="400">
+<img src="readme/zh.jpg" alt="Chinese" width="600">
+<img src="readme/ms.jpg" alt="Malay" width="600">
 </p>
 
 
@@ -249,7 +249,7 @@ Users can switch between English, Chinese, and Malay languages by selecting the 
 ## Lighthouse Report
 
 <p align="center">
-<img src="readme/audit.jpg" alt="Audit" height="150">
+<img src="readme/audit.jpg" alt="Audit" width="500">
 </p>
 
 
